@@ -1,0 +1,20 @@
+{
+  "pages":[
+    "pages/index/index",
+    "pages/home/home",
+    "pages/subject/subject",
+    "pages/apply/apply",
+    "pages/switchcity/switchcity"
+  ],
+  "permission": {
+    "scope.userLocation": {
+      "desc": "我们将根据您的位置展示与您同城的视频"
+    }
+  },
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "小PP短视频",
+    "navigationBarTextStyle":"black"
+  }
+}
