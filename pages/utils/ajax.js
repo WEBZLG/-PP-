@@ -1,4 +1,4 @@
-
+// var serverPath = 'https://100boot.cn/douyin/';
 var serverPath = 'http://192.168.1.180/index/port/'
 const key = '54851ccbe10b4d5d812690cabf242b48';
 // common.js

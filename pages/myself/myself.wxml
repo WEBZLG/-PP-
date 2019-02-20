@@ -1,0 +1,7 @@
+<import src="../tabbar/tabbar.wxml"></import>
+<view>
+我的
+<!-- 底部导航 -->
+<template is="publick-nav"></template> 
+
+</view>

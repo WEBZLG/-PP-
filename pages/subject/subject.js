@@ -1,3 +1,5 @@
+var tabber =  require('../tabbar/tabbar.js')
+
 const app = getApp()
 const api = require('../utils/api.js')
 const pageRows = 25;
@@ -48,7 +50,7 @@ Page({
       talks: [],
       talksPage: 1,
       talksPages: -1,
-      isHiddenVideo: true,
+      isHiddenVideo: false,
       isHiddenControls: true,
       videoSrc: '',
     })
@@ -112,6 +114,29 @@ Page({
       this.loadPageData();
     }
   },
+  videolist: function () {
+    console.log("ceshi")
+    wx.redirectTo({
+      url: 'subject'
+    })
+  },
+  focus: function () {
+    wx.redirectTo({
+      url: '../focus/focus'
+    })
+  },
+  message: function () {
+    console.log("ceshi")
+    wx.redirectTo({
+      url: '../message/message'
+    })
+  },
+  myself: function () {
+    console.log("ceshi")
+    wx.redirectTo({
+      url: '../myself/myself'
+    })
+  },
   like: function (e) {
     var subject = this.data.subject;
     subject.like = true;
@@ -124,7 +149,7 @@ Page({
     })
   },
   apply: function (e) {
-    wx.navigateTo({
+    wx.redirectTo({
       url: '../apply/apply',
     })
   },
@@ -132,17 +157,17 @@ Page({
     this.showTalks();
   },
   share: function (e) {
-    wx.showToast({
-      title: '请点击右上角点点点转发',
-    })
+    // wx.showToast({
+    //   title: '请点击右上角点点点转发',
+    // })
     var subject = this.data.subject;
     subject.shares++;
     this.setData({
       subject: subject
     })
-    api.share({
-      subjectId: subject.subjectId
-    })
+    // api.share({
+    //   subjectId: subject.subjectId
+    // })
   },
   // 重新加载主要用作测试
   reload: function (e) {

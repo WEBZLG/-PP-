@@ -1,0 +1,11 @@
+<template name="publick-nav">    
+  <view class="footer"> 
+    <view class='nav-item home' bindtap='videolist'>首页</view>
+    <view class='nav-item attention'  bindtap='focus'>关注</view>
+    <view class='apply'>
+      <image class="icon" src='/image/add.png' bindtap='apply'></image>
+    </view>
+    <view class='nav-item message'  bindtap='message'>消息</view>
+    <view class='nav-item myself'  bindtap='myself'>我的</view>
+  </view>
+</template> 

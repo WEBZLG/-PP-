@@ -68,48 +68,48 @@ Page({
   getUserInfo: function(e) {
     console.log(e)
     var that = this;
-    wx.login({
-      success: function (res) {
-        console.log("login by code > " + res.code)
-        // 发送 res.code 到后台换取 openId, sessionKey, unionId
-      var code = res.code;
-      wx.request({
-        method: 'POST',
-        data: {
-          code:code,
-        },
-        header: {
-          'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        url:"http://192.168.1.180/index/port/login",
-        success: function (res) {
-          console.log(res)
-          that.openId = res.data
-        }
-      })
-      }
-    });
-    wx.request({
-      method: 'POST',
-      data: {
-        // openId: that.openId,
-        // avatarUrl:e.detail.userInfo.avatarUrl,
-        // city: e.detail.userInfo.city,
-        // country: e.detail.userInfo.country,
-        // gender: e.detail.userInfo.gender,
-        // language: e.detail.userInfo.language,
-        // nickName: e.detail.userInfo.nickName,
-        // province: e.detail.userInfo.province,
-      },
-      header: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      url: "http://192.168.1.180/index/port/userinfo",
-      success: function (res) {
-        console.log(res)
+    // wx.login({
+    //   success: function (res) {
+    //     console.log("login by code > " + res.code)
+    //     // 发送 res.code 到后台换取 openId, sessionKey, unionId
+    //   var code = res.code;
+    //   wx.request({
+    //     method: 'POST',
+    //     data: {
+    //       code:code,
+    //     },
+    //     header: {
+    //       'Content-Type': 'application/x-www-form-urlencoded'
+    //     },
+    //     url:"http://192.168.1.180/index/port/login",
+    //     success: function (res) {
+    //       console.log(res)
+    //       that.openId = res.data
+    //     }
+    //   })
+    //   }
+    // });
+    // wx.request({
+    //   method: 'POST',
+    //   data: {
+    //     openId: that.openId,
+    //     avatarUrl:e.detail.userInfo.avatarUrl,
+    //     city: e.detail.userInfo.city,
+    //     country: e.detail.userInfo.country,
+    //     gender: e.detail.userInfo.gender,
+    //     language: e.detail.userInfo.language,
+    //     nickName: e.detail.userInfo.nickName,
+    //     province: e.detail.userInfo.province,
+    //   },
+    //   header: {
+    //     'Content-Type': 'application/x-www-form-urlencoded'
+    //   },
+    //   url: "http://192.168.1.180/index/port/userinfo",
+    //   success: function (res) {
+    //     console.log(res)
 
-      }
-    })
+    //   }
+    // })
 
     if (e.detail.userInfo){
       app.globalData.userInfo = e.detail.userInfo
@@ -126,7 +126,7 @@ Page({
         icon: 'none',
         duration: 2000
       })
-    }
+    };
 
   }
 })

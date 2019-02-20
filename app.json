@@ -3,6 +3,9 @@
     "pages/index/index",
     "pages/home/home",
     "pages/subject/subject",
+    "pages/focus/focus",
+    "pages/message/message",
+    "pages/myself/myself",
     "pages/apply/apply",
     "pages/switchcity/switchcity"
   ],
