@@ -46,14 +46,14 @@ function updateUserInfo(userInfo, success) {
 function getRecommendList(opt) {
   // console.log("getRecommendList...")
 
-  ajax.request({
-    url: 'subject/recommendList',
-    data: opt.data || {
-      page: 1,
-      rows: 25
-    },
-    success: opt.success
-  })
+  // ajax.request({
+  //   url: 'subject/recommendList',
+  //   data: opt.data || {
+  //     page: 1,
+  //     rows: 25
+  //   },
+  //   success: opt.success
+  // })
 }
 
 // 获取热门的视频列表
@@ -187,6 +187,25 @@ function applyTalk(opt){
     success: opt.success
   })
 }
+// 获取积分详情
+function getIntegral(opt){
+  ajax.request({
+    method: 'POST',
+    url: '/integral',
+    data: opt.data,
+    success: opt.success
+  })
+}
+
+// 提现申请
+function depositApply (opt) {
+  ajax.request({
+    method: 'POST',
+    url: '/withdraw',
+    data: opt.data,
+    success: opt.success
+  })
+}
 
 module.exports = {
   login: login,
@@ -200,5 +219,8 @@ module.exports = {
   like: like,
   share: share,
   loadTalks: loadTalks,
-  applyTalk: applyTalk
+  applyTalk: applyTalk,
+  getIntegral:getIntegral,
+  depositApply: depositApply
+
 }

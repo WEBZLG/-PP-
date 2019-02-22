@@ -1,0 +1,32 @@
+
+<view>
+  <view class='person'>
+    <image class='headimg' src='../../image/demo.jpg'></image>
+    <view class='nickName'>ivv</view>
+    <view class='sex-addr'>男 黑龙江哈尔滨</view>
+  </view>
+  <view class='message'>
+    <view class='item'>
+      <view class='title'>签名</view>
+      <input class='ipt'  placeholder="" bindinput='getSign' placeholder='填写个性签名'/>
+    </view>
+    <view class='item'>
+      <view class='title'>生日</view>
+      <input class='ipt'  placeholder="" bindinput='getBirth' placeholder='选择出生日期'/>
+    </view>
+    <view class='item'>
+      <view class='title'>电话</view>
+      <input class='ipt'  placeholder="" bindinput='getCall' placeholder='填写手机号'/>
+    </view>
+    <view class='item'>
+      <view class='title'>微信</view>
+      <input class='ipt'  placeholder="" bindinput='getWx' placeholder='填写微信号'/>
+    </view>
+    <view class='item'>
+      <button type='button' bindtap='save' disabled='{{isDis}}' >保存</button>
+    </view>
+  </view>
+  <view class='calendar-box'>
+    <calendar  calendar-style="calendar"  header-style="calendar-header"  board-style="calendar-board" days-color="{{dayStyle}}" weeks-type="cn" binddayClick="dayClick" />
+ </view>
+</view>

@@ -1,0 +1,23 @@
+/* pages/viewdetails/viewdetails.wxss */
+
+.item-list{
+  color: #eee;
+  font-size: 30rpx;
+  display: flex;
+  padding:10rpx 30rpx; 
+  justify-content: space-between;
+  line-height: 40rpx;
+}
+.item-number{
+  padding-top: 20rpx;
+}
+.time{
+  font-size: 24rpx;
+  color: #9f9f9f;
+}
+.no-text{
+  width: 100%;
+  color: #eee;
+  text-align: center;
+  padding-top: 30rpx;
+}

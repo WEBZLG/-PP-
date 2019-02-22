@@ -1,0 +1,30 @@
+<!--pages/depositapply/depositapply.wxml-->
+  <view>
+    <view class='apply-item'>
+      <text class='title'>银行名称</text>
+      <input class='ipt'  placeholder="" bindinput='getBankName'/>
+    </view>
+    <view class='apply-item'>
+      <text class='title'>银行卡号</text>
+      <input class='ipt'  placeholder="" bindinput='getBankNum'/>
+    </view>
+    <view class='apply-item'>
+      <text class='title'>开户行</text>
+      <input class='ipt'  placeholder="" bindinput='getBankAddr'/>
+    </view>
+    <view class='apply-item'>
+      <text class='title'>持卡人</text>
+      <input class='ipt'  placeholder="" bindinput='getUserName'/>
+    </view>
+    <view class='apply-item'>
+      <view>
+        <text class='title'>提现金额</text>
+        <view class='balance'>积分余额 7800000</view>
+      </view>
+      <input class='ipt'  placeholder="" bindinput='getApplyNum'/>
+    </view>
+    <view class='apply-item'>
+      <button type='button' bindtap='apply' disabled='{{isDis}}' >提现</button>
+    </view>
+    
+  </view>

@@ -8,36 +8,16 @@ Page({
     userInfo: {},
     openId:"",
     hasUserInfo: false,
-    canIUse: wx.canIUse('button.open-type.getUserInfo')
+    canIUse: wx.canIUse('button.open-type.getUserInfo'),
+    openid: '',
+    wxname: '',
+    wximage: ''
   },
-  //事件处理函数
-  bindViewTap: function() {
-    wx.navigateTo({
-      url: '/home/home'
-    })
+  globalData: {
+    userInfo: null,
+    openId:null
   },
   onLoad: function () {
-    console.log(app.globalData.userInfo)
-
-
-    // var item = "djma";
-    // var key = "132465";
-    // wx.request({
-    //   method: 'POST',
-    //   data: {
-    //     item: item,
-    //     key: key
-    //   },
-    //   header: {
-    //     'Content-Type': 'application/x-www-form-urlencoded'
-    //   },
-    //   url: serverPath + "userinfo",
-    //   success: function (res) {
-    //     console.log(res)
-
-    //   }
-    // })
-
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,
@@ -66,51 +46,43 @@ Page({
     }
   },
   getUserInfo: function(e) {
-    console.log(e)
-    var that = this;
-    // wx.login({
-    //   success: function (res) {
-    //     console.log("login by code > " + res.code)
-    //     // 发送 res.code 到后台换取 openId, sessionKey, unionId
-    //   var code = res.code;
-    //   wx.request({
-    //     method: 'POST',
-    //     data: {
-    //       code:code,
-    //     },
-    //     header: {
-    //       'Content-Type': 'application/x-www-form-urlencoded'
-    //     },
-    //     url:"http://192.168.1.180/index/port/login",
-    //     success: function (res) {
-    //       console.log(res)
-    //       that.openId = res.data
-    //     }
-    //   })
-    //   }
-    // });
-    // wx.request({
-    //   method: 'POST',
-    //   data: {
-    //     openId: that.openId,
-    //     avatarUrl:e.detail.userInfo.avatarUrl,
-    //     city: e.detail.userInfo.city,
-    //     country: e.detail.userInfo.country,
-    //     gender: e.detail.userInfo.gender,
-    //     language: e.detail.userInfo.language,
-    //     nickName: e.detail.userInfo.nickName,
-    //     province: e.detail.userInfo.province,
-    //   },
-    //   header: {
-    //     'Content-Type': 'application/x-www-form-urlencoded'
-    //   },
-    //   url: "http://192.168.1.180/index/port/userinfo",
-    //   success: function (res) {
-    //     console.log(res)
-
-    //   }
-    // })
-
+    var that = this
+    if (app.globalData.userInfo) {
+      typeof cb == "function" && cb(this.globalData.userInfo)
+    } else {
+      //调用登录接口 第一次授权登陆
+      wx.login({
+        success: function (res) {
+          var code = res.code
+          // 获取用户信息
+          wx.getUserInfo({
+            success: function (data) {
+              app.globalData.userInfo = data.userInfo
+              typeof cb == "function" && cb(that.globalData.userInfo)
+              wx.request({
+                url: "http://192.168.1.180/index/port/login",
+                data: {
+                  "code": code,
+                },
+                method: 'POST',
+                success: function (res) {
+                  console.log(res)
+                  // console.log(data)
+                  that.openid = res.data.openid; //用户openid
+                  that.wxname = data.userInfo.nickName;//用户昵称
+                  that.wximage = data.userInfo.avatarUrl;//用户头像
+                  that.setuserinfo();//第一次授权保存用户信息
+                  that.setData({
+                    userInfo: e.detail.userInfo,
+                    hasUserInfo: true
+                  })
+                }
+              })
+            }
+          })
+        }
+      })
+    };
     if (e.detail.userInfo){
       app.globalData.userInfo = e.detail.userInfo
       this.setData({
@@ -128,5 +100,30 @@ Page({
       })
     };
 
-  }
+  },
+  // 保存信息
+  setuserinfo: function (e) {
+    var openid = this.openid;
+    var wxname = this.wxname;
+    var wximage = this.wximage;
+    wx.request({
+      url: "http://192.168.1.180/index/port/setuserinfo",
+      data: {
+        "openid": openid,
+        "wxname": wxname,
+        "wximage": wximage
+      },
+      method: 'POST',
+      success: function (res) {
+        console.log(res);
+        app.globalData.openId = res.data.uid
+      }
+    })
+  },
+  //事件处理函数
+  bindViewTap: function () {
+    wx.navigateTo({
+      url: '/home/home'
+    })
+  },
 })

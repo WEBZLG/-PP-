@@ -1,0 +1,66 @@
+.person{
+  text-align: center;
+}
+.headimg{
+  height: 160rpx;
+  width: 160rpx;
+  border: 4rpx solid #eee;
+  border-radius: 50%;
+  margin: 60rpx auto 20rpx;
+}
+.nickName{
+  font-size: 48rpx;
+  color: #eee;
+}
+.sex-addr{
+  font-size: 24rpx;
+  color: #cbcbcb;
+}
+.message{
+  padding:30rpx;
+  color: #eee;
+  font-size: 36rpx;
+}
+.item{
+  display: flex;
+  margin: 30rpx 0;
+  position: relative;
+}
+.title{
+  width: 30%;
+  text-align: left
+}
+.ipt{
+  width: 70%;
+  text-align: right;
+  /* border-bottom: 2rpx solid #eee; */
+}
+button{
+width:100%;
+background-color:inherit;
+border:2px solid #fff;
+border-radius:60rpx;
+color:#fff;
+margin-top: 30rpx;
+}
+/* 日历 */
+.calendar {
+    background-color:white;  
+    padding-top: 10px; 
+}
+.calendar-header{
+  font-size: large;
+  color: #59518d;
+}
+.calendar-board{
+  color: #c7cbe2;
+   font-weight: bold;
+}
+.calendar-box{
+  position:absolute;
+  bottom:0;
+  right:0;
+  z-index:9;
+  width:100%;
+
+}

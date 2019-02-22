@@ -1,6 +1,5 @@
 /* pages/subject/subject.wxss */
 
-@import '../tabbar/tabbar';
 page {
   height: 100%;
   overflow: hidden;

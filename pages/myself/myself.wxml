@@ -1,6 +1,120 @@
 <import src="../tabbar/tabbar.wxml"></import>
-<view>
-我的
+<view class='bg-color'>
+  <view class='top-content'>
+    <view class='person'>
+      <view class='information'>
+        <view class='infor-mark'>
+          <view class='infor-name'>{{nickname}}</view>
+          <view class='infor-img'>vip</view>
+          <view class='infor-approve'>{{if_verified}}</view>
+        </view>
+        <view class='sign-text'>
+          巴拉巴拉一大堆巴拉巴拉一大堆巴拉巴拉一大堆巴拉巴拉一大堆
+        </view>
+        <view class='infor-more'>
+          <view class='infor-details'>
+            <view class='infor-birth'>{{gender}} 1997-02-29 {{city}}</view>
+            <view class='infor-call'>13000000000 Vx0006666666</view>
+          </view>
+          <view class='redact' bindtap='redact'>编辑资料</view>
+        </view>
+      </view>
+      <view class='headimg'>
+        <view class='head-box'>
+          <image class='head' src='{{avatarUrl}}'></image>
+        </view>
+        <view class='small-box'>
+          <image class='smallhead' src='../../image/reload.png'></image>
+        </view>
+      </view>
+    </view>
+    <view class='other-data'>
+      <view class='statistics'>
+        <view class='item'>
+          <text class='number'>{{like}}</text>
+          <view class='text'>获赞</view>
+        </view>
+        <view class='item'>
+          <text class='number'>{{attention}}</text>
+          <view class='text'>关注</view>
+        </view>
+        <view class='item'>
+          <text class='number'>{{fans}}</text>
+          <view class='text'>粉丝</view>
+        </view>
+      </view>
+      <view class='action'>
+        <view class='integral'>{{integral}}积分</view>
+        <view class='view-detail' bindtap='viewDetails'>查看明细</view>
+        <view class='deposit-apply' bindtap='depositApply'>提现申请</view>
+      </view>
+    </view>
+  </view>
+  <view >
+    <scroll-view scroll-x="true" class="tab-h" scroll-left="{{scrollLeft}}">
+        <view class="tab-item {{currentTab==0?'active':''}}"  data-current="0" bindtap="swichNav">发布</view>
+        <view class="tab-item {{currentTab==1?'active':''}}" data-current="1" bindtap="swichNav">收藏</view>
+        <view class="tab-item {{currentTab==2?'active':''}}" data-current="2" bindtap="swichNav">送出礼物</view>
+        <view class="tab-item {{currentTab==3?'active':''}}" data-current="3" bindtap="swichNav">收到礼物</view>
+        <view class="tab-item {{currentTab==4?'active':''}}" data-current="4" bindtap="swichNav">私聊</view>
+    </scroll-view>
+    <swiper class="tab-content" current="{{currentTab}}" duration="300" bindchange="switchTab"
+     style="height:{{winHeight}}rpx">
+        <!-- <swiper-item wx:for="{{[0,1,2,3,4]}}" wx:key="{{index}}">
+            <scroll-view scroll-y="true" class="scoll-h" >
+                <block wx:for="{{[1,2,3,4]}}" wx:key="*this">
+                    <view class="item-ans">
+                      
+                    </view>
+                </block>
+            </scroll-view>
+        </swiper-item> -->
+        <swiper-item>
+            <scroll-view scroll-y="true" class="scoll-h" >
+              <view class='block-item'>
+                <view class='item-ans'>
+                  <image class='cover' src='../../image/demo.jpg'></image>
+                  <view>
+                    <cover-image  class='cover-img' src='../../image/like.png'></cover-image>
+                    <text class='cover-text'>42.1w</text>
+                  </view>
+                </view>
+                <view class='item-ans'>
+                  <image class='cover' src='../../image/demo.jpg'></image>
+                  <view>
+                    <cover-image  class='cover-img' src='../../image/like.png'></cover-image>
+                    <text class='cover-text'>42.1w</text>
+                  </view>
+                </view>
+                <view class='item-ans'>
+                  <image class='cover' src='../../image/demo.jpg'></image>
+                  <view>
+                    <cover-image  class='cover-img' src='../../image/like.png'></cover-image>
+                    <text class='cover-text'>42.1w</text>
+                  </view>
+                </view>
+                <view class='item-ans'>
+                  <image class='cover' src='../../image/demo.jpg'></image>
+                  <view>
+                    <cover-image  class='cover-img' src='../../image/like.png'></cover-image>
+                    <text class='cover-text'>42.1w</text>
+                  </view>
+                </view>
+                <view class='item-ans'>
+                  <image class='cover' src='../../image/demo.jpg'></image>
+                  <view>
+                    <cover-image  class='cover-img' src='../../image/like.png'></cover-image>
+                    <text class='cover-text'>42.1w</text>
+                  </view>
+                </view>
+              </view>
+            </scroll-view>
+        </swiper-item>
+    </swiper>
+</view>
+
+
+
 <!-- 底部导航 -->
 <template is="publick-nav"></template> 
 

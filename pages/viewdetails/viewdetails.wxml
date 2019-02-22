@@ -1,0 +1,15 @@
+<!--pages/viewdetails/viewdetails.wxml-->
+<block wx:if="{{detailsList.length==0}}">
+  <view class='no-text'>暂无积分记录</view>
+</block>
+<block wx:else>
+  <view  wx:for="{{detailsList}}" wx:key="index">
+    <view class='item-list'>
+      <view class='item-detail'>
+        <view class='action'>{{item.reason}}</view>
+        <view class='time'>{{item.time}}</view>
+      </view>
+      <view class='item-number'>{{item.integral}}</view>
+    </view>
+  </view>
+</block>

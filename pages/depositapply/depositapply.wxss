@@ -1,0 +1,28 @@
+/* pages/depositapply/depositapply.wxss */
+.apply-item{
+  padding:30rpx;
+  font-size: 32rpx;
+  display: flex;
+  color: #eee;
+  justify-content: space-between;
+}
+.title{
+  width: 40%;
+}
+.ipt{
+  width: 60%;
+  text-align: right;
+  color: #cbcbcb;
+}
+.balance{
+  font-size: 24rpx;
+  color:cbcbcb;
+}
+button{
+width:100%;
+background-color:inherit;
+border:2px solid #fff;
+border-radius:60rpx;
+color:#fff;
+margin-top: 30rpx;
+}

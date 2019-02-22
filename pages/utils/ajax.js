@@ -26,14 +26,14 @@ function request(opt) {
           wx.removeStorageSync("token")
           login();
         } else {
-          console.warn(res.data);
+          // console.warn(res.data);
           wx.showModal({
             content: res.data.message,
             showCancel: false
           })
         }
       } else {
-        console.error(res);
+        // console.error(res);
         wx.showModal({
           title: '微信异常',
           content: res.statusCode,
