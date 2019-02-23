@@ -39,6 +39,8 @@ page{
   height:30rpx;
   padding:0 20rpx;
   margin-top:16rpx;
+  margin-left:30rpx;
+
 }
 .sign-text{
   font-size:28rpx;
@@ -114,9 +116,9 @@ page{
 }
 .tab-h{
 height: 80rpx;width: 100%; box-sizing: border-box;overflow: hidden;line-height: 80rpx;background: #F7F7F7; font-size: 16px; white-space: nowrap;}
-.tab-item{margin:0 30rpx;display: inline-block;}
+.tab-item{margin:0 20rpx;display: inline-block;font-size: 28rpx;}
 .tab-item.active{color: #4675F9;position: relative;}
-.tab-item.active:after{ content: "";display: block;height: 8rpx;width: 0;background: #4675F9;position: absolute; bottom: 0;left: 5rpx;border-radius: 16rpx;}
+.tab-item.active:after{ content: "";display: block;height: 8rpx;width:60rpx;background: #4675F9;position: absolute; bottom: 0;left: 20rpx;border-radius: 16rpx;}
 .block-item{display: flex; flex-wrap: wrap;}
 .item-ans{ width: 32.82%;border: 1rpx solid #c2c2c2;justify-content:space-between; position: relative;}
 .cover{width: 100%;}
@@ -141,4 +143,9 @@ height: 80rpx;width: 100%; box-sizing: border-box;overflow: hidden;line-height: 
   bottom:10rpx;
   color: #fff;
   font-size: 32rpx;
+}
+.vip{
+  height:30rpx;
+  width:30rpx;
+
 }

@@ -1,7 +1,5 @@
-<import src="../tabbar/tabbar.wxml"></import>
 <view>
 消息
-<!-- 底部导航 -->
-<template is="publick-nav"></template> 
+
 
 </view>

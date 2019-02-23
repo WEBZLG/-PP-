@@ -1,20 +1,17 @@
-<import src="../tabbar/tabbar.wxml"></import>
 <view class='bg-color'>
   <view class='top-content'>
     <view class='person'>
       <view class='information'>
         <view class='infor-mark'>
           <view class='infor-name'>{{nickname}}</view>
-          <view class='infor-img'>vip</view>
-          <view class='infor-approve'>{{if_verified}}</view>
+          <view class='infor-img' wx:if="{{if_verified==1}}"><image class='vip' src='../../image/VIP@2x.png'></image></view>
+          <view class='infor-approve'>{{if_verified==0?"未认证":"已认证"}}</view>
         </view>
-        <view class='sign-text'>
-          巴拉巴拉一大堆巴拉巴拉一大堆巴拉巴拉一大堆巴拉巴拉一大堆
-        </view>
+        <view class='sign-text'>{{signature}}</view>
         <view class='infor-more'>
           <view class='infor-details'>
-            <view class='infor-birth'>{{gender}} 1997-02-29 {{city}}</view>
-            <view class='infor-call'>13000000000 Vx0006666666</view>
+            <view class='infor-birth'>{{gender==1 ? "男":"女"}} {{birthday==null ? "1990-09-09" : birthday}} {{city==null ? "哈尔滨" : city}}</view>
+            <view class='infor-call'>{{phone==null ? "18888888888" : phone}} {{wx==null ? "wx666666" : wx}}</view>
           </view>
           <view class='redact' bindtap='redact'>编辑资料</view>
         </view>
@@ -52,17 +49,17 @@
   </view>
   <view >
     <scroll-view scroll-x="true" class="tab-h" scroll-left="{{scrollLeft}}">
-        <view class="tab-item {{currentTab==0?'active':''}}"  data-current="0" bindtap="swichNav">发布</view>
-        <view class="tab-item {{currentTab==1?'active':''}}" data-current="1" bindtap="swichNav">收藏</view>
-        <view class="tab-item {{currentTab==2?'active':''}}" data-current="2" bindtap="swichNav">送出礼物</view>
-        <view class="tab-item {{currentTab==3?'active':''}}" data-current="3" bindtap="swichNav">收到礼物</view>
-        <view class="tab-item {{currentTab==4?'active':''}}" data-current="4" bindtap="swichNav">私聊</view>
+        <view class="tab-item {{currentTab==0?'active':''}}"  data-current="0" bindtap='swichNav'>发布视频</view>
+        <view class="tab-item {{currentTab==1?'active':''}}" data-current="1" bindtap='swichNav'>点赞视频</view>
+        <view class="tab-item {{currentTab==2?'active':''}}" data-current="2" bindtap='swichNav'>送出礼物</view>
+        <view class="tab-item {{currentTab==3?'active':''}}" data-current="3" bindtap='swichNav'>收到礼物</view>
+        <view class="tab-item {{currentTab==4?'active':''}}" data-current="4" bindtap='swichNav'>私信留言</view>
     </scroll-view>
     <swiper class="tab-content" current="{{currentTab}}" duration="300" bindchange="switchTab"
      style="height:{{winHeight}}rpx">
-        <!-- <swiper-item wx:for="{{[0,1,2,3,4]}}" wx:key="{{index}}">
+        <!-- <swiper-item wx:for="{{release}}" wx:key="{{index}}">
             <scroll-view scroll-y="true" class="scoll-h" >
-                <block wx:for="{{[1,2,3,4]}}" wx:key="*this">
+                <block wx:for="release" wx:key="*this">
                     <view class="item-ans">
                       
                     </view>
@@ -79,43 +76,10 @@
                     <text class='cover-text'>42.1w</text>
                   </view>
                 </view>
-                <view class='item-ans'>
-                  <image class='cover' src='../../image/demo.jpg'></image>
-                  <view>
-                    <cover-image  class='cover-img' src='../../image/like.png'></cover-image>
-                    <text class='cover-text'>42.1w</text>
-                  </view>
-                </view>
-                <view class='item-ans'>
-                  <image class='cover' src='../../image/demo.jpg'></image>
-                  <view>
-                    <cover-image  class='cover-img' src='../../image/like.png'></cover-image>
-                    <text class='cover-text'>42.1w</text>
-                  </view>
-                </view>
-                <view class='item-ans'>
-                  <image class='cover' src='../../image/demo.jpg'></image>
-                  <view>
-                    <cover-image  class='cover-img' src='../../image/like.png'></cover-image>
-                    <text class='cover-text'>42.1w</text>
-                  </view>
-                </view>
-                <view class='item-ans'>
-                  <image class='cover' src='../../image/demo.jpg'></image>
-                  <view>
-                    <cover-image  class='cover-img' src='../../image/like.png'></cover-image>
-                    <text class='cover-text'>42.1w</text>
-                  </view>
-                </view>
               </view>
             </scroll-view>
         </swiper-item>
     </swiper>
 </view>
-
-
-
-<!-- 底部导航 -->
-<template is="publick-nav"></template> 
 
 </view>

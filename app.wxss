@@ -13,3 +13,15 @@ page{
   background-color: #3E3E3E;
   height: 100%;
 }
+.small-icon{
+  height: 30rpx;
+  width: 30rpx;
+}
+.length-icon{
+  height:36rpx;
+  width:80rpx;
+
+}
+.public-text{
+  margin: 0 10rpx;
+}

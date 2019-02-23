@@ -1,129 +1,442 @@
-//index.js
-//获取应用实例
+
+var tabber = require('../tabbar/tabbar.js')
+
 const app = getApp()
+const api = require('../utils/api.js')
+const pageRows = 25;
+
+var dataList = [];// 为了方便操作数据
+
+function getRandomColor() {
+  let rgb = []
+  for (let i = 0; i < 3; ++i) {
+    let color = Math.floor(Math.random() * 256).toString(16)
+    color = color.length == 1 ? '0' + color : color
+    rgb.push(color)
+  }
+  return '#' + rgb.join('')
+}
 
 Page({
+
+  /**
+   * 页面的初始数据
+   */
   data: {
-    motto: 'PP短视频',
+    page: 1,
+    hasNextPage: true,
+    subject: null,
+    current: 0,
+    subjectList: [],
+    duration: 500,
     userInfo: {},
-    openId:"",
     hasUserInfo: false,
+    inputTalk: '',
+    talks: [],
+    talksPage: 1,
+    talksPages: -1,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
-    openid: '',
-    wxname: '',
-    wximage: ''
+    talksAnimationData: {},
+    isHiddenVideo: true,
+    isHiddenControls: true,
+    videoSrc: '',
   },
-  globalData: {
-    userInfo: null,
-    openId:null
+  resetDataList: function () {
+    dataList = [];
+    this.setData({
+      page: 1,
+      hasNextPage: true,
+      current: 0,
+      subjectList: [],
+      talks: [],
+      talksPage: 1,
+      talksPages: -1,
+      isHiddenVideo: false,
+      isHiddenControls: true,
+      videoSrc: '',
+    })
   },
-  onLoad: function () {
+  loadPageData: function (success) {
+    var that = this;
+    // console.log("load subject page " + that.data.page);
+
+    if (this.data.hasNextPage == false) {
+      if (success) success()
+      return;
+    }
+
+    var pageNum = this.data.page;
+
+    // 获取推荐视频列表
+    api.getRecommendList({
+      data: {
+        page: pageNum,
+        rows: pageRows
+      },
+      success: function (res) {
+        var list = res.content;
+
+        for (var i = 0; i < list.length; i++) {
+          dataList.push(list[i])
+        }
+
+        // 如果当前页有数据就假定还有下一页数据
+        var hasNextPage = list.length > 0;
+        if (hasNextPage) {
+          pageNum = pageNum + 1;
+        }
+
+        that.setData({
+          page: pageNum,
+          hasNextPage: hasNextPage,
+          subjectList: dataList
+        })
+        if (success) {
+          success();
+        }
+      }
+    })
+  },
+  bindSwiperChange: function (e) {
+    var current = e.detail.current;
+    this.changeSubject(current);
+  },
+  changeSubject: function (index) {
+    // 当前位置
+    var subject = this.data.subjectList[index];
+    // 切换内容
+    this.setData({
+      subject: subject
+    })
+
+    // 自动加载
+    var diff = this.data.subjectList.length - index;
+    if (diff < pageRows) {
+      this.loadPageData();
+    }
+  },
+  videolist: function () {
+    console.log("ceshi")
+    wx.redirectTo({
+      url: 'subject'
+    })
+  },
+  focus: function () {
+    wx.redirectTo({
+      url: '../focus/focus'
+    })
+  },
+  message: function () {
+    console.log("ceshi")
+    wx.redirectTo({
+      url: '../message/message'
+    })
+  },
+  myself: function () {
+    console.log("ceshi")
+    wx.redirectTo({
+      url: '../myself/myself'
+    })
+  },
+  like: function (e) {
+    var subject = this.data.subject;
+    subject.like = true;
+    subject.likes++;
+    this.setData({
+      subject: subject
+    })
+    api.like({
+      subjectId: subject.subjectId
+    })
+  },
+  apply: function (e) {
+    wx.redirectTo({
+      url: '../apply/apply',
+    })
+  },
+  talk: function (e) {
+    this.showTalks();
+  },
+  share: function (e) {
+    // wx.showToast({
+    //   title: '请点击右上角点点点转发',
+    // })
+    var subject = this.data.subject;
+    subject.shares++;
+    this.setData({
+      subject: subject
+    })
+    // api.share({
+    //   subjectId: subject.subjectId
+    // })
+  },
+  // 重新加载主要用作测试
+  reload: function (e) {
+    var that = this;
+    this.resetDataList()
+    this.loadPageData(function () {
+      that.changeSubject(0);
+      wx.stopPullDownRefresh();
+    });
+  },
+  // 显示大头像
+  showAvatar: function () {
+    var url = this.data.subject.avatarUrl;
+    wx.previewImage({
+      urls: [url],
+    })
+  },
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
+    // console.log("onload options ", options)
+
+    var that = this;
+
+    // 转发的抖音信息
+    // 注意：小程序的转发主要是转发小程序本身而不是里面的某个内容
+    // 所以用户第一次打开才会看到转发的信息
+    if (options && options.subjectId) {
+      api.getSubjectInfo(options.subjectId, function (shareSubject) {
+        that.setData({
+          subject: shareSubject
+        })
+
+        that.loadPageData()
+      })
+    } else {
+      that.loadPageData(function () {
+        that.changeSubject(0)
+      })
+    }
+
+    // 获取用户信息
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,
         hasUserInfo: true
-      });
-    } else if (this.data.canIUse){
+      })
+    } else if (this.data.canIUse) {
       // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
       // 所以此处加入 callback 以防止这种情况
-      app.userInfoReadyCallback = res => {
-        this.setData({
-          userInfo: res.userInfo,
+      app.onUserInfo = userInfo => {
+        that.setData({
+          userInfo: userInfo,
           hasUserInfo: true
-        });
+        })
       }
-    } else {
-      // 在没有 open-type=getUserInfo 版本的兼容处理
-      wx.getUserInfo({
-        success: res => {
-          app.globalData.userInfo = res.userInfo
-          this.setData({
-            userInfo: res.userInfo,
-            hasUserInfo: true
-          })
-        }
-      });
     }
   },
-  getUserInfo: function(e) {
-    var that = this
-    if (app.globalData.userInfo) {
-      typeof cb == "function" && cb(this.globalData.userInfo)
-    } else {
-      //调用登录接口 第一次授权登陆
-      wx.login({
-        success: function (res) {
-          var code = res.code
-          // 获取用户信息
-          wx.getUserInfo({
-            success: function (data) {
-              app.globalData.userInfo = data.userInfo
-              typeof cb == "function" && cb(that.globalData.userInfo)
-              wx.request({
-                url: "http://192.168.1.180/index/port/login",
-                data: {
-                  "code": code,
-                },
-                method: 'POST',
-                success: function (res) {
-                  console.log(res)
-                  // console.log(data)
-                  that.openid = res.data.openid; //用户openid
-                  that.wxname = data.userInfo.nickName;//用户昵称
-                  that.wximage = data.userInfo.avatarUrl;//用户头像
-                  that.setuserinfo();//第一次授权保存用户信息
-                  that.setData({
-                    userInfo: e.detail.userInfo,
-                    hasUserInfo: true
-                  })
-                }
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {
+    var that = this;
+
+    wx.setNavigationBarTitle({
+      title: "小PP短视频",
+    })
+
+    // 评论弹出层动画创建
+    this.animation = wx.createAnimation({
+      duration: 400,
+      timingFunction: "ease",
+      delay: 0
+    })
+
+    // 视频组件初始化
+    this.videoContext = wx.createVideoContext('myVideo')
+  },
+
+  danmuTimer: null,// 弹幕定时器
+  previewSubject: function () {
+    var subject = this.data.subject;
+    if (subject.type == 'video') {
+      // 设置视频地址
+      this.setData({
+        videoSrc: subject.src,
+        isHiddenVideo: false
+      })
+      // 开始播放
+      this.videoContext.play();
+
+      // 自动发送弹幕
+      var that = this;
+      api.loadTalks({
+        data: {
+          subjectId: that.data.subject.subjectId,
+          page: 1,
+          rows: 60
+        },
+        success: function (page) {
+          var danMus = page.content;
+          // 先播放最新的弹幕, 评论多的话，需要后台数据排序
+          danMus.reverse();
+          console.log("获取到 " + danMus.length + " 条评论", danMus)
+          that.danmuTimer = setInterval(function () {
+            var talk = danMus.pop();
+            if (talk) {
+              console.log("发送弹幕: " + talk.content)
+              that.videoContext.sendDanmu({
+                text: talk.content, // 评论内容
+                color: getRandomColor() // 随机颜色
               })
+            } else {
+              clearInterval(that.danmuTimer);
             }
+          }, 1000)
+        }
+      });
+
+    } else {
+      wx.previewImage({
+        urls: [subject.coverUrl],
+      })
+    }
+  },
+
+  hidePreview: function () {
+    var subject = this.data.subject;
+    if (subject.type == 'video') {
+      // 停止发送弹幕
+      clearInterval(this.danmuTimer);
+      // 暂停播放
+      this.videoContext.pause();
+      // 隐藏视频层
+      this.setData({
+        isHiddenVideo: true
+      })
+    }
+  },
+
+  time: null,
+  bindSwitchControls: function () {
+    if (this.time) {
+      clearTimeout(this.time)
+    }
+    var isHidden = !this.data.isHiddenControls;
+    this.setData({
+      isHiddenControls: isHidden
+    })
+
+    // 自动隐藏按钮
+    var that = this;
+    if (!isHidden) {
+      this.time = setTimeout(function () {
+        var isHidden = that.data.isHiddenControls;
+        if (!isHidden) {
+          that.setData({
+            isHiddenControls: true
+          })
+        }
+      }, 3000)
+    }
+  },
+
+  videoErrorCallback: function (e) {
+    console.log('视频错误信息:' + this.data.subject.src)
+    console.log(e.detail.errMsg)
+  },
+
+  talkConfirm: function (event) {
+    var that = this;
+    var content = event.detail.value;
+    if (content) {
+      // 评论数增加
+      var subject = this.data.subject;
+      subject.talks++;
+      this.setData({
+        subject: subject
+      })
+      api.applyTalk({
+        data: {
+          subjectId: this.data.subject.subjectId,
+          content: content,
+        },
+        success: function () {
+          // that.hideTalks();
+          that.loadTalks();
+          // 清空输入内容
+          that.setData({
+            inputTalk: ''
           })
         }
       })
-    };
-    if (e.detail.userInfo){
-      app.globalData.userInfo = e.detail.userInfo
-      this.setData({
-        userInfo: e.detail.userInfo,
-        hasUserInfo: true
-      });
-      wx.navigateTo({
-        url: '../subject/subject'
-      })
-    }else{
+    } else {
       wx.showToast({
-        title: '授权失败！',
-        icon: 'none',
-        duration: 2000
+        title: '无字天书？',
       })
-    };
+    }
+  },
+
+  showTalks: function () {
+    // 先清空数据
+    this.setData({
+      talks: []
+    })
+    this.loadTalks();
+    this.animation.bottom("0rpx").height("100%").step()
+    this.setData({
+      talksPage: 1,
+      talksAnimationData: this.animation.export()
+    })
+  },
+
+  hideTalks: function () {
+    this.animation.bottom("-100%").height("0rpx").step()
+    this.setData({
+      talksPage: 1,
+      talksAnimationData: this.animation.export()
+    })
+  },
+
+  loadTalks: function () {
+    var that = this;
+    api.loadTalks({
+      data: {
+        subjectId: this.data.subject.subjectId,
+        page: that.data.talksPage
+      },
+      success: function (page) {
+        that.setData({
+          talks: page.content,
+          talksPages: page.pages,
+          talksAnimationData: that.animation.export()
+        })
+      }
+    });
+  },
+
+  onScrollLoad: function () {
+    var page = this.data.talkPage;
+    if (this.data.talkPage < this.data.talksPages) {
+      page--;
+    } else {
+      page = this.data.talksPages;
+    }
+    this.setData({
+      talkPage: page
+    })
+    this.loadTalks();
+  },
+
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload: function () {
 
   },
-  // 保存信息
-  setuserinfo: function (e) {
-    var openid = this.openid;
-    var wxname = this.wxname;
-    var wximage = this.wximage;
-    wx.request({
-      url: "http://192.168.1.180/index/port/setuserinfo",
-      data: {
-        "openid": openid,
-        "wxname": wxname,
-        "wximage": wximage
-      },
-      method: 'POST',
-      success: function (res) {
-        console.log(res);
-        app.globalData.openId = res.data.uid
-      }
-    })
-  },
-  //事件处理函数
-  bindViewTap: function () {
-    wx.navigateTo({
-      url: '/home/home'
-    })
-  },
+
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
+    var subject = this.data.subject;
+    return {
+      title: subject.title,
+      imageUrl: subject.coverUrl,
+      path: '/pages/subject/subject?subjectId=' + subject.subjectId
+    }
+  }
 })
