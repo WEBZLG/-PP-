@@ -1,5 +1,5 @@
 const app = getApp()
-
+const api = require('../utils/api.js')
 Page({
 
   /**
@@ -31,7 +31,21 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    console.log(app.globalData.userInfo)
+    var that = this;
+    //  高度自适应
+    wx.getSystemInfo({
+      success: function (res) {
+        var clientHeight = res.windowHeight,
+          clientWidth = res.windowWidth,
+          rpxR = 750 / clientWidth;
+        var calc = clientHeight * rpxR - 550;
+        console.log(calc)
+        that.setData({
+          winHeight: calc
+        });
+      }
+    });
     this.setData({
       nickname: app.globalData.userInfo.nickName,
       gender: app.globalData.userInfo.gender,
@@ -41,19 +55,8 @@ Page({
       avatarUrl: app.globalData.userInfo.avatarUrl,
     })
     this.myselfinfo();
-    var that = this;
-    //  高度自适应
-    wx.getSystemInfo({
-      success: function (res) {
-        var clientHeight = res.windowHeight,
-          clientWidth = res.windowWidth,
-          rpxR = 750 / clientWidth;
-        var calc = clientHeight * rpxR - 650;
-        that.setData({
-          winHeight: calc
-        });
-      }
-    });
+
+
     
   },
 
@@ -89,34 +92,42 @@ Page({
   },
   // 编辑资料
   redact:function(){
-    wx.redirectTo({
+    wx.navigateTo({
       url: '../redact/redact'
     })
   },
   // 查看明细
   viewDetails: function () {
-    wx.redirectTo({
+    wx.navigateTo({
       url: '../viewdetails/viewdetails'
     })
   },
   // 提现申请
   depositApply: function () {
-    wx.redirectTo({
+    wx.navigateTo({
       url: '../depositapply/depositapply'
     })
   },
   // 点赞视频
   getLikeVideo:function(){
-    wx.request({
-      url: "http://192.168.1.180/index/port/myselflike",
+    api.getGoods({
       data: {
         "uid": this.data.uid
       },
-      method: 'POST',
-      success: function (res) {
+      success: function () {
         console.log(res);
       }
     })
+    // wx.request({
+    //   url: "http://192.168.1.180/index/port/myselflike",
+    //   data: {
+    //     "uid": this.data.uid
+    //   },
+    //   method: 'POST',
+    //   success: function (res) {
+    //     console.log(res);
+    //   }
+    // })
   },
   // 送出礼物
   getSendGoods:function(){
@@ -156,28 +167,11 @@ Page({
       }
     })
   },
-  // 导航
-  videolist: function () {
-    console.log("ceshi")
-    wx.redirectTo({
-      url: '../subject/subject'
-    })
-  },
-  focus: function () {
-    wx.redirectTo({
-      url: '../focus/focus'
-    })
-  },
-  message: function () {
-    console.log("ceshi")
-    wx.redirectTo({
-      url: '../message/message'
-    })
-  },
-  myself: function () {
-    console.log("ceshi")
-    wx.redirectTo({
-      url: 'myself'
+
+  // 帮助
+  help: function () {
+    wx.navigateTo({
+      url: '../help/help'
     })
   },
 

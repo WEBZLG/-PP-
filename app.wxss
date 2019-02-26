@@ -25,3 +25,6 @@ page{
 .public-text{
   margin: 0 10rpx;
 }
+.pding{
+  padding: 0 20rpx;
+}

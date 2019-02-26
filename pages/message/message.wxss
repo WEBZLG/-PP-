@@ -1,0 +1,25 @@
+/* pages/information/information.wxss */
+page{
+  background-color: #434343;
+}
+.information{
+  display: flex;
+  flex-direction: row;
+  padding: 20rpx 30rpx;
+}
+.icon-list{
+  display: flex;
+  flex-direction: column;
+  padding: 13rpx;
+  align-items: center;
+}
+.icon-list text{
+  margin-top: 30rpx;
+  color: white;
+}
+.spacing{
+  margin-right:30rpx;
+}
+text{
+  font-size: 26rpx;
+}

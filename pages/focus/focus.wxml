@@ -1,5 +1,73 @@
-<view>
-关注
+<!--logs.wxml-->
+<view class='content'>
+  <!-- 顶部栏 -->
+  <view class='topTabSwiper'>
+    <view class='tab  {{currentTab == 0 ? "tabBorer" : ""}}' data-current="0" bindtap='checkCurrent'>关注</view>
+    <view class='tab  {{currentTab == 1 ? "tabBorer" : ""}}' data-current="1" bindtap='checkCurrent'>活动</view>
+  </view>
 
+  <!-- <swiper current="{{currentData}}" class='swiper'  duration="300" bindchange="bindchange"> -->
+  <swiper style="height: {{clientHeight?clientHeight+'px':'auto'}}" class='swiper' current="{{currentTab}}" duration="300" bindchange="swiperchange">
+    <swiper-item>
+      <scroll-view scroll-y="{{true}}" style="height: {{clientHeight?clientHeight+'px':'auto'}}" bindscrolltolower="scrollbot" class='swiper_conone'>
+        <!-- 第一段内容 -->
+        <view class='aaa' wx:for="{{guanzhuList}}" wx:key="{{index}}">
+          <view class='nav-border'>
+            <view class='nav-content'>
+              <view class='nav-contentup'>
+                <view class='nav-contentup-img'>
+                  <image src='{{item.wximage}}' class='nav-contentimg'></image>
+                </view>
+
+                <view class='nav-contenttext'>
+                  <text class='nav-contenttext-name'>{{item.wxname}}</text>
+                  <text class='nav-contenttext-time'>{{item.time}}</text>
+                </view>
+              </view>
+
+              <view class='nav-contentdown'>
+                <text class='nav-contentdown-text'>{{item.wxname}}</text>
+              </view>
+            </view>
+          </view>
+          <!-- 视频部分 -->
+          <view class='nav-video'>
+            <video src='{{item.url}}'></video>
+          </view>
+          <!-- 底部栏 -->
+          <!-- <view class='bottom-bar'>
+            <view class='bottom-bar-share'>
+              <image class='bottom-img' src='/imgs/share@3x.png'></image>
+              <text class='bottom-text'>分享</text>
+            </view>
+            <view class='bottom-bar-comment'>
+              <image class='bottom-img' src='/imgs/comment@3x.png'></image>
+              <text class='bottom-text'>评论</text>
+            </view>
+            <view class='bottom-bar-zan'>
+              <image class='bottom-img' src='/imgs/like@3x.png'></image>
+              <text class='bottom-text'>赞</text>
+            </view>
+          </view> -->
+        </view>
+      </scroll-view>
+    </swiper-item>
+
+
+
+    <swiper-item>
+      <scroll-view scroll-y="{{true}}" style="height: {{clientHeight?clientHeight+'px':'auto'}}" bindscrolltolower="scrollbot" class='swiper_conone'>
+        <view class='swiper_con swiper_one' wx:for="{{huodongList}}" wx:key="{{index}}">
+          <view class='swiper_con-left'>
+            <text class='swiper_con-left1'>{{item.title}}</text>
+            <text class='swiper_con-left2'>{{item.addtime}}</text>
+          </view>
+          <view class='swiper_con-righrt'>
+            <text class='swiper_con-righrt1'>查看</text>
+          </view>
+        </view>
+      </scroll-view>
+    </swiper-item>
+  </swiper>
 
 </view>

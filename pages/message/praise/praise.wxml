@@ -1,0 +1,16 @@
+<!--pages/zan/zan.wxml-->
+<block wx:for='{{Zan}}' wx:key="*this"> 
+<view class='zan'>
+  <view class='head-img'>
+    <image src='{{item.pic}}' style='width:100rpx;height:100rpx;'></image>
+  </view>
+  <view class='zan-text'>
+    <text>{{item.wxname}}</text>
+    <text>赞了你的作品</text>
+    <text>{{item.time}}</text>
+  </view>
+  <view>
+  <image src='{{item.wximage}}' style='width:100rpx;height:100rpx;'></image>
+  </view>
+</view>
+</block>

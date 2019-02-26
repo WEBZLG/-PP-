@@ -1,0 +1,4 @@
+/* pages/detail/detail.wxss */
+page{
+  background-color: #434343;
+}

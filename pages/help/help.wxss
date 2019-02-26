@@ -1,0 +1,35 @@
+/* pages/help/help.wxss */
+.help-item{
+  color: #eee;
+  font-size: 32rpx;
+  padding: 30rpx;
+  display: flex;
+  justify-content: space-between;
+}
+.help-action{
+  color: #cbcbcb
+}
+.window-bg{
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 1
+}
+.public-box{
+  height: 300rpx;
+  width: 90%;
+  margin: 30rpx auto;
+
+  background-color: #fff;
+
+  border-radius: 5rpx;
+}
+.public-box textarea{
+    font-size: 32rpx;
+    color: #000;
+    line-height: 20rpx;
+    padding: 20rpx;
+}

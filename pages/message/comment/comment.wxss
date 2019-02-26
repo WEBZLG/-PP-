@@ -1,0 +1,26 @@
+/* pages/comment/comment.wxss */
+page{
+  background-color: #434343;
+  font-family: Microsoft YaHei;
+}
+.head-img{
+  width: 100rpx;
+  height: 100rpx;
+  border: white 1rpx solid;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.comment{
+  display: flex;
+  flex-direction: row;
+  justify-content:space-between;
+  padding: 50rpx 30rpx 0rpx;
+}
+.comment-text{
+  display: flex;
+  flex-direction: column;
+  color: white;
+  font-size: 22rpx;
+  margin-left:-100rpx;
+  /* justify-content: space-between; */
+}

@@ -22,16 +22,17 @@
   <view class="srcoll_view" bindtap="textclick">这武器那都好，就是不吃药只能战斗15秒，15秒内不是你死就是我亡，这才是90级史诗该有的王者风范!</view>
 </view>
 <view class='my-address'>
-  <view class='address'>
-    <view><image class='small-icon' src='/image/site.png'></image><text class='public-text'>黑龙江哈尔滨</text></view>
+  <view class='address'   bindtap='switchcity'>
+    <view><image class='small-icon' src='/image/site.png'></image><text class='public-text'>哈尔滨</text></view>
   </view>
-  <view class='search'><image  class='small-icon' src='/image/search.png'></image></view>
+  <view class='search'><image class='small-icon' src='/image/search.png'></image></view>
 </view>
 
 <!-- 操作按钮 -->
 <view class="tools">
   <view>
-    <image class="userinfo-avatar" src="{{subject.avatarUrl}}" bindtap='showAvatar'></image>
+    <!-- <image class="userinfo-avatar" src="{{subject.avatarUrl}}" bindtap='showAvatar'></image> -->
+    <image class="userinfo-avatar" src="../../image/demo.jpg" bindtap='showAvatar'></image>
   </view>
   <view>
     <image class="icon right-icon" src='/image/gift.png' bindtap='gift'>礼物</image>
@@ -66,8 +67,12 @@
   <!-- 描述 -->
   <view class="desc">
     <view class='nick-name'>
-    <text>@djmajipeng</text>
-    <view class='focus'><image class='length-icon' src='../../image/follow.png'></image></view></view> 
+      <text>@djmajipeng</text>
+      <view class='focus pding'>
+        <image wx:if="{{!focus}}" class='length-icon' src='../../image/follow.png' bindtap='focus'></image>
+        <image wx:if="{{focus}}" class='length-icon' src='../../image/followed.png' bindtap='focus'></image>
+      </view> 
+    </view>
     <view class='activition'><image class='length-icon' src='../../image/activity.png'></image></view>
     <view >
       <text class="desc-text">{{subject.title}}666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666</text>
@@ -81,15 +86,15 @@
   <view class='gifts'>
     <view class='contribution'>贡献榜单Top3</view>
     <view class='top-name'>
-      <image class='top-img' src='/image/talk.png'></image>
+      <image class='top-img top-one' src='/image/talk.png'></image>
       <text>majipeng</text>
     </view>
     <view class='top-name'>
-      <image class='top-img' src='/image/talk.png'></image>
+      <image class='top-img top-two' src='/image/talk.png'></image>
       <text>majipeng</text>
     </view>
     <view class='top-name'>
-      <image class='top-img' src='/image/talk.png'></image>
+      <image class='top-img top-three' src='/image/talk.png'></image>
       <text>majipeng</text>
     </view>
   </view>

@@ -1,0 +1,6 @@
+<!--pages/add/add.wxml-->
+<view>
+  <view class='add-item'>上传</view>
+  <view class='add-item' bindtap='getLocalVideo'>拍摄</view>
+  <view class='add-item'>3D相册</view>
+</view>

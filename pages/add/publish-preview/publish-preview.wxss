@@ -1,0 +1,28 @@
+/* pages/publish/publish-preview/publish-preview.wxss */
+.video-preview{
+  text-align: center;
+}
+.icon-music{
+  width:32rpx;
+  height:32rpx;
+
+}
+.icon-cam-delete,
+.icon-cam-save{
+  height: 120rpx;
+  width: 120rpx;
+}
+.icon-box{
+  position: absolute;
+  bottom: 120rpx;
+  left: 0;
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
+}
+.choose-music{
+  color: #fff;
+  font-size: 32rpx;
+  display: flex;
+  justify-content: space-evenly;
+}

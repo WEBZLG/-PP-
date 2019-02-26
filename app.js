@@ -4,7 +4,6 @@ App({
 
   },
   onLaunch: function () {
-
     // 获取用户信息
     wx.getSetting({
       success: res => {
@@ -30,5 +29,6 @@ App({
   },
   globalData: {
     userInfo: null,
+    pubUrl:''
   }
 })

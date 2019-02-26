@@ -89,7 +89,8 @@ Page({
         userInfo: e.detail.userInfo,
         hasUserInfo: true
       });
-      wx.navigateTo({
+      console.log("登录")
+      wx.switchTab({
         url: '../index/index'
       })
     } else {

@@ -1,5 +1,35 @@
-<view>
-消息
-
-
+<!--pages/information/information.wxml-->
+<view class='information'>
+<!-- 公告 -->
+<navigator url='./notice/notice' open-type='navigate'>
+<!-- 跳转 -->
+  <view class='icon-list spacing'>
+    <image src='../../image/notice.png' style='width:124rpx;height:124rpx;'></image>
+  <text>公告</text>
+  <!-- 赞 -->
+  </view>
+  </navigator>
+  <navigator url='./praise/praise' open-type='navigate'>
+  <view class='icon-list spacing'>
+    <image src='../../image/zan.png' 
+    style='width:124rpx;height:124rpx;'></image>
+  <text>赞</text>
+  </view>
+  </navigator>
+  <!-- 粉丝 -->
+  <navigator url='./fans/fans' open-type='navigate'>
+  <view class='icon-list spacing'>
+    <image src='../../image/fans.png'
+    style='width:124rpx;height:124rpx;'></image>
+  <text>粉丝</text>
+  </view>
+  </navigator>
+  <!-- 评论 -->
+  <navigator url='./comment/comment' open-type='navigate'>
+  <view class='icon-list '>
+    <image src='../../image/comment.png'
+    style='width:124rpx;height:124rpx;'></image>
+  <text>评论</text>
+  </view>
+</navigator>
 </view>

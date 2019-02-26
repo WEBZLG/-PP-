@@ -1,0 +1,42 @@
+<view class="camera-container">
+    <camera binderror="cameraError" class="camera-view" devicePosition="{{devicePosition}}" flash="{{flash}}" id="myCamera" style="height:{{cameraHeight}}" wx:if="{{camSetFlag}}">
+        <cover-view class="c-time-warp" hidden="{{cameraType==1}}">
+            <cover-view class="c-time" style="width:{{stepWidth}}%"></cover-view>
+        </cover-view>
+        <!-- <cover-image catchtap="gotoPubOriginPage" class="icon-cam-close" hidden="{{recordState==1}}" src="/image/icon_cam_close.png"></cover-image> -->
+        <cover-view catchtap="deviceRadioChange" class="camera-device" hidden="{{recordState==1}}">
+            <cover-image class="icon-cam-device" src="/image/icon_cam_device.png"></cover-image>
+            <cover-view class="t-1">翻转</cover-view>
+        </cover-view>
+        <cover-view catchtap="flashRadioChange" class="camera-flash" hidden="{{recordState==1}}">
+            <cover-image class="icon-camflash-on" hidden="{{flash=='off'}}" src="/image/icon_camflash_on.png"></cover-image>
+            <cover-image class="icon-camflash-off" hidden="{{flash=='on'}}" src="/image/icon_camflash_off.png"></cover-image>
+            <cover-view class="t-1">闪光灯</cover-view>
+        </cover-view>
+        <cover-view class="camera-menu">
+            <cover-view catchtap="{{cameraType==0?'chooseVideo':'chooseImage'}}" class="camera-menu-image" hidden="{{recordState!=0}}">
+                <cover-image class="icon-cam-image" src="/image/icon_cam_image.png"></cover-image>
+                <cover-view class="t-1">{{cameraType==0?'本地视频':'本地图片'}}</cover-view>
+            </cover-view>
+            <cover-view class="camera-menu-play">
+                <block wx:if="{{cameraType==0}}">
+                    <cover-image catchtap="recordVideo" class="icon-camera-play" src="/image/icon_video_start.png" wx:if="{{recordState==0}}"></cover-image>
+                    <cover-image catchtap="stopRecord" class="icon-camera-play" src="/image/icon_video_end.png" wx:if="{{recordState==1}}"></cover-image>
+                </block>
+                <cover-image catchtap="takePhoto" class="icon-camera-play" src="/image/icon_image_play.png" wx:else></cover-image>
+            </cover-view>
+            <cover-view catchtap="chooseImage" class="camera-menu-txt" hidden="{{recordState!=0}}">
+                <cover-image class="icon-cam-txt" src="/image/icon_video_menu.png"></cover-image>
+                <cover-view class="t-1">图文视频</cover-view>
+            </cover-view>
+        </cover-view>
+        <cover-view class="camera-tab-tools" hidden="{{recordState!=0}}">
+            <cover-view catchtap="switchChange" class="t-1" data-type="0" style="{{cameraType==0?'color:#FFD402;margin-left:140rpx;':''}}">录像</cover-view>
+            <cover-view catchtap="switchChange" class="t-1" data-type="1" style="{{cameraType==1?'color:#FFD402;margin-right:140rpx;':''}}">拍照</cover-view>
+        </cover-view>
+    </camera>
+    <view wx:if="{{camSetBtn}}">
+        <image catchtap="gotoPubOriginPage" class="icon-cam-close" src="/image/icon_cam_close.png"></image>
+        <button bindtap="cameraSetSwitch" class="cam-set-btn">去授权相机</button>
+    </view>
+</view>

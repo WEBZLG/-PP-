@@ -3,7 +3,7 @@
     <view style="margin-top:0;">当前</view>
     <view style="margin-top:0;">热门</view>
   </view>
-  <view wx:for="{{searchLetter}}" style="color:#2ab4ff;font-size:20rpx;" wx:key="index" data-letter="{{item.name}}" catchtouchend="clickLetter" >{{item.name}}</view>
+  <view wx:for="{{searchLetter}}" style="font-size:20rpx;" wx:key="index" data-letter="{{item.name}}" catchtouchend="clickLetter" >{{item.name}}</view>
 </view>
 <block wx:if="{{isShowLetter}}">
   <view class="showSlectedLetter">
@@ -13,7 +13,10 @@
 <scroll-view scroll-y="true" style="height:{{winHeight}}px"  
  scroll-into-view="{{scrollTopId}}" scroll-top="{{scrollTop}}">
   <view class="hotcity-common thisCity">当前选择城市</view>
-  <view class="thisCityName">{{city}}</view>
+  <view class='change-city'>
+    <view class="thisCityName">{{city}}</view>
+    <button class='save-btn' type='button' bindtap='save'>保存</button>
+   </view>
   <view>
     <text class="hotcity hotcity-common">热门城市</text>
     <view class="weui-grids">

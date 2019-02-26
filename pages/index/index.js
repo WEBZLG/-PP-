@@ -1,6 +1,4 @@
 
-var tabber = require('../tabbar/tabbar.js')
-
 const app = getApp()
 const api = require('../utils/api.js')
 const pageRows = 25;
@@ -40,6 +38,7 @@ Page({
     isHiddenVideo: true,
     isHiddenControls: true,
     videoSrc: '',
+    focus:false
   },
   resetDataList: function () {
     dataList = [];
@@ -115,36 +114,31 @@ Page({
       this.loadPageData();
     }
   },
-  videolist: function () {
-    console.log("ceshi")
-    wx.redirectTo({
-      url: 'subject'
+
+  switchcity:function(){
+    wx.navigateTo({
+      url:'../switchcity/switchcity'
     })
   },
-  focus: function () {
-    wx.redirectTo({
-      url: '../focus/focus'
-    })
+  // 关注
+  focus:function(){
+    if(this.data.focus==false){
+      this.setData({
+        focus: true
+      })
+    }else{
+      this.setData({
+        focus: false
+      })
+    }
   },
-  message: function () {
-    console.log("ceshi")
-    wx.redirectTo({
-      url: '../message/message'
-    })
-  },
-  myself: function () {
-    console.log("ceshi")
-    wx.redirectTo({
-      url: '../myself/myself'
-    })
-  },
+  // 点赞
   like: function (e) {
-    var subject = this.data.subject;
-    subject.like = true;
-    subject.likes++;
     this.setData({
-      subject: subject
+    "subject.like" : true
     })
+    var subject = this.data.subject;
+    subject.likes++
     api.like({
       subjectId: subject.subjectId
     })
@@ -190,8 +184,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    // console.log("onload options ", options)
-
     var that = this;
 
     // 转发的抖音信息

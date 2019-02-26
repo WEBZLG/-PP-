@@ -1,0 +1,12 @@
+<!--pages/notice/notice.wxml-->
+<block wx:for="{{Notice}}" wx:key='index'>
+  <view class='notice-list' >
+    <view class='notice-text'>
+      <text>{{item.title}}</text>
+      <text style='color:#cbcbcb;'>{{item.time}}</text>
+    </view>
+  <view class='nitice-btn'>
+  查看
+  </view> 
+</view>
+ </block>

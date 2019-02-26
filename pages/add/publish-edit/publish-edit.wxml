@@ -1,0 +1,41 @@
+<view class="text-edit" wx:if="{{previewData.type=='text'}}">
+    <image class="textbg-img" mode="aspectFill" src="{{textbgImg}}"></image>
+    <view class="text-cont clearfix">
+        <view class="choose-music" data-musicid="{{previewData.music.id}}">
+            <text bindtap="gotoMusicPage" class="t-1">当前音乐: {{previewData.music.name}}</text>
+            <view bindtap="gotoMusicPage" class="v-1">
+                <image class="icon-music" src="/image/icon_music.png"></image>更换
+      </view>
+        </view>
+        <form bindsubmit="disTextSubmit" reportSubmit="true">
+            <textarea class="text-area-con" maxlength="100" name="textarea" placeholder="写下您想说的话..." placeholderClass="edit-area-placeholder"></textarea>
+            <view class="text-cont-btn">
+                <button bindtap="deletePreviewData" class="edit-close-btn">取消</button>
+                <button class="edit-sub-btn" formType="submit">下一步</button>
+            </view>
+        </form>
+    </view>
+</view>
+<view class="image-edit" wx:if="{{previewData.type=='image'}}">
+    <view bindtap="gotoMusicPage" class="choose-music2" data-musicid="{{previewData.music.id}}">
+        <image class="icon-music" src="/image/icon_music.png"></image>
+        <text class="t-1">当前音乐: {{previewData.music.name}}</text>
+    </view>
+    <view class="imgedit-item" wx:for="{{previewData.detailData}}" wx:for-index="idx" wx:key="idx">
+        <view catchtap="delImageHandle" class="imgedit-del" data-index="{{idx}}">
+            <view class="v-1"></view>
+            <text class="t-1">X</text>
+        </view>
+        <view class="imgedit-cont" style="border: {{item.size?'1rpx solid #f30':'none'}}">
+            <image class="i-c-img" mode="widthFix" src="{{item.src}}"></image>
+        </view>
+        <textarea bindfocus="editAreaFocus" bindinput="writeImgTxt" border="" class="{{item.error?'imgedit-area error':'imgedit-area'}}" data-index="{{idx}}" maxlength="100" name="textarea" placeholder="说点什么..." placeholderClass="edit-area-placeholder" value="{{item.text}}"></textarea>
+    </view>
+    <view bindtap="addImageHandle" class="imgedit-btn" hidden="{{previewData.detailData.length>=9}}">+</view>
+    <view class="s-modal-bottom claerfix">
+        <form bindsubmit="disImageSubmit" reportSubmit="true">
+            <button bindtap="deletePreviewData" class="edit-close-btn">取消</button>
+            <button class="edit-sub-btn" formType="submit">下一步</button>
+        </form>
+    </view>
+</view>

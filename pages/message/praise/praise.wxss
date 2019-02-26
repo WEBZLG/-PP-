@@ -1,0 +1,25 @@
+/* pages/zan/zan.wxss */
+page{
+  background-color: #434343;
+}
+.head-img{
+  width: 100rpx;
+  height: 100rpx;
+  border: white 1rpx solid;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.zan{
+  display: flex;
+  flex-direction: row;
+  justify-content:space-between;
+  padding: 50rpx 30rpx 0rpx;
+}
+.zan-text{
+  display: flex;
+  flex-direction: column;
+  color: white;
+  font-size: 23rpx;
+  margin-left:-200rpx;
+  /* justify-content: space-between; */
+}

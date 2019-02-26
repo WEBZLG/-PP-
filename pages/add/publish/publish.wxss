@@ -1,0 +1,75 @@
+/* pages/publish/publish.wxss */
+page{
+  background-color: inherit;
+}
+.icon-cam-close,
+.icon-cam-device,
+.icon-camflash-on,
+.icon-camflash-off,
+.icon-cam-image,
+.icon-cam-txt,
+.icon-camera-play{
+  height: 60rpx;
+  width: 60rpx;
+  margin: 0 auto;
+}
+.icon-camera-play,
+.icon-cam-txt{
+  height: 60rpx;
+  width: 60rpx;
+}
+.camera-container{
+  font-size:32rpx;
+  color:#fff;
+  height: 100%;
+}
+
+.camera-device{
+  position: absolute;
+  right: 40rpx;
+  top: 30rpx;
+}
+
+.camera-flash{
+  position:absolute;
+  right:30rpx;
+  top:160rpx;
+
+}
+
+.camera-menu{
+  display: flex;
+  position: absolute;
+  bottom: 120rpx;
+  width: 100%;
+  left: 0;
+  justify-content:space-evenly;
+}
+.camera-tab-tools{
+  display: flex;
+  position: absolute;
+  bottom: 10rpx;
+  left: 0;
+  width: 100%;
+  justify-content:space-evenly;
+}
+.icon-cam-close{
+  position: absolute;
+  left: 30rpx;
+  top: 30rpx;
+}
+#myCamera{
+  height: 100%;
+  width: 100%；
+}
+.c-time-warp{
+  margin-top: 30rpx;
+  width: 100%;
+  height: 4rpx;
+  background-color: #000;
+}
+.c-time{
+  border-bottom:2px solid #fff;
+  position: relative;
+  z-index: 999;
+}

@@ -1,6 +1,6 @@
 // var serverPath = 'https://100boot.cn/douyin/';
 var serverPath = 'http://192.168.1.180/index/port/'
-const key = '54851ccbe10b4d5d812690cabf242b48';
+// const key = '54851ccbe10b4d5d812690cabf242b48';
 // common.js
 function request(opt) {
   // set token
@@ -11,7 +11,7 @@ function request(opt) {
     method: opt.method || 'GET',
     header: {
       token: token || '',
-      key: key
+      // key: key
     },
     url: serverPath + opt.url,
     data: opt.data,
@@ -58,12 +58,12 @@ function request(opt) {
 
 function login(){
   wx.reLaunch({
-    url: '/pages/subject/subject',
+    url: '/pages/index/index',
   })
 }
 
 module.exports = {
   serverPath: serverPath,
   request: request,
-  key: key
+  // key: key
 }

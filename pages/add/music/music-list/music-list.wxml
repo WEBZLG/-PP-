@@ -1,0 +1,18 @@
+<view class="music-wrap">
+    <view class="music-list">
+        <view class="music-box" data-id="{{item.musicId}}" wx:for="{{music.list}}" wx:key="{{item.musicId}}">
+            <view bindtap="playMusicHandle" class="msc-box-top" data-id="{{item.musicId}}" data-thumbs="{{item.playFlag}}">
+                <view class="msc-cover">
+                    <image class="msc-coverimg" src="{{item.musicCover}}"></image>
+                    <image class="{{item.playFlag?'msc-playerbtn cur':'msc-playerbtn'}}" src="{{item.playFlag?'/image/icon_pausemin.png':'/image/icon_playmin.png'}}"></image>
+                </view>
+                <view class="msc-name">{{item.musicName}}</view>
+                <view class="msc-singer">{{item.singer}}</view>
+                <view class="msc-time">{{item.time}}</view>
+                <image catchtap="collectMusicHandle" class="music-collect" data-id="{{item.musicId}}" src="{{item.thumbs?'/image/icon_collect_m_cur.png':'/image/icon_collect_m.png'}}"></image>
+            </view>
+            <button bindtap="chooseMusicHandle" class="msc-usebtn" data-id="{{item.musicId}}" hidden="{{!item.playFlag}}">确定使用</button>
+        </view>
+        <view class="no-more-music" wx:if="{{music.listEnd}}">没有更多了</view>
+    </view>
+</view>

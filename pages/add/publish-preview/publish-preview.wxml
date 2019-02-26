@@ -1,0 +1,42 @@
+<view class="text-preview" wx:if="{{previewData.type=='text'}}">
+    <view class="choose-music fixed-top" data-musicid="{{previewData.music.id}}">
+        <text bindtap="gotoMusicPage" class="t-1">当前音乐: {{previewData.music.name}}</text>
+        <view bindtap="gotoMusicPage" class="v-1">
+            <image class="icon-music" src="/image/icon_music.png"></image>更换
+    </view>
+    </view>
+    <image class="text-preview-img" mode="aspectFill" src="{{previewData.detailData[0].src}}"></image>
+    <view class="text-preview-cont-old clearfix">{{previewData.detailData[0].text}}</view>
+    <image catchtap="returnEditPage" class="icon-cam-delete" src="/image/icon_cam_delete.png"></image>
+    <image catchtap="gotoPubSubmitPage" class="icon-cam-save" src="/image/icon_cam_save.png"></image>
+</view>
+<view class="image-preview" wx:if="{{previewData.type=='image'}}">
+    <view class="choose-music fixed-top" data-musicid="{{previewData.music.id}}">
+        <text bindtap="gotoMusicPage" class="t-1">当前音乐: {{previewData.music.name}}</text>
+        <view bindtap="gotoMusicPage" class="v-1">
+            <image class="icon-music" src="/image/icon_music.png"></image>更换
+    </view>
+    </view>
+    <swiper autoplay="{{imagePreview.autoplay}}" bindchange="swiperBindchange" circular="{{imagePreview.circular}}" class="swiper-image" current="{{imagePreview.current}}" duration="{{imagePreview.duration}}" indicatorDots="{{imagePreview.indicatorDots}}" interval="{{imagePreview.interval}}">
+        <swiper-item catchtouchend="stopTouchMove" catchtouchmove="stopTouchMove" catchtouchstart="stopTouchMove" class="swiper-item" wx:for="{{previewData.detailData}}" wx:for-index="idx">
+            <image class="slide-image" mode="widthFix" src="{{item.src}}"></image>
+            <view class="text-preview-cont" style="bottom:{{item.bottom}}" wx:if="{{item.text}}">{{item.text}}</view>
+        </swiper-item>
+    </swiper>
+    <image catchtap="returnEditPage" class="icon-cam-delete" src="/image/icon_cam_delete.png"></image>
+    <image catchtap="gotoPubSubmitPage" class="icon-cam-save" src="/image/icon_cam_save.png"></image>
+</view>
+<view class="video-preview" wx:if="{{previewData.type=='video'}}">
+    <view class="choose-music fixed-top" data-musicid="{{previewData.music.id}}">
+        <text bindtap="gotoMusicPage" class="t-1">当前音乐: {{previewData.music.name}}</text>
+        <view bindtap="gotoMusicPage" class="v-1">
+            <image class="icon-music" src="/image/icon_music.png"></image>更换
+        </view>
+    </view>
+  <video autoplay="{{true}}" class="video-preview" controls="{{false}}" id="myVideo" loop="{{true}}" objectFit="{{previewData.videoType==1?'cover':'contain'}}" src="{{previewData.videoUrl.tempFilePath}}" wx:if="{{previewData.type=='video'}}">
+  </video>
+  <view class='icon-box'>
+    <cover-image catchtap="returnEditPage" class="icon-cam-delete" src="/image/icon_cam_delete.png"></cover-image>
+    <cover-image catchtap="gotoPubSubmitPage" class="icon-cam-save" src="/image/icon_cam_save.png"></cover-image>
+  </view>
+</view>

@@ -1,0 +1,11 @@
+/* pages/add/add.wxss */
+.add-item{
+  font-size: 40rpx;
+  text-align: center;
+  color: #eee;
+  width: 90%;
+  height: 120rpx;
+  line-height: 120rpx;
+  margin: 20rpx auto;
+  border: 2rpx solid #eee;
+}

@@ -1,16 +1,28 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/add/publish-preview/publish-preview",
+    "pages/add/publish-submit/publish-submit",
+    "pages/add/publish/publish",
     "pages/redact/redact",
     "pages/viewdetails/viewdetails",
     "pages/depositapply/depositapply",
+    "pages/add/add",
     "pages/home/home",
     "pages/focus/focus",
+    "pages/switchcity/switchcity",
     "pages/message/message",
     "pages/myself/myself",
     "pages/apply/apply",
-    "pages/switchcity/switchcity",
-    "pages/login/login"
+    "pages/login/login",
+    "pages/help/help",
+    "pages/add/publish-edit/publish-edit",
+    "pages/search/search",
+    "pages/message/comment/comment",
+    "pages/message/fans/fans",
+    "pages/message/detail/detail",
+    "pages/message/notice/notice",
+    "pages/message/praise/praise"
   ],
   "permission": {
     "scope.userLocation": {
@@ -39,7 +51,8 @@
       },
       {
         "iconPath": "image/add.png",
-        "pagePath": "pages/home/home"
+        "selectedIconPath": "image/add.png",
+        "pagePath": "pages/add/add"
       },
       {
         "pagePath": "pages/message/message",
@@ -51,7 +64,6 @@
       }
     ]
   },
-
   "plugins": {
     "calendar": {
       "version": "1.1.3",

@@ -1,0 +1,84 @@
+<view class="">
+    <view class="search-box">
+        <view bindtap="searchHandle" wx:if="{{!searchFlag}}">
+            <input class="search-btn" disabled="{{true}}" name="text" placeholder="输入你要查找的歌曲名称" placeholderClass="phcolor" type="text"></input>
+            <image class="icon-search" src="/image/icon_search.png"></image>
+        </view>
+        <form bindsubmit="searchMusic" reportSubmit="true" wx:else>
+            <input bindconfirm="searchMusic" bindinput="searchBindinput" class="search-btn" confirmType="search" focus="{{true}}" name="text" placeholder="输入你要查找的歌曲名称" placeholderClass="phcolor" style="width:86%" type="text"></input>
+            <image class="icon-search" src="/image/icon_search.png"></image>
+            <button class="icon-search-clear" formType="submit" hidden="{{search.value==''}}">搜索</button>
+            <button bindtap="searchHandle" class="icon-search-clear" hidden="{{search.value!=''}}">取消</button>
+        </form>
+    </view>
+    <view wx:if="{{searchFlag}}">
+        <view class="music-list">
+            <view class="music-box" data-id="{{item.musicId}}" wx:for="{{search.list}}" wx:key="{{item.musicId}}">
+                <view bindtap="playMusicHandle" class="msc-box-top" data-id="{{item.musicId}}" data-thumbs="{{item.playFlag}}">
+                    <view class="msc-cover">
+                        <image class="msc-coverimg" src="{{item.musicCover}}"></image>
+                        <image class="{{item.playFlag?'msc-playerbtn cur':'msc-playerbtn'}}" src="{{item.playFlag?'/image/icon_pausemin.png':'/image/icon_playmin.png'}}"></image>
+                    </view>
+                    <view class="msc-name">{{item.musicName}}</view>
+                    <view class="msc-singer">{{item.singer}}</view>
+                    <view class="msc-time">{{item.time}}</view>
+                    <image catchtap="collectMusicHandle" class="music-collect" data-id="{{item.musicId}}" src="{{item.thumbs?'/image/icon_collect_m_cur.png':'/image/icon_collect_m.png'}}"></image>
+                </view>
+                <button bindtap="chooseMusicHandle" class="msc-usebtn" data-id="{{item.musicId}}" hidden="{{!item.playFlag}}">确定使用</button>
+            </view>
+            <view class="no-more-music" wx:if="{{search.listEnd&&search.count==0}}">抱歉，没有找到你要找的音乐</view>
+            <view class="no-more-music" wx:if="{{search.listEnd&&search.count!=0}}">没有更多了</view>
+        </view>
+    </view>
+    <view wx:else>
+        <view class="music-menu">
+            <view bindtap="gotoMusicListPage" class="msc-menu-item" data-id="{{item.musicType}}" wx:for="{{musicMenu}}" wx:key="{{item.musicType}}">
+                <image class="m-i-img" src="{{item.musicTypeCover}}"></image>
+                <view class="m-i-txt">{{item.musicTypeName}}</view>
+            </view>
+        </view>
+        <view class="music-cont">
+            <view class="msc-cont-hd">
+                <view bindtap="musicListTab" class="{{currType==hotMusic.typeId?'tab-item current':'tab-item'}}" data-type="{{hotMusic.typeId}}">热门歌曲</view>
+                <view bindtap="musicListTab" class="{{currType==collectMusic.typeId?'tab-item current':'tab-item'}}" data-type="{{collectMusic.typeId}}">我的收藏</view>
+                <view class="s-line"></view>
+            </view>
+            <view class="msc-cont-bd">
+                <view class="music-list" hidden="{{currType!=hotMusic.typeId}}">
+                    <view class="music-box" data-id="{{item.musicId}}" wx:for="{{hotMusic.data.list}}" wx:key="{{item.musicId}}">
+                        <view bindtap="playMusicHandle" class="msc-box-top" data-id="{{item.musicId}}" data-thumbs="{{item.playFlag}}">
+                            <view class="msc-cover">
+                                <image class="msc-coverimg" src="{{item.musicCover}}"></image>
+                                <image class="{{item.playFlag?'msc-playerbtn cur':'msc-playerbtn'}}" src="{{item.playFlag?'/image/icon_pausemin.png':'/image/icon_playmin.png'}}"></image>
+                            </view>
+                            <view class="msc-name">{{item.musicName}}</view>
+                            <view class="msc-singer">{{item.singer}}</view>
+                            <view class="msc-time">{{item.time}}</view>
+                            <image catchtap="collectMusicHandle" class="music-collect" data-id="{{item.musicId}}" src="{{item.thumbs?'/image/icon_collect_m_cur.png':'/image/icon_collect_m.png'}}"></image>
+                        </view>
+                        <button bindtap="chooseMusicHandle" class="msc-usebtn" data-id="{{item.musicId}}" hidden="{{!item.playFlag}}">确定使用</button>
+                    </view>
+                    <view bindtap="gotoMusicListPage" class="more-music" data-id="{{hotMusic.typeId}}" wx:if="{{hotMusic.data.count>hotMusic.pageSize}}">查看全部</view>
+                    <view class="no-more-music" wx:else>没有更多了</view>
+                </view>
+                <view class="music-list" hidden="{{currType!=collectMusic.typeId}}">
+                    <view class="music-box" data-id="{{item.musicId}}" wx:for="{{collectMusic.data.list}}" wx:key="{{item.musicId}}">
+                        <view bindtap="playMusicHandle" class="msc-box-top" data-id="{{item.musicId}}" data-thumbs="{{item.playFlag}}">
+                            <view class="msc-cover">
+                                <image class="msc-coverimg" src="{{item.musicCover}}"></image>
+                                <image class="{{item.playFlag?'msc-playerbtn cur':'msc-playerbtn'}}" src="{{item.playFlag?'/image/icon_pausemin.png':'/image/icon_playmin.png'}}"></image>
+                            </view>
+                            <view class="msc-name">{{item.musicName}}</view>
+                            <view class="msc-singer">{{item.singer}}</view>
+                            <view class="msc-time">{{item.time}}</view>
+                            <image catchtap="collectMusicHandle" class="music-collect" data-id="{{item.musicId}}" src="{{item.thumbs?'/image/icon_collect_m_cur.png':'/image/icon_collect_m.png'}}"></image>
+                        </view>
+                        <button bindtap="chooseMusicHandle" class="msc-usebtn" data-id="{{item.musicId}}" hidden="{{!item.playFlag}}">确定使用</button>
+                    </view>
+                    <view bindtap="gotoMusicListPage" class="more-music" data-id="{{collectMusic.typeId}}" wx:if="{{collectMusic.data.count>collectMusic.pageSize}}">查看全部</view>
+                    <view class="no-more-music" wx:else>没有更多了</view>
+                </view>
+            </view>
+        </view>
+    </view>
+</view>

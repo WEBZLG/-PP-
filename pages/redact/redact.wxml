@@ -12,7 +12,6 @@
     </view>
     <view class='item'>
       <view class='title '>生日</view>
-      <!-- <input class='ipt'  bindinput='getBirth' placeholder='选择出生日期'/> -->
       <input class='ipt maskLayer'  bindtap='chooseSezi' placeholder='选择出生日期' value='{{birthday}}' disabled='true'/>
     </view>
     <view class='item'>

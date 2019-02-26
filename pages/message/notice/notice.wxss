@@ -1,0 +1,16 @@
+/* pages/notice/notice.wxss */
+page{
+  background-color: #434343;
+}
+.notice-list{
+  display: flex;
+  flex-direction: row;
+  justify-content:space-between;
+  margin: 39rpx 30rpx 0rpx 30rpx;
+  font-size: 26rpx;
+  color: white;
+}
+.notice-text{
+  display: flex;
+  flex-direction: column;
+}

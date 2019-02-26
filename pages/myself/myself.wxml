@@ -20,7 +20,7 @@
         <view class='head-box'>
           <image class='head' src='{{avatarUrl}}'></image>
         </view>
-        <view class='small-box'>
+        <view class='small-box' bindtap='help'>
           <image class='smallhead' src='../../image/reload.png'></image>
         </view>
       </view>

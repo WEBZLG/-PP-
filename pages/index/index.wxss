@@ -37,12 +37,12 @@ page {
 }
 
 .icon {
-  width: 80rpx;
-  height:80rpx;
+  width: 60rpx;
+  height:60rpx;
 }
 
 .right-icon {
-  margin: 16rpx 20rpx 0rpx;
+  margin: 16rpx 30rpx 0rpx;
 }
 
 .text {
@@ -319,7 +319,7 @@ background:rgba(0, 0, 0, 0.4);
 .top-img{
   height: 30rpx;
   width: 30rpx;
-  border: 2rpx solid #fff;
+  border: 4rpx solid #fff;
   border-radius: 50%;
   margin-right: 10rpx;
 }
@@ -329,7 +329,7 @@ background:rgba(0, 0, 0, 0.4);
   background:rgba(0,0,0,0.4);
   padding:0 20rpx;
   border-radius:30rpx;
-  margin-bottom: 8rpx;
+  margin-bottom: 10rpx;
 }
 .contribution{
   padding: 6rpx 20rpx;
@@ -337,4 +337,13 @@ background:rgba(0, 0, 0, 0.4);
 .top-name{
   padding-left: 0;
   line-height: 30rpx;
+}
+.top-one{
+  border-color: #FFB001;
+}
+.top-two{
+  border-color: #ACADAB;
+}
+.top-three{
+  border-color: #D8760B;
 }

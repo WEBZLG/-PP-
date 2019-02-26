@@ -124,11 +124,11 @@ function like(data, success){
 }
 
 function share(data, success) {
-  // ajax.request({
-  //   url: 'subject/share',
-  //   data: data,
-  //   success: success
-  // })
+  ajax.request({
+    url: 'subject/share',
+    data: data,
+    success: success
+  })
   onShareAppMessage()
 }
 
@@ -206,7 +206,15 @@ function depositApply (opt) {
     success: opt.success
   })
 }
-
+// 收到的礼物
+function getGoods(opt) {
+  ajax.request({
+    method: 'POST',
+    url: '/myselflike',
+    data: opt.data,
+    success: opt.success
+  })
+}
 module.exports = {
   login: login,
   getUserInfo: getUserInfo,

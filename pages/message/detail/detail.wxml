@@ -1,0 +1,5 @@
+<!--pages/detail/detail.wxml-->
+<view>
+ <text>{{item.title}}</text>
+ <text>{{item.time}}</text>
+</view>
