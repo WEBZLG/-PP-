@@ -7,10 +7,11 @@
   height:32rpx;
 
 }
-.icon-cam-delete,
+.icon-cam-music,
+.icon-cam-picture,
 .icon-cam-save{
-  height: 120rpx;
-  width: 120rpx;
+  height: 100rpx;
+  width: 100rpx;
 }
 .icon-box{
   position: absolute;
@@ -25,4 +26,43 @@
   font-size: 32rpx;
   display: flex;
   justify-content: space-evenly;
+}
+/* 弹窗 */
+.music-layer {
+  position: absolute;
+  bottom: -100%;
+  height: 0;
+  width: 100%;
+  overflow: hidden;
+  /* background-color: blue; */
+}
+
+.music-white-space {
+  height: 100%;
+  width: 100%;
+  /* background-color: green; */
+}
+
+.music {
+  position: absolute;
+  height: 900rpx;
+  width: 100%;
+  bottom: 0rpx;
+  background-color: rgba(0, 0, 0, .5);
+  border-top-left-radius: 2%;
+  border-top-right-radius: 2%;
+}
+.music-item{
+  display: flex;
+  justify-content: space-between;
+  margin: 20rpx;
+  color: #eee;
+}
+.music-icon{
+  height:40rpx;
+  width:40rpx;
+}
+.music-list{
+  height: 600rpx;
+  overflow: auto;
 }

@@ -10,11 +10,19 @@ Page({
             autoplay: !1,
             circular: !0,
             interval: 3e3,
-            duration: 0
+            duration: 0,
         },
+        musicAnimationData: {},
+        pictureAnimationData:{},
         networkImageUrl: t.globalData.IMAGE_URL
     },
     onLoad: function(t) {
+      // 评论弹出层动画创建
+      this.animation = wx.createAnimation({
+        duration: 400,
+        timingFunction: "ease",
+        delay: 0
+      })
         a = wx.createInnerAudioContext();
         var i = getCurrentPages(), e = i[i.length - 2].data.previewData;
         this.setData({
@@ -37,9 +45,9 @@ Page({
     stopTouchMove: function() {
         return !1;
     },
-    returnEditPage: function() {
-        wx.navigateBack();
-    },
+    // returnEditPage: function() {
+    //     wx.navigateBack();
+    // },
     gotoPubSubmitPage: function() {
         wx.navigateTo({
             url: "../publish-submit/publish-submit"
@@ -78,5 +86,74 @@ Page({
     },
     swiperBindchange: function(t) {
         this.data.previewData.music && 0 == t.detail.current && this.playMusicFn(this.data.previewData.music.url);
-    }
+    },
+    showMusicBox:function(){
+      this.showMusic()
+    },
+    // 配乐弹窗
+    showMusic: function () {
+      this.loadMusic();
+      this.animation.bottom("0rpx").height("100%").step()
+      this.setData({
+        talksPage: 1,
+        musicAnimationData: this.animation.export()
+      })
+    },
+
+  hideMusic: function () {
+      this.animation.bottom("-100%").height("0rpx").step()
+      this.setData({
+        talksPage: 1,
+        musicAnimationData: this.animation.export()
+      })
+    },
+  loadMusic: function () {
+      var that = this;
+      // api.loadTalks({
+      //   data: {
+      //     subjectId: this.data.subject.subjectId,
+      //     page: that.data.talksPage
+      //   },
+      //   success: function (page) {
+      //     that.setData({
+      //       talks: page.content,
+      //       talksPages: page.pages,
+      //       musicAnimationData: that.animation.export()
+      //     })
+      //   }
+      // });
+    },
+  // 贴纸弹窗
+  showPicture: function () {
+    this.loadMusic();
+    this.animation.bottom("0rpx").height("100%").step()
+    this.setData({
+      talksPage: 1,
+      pictureAnimationData: this.animation.export()
+    })
+  },
+
+  hidePicture: function () {
+    this.animation.bottom("-100%").height("0rpx").step()
+    this.setData({
+      talksPage: 1,
+      pictureAnimationData: this.animation.export()
+    })
+  },
+  loadPicture: function () {
+    var that = this;
+    // api.loadTalks({
+    //   data: {
+    //     subjectId: this.data.subject.subjectId,
+    //     page: that.data.talksPage
+    //   },
+    //   success: function (page) {
+    //     that.setData({
+    //       talks: page.content,
+    //       talksPages: page.pages,
+    //       pictureAnimationData: that.animation.export()
+    //     })
+    //   }
+    // });
+  },
 });

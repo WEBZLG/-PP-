@@ -22,7 +22,11 @@
     "pages/message/fans/fans",
     "pages/message/detail/detail",
     "pages/message/notice/notice",
-    "pages/message/praise/praise"
+    "pages/message/praise/praise",
+    "pages/3d/index",
+    "pages/3d/view",
+    "pages/3d/mybook",
+    "pages/3d/share"
   ],
   "permission": {
     "scope.userLocation": {

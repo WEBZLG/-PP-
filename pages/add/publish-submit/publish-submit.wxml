@@ -3,7 +3,7 @@
         <view class="des-w-left">
             <view class="min-hei200">
                 <view class="des-topic-follow">
-                    <button bindtap="delTopic" class="des-tf-btn topic-item" data-value="{{item}}" wx:for="{{topicList}}">#{{item}}</button>
+                    <button bindtap="delTopic" class="des-tf-btn topic-item" data-value="{{item}}" wx:for="{{topicList}}" wx:key="{{indx}}">#{{item}}</button>
                     <button bindtap="delFollow" class="des-tf-btn follow-item" data-name="{{item.userName}}" data-userid="{{item.userId}}" wx:for="{{followList}}" wx:key="{{item.userId}}">@{{item.userName}}</button>
                 </view>
                 <textarea class="des-textarea" hidden="{{topicAreaShow}}" maxlength="140" name="textarea" placeholder="说点什么..." value="{{description}}"></textarea>

@@ -29,11 +29,11 @@ Page({
     if (eachotherStatus==0){
       this.setData({
         [chooseIndex]: 1,
-        eachotherStatus: eachotherStatus,
-        Fans: this.data.Fans,
       })
     }else{
-      return;
+      this.setData({
+        [chooseIndex]: 0,
+      })
     }
     // console.log(this.data.Fans)
     // console.log(e.currentTarget.dataset.item.eachother);

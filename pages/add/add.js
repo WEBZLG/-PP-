@@ -84,4 +84,9 @@ Page({
       url: 'publish/publish',
     })
   },
+  get3dAlbum:function(){
+    wx.navigateTo({
+      url: '../3d/index',
+    })
+  }
 })
