@@ -1,7 +1,7 @@
 <canvas canvasId="shareCanvas" class="drawtu"></canvas>
 
 <view class="wrapper">
-    <view class="container">
+    <view class="container-share">
         <view bindtap="clkyulan" class="li">
             <image data-src="{{item.wxcove}}" src="{{photolist.wxcove}}"></image>
             <text>{{photolist.wxtitle}}</text>

@@ -1725,7 +1725,7 @@ page{
 	margin-top: 50rpx;
 }
 
- .container {
+ .container-share {
 	position: relative;
 	margin: auto;
 	width: 85%;
@@ -1733,7 +1733,7 @@ page{
 	margin-bottom: 20rpx;
 }
 
- .container   .li {
+ .container-share .li {
 	position: relative;
 	width: 90%;
 	height: 90%;
@@ -1742,13 +1742,13 @@ page{
 	border: 10rpx solid #fff;
 }
 
- .container   .li wx-image {
+ .container-share .li wx-image {
 	width: 100%;
 	height: 100%;
 	border-radius: 5rpx;
 }
 
- .container   .li wx-text {
+ .container-share .li wx-text {
 	display: block;
 	position: absolute;
 	z-index: 9;
@@ -1762,7 +1762,7 @@ page{
 	border-radius: 0 0 10rpx 10rpx;
 }
 
- .container   .ul .wx-button {
+ .container-share .ul .wx-button {
 	position: absolute;
 	z-index: 999;
 	top: 0;
@@ -1773,7 +1773,7 @@ page{
 	border: none;
 }
 
- .container   .ul .wx-button::after {
+ .container-share .ul .wx-button::after {
 	border: 0;
 }
 
