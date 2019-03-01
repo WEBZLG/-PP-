@@ -10,7 +10,7 @@ Page({
         src: 'http://ws.stream.qqmusic.qq.com/M500001VfvsJ21xFqb.mp3?guid=ffffffff82def4af4b12b3cd9337d5e7&uin=346897220&vkey=6292F51E1E384E06DCBDC9AB7C49FD713D632D313AC4858BACB8DDD29067D3C601481D36E62053BF8DFEAF74C0A5CCFADD6471160CAF3E6A&fromtag=46',
         name:"此时此刻"},
       { id:1,
-        src: "http://125.211.209.17/amobile.music.tc.qq.com/C400001dYQtM2ZJekQ.m4a?guid=5167500104&vkey=2A58E0DD1A143BD8FD378E1BCD046E2604BD45DA9EFAE9C4240569B5E2EC1EBE4682F833F0AB41A25613950ABE524D28CA81727B8E01A27F&uin=0&fromtag=66",
+        src: "http://www.170mv.com/kw/sd.sycdn.kuwo.cn/resource/n1/47/70/1534907298.mp3",
         name:"狂狼"}
 
     ],
@@ -158,6 +158,7 @@ Page({
   },
 
   hideMusic: function () {
+    this.audioPause();
     this.animation.bottom("-100%").height("0rpx").step()
     this.setData({
       talksPage: 1,

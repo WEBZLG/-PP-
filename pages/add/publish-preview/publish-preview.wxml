@@ -72,12 +72,12 @@
       </view>
       <view class='music-nav'>
         <scroll-view scroll-x="true" class="tab-h" scroll-left="{{scrollLeft}}">
-          <view class="tab-item {{currentTab==0?'active':''}}"  data-current="0" bindtap="swichNav"><image src='../../../image/000.jpg'></image><text>伤感</text>
+          <view class="tab-item {{currentTab==0?'active':''}}"  data-current="0" bindtap="swichNav">伤感
           </view>
-          <view class="tab-item {{currentTab==1?'active':''}}" data-current="1" bindtap="swichNav"><image src='../../../image/000.jpg'></image><text>舒缓</text></view>
-          <view class="tab-item {{currentTab==2?'active':''}}" data-current="2" bindtap="swichNav"><image src='../../../image/000.jpg'></image><text>欢快</text></view>
-          <view class="tab-item {{currentTab==3?'active':''}}" data-current="3" bindtap="swichNav"><image src='../../../image/000.jpg'></image><text>爵士</text></view>
-          <view class="tab-item {{currentTab==4?'active':''}}" data-current="4" bindtap="swichNav"><image src='../../../image/000.jpg'></image><text>流行</text></view>
+          <view class="tab-item {{currentTab==1?'active':''}}" data-current="1" bindtap="swichNav">舒缓</view>
+          <view class="tab-item {{currentTab==2?'active':''}}" data-current="2" bindtap="swichNav">欢快</view>
+          <view class="tab-item {{currentTab==3?'active':''}}" data-current="3" bindtap="swichNav">爵士</view>
+          <view class="tab-item {{currentTab==4?'active':''}}" data-current="4" bindtap="swichNav">流行</view>
         </scroll-view>
       </view>
     </view>
@@ -86,8 +86,36 @@
   <view class='music-layer' animation='{{pictureAnimationData}}'>
     <view class='music-white-space' bindtap='hidePicture'>
     </view>
-    <view class='music'>
-    弹窗吗
+    <view class='picture'>
+      <view class='picture-box'>
+        <swiper class="tab-content" current="{{currentTab}}" duration="300" bindchange="switchTab">
+            <swiper-item wx:for="{{[0,1,2,3,4]}}" wx:key="index">
+                <scroll-view scroll-x="true" class="scoll-x" >
+                    <!-- <block wx:for="{{pictureList}}" wx:key="index"> -->
+                      <image src='../../../image/000.jpg' class='pic'></image>
+                      <image src='../../../image/000.jpg' class='pic'></image>
+                      <image src='../../../image/000.jpg' class='pic'></image>
+                      <image src='../../../image/000.jpg' class='pic'></image>
+                      <image src='../../../image/000.jpg' class='pic'></image>
+                      <image src='../../../image/000.jpg' class='pic'></image>
+                      <image src='../../../image/000.jpg' class='pic'></image>
+                      <image src='../../../image/000.jpg' class='pic'></image>
+                    <!-- </block> -->
+                </scroll-view>
+            </swiper-item>
+        </swiper> 
+      </view>
+
+      <view class='picture-nav'>
+        <scroll-view scroll-x="true" class="tab-h" scroll-left="{{scrollLeft}}">
+          <view class="tab-item {{currentTab==0?'active':''}}"  data-current="0" bindtap="swichNav">伤感
+          </view>
+          <view class="tab-item {{currentTab==1?'active':''}}" data-current="1" bindtap="swichNav">舒缓</view>
+          <view class="tab-item {{currentTab==2?'active':''}}" data-current="2" bindtap="swichNav">欢快</view>
+          <view class="tab-item {{currentTab==3?'active':''}}" data-current="3" bindtap="swichNav">爵士</view>
+          <view class="tab-item {{currentTab==4?'active':''}}" data-current="4" bindtap="swichNav">流行</view>
+        </scroll-view>
+      </view>
     </view>
   </view>
 </view>
