@@ -1,5 +1,11 @@
 /**app.wxss**/
-@import "pages/tabbar/tabbar";
+.clearfix:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+.fl{
+  float: left;
+}
+.fr{
+  float: right;
+}
 .container {
   height: 100%;
   display: flex;

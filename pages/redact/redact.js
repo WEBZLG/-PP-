@@ -6,6 +6,7 @@ Page({
    */
   data: {
     uid: app.globalData.uid,
+    nickName:"",
     signature:"",
     place: "",
     sex:"",
@@ -26,7 +27,8 @@ Page({
    */
   onLoad: function (options) {
     this.setData({
-      place: app.globalData.userInfo.city
+      place: app.globalData.userInfo.city,
+      nickName:app.globalData.userInfo.nickName
     })
   },
 

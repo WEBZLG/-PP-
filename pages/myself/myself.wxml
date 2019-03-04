@@ -21,7 +21,7 @@
           <image class='head' src='{{avatarUrl}}'></image>
         </view>
         <view class='small-box' bindtap='help'>
-          <image class='smallhead' src='../../image/reload.png'></image>
+          <image class='smallhead' src='../../image/about.png'></image>
         </view>
       </view>
     </view>
@@ -79,7 +79,99 @@
               </view>
             </scroll-view>
         </swiper-item>
+        <swiper-item>
+            <scroll-view scroll-y="true" class="scoll-h" >
+              <view class='block-item'>
+                <view class='item-ans'>
+                  <image class='cover' src='../../image/demo.jpg'></image>
+                  <view>
+                    <cover-image  class='cover-img' src='../../image/like.png'></cover-image>
+                    <text class='cover-text'>42.1w</text>
+                  </view>
+                </view>
+              </view>
+            </scroll-view>
+        </swiper-item>
+        <swiper-item>
+          <scroll-view scroll-y="true" class="scoll-h" >
+            <view class='gift-item' wx:for="{{sendGoodsList}}" wx:key="{{index}}">
+              <view>
+                <image class='head-img' src='{{item.wximage}}'></image>
+              </view>
+              <view class='gift-text'>
+                <view class='gift-type'>{{item.wxname}} 送过我 {{item.name}}</view>
+                <view class='gift-words'>【送礼留言】巴拉巴拉啦芭啦啦八零</view>
+                <view class='gift-time'>{{item.time}}</view>
+              </view>
+            </view>
+          </scroll-view>
+        </swiper-item>
+        <swiper-item>
+          <scroll-view scroll-y="true" class="scoll-h" >
+            <view class='gift-item'>
+              <view>
+                <image class='head-img' src='../../image/000.jpg'></image>
+              </view>
+              <view class='gift-text'>
+                <view class='gift-type'>@fjajfl 送过我 bingbing眼睛</view>
+                <view class='gift-words'>【送礼留言】巴拉巴拉啦芭啦啦八零</view>
+                <view class='gift-time'>2019-03-04</view>
+              </view>
+            </view>
+          </scroll-view>
+        </swiper-item>
+        <swiper-item>
+          <scroll-view scroll-y="true" class="scoll-h" >
+            <view class='gift-item' catchtap="showDialog" wx:for="{{noteList}}" wx:key="{{index}}">
+              <view>
+                <image class='head-img' src='{{item.wximage}}'></image>
+              </view>
+              <view class='words-content'>
+                <view class='who-time'>
+                  <view class='words-nickname'>{{item.wxname}}</view>
+                  <view class='gift-time'>{{item.content.time}}</view>
+                </view>
+                <view class='say-num'>
+                  <view class='gift-words'>{{item.content.content}}</view>
+                  <!-- <view class='words-num'>16</view> -->
+                </view>
+              </view>
+            </view>
+          </scroll-view>
+        </swiper-item>
     </swiper>
-</view>
-
+  </view>
+  <!-- 对话弹窗 -->
+  <view class='dialog-layer' animation='{{animationData}}'>
+    <view class='dialog-white-space' bindtap='hideDialog'></view>
+    <view class='dialog-content'>
+      <view class='close'>
+        <image class='close-btn' bindtap='hideDialog' src='../../image/close.png'></image>
+      </view>
+      <scroll-view scroll-y="true" class="scroll-h">
+        <view class='dialog-item'>
+          <view>
+            <image class='dialog-head' src='../../image/000.jpg'></image>
+          </view>
+          <view class='dialog-words'>
+            <view class='name-text'>小pp</view>
+            <view class='words-text'>就卡就发拉进来的剑法i京东方辣椒就卡就发拉进来的剑法i京东方辣椒就卡就发拉进来的剑法i京东方辣椒</view>
+          </view>       
+        </view>
+        <view class='dialog-item'>
+          <view class='dialog-words clearfix'>
+            <view class='name-text name-text-right'>小pp</view>
+            <view class='words-text words-text-right'>就卡就发拉进来的剑法i京东方辣椒就卡就发拉进来的剑法i京东方辣椒就卡就发拉进来的剑法i京东方辣椒</view>
+          </view>       
+          <view>
+            <image class='dialog-head' src='../../image/000.jpg'></image>
+          </view>
+        </view>
+      </scroll-view>
+      <view class='ipt-text'>
+        <input type='text' class='ipt' placeholder='请输入聊天内容'></input>
+        <button class='send-btn'>发送</button>
+      </view>
+    </view>
+  </view>
 </view>

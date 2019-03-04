@@ -7,15 +7,16 @@ Page({
    */
   data: {
     uid: app.globalData.uid,
-    nickname:"",
-    gender:"",
-    city:"",
-    provice:"",
-    country:"",
+    nickname:"小pp",
+    gender:"1",
+    city:"哈尔滨",
+    provice:"黑龙江",
+    country:"中国",
     avatarUrl:"",
-    phone:"",
-    birthday:"",
-    wx:"",
+    signature:"小pp视频专家",
+    phone:"18888888888",
+    birthday:"1999-09-09",
+    wx:"wx88888888",
     winHeight: "",//窗口高度
     currentTab: 0, //预设当前项的值
     scrollLeft: 0, //tab标题的滚动条位置
@@ -24,15 +25,25 @@ Page({
     if_verified:"未认证",
     integral:0,
     like:0,
-    release:[]
+    release:[],
+    animationData:{},
+    noteList:[],//私信留言
+    sendGoodsList:[]//送出礼物
+
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log(app.globalData.userInfo)
     var that = this;
+    console.log(app.globalData.userInfo)
+    // 评论弹出层动画创建
+    this.animation = wx.createAnimation({
+      duration: 400,
+      timingFunction: "ease",
+      delay: 0
+    });
     //  高度自适应
     wx.getSystemInfo({
       success: function (res) {
@@ -46,6 +57,7 @@ Page({
         });
       }
     });
+
     this.setData({
       nickname: app.globalData.userInfo.nickName,
       gender: app.globalData.userInfo.gender,
@@ -110,35 +122,40 @@ Page({
   },
   // 点赞视频
   getLikeVideo:function(){
-    api.getGoods({
-      data: {
-        "uid": this.data.uid
-      },
-      success: function () {
-        console.log(res);
-      }
-    })
-    // wx.request({
-    //   url: "http://192.168.1.180/index/port/myselflike",
+    // api.getGoods({
     //   data: {
     //     "uid": this.data.uid
     //   },
-    //   method: 'POST',
-    //   success: function (res) {
+    //   success: function () {
     //     console.log(res);
     //   }
     // })
-  },
-  // 送出礼物
-  getSendGoods:function(){
     wx.request({
-      url: "http://192.168.1.180/index/port/sendgift",
+      url: "http://192.168.1.180/index/port/myselflike",
       data: {
         "uid": this.data.uid
       },
       method: 'POST',
       success: function (res) {
         console.log(res);
+      }
+    })
+  },
+  // 送出礼物
+  getSendGoods:function(){
+    const that = this
+    wx.request({
+      url: "http://192.168.1.180/index/port/sendgift",
+      data: {
+        // "uid": this.data.uid
+        "uid": 3
+      },
+      method: 'POST',
+      success: function (res) {
+        console.log(res);
+        that.setData({
+          sendGoodsList:res.data
+        })
       }
     })
   },
@@ -155,20 +172,44 @@ Page({
       }
     })
   },
+  //私信留言
   getNote:function(){
+    const that = this;
     wx.request({
       url: "http://192.168.1.180/index/port/letters",
       data: {
-        "uid": this.data.uid
+        // "uid": this.data.uid
+        "uid": 3
       },
       method: 'POST',
       success: function (res) {
         console.log(res);
+        that.setData({
+          noteList:res.data
+        })
       }
     })
   },
-
-  // 帮助
+//私信留言详情
+  getNoteDetails: function (e) {
+    console.log(e)
+    const that = this;
+    wx.request({
+      url: "http://192.168.1.180/index/port/lettersinfo",
+      data: {
+        // "uid": this.data.uid
+        "uid": 4
+      },
+      method: 'POST',
+      success: function (res) {
+        console.log(res);
+        that.setData({
+          noteList: res.data
+        })
+      }
+    })
+  },
+  // 帮助跳转
   help: function () {
     wx.navigateTo({
       url: '../help/help'
@@ -225,7 +266,18 @@ Page({
   },
   // 滚动切换标签样式
   switchTab: function (e) {
-    console.log("滚动"+ e)
+    // console.log(e)
+    if (e.detail.current == 0) {
+      this.getSendVideo();
+    } else if (e.detail.current == 1) {
+      this.getLikeVideo();
+    } else if (e.detail.current == 2) {
+      this.getSendGoods();
+    } else if (e.detail.current == 3) {
+      this.getReceiveGoods();
+    } else if (e.detail.current == 4) {
+      this.getNote();
+    }
     this.setData({
       currentTab: e.detail.current
     });
@@ -233,7 +285,7 @@ Page({
   },
   // 点击标题切换当前页时改变样式
   swichNav: function (e) {
-    console.log(e)
+    // console.log(e)
     var cur = e.target.dataset.current;
     if (this.data.currentTaB == cur) { return false; }
     else {
@@ -241,17 +293,17 @@ Page({
         currentTab: cur
       })
     };
-    if (e.target.dataset.current==0){
-      this.getSendVideo();
-    } else if (e.target.dataset.current==1){
-      this.getLikeVideo();
-    } else if (e.target.dataset.current == 2) {
-      this.getSendGoods();
-    } else if (e.target.dataset.current == 3) {
-      this.getReceiveGoods();
-    } else if (e.target.dataset.current == 4) {
-      this.getNote();
-    }
+    // if (e.target.dataset.current==0){
+    //   this.getSendVideo();
+    // } else if (e.target.dataset.current==1){
+    //   this.getLikeVideo();
+    // } else if (e.target.dataset.current == 2) {
+    //   this.getSendGoods();
+    // } else if (e.target.dataset.current == 3) {
+    //   this.getReceiveGoods();
+    // } else if (e.target.dataset.current == 4) {
+    //   this.getNote();
+    // }
   },
   //判断当前滚动超过一屏时，设置tab标题滚动条。
   checkCor: function () {
@@ -264,6 +316,42 @@ Page({
         scrollLeft: 0
       })
     }
-  }
+  },
+  // 对话弹窗
+  showDialog: function () {
+    wx.hideTabBar({ animation:true})
+    this.loadDialog();
+    this.animation.bottom("0rpx").height("100%").step()
+    this.setData({
+      talksPage: 1,
+      animationData: this.animation.export()
+    });
+    this.getNoteDetails();//私信详情
+  },
+
+  hideDialog: function () {
+    wx.showTabBar({ animation: true })
+    this.animation.bottom("-100%").height("0rpx").step()
+    this.setData({
+      talksPage: 1,
+      animationData: this.animation.export()
+    })
+  },
+  loadDialog: function () {
+    var that = this;
+    // api.loadTalks({
+    //   data: {
+    //     subjectId: this.data.subject.subjectId,
+    //     page: that.data.talksPage
+    //   },
+    //   success: function (page) {
+    //     that.setData({
+    //       talks: page.content,
+    //       talksPages: page.pages,
+    //       animationData: that.animation.export()
+    //     })
+    //   }
+    // });
+  },
 
 })
