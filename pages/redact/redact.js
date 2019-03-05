@@ -6,6 +6,7 @@ Page({
    */
   data: {
     uid: app.globalData.uid,
+    headUrl:"",
     nickName:"",
     signature:"",
     place: "",
@@ -26,9 +27,14 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    console.log(app.globalData.userInfo)
     this.setData({
       place: app.globalData.userInfo.city,
-      nickName:app.globalData.userInfo.nickName
+      nickName:app.globalData.userInfo.nickName,
+      headUrl: app.globalData.userInfo.avatarUrl
+    })
+    wx.setNavigationBarTitle({
+      title: '编辑资料',
     })
   },
 
@@ -169,7 +175,7 @@ Page({
     var that = this;
     console.log(app.globalData.userInfo)
     wx.request({
-      url: "http://192.168.1.180/index/port/editpersonal",
+      url: app.globalData.serverPath +"editpersonal",
       data: {
         "uid": app.globalData.uid,
         "wxname": app.globalData.userInfo.nickName,

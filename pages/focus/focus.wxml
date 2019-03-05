@@ -34,21 +34,6 @@
           <view class='nav-video'>
             <video src='{{item.url}}'></video>
           </view>
-          <!-- 底部栏 -->
-          <!-- <view class='bottom-bar'>
-            <view class='bottom-bar-share'>
-              <image class='bottom-img' src='/imgs/share@3x.png'></image>
-              <text class='bottom-text'>分享</text>
-            </view>
-            <view class='bottom-bar-comment'>
-              <image class='bottom-img' src='/imgs/comment@3x.png'></image>
-              <text class='bottom-text'>评论</text>
-            </view>
-            <view class='bottom-bar-zan'>
-              <image class='bottom-img' src='/imgs/like@3x.png'></image>
-              <text class='bottom-text'>赞</text>
-            </view>
-          </view> -->
         </view>
       </scroll-view>
     </swiper-item>
@@ -57,7 +42,7 @@
 
     <swiper-item>
       <scroll-view scroll-y="{{true}}" style="height: {{clientHeight?clientHeight+'px':'auto'}}" bindscrolltolower="scrollbot" class='swiper_conone'>
-        <view class='swiper_con swiper_one' wx:for="{{huodongList}}" wx:key="{{index}}">
+        <view class='swiper_con swiper_one' wx:for="{{huodongList}}" wx:key="{{index}}" wx:if="{{huodongList !==''}}">
           <view class='swiper_con-left'>
             <text class='swiper_con-left1'>{{item.title}}</text>
             <text class='swiper_con-left2'>{{item.addtime}}</text>
@@ -67,6 +52,7 @@
           </view>
         </view>
       </scroll-view>
+      <view class='none-data'  wx:if="{{huodongList ==''}}">暂无数据</view>
     </swiper-item>
   </swiper>
 

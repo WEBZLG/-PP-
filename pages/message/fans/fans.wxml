@@ -1,6 +1,6 @@
 <!--pages/fans/fans.wxml-->
 
-<view class='fans' wx:for='{{Fans}}' wx:key='index'>
+<view class='fans' wx:for='{{Fans}}' wx:key='index' wx:if="{{Fans !== ''}}">
   <view class='head-img'>
     <image src='{{item.wximage}}' style='width:100rpx;height:100rpx;'></image>
   </view>
@@ -12,5 +12,5 @@
   <view class='follow' bindtap='changeMotto' data-id='{{index}}'  data-item='{{item}}'>
     {{item.eachother==0?'+ 关注':'相互关注'}}
   </view>
-
 </view>
+<view class='none-data' wx:if="{{Fans == ''}}">暂无数据</view>

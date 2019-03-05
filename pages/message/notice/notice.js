@@ -32,7 +32,7 @@ Page({
   getdata: function () {
     var that = this;  
     wx.request({
-      url: 'http://192.168.1.180/index/port/infolist',//请求地址
+      url: app.globalData.serverPath +'infolist',//请求地址
       data: {//发送给后台的数据
         id:15
       },
@@ -41,9 +41,9 @@ Page({
       },
       method: "POST",//get为默认方法/POST
       success: function (res) {
-        　　　　　　that.setData({
-          　　　　　　Notice: res.data
-        　　　　　　　　　　})
+　　　　　　that.setData({
+　　　　　　Notice: res.data
+　　　　　　})
 
       },
       fail: function (err) { },//请求失败

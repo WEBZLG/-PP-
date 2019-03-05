@@ -1,5 +1,5 @@
 const app = getApp()
-const api = require('../../pages/utils/api.js')
+// const api = require('../../pages/utils/api.js')
 
 var start;
 Page({

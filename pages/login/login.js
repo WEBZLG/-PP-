@@ -60,7 +60,7 @@ Page({
               app.globalData.userInfo = data.userInfo
               typeof cb == "function" && cb(that.globalData.userInfo)
               wx.request({
-                url: "http://192.168.1.180/index/port/login",
+                url: app.globalData.serverPath+"login",
                 data: {
                   "code": code,
                 },
@@ -108,7 +108,7 @@ Page({
     var wxname = this.data.wxname;
     var wximage = this.data.wximage;
     wx.request({
-      url: "http://192.168.1.180/index/port/setuserinfo",
+      url: app.globalData.serverPath+"setuserinfo",
       data: {
         "openid": openid,
         "wxname": wxname,

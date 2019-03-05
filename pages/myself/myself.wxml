@@ -57,20 +57,12 @@
     </scroll-view>
     <swiper class="tab-content" current="{{currentTab}}" duration="300" bindchange="switchTab"
      style="height:{{winHeight}}rpx">
-        <!-- <swiper-item wx:for="{{release}}" wx:key="{{index}}">
-            <scroll-view scroll-y="true" class="scoll-h" >
-                <block wx:for="release" wx:key="*this">
-                    <view class="item-ans">
-                      
-                    </view>
-                </block>
-            </scroll-view>
-        </swiper-item> -->
+        <!-- 发布视频 -->
         <swiper-item>
             <scroll-view scroll-y="true" class="scoll-h" >
               <view class='block-item'>
                 <view class='item-ans'>
-                  <image class='cover' src='../../image/demo.jpg'></image>
+                  <image class='cover' src='../../image/liwu.png'></image>
                   <view>
                     <cover-image  class='cover-img' src='../../image/like.png'></cover-image>
                     <text class='cover-text'>42.1w</text>
@@ -79,11 +71,12 @@
               </view>
             </scroll-view>
         </swiper-item>
+        <!-- 点赞视频 -->
         <swiper-item>
             <scroll-view scroll-y="true" class="scoll-h" >
               <view class='block-item'>
                 <view class='item-ans'>
-                  <image class='cover' src='../../image/demo.jpg'></image>
+                  <image class='cover' src='../../image/liwu.png'></image>
                   <view>
                     <cover-image  class='cover-img' src='../../image/like.png'></cover-image>
                     <text class='cover-text'>42.1w</text>
@@ -92,6 +85,7 @@
               </view>
             </scroll-view>
         </swiper-item>
+        <!-- 送出礼物 -->
         <swiper-item>
           <scroll-view scroll-y="true" class="scoll-h" >
             <view class='gift-item' wx:for="{{sendGoodsList}}" wx:key="{{index}}">
@@ -106,23 +100,25 @@
             </view>
           </scroll-view>
         </swiper-item>
+        <!-- 收到礼物 -->
         <swiper-item>
           <scroll-view scroll-y="true" class="scoll-h" >
-            <view class='gift-item'>
+            <view class='gift-item' wx:for="{{getGoodsList}}" wx:key="{{index}}">
               <view>
-                <image class='head-img' src='../../image/000.jpg'></image>
+                <image class='head-img' src='{{item.wximage}}'></image>
               </view>
               <view class='gift-text'>
-                <view class='gift-type'>@fjajfl 送过我 bingbing眼睛</view>
+                <view class='gift-type'>{{item.wxname}} 送过我 {{item.name}}</view>
                 <view class='gift-words'>【送礼留言】巴拉巴拉啦芭啦啦八零</view>
-                <view class='gift-time'>2019-03-04</view>
+                <view class='gift-time'>{{item.time}}</view>
               </view>
             </view>
           </scroll-view>
         </swiper-item>
+        <!-- 私信留言 -->
         <swiper-item>
           <scroll-view scroll-y="true" class="scoll-h" >
-            <view class='gift-item' catchtap="showDialog" wx:for="{{noteList}}" wx:key="{{index}}">
+            <view class='gift-item' catchtap="getNoteDetails" wx:for="{{noteList}}" wx:key="{{index}}"  data-id='{{item.id}}'>
               <view>
                 <image class='head-img' src='{{item.wximage}}'></image>
               </view>
@@ -149,24 +145,26 @@
         <image class='close-btn' bindtap='hideDialog' src='../../image/close.png'></image>
       </view>
       <scroll-view scroll-y="true" class="scroll-h">
-        <view class='dialog-item'>
-          <view>
-            <image class='dialog-head' src='../../image/000.jpg'></image>
+        <block wx:for="{{noteListDetails}}" wx:key="{{index}}">
+          <view class='dialog-item'  wx:if="{{isDialog == item.sid}}">
+            <view>
+              <image class='dialog-head' src='{{item.wximage}}'></image>
+            </view>
+            <view class='dialog-words'>
+              <view class='name-text'>{{item.wxname}}</view>
+              <text class='words-text'>{{item.content}}</text>
+            </view>       
           </view>
-          <view class='dialog-words'>
-            <view class='name-text'>小pp</view>
-            <view class='words-text'>就卡就发拉进来的剑法i京东方辣椒就卡就发拉进来的剑法i京东方辣椒就卡就发拉进来的剑法i京东方辣椒</view>
-          </view>       
-        </view>
-        <view class='dialog-item'>
-          <view class='dialog-words clearfix'>
-            <view class='name-text name-text-right'>小pp</view>
-            <view class='words-text words-text-right'>就卡就发拉进来的剑法i京东方辣椒就卡就发拉进来的剑法i京东方辣椒就卡就发拉进来的剑法i京东方辣椒</view>
-          </view>       
-          <view>
-            <image class='dialog-head' src='../../image/000.jpg'></image>
+          <view class='dialog-item dialog-item-right' wx:if="{{isDialog !== item.sid}}">
+            <view>
+              <image class='dialog-head' src='{{item.wximage}}'></image>
+            </view>
+            <view class='dialog-words'>
+              <view class='name-text name-text-right'>{{item.wxname}}</view>
+              <text class='words-text words-text-right'>{{item.content}}</text>
+            </view>       
           </view>
-        </view>
+        </block>
       </scroll-view>
       <view class='ipt-text'>
         <input type='text' class='ipt' placeholder='请输入聊天内容'></input>

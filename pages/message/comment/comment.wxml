@@ -1,6 +1,6 @@
 <!--pages/comment/comment.wxml-->
 <block wx:for='{{Comment}}' wx:key="*this">
-<view class='comment'>
+<view class='comment' wx:if="{{Comment !==''}}">
   <view class='head-img'>
     <image src='{{item.wximage}}' style='width:100rpx;height:100rpx;'></image>
   </view>
@@ -15,3 +15,4 @@
 </view>
 </block>
 
+<view class='none-data'  wx:if="{{Comment ==''}}">暂无数据</view>

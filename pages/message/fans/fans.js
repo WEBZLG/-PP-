@@ -56,7 +56,7 @@ Page({
   getdata: function () {
     const that = this;
     wx.request({
-      url: 'http://192.168.1.180/index/port/fanlist',//请求地址
+      url: app.globalData.serverPath +'fanlist',//请求地址
       data: {//发送给后台的数据
         uid: 3
       },
@@ -77,7 +77,7 @@ Page({
   getdata2: function () {
     const that = this;
     wx.request({
-      url: 'http://192.168.1.180/index/port/attention',//请求地址
+      url: app.globalData.serverPath +'attention',//请求地址
       data: {//发送给后台的数据
         uid: 3,
         attentid:5

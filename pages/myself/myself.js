@@ -1,5 +1,5 @@
 const app = getApp()
-const api = require('../utils/api.js')
+// const api = require('../utils/api.js')
 Page({
 
   /**
@@ -26,9 +26,12 @@ Page({
     integral:0,
     like:0,
     release:[],
+    isDialog:"",//判断对话是否是当前人
     animationData:{},
     noteList:[],//私信留言
-    sendGoodsList:[]//送出礼物
+    noteListDetails: [],//私信留言详情
+    sendGoodsList:[],//送出礼物
+    getGoodsList:[]//收到礼物
 
   },
 
@@ -37,7 +40,10 @@ Page({
    */
   onLoad: function (options) {
     var that = this;
-    console.log(app.globalData.userInfo)
+    wx.setNavigationBarTitle({
+      title: '我的',
+    }),
+
     // 评论弹出层动画创建
     this.animation = wx.createAnimation({
       duration: 400,
@@ -51,7 +57,7 @@ Page({
           clientWidth = res.windowWidth,
           rpxR = 750 / clientWidth;
         var calc = clientHeight * rpxR - 550;
-        console.log(calc)
+        // console.log(calc)
         that.setData({
           winHeight: calc
         });
@@ -76,7 +82,7 @@ Page({
   myselfinfo: function (e) {
     var that = this;
     wx.request({
-      url: "http://192.168.1.180/index/port/myselfinfo",
+      url: app.globalData.serverPath+"myselfinfo",
       data: {
         "uid": app.globalData.uid
       },
@@ -131,9 +137,10 @@ Page({
     //   }
     // })
     wx.request({
-      url: "http://192.168.1.180/index/port/myselflike",
+      url: app.globalData.serverPath+"myselflike",
       data: {
-        "uid": this.data.uid
+        // "uid": this.data.uid
+        "uid": 3
       },
       method: 'POST',
       success: function (res) {
@@ -145,14 +152,14 @@ Page({
   getSendGoods:function(){
     const that = this
     wx.request({
-      url: "http://192.168.1.180/index/port/sendgift",
+      url: app.globalData.serverPath+"sendgift",
       data: {
         // "uid": this.data.uid
         "uid": 3
       },
       method: 'POST',
       success: function (res) {
-        console.log(res);
+        // console.log(res);
         that.setData({
           sendGoodsList:res.data
         })
@@ -161,14 +168,18 @@ Page({
   },
   // 收到礼物
   getReceiveGoods:function(){
+    var that = this;
     wx.request({
-      url: "http://192.168.1.180/index/port/incomegift",
+      url: app.globalData.serverPath+"incomegift",
       data: {
-        "uid": this.data.uid
+        // "uid": this.data.uid
+        "uid": 3
       },
       method: 'POST',
       success: function (res) {
-        console.log(res);
+        that.setData({
+          getGoodsList: res.data
+        })
       }
     })
   },
@@ -176,14 +187,14 @@ Page({
   getNote:function(){
     const that = this;
     wx.request({
-      url: "http://192.168.1.180/index/port/letters",
+      url: app.globalData.serverPath+"letters",
       data: {
         // "uid": this.data.uid
         "uid": 3
       },
       method: 'POST',
       success: function (res) {
-        console.log(res);
+        // console.log(res);
         that.setData({
           noteList:res.data
         })
@@ -191,21 +202,21 @@ Page({
     })
   },
 //私信留言详情
-  getNoteDetails: function (e) {
-    console.log(e)
+  getNoteDetails: function (event) {
     const that = this;
     wx.request({
-      url: "http://192.168.1.180/index/port/lettersinfo",
+      url: app.globalData.serverPath+"lettersinfo",
       data: {
-        // "uid": this.data.uid
-        "uid": 4
+        "uid": event.currentTarget.dataset.id
       },
       method: 'POST',
       success: function (res) {
-        console.log(res);
+        // console.log(res);
         that.setData({
-          noteList: res.data
+          noteListDetails: res.data,
+          isDialog:res.data[0].sid
         })
+        that.showDialog()
       }
     })
   },
@@ -293,17 +304,6 @@ Page({
         currentTab: cur
       })
     };
-    // if (e.target.dataset.current==0){
-    //   this.getSendVideo();
-    // } else if (e.target.dataset.current==1){
-    //   this.getLikeVideo();
-    // } else if (e.target.dataset.current == 2) {
-    //   this.getSendGoods();
-    // } else if (e.target.dataset.current == 3) {
-    //   this.getReceiveGoods();
-    // } else if (e.target.dataset.current == 4) {
-    //   this.getNote();
-    // }
   },
   //判断当前滚动超过一屏时，设置tab标题滚动条。
   checkCor: function () {
@@ -326,7 +326,6 @@ Page({
       talksPage: 1,
       animationData: this.animation.export()
     });
-    this.getNoteDetails();//私信详情
   },
 
   hideDialog: function () {

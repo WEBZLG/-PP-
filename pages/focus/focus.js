@@ -21,7 +21,7 @@ Page({
    
     //1.开始初始化第一个TAB页的关注列表数据
     wx.request({
-      url: 'http://192.168.1.180/index/port/attentionlist',
+      url: app.globalData.serverPath +'attentionlist',
       data: { uid: app.globalData.uid},
       success:function(res){
         //请求成功
@@ -39,7 +39,7 @@ Page({
     })
     //2.开始初始化活动页面的数据
     wx.request({
-      url: "http://192.168.1.180/index/port/apply",
+      url: app.globalData.serverPath +"apply",
       data: { uid: app.globalData.uid},
       success:function(res){
         that.setData({

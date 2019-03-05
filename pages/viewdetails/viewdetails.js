@@ -1,5 +1,5 @@
 const app = getApp()
-const api = require('../utils/api.js')
+// const api = require('../utils/api.js')
 
 Page({
 
@@ -14,10 +14,12 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
     var that = this;
+    wx.setNavigationBarTitle({
+      title: '积分明细',
+    })
     wx.request({
-      url:"http://192.168.1.180/index/port/integral",
+      url: app.globalData.serverPath +"integral",
       method: 'POST',
       data:{
         uid: app.globalData.uid

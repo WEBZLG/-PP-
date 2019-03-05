@@ -1,6 +1,6 @@
 // pages/depositapply/depositapply.js
 const app = getApp()
-const api = require('../utils/api.js')
+// const api = require('../utils/api.js')
 
 Page({
 
@@ -20,7 +20,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    wx.setNavigationBarTitle({
+      title: '提现',
+    })
   },
 
   /**
@@ -108,7 +110,7 @@ Page({
     }else{
     // 提现申请
     wx.request({
-      url: 'http://192.168.1.180/index/port/withdraw',
+      url: app.globalData.serverPath+'withdraw',
       method: 'POST',
       data: {
         uid: app.globalData.uid,

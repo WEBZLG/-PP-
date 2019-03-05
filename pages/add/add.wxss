@@ -1,4 +1,9 @@
 /* pages/add/add.wxss */
+page{
+  background-color: #4A4A4A;
+  text-align:center;
+}
+
 .add-item{
   font-size: 40rpx;
   text-align: center;
@@ -8,4 +13,23 @@
   line-height: 120rpx;
   margin: 20rpx auto;
   border: 2rpx solid #eee;
+}
+.add-bg{
+  height:230rpx;
+  margin-top:50%;
+  width:95%;
+}
+
+.btn-box{
+  display:flex;
+  justify-content:space-evenly;
+  position:absolute;
+  width:100%;
+  top:43%;
+  left:0;
+}
+
+.nav-btn{
+  height: 140rpx;
+  width: 140rpx;
 }

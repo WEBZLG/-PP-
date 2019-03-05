@@ -242,8 +242,8 @@
   width: 30rpx;
 }
 .head-img{
-  height:120rpx;
-  width:120rpx;
+  height:100rpx;
+  width:100rpx;
   border: 4rpx solid #c4c4c4;
   border-radius:50%;
 }
@@ -330,7 +330,7 @@
   display: flex;
   padding:10rpx 20rpx;
 
-  justify-content:space-evenly;
+  /* justify-content:space-evenly; */
 }
 .dialog-head{
   height: 80rpx;
@@ -342,7 +342,7 @@
   margin:0 10rpx;
 }
 .words-text{
-  width:65%;
+  display: inline-block;
   padding:20rpx;
   color:#636363;
   font-size:28rpx;
@@ -356,9 +356,12 @@
   text-align: right;
 }
 .words-text-right{
-  float: right;
   border-top-right-radius:0rpx;
   border-top-left-radius:20rpx;
+}
+
+.dialog-item-right{
+  flex-direction:row-reverse;
 }
 .ipt-text{
   display:flex;

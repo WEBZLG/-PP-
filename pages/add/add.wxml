@@ -1,6 +1,9 @@
 <!--pages/add/add.wxml-->
 <view>
-  <view class='add-item'>上传</view>
-  <view class='add-item' bindtap='getLocalVideo'>拍摄</view>
-  <view class='add-item' bindtap='get3dAlbum'>3D相册</view>
+  <image class='add-bg' src='../../image/addbg.png'></image>
+  <view class='btn-box'>
+    <cover-image class='nav-btn' bindtap='chooseVideo' src='../../image/upload.png'></cover-image>
+    <cover-image class='nav-btn' bindtap='getLocalVideo' src='../../image/rec.png'></cover-image>
+    <cover-image class='nav-btn' bindtap='get3dAlbum' src='../../image/3dpic.png'></cover-image>
+  </view>
 </view>
