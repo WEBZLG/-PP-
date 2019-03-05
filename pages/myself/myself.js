@@ -25,7 +25,8 @@ Page({
     if_verified:"未认证",
     integral:0,
     like:0,
-    release:[],
+    sendVideo:[],//发布的视频
+    getVideo: [],//点赞的视频
     isDialog:"",//判断对话是否是当前人
     animationData:{},
     noteList:[],//私信留言
@@ -65,12 +66,12 @@ Page({
     });
 
     this.setData({
-      nickname: app.globalData.userInfo.nickName,
-      gender: app.globalData.userInfo.gender,
-      city: app.globalData.userInfo.city,
-      province: app.globalData.userInfo.province,
-      country: app.globalData.userInfo.country,
-      avatarUrl: app.globalData.userInfo.avatarUrl,
+      // nickname: app.globalData.userInfo.nickName,
+      // gender: app.globalData.userInfo.gender,
+      // city: app.globalData.userInfo.city,
+      // province: app.globalData.userInfo.province,
+      // country: app.globalData.userInfo.country,
+      // avatarUrl: app.globalData.userInfo.avatarUrl,
     })
     this.myselfinfo();
 
@@ -90,16 +91,16 @@ Page({
       success: function (res) {
         console.log(res);
         that.setData({
-          attention : res.data.attention,
-          fans: res.data.fans,
-          if_verified: res.data.if_verified,
-          integral: res.data.integral,
-          like: res.data.like,
-          birthday: res.data.birthday,
-          phone:res.data.phone,
-          wx:res.data.wx,
-          signature:res.data.signature,
-          release: res.data.release
+          // attention : res.data.attention,
+          // fans: res.data.fans,
+          // if_verified: res.data.if_verified,
+          // integral: res.data.integral,
+          // like: res.data.like,
+          // birthday: res.data.birthday,
+          // phone:res.data.phone,
+          // wx:res.data.wx,
+          // signature:res.data.signature,
+          // sendVideo: res.data.release
         })
       }
     })
@@ -126,16 +127,15 @@ Page({
       url: '../depositapply/depositapply'
     })
   },
+  // 帮助跳转
+  help: function () {
+    wx.navigateTo({
+      url: '../help/help'
+    })
+  },
   // 点赞视频
   getLikeVideo:function(){
-    // api.getGoods({
-    //   data: {
-    //     "uid": this.data.uid
-    //   },
-    //   success: function () {
-    //     console.log(res);
-    //   }
-    // })
+    const that = this;
     wx.request({
       url: app.globalData.serverPath+"myselflike",
       data: {
@@ -145,6 +145,9 @@ Page({
       method: 'POST',
       success: function (res) {
         console.log(res);
+        that.setData({
+          sendVideo:res.data
+        })
       }
     })
   },
@@ -220,12 +223,7 @@ Page({
       }
     })
   },
-  // 帮助跳转
-  help: function () {
-    wx.navigateTo({
-      url: '../help/help'
-    })
-  },
+
 
   /**
    * 生命周期函数--监听页面初次渲染完成

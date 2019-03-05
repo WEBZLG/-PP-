@@ -60,29 +60,33 @@
         <!-- 发布视频 -->
         <swiper-item>
             <scroll-view scroll-y="true" class="scoll-h" >
-              <view class='block-item'>
-                <view class='item-ans'>
-                  <image class='cover' src='../../image/liwu.png'></image>
-                  <view>
-                    <cover-image  class='cover-img' src='../../image/like.png'></cover-image>
-                    <text class='cover-text'>42.1w</text>
+              <block wx:for="{{sendVideo}}" wx:key="{{index}}" data-id="{{item.id}}">
+                <view class='block-item'>
+                  <view class='item-ans'>
+                    <image class='cover' src='{{item.pic}}'></image>
+                    <!-- <view>
+                      <cover-image  class='cover-img' src='../../image/like.png'></cover-image>
+                      <text class='cover-text'>42.1w</text>
+                    </view> -->
                   </view>
                 </view>
-              </view>
+              </block>
             </scroll-view>
         </swiper-item>
         <!-- 点赞视频 -->
         <swiper-item>
             <scroll-view scroll-y="true" class="scoll-h" >
-              <view class='block-item'>
-                <view class='item-ans'>
-                  <image class='cover' src='../../image/liwu.png'></image>
-                  <view>
-                    <cover-image  class='cover-img' src='../../image/like.png'></cover-image>
-                    <text class='cover-text'>42.1w</text>
+             <block wx:for="{{getVideo}}" wx:key="{{index}}"  data-id="{{item.id}}">
+                <view class='block-item'>
+                  <view class='item-ans'>
+                    <image class='cover' src='{{item.pic}}'></image>
+                    <!-- <view>
+                      <cover-image  class='cover-img' src='../../image/like.png'></cover-image>
+                      <text class='cover-text'>42.1w</text>
+                    </view> -->
                   </view>
                 </view>
-              </view>
+              </block>
             </scroll-view>
         </swiper-item>
         <!-- 送出礼物 -->
