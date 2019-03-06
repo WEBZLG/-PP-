@@ -1,4 +1,6 @@
 // pages/fans/fans.js
+
+const app = getApp()
 Page({
 
   /**
@@ -12,7 +14,7 @@ Page({
     time:'',//关注时间
     info:'',//susccess//error
     status: '',//0是关注状态 1是未关注的状态
-    uid:''
+    attentid:''//粉丝id
   },
   changeMotto: function (e) {
     var that =this;
@@ -25,16 +27,42 @@ Page({
       [chooseIndex]: 0,
       eachotherStatus: eachotherStatus,
       Fans: this.data.Fans,
+      attentid: e.currentTarget.dataset.item.uid
     })
-    if (eachotherStatus==0){
-      this.setData({
-        [chooseIndex]: 1,
-      })
-    }else{
-      this.setData({
-        [chooseIndex]: 0,
-      })
-    }
+    wx.request({
+      url: app.globalData.serverPath + 'attention',//请求地址
+      data: {//发送给后台的数据
+        uid: 3,
+        // uid:app.globalData.uid
+        // attentid:attentid
+        attentid: 5
+      },
+      header: {//请求头
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      method: "POST",//get为默认方法/POST
+      success: function (res) {
+        console.log(res)
+        if(res.data.info == "success"){
+          if (eachotherStatus == 0) {
+            that.setData({
+              [chooseIndex]: 1,
+            })
+          } else {
+            that.setData({
+              [chooseIndex]: 0,
+            })
+          }
+        }else{
+          return false;
+        }
+
+      },
+      fail: function (err) { },//请求失败
+      complete: function () { }//请求完成后执行的函数
+    })
+
+
     // console.log(this.data.Fans)
     // console.log(e.currentTarget.dataset.item.eachother);
   },
@@ -50,8 +78,6 @@ Page({
         backgroundColor: '#434343',
       }),
       this.getdata()
-      // this.getdata2()
-
   },
   getdata: function () {
     const that = this;
@@ -59,6 +85,7 @@ Page({
       url: app.globalData.serverPath +'fanlist',//请求地址
       data: {//发送给后台的数据
         uid: 3
+        // uid:app.globalData.uid
       },
       header: {//请求头
         "Content-Type": "application/x-www-form-urlencoded"
@@ -74,28 +101,7 @@ Page({
       complete: function () { }//请求完成后执行的函数
     })
   },
-  getdata2: function () {
-    const that = this;
-    wx.request({
-      url: app.globalData.serverPath +'attention',//请求地址
-      data: {//发送给后台的数据
-        uid: 3,
-        attentid:5
-      },
-      header: {//请求头
-        "Content-Type": "application/x-www-form-urlencoded"
-      },
-      method: "POST",//get为默认方法/POST
-      success: function (res) {
-        // console.log(res.data)
-        that.setData({
-          attention: res.data
-        })
-      },
-      fail: function (err) { },//请求失败
-      complete: function () { }//请求完成后执行的函数
-    })
-  },
+
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

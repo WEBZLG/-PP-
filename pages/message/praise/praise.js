@@ -27,11 +27,6 @@ Page({
         frontColor: '#ffffff',
         backgroundColor: '#434343',
       }),
-      // this.setData({
-      //   zanList: [
-      //     { img_url: "/img/head@2x.png", text_id: "@曾经的彪哥", time: "2019-02-01 12：39", video_img: "/img/zan-img.png" }, { img_url: "/img/head@2x.png", text_id: "@叫我老王", time: "2019-02-16 02：39", video_img: "/img/zan-img.png" }, { img_url: "/img/head@2x.png", text_id: "@Luka Addway", time: "2019-02-01 12：39", video_img: "/img/zan-img.png" }
-      //   ]
-      // })
       this.getdata()
   },
   getdata: function () {
@@ -39,7 +34,8 @@ Page({
     wx.request({
       url: app.globalData.serverPath +'likelist',//请求地址
       data: {//发送给后台的数据
-        uid: app.globalData.uid
+        // uid: app.globalData.uid
+        uid: 3
       },
       header: {//请求头
         "Content-Type": "application/x-www-form-urlencoded"

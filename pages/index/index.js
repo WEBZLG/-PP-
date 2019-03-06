@@ -186,7 +186,6 @@ Page({
   onLoad: function (options) {
     var that = this;
 
-    // 转发的抖音信息
     // 注意：小程序的转发主要是转发小程序本身而不是里面的某个内容
     // 所以用户第一次打开才会看到转发的信息
     if (options && options.subjectId) {
@@ -202,29 +201,11 @@ Page({
         that.changeSubject(0)
       })
     }
-
-    // 获取用户信息
-    if (app.globalData.userInfo) {
-      this.setData({
-        userInfo: app.globalData.userInfo,
-        hasUserInfo: true
-      })
-    } else if (this.data.canIUse) {
-      // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-      // 所以此处加入 callback 以防止这种情况
-      app.onUserInfo = userInfo => {
-        that.setData({
-          userInfo: userInfo,
-          hasUserInfo: true
-        })
-      }
-    }
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    var that = this;
 
     wx.setNavigationBarTitle({
       title: "小PP短视频",

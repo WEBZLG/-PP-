@@ -5,9 +5,7 @@
       <text>{{item.title}}</text>
       <text style='color:#cbcbcb;'>{{item.time}}</text>
     </view>
-    <view class='nitice-btn'>
-    查看
-    </view> 
+    <view class='nitice-btn' bindtap='viewDetails'  data-id="{{item.id}}">查看</view> 
   </view>
  </block>
  <block  wx:if="{{Notice==''}}">

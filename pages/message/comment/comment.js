@@ -14,8 +14,6 @@ Page({
     pic:'',//作品封面
     rid:'',//作品ID
     content:''//评论内容
-    
-
   },
 
   /**
@@ -56,14 +54,15 @@ Page({
     wx.request({
       url: app.globalData.serverPath +'commentlist',//请求地址
       data: {//发送给后台的数据
-        uid: app.globalData.uid
+        // uid: app.globalData.uid
+        uid: 3
       },
       header: {//请求头
         "Content-Type": "application/x-www-form-urlencoded"
       },
       method: "POST",//get为默认方法/POST
       success: function (res) {
-        // console.log(res.data)
+        console.log(res.data)
         that.setData({
           Comment: res.data
         })

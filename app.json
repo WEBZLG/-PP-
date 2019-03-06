@@ -26,7 +26,8 @@
     "pages/3d/index",
     "pages/3d/view",
     "pages/3d/mybook",
-    "pages/3d/share"
+    "pages/3d/share",
+    "pages/message/noticeDetails/noticeDetails"
   ],
   "permission": {
     "scope.userLocation": {

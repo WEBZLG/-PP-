@@ -5,8 +5,7 @@ const app = getApp()
 Page({
   data: {
     motto: 'PP短视频',
-    userInfo: {},
-    openId: "",
+    // userInfo: {},
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     openid: '',
@@ -57,6 +56,11 @@ Page({
           // 获取用户信息
           wx.getUserInfo({
             success: function (data) {
+              // 缓存用户信息
+              wx.setStorage({
+                key: 'userMessage',
+                data: data.userInfo
+              })
               app.globalData.userInfo = data.userInfo
               typeof cb == "function" && cb(that.globalData.userInfo)
               wx.request({
@@ -69,7 +73,7 @@ Page({
                   console.log(res)
 
                   that.setData({
-                    userInfo: e.detail.userInfo,
+                    // userInfo: e.detail.userInfo,
                     hasUserInfo: true,
                     openid: res.data.openid, //用户openid
                     wxname: data.userInfo.nickName,//用户昵称
@@ -118,13 +122,12 @@ Page({
       success: function (res) {
         console.log(res);
         app.globalData.uid = res.data.uid
+        // 缓存uid
+        wx.setStorage({
+          key: 'userUid',
+          data: res.data.uid
+        })
       }
     })
-  },
-  //事件处理函数
-  bindViewTap: function () {
-    wx.navigateTo({
-      url: '/index/index'
-    })
-  },
+  }
 })

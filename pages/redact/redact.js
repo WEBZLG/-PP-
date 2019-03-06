@@ -5,7 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    uid: app.globalData.uid,
+    uid:"",
     headUrl:"",
     nickName:"",
     signature:"",
@@ -27,15 +27,39 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log(app.globalData.userInfo)
-    this.setData({
-      place: app.globalData.userInfo.city,
-      nickName:app.globalData.userInfo.nickName,
-      headUrl: app.globalData.userInfo.avatarUrl
-    })
     wx.setNavigationBarTitle({
       title: '编辑资料',
     })
+    // 缓存中取信息
+    wx.getStorage({
+      key: 'userMessage',
+      success(res) {
+        console.log(res.data)
+        that.setData({
+          // nickname: res.data.nickName,
+          // gender: res.data.gender,
+          // city: res.data.city,
+          // province: res.data.province,
+          // country: res.data.country,
+          // avatarUrl: res.data.avatarUrl,
+
+
+          place: res.data.city,
+          nickName: res.data.nickName,
+          headUrl: res.data.avatarUrl
+        })
+      }
+    });
+    wx.getStorage({
+      key: 'userUid',
+      success(res) {
+        console.log(res.data)
+        that.setData({
+          uid: res.data
+        })
+      }
+    });
+
   },
 
   /**

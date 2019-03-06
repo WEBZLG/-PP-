@@ -1,12 +1,12 @@
 <!--pages/comment/comment.wxml-->
-<block wx:for='{{Comment}}' wx:key="*this">
+<block wx:for='{{Comment}}' wx:key="index">
 <view class='comment' wx:if="{{Comment !==''}}">
   <view class='head-img'>
     <image src='{{item.wximage}}' style='width:100rpx;height:100rpx;'></image>
   </view>
   <view class='comment-text'>
     <text>{{item.wxname}}</text>
-    <text>{{item.content}}</text>
+    <text class='text'>{{item.content}}</text>
     <text style='font-size: 18rpx;color:#b8b8b8;'>评论了你的作品 {{item.time}}</text>
   </view>
   <view>

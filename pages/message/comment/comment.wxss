@@ -17,10 +17,16 @@ page{
   padding: 50rpx 30rpx 0rpx;
 }
 .comment-text{
-  display: flex;
-  flex-direction: column;
-  color: white;
-  font-size: 22rpx;
+  display:flex;
+  flex-direction:column;
+  color:white;
+  font-size:24rpx;
   margin-left:-100rpx;
-  /* justify-content: space-between; */
+  line-height:34rpx;
+
+}
+.text{
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
 }
