@@ -7,7 +7,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    detailsList:[]
+    detailsList:[],
+    uid:""
   },
 
   /**
@@ -18,11 +19,21 @@ Page({
     wx.setNavigationBarTitle({
       title: '积分明细',
     })
+    // 缓存获取uid
+    wx.getStorage({
+      key: 'userUid',
+      success(res) {
+        console.log(res.data)
+        that.setData({
+          uid: res.data
+        })
+      }
+    });
     wx.request({
       url: app.globalData.serverPath +"integral",
       method: 'POST',
       data:{
-        uid: app.globalData.uid
+        uid: that.data.uid
       },
       success:function(res){
         console.log(res)
@@ -37,7 +48,6 @@ Page({
         })
       }
     })
-    console.log(this.data.detailsList)
   },
 
   /**

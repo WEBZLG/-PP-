@@ -2,6 +2,7 @@ var t = getApp(), i = require("../../utils/config.js"), c = wx.createInnerAudioC
 
 Page({
     data: {
+      openid:"",
         host: i.host,
         tabs: [],
         tabW: 0,
@@ -76,6 +77,15 @@ Page({
     },
     onLoad: function(t) {
         var c = this;
+      wx.getStorage({
+        key: 'openId',
+        success(res) {
+          console.log(res.data)
+          c.setData({
+            openid: res.data
+          })
+        }
+      });
         this.setData({
             xcid: t.id
         }), wx.request({
@@ -139,7 +149,7 @@ Page({
         }), wx.request({
             url: i.host + "index.php?c=HZH&a=shareAdd",
             data: {
-                openid: t.globalData.openid,
+                openid: t.data.openid,
                 imageurl: a.data.tu.image,
                 skin: n,
                 music: o
@@ -166,7 +176,7 @@ Page({
                         "content-type": "multipart/form-data"
                     },
                     formData: {
-                        openid: t.globalData.openid,
+                        openid: c.data.openid,
                         skin: c.data.skinid,
                         music: "https://www.vop2.cn/music/hzh/5bf3b570bd284.mp3"
                     },

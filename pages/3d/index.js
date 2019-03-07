@@ -3,26 +3,38 @@ var e = getApp(), a = require("../../utils/config.js");
 Page({
     data: {
         ad: a.ad,
-        host: a.host
+        host: a.host,
+        openId:""
     },
     onLoad: function() {
-      wx.setNavigationBarTitle({
-        title: '3D相册',
-      }),
+      const that = this;
+      wx.getStorage({
+        key: 'openId',
+        success(res) {
+          console.log(res.data)
+          that.setData({
+            openId: res.data
+          })
+        }
+      });
+        wx.setNavigationBarTitle({
+          title: '3D相册',
+        }),
         wx.setNavigationBarColor({
           frontColor: '#ffffff',
           backgroundColor: '#3E3E3E',
-        }),
-        wx.login({
-            success: function(o) {
-                wx.request({
-                    url: a.requestUrl + "&a=getOpenid&code=" + o.code,
-                    success: function(a) {
-                        e.globalData.openid = a.data, console.log(e.globalData.openid);
-                    }
-                });
-            }
-        });
+        })
+        // wx.login({
+        //     success: function(o) {
+        //         wx.request({
+        //             url: a.requestUrl + "&a=getOpenid&code=" + o.code,
+        //             success: function(a) {
+        //               console.log(a)
+        //                 e.globalData.openid = a.data, console.log(e.globalData.openid);
+        //             }
+        //         });
+        //     }
+        // });
     },
     mybook: function() {
         wx.navigateTo({
@@ -30,12 +42,13 @@ Page({
         });
     },
     newphoto: function(o) {
+      console.log(o)
         var t = this, n = o.detail.formId;
         console.log(n), wx.request({
             url: a.host + "admin.php?m=Qwadmin&c=Zz&a=index",
             data: {
                 apptype: a.apptype,
-                openid: e.globalData.openid,
+                openid: t.data.openid,
                 template_id: a.template_id,
                 formid: n
             }
@@ -51,6 +64,7 @@ Page({
         });
     },
     uploadImage: function(o) {
+      var that = this;
         wx.uploadFile({
             url: a.host + "index.php?m=WEB&c=D3Uploader&a=wxUpload",
             filePath: o[0],
@@ -60,7 +74,7 @@ Page({
                 "content-type": "multipart/form-data"
             },
             formData: {
-                unionid: e.globalData.openid
+              unionid: that.data.openid
             },
             success: function(e) {
                 console.log(e.data);

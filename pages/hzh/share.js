@@ -4,6 +4,7 @@ Page({
     data: {
         host: i.host,
         tabs: [],
+        openid:"",
         tabW: 0,
         a: [],
         xcid: "",
@@ -88,18 +89,19 @@ Page({
             }
         }), this.setData({
             xcid: c.id
-        }), this.huoqutupian(), wx.login({
-            success: function(c) {
-                wx.request({
-                    url: i.requestUrl + "&a=getOpenid&code=" + c.code,
-                    success: function(i) {
-                        t.globalData.openid = i.data, o.setData({
-                            openid: i.data
-                        }), console.log(o.data.openid);
-                    }
-                });
-            }
-        });
+        }), this.huoqutupian()
+        // wx.login({
+        //     success: function(c) {
+        //         wx.request({
+        //             url: i.requestUrl + "&a=getOpenid&code=" + c.code,
+        //             success: function(i) {
+        //                 t.globalData.openid = i.data, o.setData({
+        //                     openid: i.data
+        //                 }), console.log(o.data.openid);
+        //             }
+        //         });
+        //     }
+        // });
     },
     huoqutupian: function() {
         var t = this;

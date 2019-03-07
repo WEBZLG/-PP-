@@ -32,4 +32,5 @@
     color: #000;
     line-height: 20rpx;
     padding: 20rpx;
+    height:270rpx;
 }

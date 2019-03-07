@@ -1,415 +1,401 @@
-
 const app = getApp()
-const api = require('../utils/api.js')
-const pageRows = 25;
-
-var dataList = [];// 为了方便操作数据
-
-function getRandomColor() {
-  let rgb = []
-  for (let i = 0; i < 3; ++i) {
-    let color = Math.floor(Math.random() * 256).toString(16)
-    color = color.length == 1 ? '0' + color : color
-    rgb.push(color)
-  }
-  return '#' + rgb.join('')
-}
 
 Page({
 
-  /**
-   * 页面的初始数据
-   */
   data: {
-    page: 1,
-    hasNextPage: true,
-    subject: null,
-    current: 0,
-    subjectList: [],
-    duration: 500,
-    userInfo: {},
-    hasUserInfo: false,
-    inputTalk: '',
-    talks: [],
-    talksPage: 1,
-    talksPages: -1,
-    canIUse: wx.canIUse('button.open-type.getUserInfo'),
-    talksAnimationData: {},
-    isHiddenVideo: true,
-    isHiddenControls: true,
-    videoSrc: '',
-    focus:false
+    IndexList: [],//获取首页数组
+    uid: '',//发布人的ID
+    content: '',//发布介绍
+    url: '',//视频地址
+    pic: '',//第一帧图片
+    id: '',//作品ID
+    wxname: '',//发布人昵称
+    wximage: '',//发布人头像
+    name: '',//歌曲名
+    if_pass: '',//是否认证
+    if_activity: '',//1为发布活动 0为普通发布
+    likenum: '',//点赞数
+    commentnum: '',//评论数
+    sharenum: '',//分享数
+    top: '',//送礼物排行榜
+    relation: '',//关注/为关注
+    if_like: '', //0未点赞  1点赞了
+    // 评论
+    content: '',//内容
+    // CommentList: [],
+    commentList: [{
+      // userzan:0,
+      userimg:'../../image/like_red.png',
+      username: 'Luka Addway',
+      ComTime: '02-19 11:25',
+      ComContent: '兄弟你这也太帅了,兄弟你这也太帅了,兄弟你这也太帅了,兄弟你这也太帅了',
+    }, {
+        userimg: '../../image/like_red.png',
+        username: '叫我老王',
+        ComTime: '02-19 11:25',
+        ComContent: '可以可以',
+      }],
+    ball_height: 2,
+    //播放按钮
+    display_play: 'none',
+    //点击评论隐藏图标
+    display_pl: 'block',
+    count: 1,//视频爱心点赞
+    commentcount:1,//评论点赞
+    index_num: 1,
+    play: 'none',
+    inputValue: '',
+    index: 1,
+    vid: 0,
+    pagey: '',
+    vsrc: ['http://wxsnsdy.tc.qq.com/105/20210/snsdyvideodownload?filekey=30280201010421301f0201690402534804102ca905ce620b1241b726bc41dcff44e00204012882540400&bizid=1023&hy=SH&fileparam=302c020101042530230204136ffd93020457e3c4ff02024ef202031e8d7f02030f42400204045a320a0201000400" binderror="videoErrorCallback', 'http://v2018.zhuoxuncn.com/zhuoxunvideo/20181220/0104_1.mp4', 'http://v2018.zhuoxuncn.com/zhuoxunvideo/20181123/27.mp4', 'http://wxsnsdy.tc.qq.com/105/20210/snsdyvideodownload?filekey=30280201010421301f0201690402534804102ca905ce620b1241b726bc41dcff44e00204012882540400&bizid=1023&hy=SH&fileparam=302c020101042530230204136ffd93020457e3c4ff02024ef202031e8d7f02030f42400204045a320a0201000400" ,binderror="videoErrorCallback', 'http://v2018.zhuoxuncn.com/zhuoxunvideo/20181220/0104_1.mp4', 'http://v2018.zhuoxuncn.com/zhuoxunvideo/20181123/27.mp4', 'http://wxsnsdy.tc.qq.com/105/20210/snsdyvideodownload?filekey=30280201010421301f0201690402534804102ca905ce620b1241b726bc41dcff44e00204012882540400&bizid=1023&hy=SH&fileparam=302c020101042530230204136ffd93020457e3c4ff02024ef202031e8d7f02030f42400204045a320a0201000400" binderror="videoErrorCallback', 'http://v2018.zhuoxuncn.com/zhuoxunvideo/20181220/0104_1.mp4',],
+    src: '',
+
   },
-  resetDataList: function () {
-    dataList = [];
-    this.setData({
-      page: 1,
-      hasNextPage: true,
-      current: 0,
-      subjectList: [],
-      talks: [],
-      talksPage: 1,
-      talksPages: -1,
-      isHiddenVideo: false,
-      isHiddenControls: true,
-      videoSrc: '',
-    })
-  },
-  loadPageData: function (success) {
-    var that = this;
-    // console.log("load subject page " + that.data.page);
-
-    if (this.data.hasNextPage == false) {
-      if (success) success()
-      return;
-    }
-
-    var pageNum = this.data.page;
-
-    // 获取推荐视频列表
-    api.getRecommendList({
-      data: {
-        page: pageNum,
-        rows: pageRows
-      },
-      success: function (res) {
-        var list = res.content;
-
-        for (var i = 0; i < list.length; i++) {
-          dataList.push(list[i])
-        }
-
-        // 如果当前页有数据就假定还有下一页数据
-        var hasNextPage = list.length > 0;
-        if (hasNextPage) {
-          pageNum = pageNum + 1;
-        }
-
-        that.setData({
-          page: pageNum,
-          hasNextPage: hasNextPage,
-          subjectList: dataList
-        })
-        if (success) {
-          success();
-        }
-      }
-    })
-  },
-  bindSwiperChange: function (e) {
-    var current = e.detail.current;
-    this.changeSubject(current);
-  },
-  changeSubject: function (index) {
-    // 当前位置
-    var subject = this.data.subjectList[index];
-    // 切换内容
-    this.setData({
-      subject: subject
-    })
-
-    // 自动加载
-    var diff = this.data.subjectList.length - index;
-    if (diff < pageRows) {
-      this.loadPageData();
-    }
-  },
-
-  switchcity:function(){
+  //地址
+  switchcity: function () {
     wx.navigateTo({
-      url:'../switchcity/switchcity'
+      url: '../switchcity/switchcity'
+    })
+  },
+  //搜索
+  search: function () {
+    wx.navigateTo({
+      url: '../search/search'
     })
   },
   // 关注
-  focus:function(){
-    if(this.data.focus==false){
+  focus: function (e) {
+    var that=this;
+    const index=e.currentTarget.dataset.id;
+    const eachrelation = e.currentTarget.dataset.item.relation;
+    const relationIndex = "IndexList[" + index + "].relation";
+    this.setData({
+      [relationIndex]: 1,
+      eachrelation: eachrelation,
+      IndexList: this.data.IndexList,
+    })
+    if (eachrelation == 0) {
       this.setData({
-        focus: true
+        [relationIndex]: 1,
       })
-    }else{
+    } else {
       this.setData({
-        focus: false
+        [relationIndex]: 0,
       })
     }
   },
-  // 点赞
-  like: function (e) {
-    this.setData({
-    "subject.like" : true
-    })
-    var subject = this.data.subject;
-    subject.likes++
-    api.like({
-      subjectId: subject.subjectId
-    })
+  /// 单击、双击
+  multipleTap: function (e) {
+    var that = this
+    var currentTime = e.timeStamp
+    var lastTapTime = that.lastTapTime
+    that.lastTapTime = currentTime
+    if (currentTime - lastTapTime < 300) {
+      // 双击触发
+      // console.log("double tap")
+      clearTimeout(that.lastTapTimeoutFunc);
+      // console.log(this.data)
+      var that = this;
+      // 提交点赞
+      var vid = this.data.vid;
+      if (this.data.count == '1') {
+        that.setData({
+          fav: -1,
+          if_like: 0,
+          count: 2
+        })
+      } else if (this.data.count == '2') {
+        that.setData({
+          if_like: 1,
+          count: 1
+        })
+      }
+    } else {
+      //单击触发
+      that.lastTapTimeoutFunc = setTimeout(function () {
+        // console.log(that.data)
+        // console.log(that.data.index_num)
+        that.setData({
+          index_num: that.data.index_num + 1
+        });
+        if (that.data.index_num % 2 == 1) {
+          // console.log('播放')
+          that.videoContext.play()
+          that.setData({
+            display_play: 'none'
+          })
+        } else {
+          // console.log('暂停')
+          that.videoContext.pause()
+          that.setData({
+            display_play: 'block'
+          })
+        }
+      }, 300);
+    }
+
   },
-  apply: function (e) {
-    wx.redirectTo({
-      url: '../apply/apply',
-    })
-  },
-  talk: function (e) {
-    this.showTalks();
-  },
-  share: function (e) {
-    // wx.showToast({
-    //   title: '请点击右上角点点点转发',
-    // })
-    var subject = this.data.subject;
-    subject.shares++;
-    this.setData({
-      subject: subject
-    })
-    // api.share({
-    //   subjectId: subject.subjectId
-    // })
-  },
-  // 重新加载主要用作测试
-  reload: function (e) {
+  // 点击图片的点赞事件  
+  toCollect: function (e) {
+
     var that = this;
-    this.resetDataList()
-    this.loadPageData(function () {
-      that.changeSubject(0);
-      wx.stopPullDownRefresh();
-    });
+    // 获取脚标
+    const index = e.currentTarget.dataset.id;
+    // console.log(e.currentTarget.dataset.id)
+    // 获取点赞的值
+    const eachiflike = e.currentTarget.dataset.item.if_like;
+    const iflikeIndex = "IndexList[" + index + "].if_like";
+    // console.log(iflikeIndex)
+    // console.log(eachoiflike)
+    this.setData({
+      [iflikeIndex]: 1,
+      eachiflike: eachiflike,
+      IndexList: this.data.IndexList,
+    })
+    if (eachiflike == 0) {
+      this.setData({
+        [iflikeIndex]: 1,
+      })
+    } else {
+      this.setData({
+        [iflikeIndex]: 0,
+      })
+    }
   },
-  // 显示大头像
-  showAvatar: function () {
-    var url = this.data.subject.avatarUrl;
-    wx.previewImage({
-      urls: [url],
+  onReady: function (res) {
+    this.videoContext = wx.createVideoContext('myVideo')
+  },
+  
+// 评论点赞
+  commentCollect:function(e){
+    console.log(e);
+    var that=this;
+    // var vid = e.currentTarget.dataset.id;
+    if (this.data.commentcount == 1) {
+      that.setData({
+        fav: -1,
+        comment_not_zan: true,
+        commentcount: 2
+      })
+    } else {
+      that.setData({
+        fav: 0,
+        comment_not_zan: false,
+        commentcount: 1
+      })
+    }
+  },
+  bindPlay: function () {
+    this.videoContext.play()
+    
+  },
+  touchstart: function (res) {
+    this.setData({
+      pagey: res.changedTouches[0].pageY
+    })
+    // console.log(res)
+  },
+  touchend: function (res) {
+    if (res.changedTouches[0].pageY - this.data.pagey > 100) {
+
+      var isZero = this.data.vid == 0
+      var id = this.data.vid == 0 ? 0 : this.data.vid - 1
+      if (isZero) {
+        wx.showToast({
+          title: '已是第一个！',
+        })
+      } else {
+        this.setData({
+          vid: id,
+          index: 1
+
+        })
+        var that = this
+        setTimeout(function () {
+          that.bindPlay()
+        }, 500)
+      }
+    } else if (this.data.pagey - res.changedTouches[0].pageY > 100) {
+      var islast = this.data.vid == this.data.vsrc.length - 1
+      var lid = this.data.vid == this.data.vsrc.length - 1 ? this.data.vsrc.length - 1 : this.data.vid + 1
+      if (islast) {
+        wx.showToast({
+          title: '已是最后一个！',
+        })
+      } else {
+        this.setData({
+          vid: lid,
+          index: 1
+        })
+      }
+      var that = this
+      setTimeout(function () {
+        that.bindPlay()
+      }, 500)
+    }
+  },
+  bindInputBlur: function (e) {
+    this.inputValue = e.detail.value
+  },
+  bindSendDanmu: function () {
+    this.videoContext.sendDanmu({
+      text: this.inputValue,
+      color: getRandomColor()
+    })
+  },
+  // 播放
+  bindPlay: function () {
+    this.videoContext.play()
+  },
+  // 暂停播放
+  bindPause: function () {
+    this.videoContext.pause()
+    display_play: 'block'
+  },
+  //播放结束
+  bindend: function () {
+    var a = this.data.index
+    var a_dow = a + 1
+    // console.log(a + 1);
+    this.setData({
+      index: a_dow,
+      vid: this.data.scrollTop_list[parseInt(a_dow)].vid,
+      display_play: 'none',
+      video: [],
+    })
+    // 获取视频
+    this.tab_video()
+    // 获取评论列表
+    this.getcomment()
+  },
+  videoErrorCallback: function (e) {
+    // console.log('视频错误信息:')
+    // console.log(e.detail.errMsg)
+
+  },
+
+  //评论
+  showModal: function () {
+    var animation = wx.createAnimation({
+      duration: 200,
+      timingFunction: "linear",
+      delay: 0
+    })
+    this.animation = animation
+    animation.translateY(300).step()
+    this.setData({
+      animationData: animation.export(),
+      showModalStatus: true,
+      heighTrue: false,
+      video_heighe: 45,
+      ball_height: 1,
+      display_pl: 'none'
+    })
+    setTimeout(function () {
+      animation.translateY(0).step()
+      this.setData({
+        animationData: animation.export()
+      })
+    }.bind(this), 200)
+  },
+  //隐藏对话框
+  hideModal: function () {
+    // 隐藏遮罩层
+    var animation = wx.createAnimation({
+      duration: 200,
+      timingFunction: "linear",
+      delay: 0
+    })
+    this.animation = animation
+    animation.translateY(300).step()
+    this.setData({
+      animationData: animation.export(),
+    })
+    setTimeout(function () {
+      animation.translateY(0).step()
+      this.setData({
+        animationData: animation.export(),
+        showModalStatus: false,
+        heighTrue: true,
+        video_heighe: 100,
+        ball_height: 2,
+        display_pl: 'block'
+      })
+    }.bind(this), 200)
+  },
+  getComment:function(e){
+    console.log(this)
+  },
+  getdata: function () {
+    var that = this;
+    wx.request({
+      url: app.globalData.serverPath + 'index',//请求地址
+      data: {//发送给后台的数据
+        // uid: that.data.uid
+        uid:3
+      },
+      header: {//请求头
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      method: "POST",//get为默认方法/POST
+      success: function (res) {
+        console.log(res.data)
+        that.setData({
+          IndexList: res.data
+        })
+
+      },
+      fail: function (err) { },//请求失败
+      complete: function () { }//请求完成后执行的函数
+    })
+  },
+  getdata2: function () {
+    var that = this;
+    wx.request({
+      url: app.globalData.serverPath + 'indexcomment',//请求地址
+      data: {//发送给后台的数据
+
+
+      },
+      header: {//请求头
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      method: "POST",//get为默认方法/POST
+      success: function (res) {
+        // console.log(res.data)
+        that.setData({
+          CommentList: res.data
+        })
+
+      },
+      fail: function (err) { },//请求失败
+      complete: function () { }//请求完成后执行的函数
     })
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var that = this;
-
-    // 注意：小程序的转发主要是转发小程序本身而不是里面的某个内容
-    // 所以用户第一次打开才会看到转发的信息
-    if (options && options.subjectId) {
-      api.getSubjectInfo(options.subjectId, function (shareSubject) {
-        that.setData({
-          subject: shareSubject
-        })
-
-        that.loadPageData()
-      })
-    } else {
-      that.loadPageData(function () {
-        that.changeSubject(0)
-      })
-    }
-  },
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
+    const that = this;
     wx.setNavigationBarTitle({
       title: "小PP短视频",
     })
-
-    // 评论弹出层动画创建
-    this.animation = wx.createAnimation({
-      duration: 400,
-      timingFunction: "ease",
-      delay: 0
-    })
-
-    // 视频组件初始化
-    this.videoContext = wx.createVideoContext('myVideo')
-  },
-
-  danmuTimer: null,// 弹幕定时器
-  previewSubject: function () {
-    var subject = this.data.subject;
-    if (subject.type == 'video') {
-      // 设置视频地址
-      this.setData({
-        videoSrc: subject.src,
-        isHiddenVideo: false
-      })
-      // 开始播放
-      this.videoContext.play();
-
-      // 自动发送弹幕
-      var that = this;
-      api.loadTalks({
-        data: {
-          subjectId: that.data.subject.subjectId,
-          page: 1,
-          rows: 60
-        },
-        success: function (page) {
-          var danMus = page.content;
-          // 先播放最新的弹幕, 评论多的话，需要后台数据排序
-          danMus.reverse();
-          console.log("获取到 " + danMus.length + " 条评论", danMus)
-          that.danmuTimer = setInterval(function () {
-            var talk = danMus.pop();
-            if (talk) {
-              console.log("发送弹幕: " + talk.content)
-              that.videoContext.sendDanmu({
-                text: talk.content, // 评论内容
-                color: getRandomColor() // 随机颜色
-              })
-            } else {
-              clearInterval(that.danmuTimer);
-            }
-          }, 1000)
-        }
-      });
-
-    } else {
-      wx.previewImage({
-        urls: [subject.coverUrl],
-      })
-    }
-  },
-
-  hidePreview: function () {
-    var subject = this.data.subject;
-    if (subject.type == 'video') {
-      // 停止发送弹幕
-      clearInterval(this.danmuTimer);
-      // 暂停播放
-      this.videoContext.pause();
-      // 隐藏视频层
-      this.setData({
-        isHiddenVideo: true
-      })
-    }
-  },
-
-  time: null,
-  bindSwitchControls: function () {
-    if (this.time) {
-      clearTimeout(this.time)
-    }
-    var isHidden = !this.data.isHiddenControls;
-    this.setData({
-      isHiddenControls: isHidden
-    })
-
-    // 自动隐藏按钮
-    var that = this;
-    if (!isHidden) {
-      this.time = setTimeout(function () {
-        var isHidden = that.data.isHiddenControls;
-        if (!isHidden) {
-          that.setData({
-            isHiddenControls: true
-          })
-        }
-      }, 3000)
-    }
-  },
-
-  videoErrorCallback: function (e) {
-    console.log('视频错误信息:' + this.data.subject.src)
-    console.log(e.detail.errMsg)
-  },
-
-  talkConfirm: function (event) {
-    var that = this;
-    var content = event.detail.value;
-    if (content) {
-      // 评论数增加
-      var subject = this.data.subject;
-      subject.talks++;
-      this.setData({
-        subject: subject
-      })
-      api.applyTalk({
-        data: {
-          subjectId: this.data.subject.subjectId,
-          content: content,
-        },
-        success: function () {
-          // that.hideTalks();
-          that.loadTalks();
-          // 清空输入内容
-          that.setData({
-            inputTalk: ''
-          })
-        }
-      })
-    } else {
-      wx.showToast({
-        title: '无字天书？',
-      })
-    }
-  },
-
-  showTalks: function () {
-    // 先清空数据
-    this.setData({
-      talks: []
-    })
-    this.loadTalks();
-    this.animation.bottom("0rpx").height("100%").step()
-    this.setData({
-      talksPage: 1,
-      talksAnimationData: this.animation.export()
-    })
-  },
-
-  hideTalks: function () {
-    this.animation.bottom("-100%").height("0rpx").step()
-    this.setData({
-      talksPage: 1,
-      talksAnimationData: this.animation.export()
-    })
-  },
-
-  loadTalks: function () {
-    var that = this;
-    api.loadTalks({
-      data: {
-        subjectId: this.data.subject.subjectId,
-        page: that.data.talksPage
-      },
-      success: function (page) {
+    wx.getStorage({
+      key: 'userUid',
+      success(res) {
+        console.log(res.data)
         that.setData({
-          talks: page.content,
-          talksPages: page.pages,
-          talksAnimationData: that.animation.export()
-        })
+          uid: res.data
+        });
       }
     });
+    this.getdata()
+    this.getdata2()
   },
-
-  onScrollLoad: function () {
-    var page = this.data.talkPage;
-    if (this.data.talkPage < this.data.talksPages) {
-      page--;
-    } else {
-      page = this.data.talksPages;
-    }
-    this.setData({
-      talkPage: page
-    })
-    this.loadTalks();
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-    var subject = this.data.subject;
-    return {
-      title: subject.title,
-      imageUrl: subject.coverUrl,
-      path: '/pages/subject/subject?subjectId=' + subject.subjectId
-    }
+  onShow:function(){
+    
   }
+  
+
 })

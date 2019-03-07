@@ -27,29 +27,11 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    const that = this;
     wx.setNavigationBarTitle({
       title: '编辑资料',
     })
     // 缓存中取信息
-    wx.getStorage({
-      key: 'userMessage',
-      success(res) {
-        console.log(res.data)
-        that.setData({
-          // nickname: res.data.nickName,
-          // gender: res.data.gender,
-          // city: res.data.city,
-          // province: res.data.province,
-          // country: res.data.country,
-          // avatarUrl: res.data.avatarUrl,
-
-
-          place: res.data.city,
-          nickName: res.data.nickName,
-          headUrl: res.data.avatarUrl
-        })
-      }
-    });
     wx.getStorage({
       key: 'userUid',
       success(res) {
@@ -59,6 +41,19 @@ Page({
         })
       }
     });
+    wx.getStorage({
+      key: 'userMessage',
+      success(res) {
+        console.log(res.data)
+        that.setData({
+          sex: res.data.gender,
+          place: res.data.city,
+          nickName: res.data.nickName,
+          headUrl: res.data.avatarUrl
+        })
+      }
+    });
+
 
   },
 
@@ -197,15 +192,14 @@ Page({
   //编辑个人信息
   save: function (e) {
     var that = this;
-    console.log(app.globalData.userInfo)
     wx.request({
       url: app.globalData.serverPath +"editpersonal",
       data: {
-        "uid": app.globalData.uid,
-        "wxname": app.globalData.userInfo.nickName,
+        "uid": that.data.uid,
+        "wxname": that.data.nickName,
         "signature": that.data.signature ,
         "place": that.data.place,
-        "sex": app.globalData.userInfo.gender,
+        "sex": that.data.gender,
         "birthday": that.data.birthday,
         "phone": that.data.phone,
         "wx": that.data.wx,
@@ -216,9 +210,6 @@ Page({
           content: "保存成功!",
           showCancel: false
         });
-        // this.setData({
-        //   isDis:true
-        // })
       },
       fail:function(error){
         wx.showModal({

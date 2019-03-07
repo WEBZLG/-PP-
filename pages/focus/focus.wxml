@@ -6,12 +6,11 @@
     <view class='tab  {{currentTab == 1 ? "tabBorer" : ""}}' data-current="1" bindtap='checkCurrent'>活动</view>
   </view>
 
-  <!-- <swiper current="{{currentData}}" class='swiper'  duration="300" bindchange="bindchange"> -->
   <swiper style="height: {{clientHeight?clientHeight+'px':'auto'}}" class='swiper' current="{{currentTab}}" duration="300" bindchange="swiperchange">
     <swiper-item>
       <scroll-view scroll-y="{{true}}" style="height: {{clientHeight?clientHeight+'px':'auto'}}" bindscrolltolower="scrollbot" class='swiper_conone'>
         <!-- 第一段内容 -->
-        <view class='aaa' wx:for="{{guanzhuList}}" wx:key="{{index}}">
+        <view class='aaa' wx:for="{{guanzhuList}}" wx:key="{{index}}" wx:if="{{guanzhuList !==''}}">
           <view class='nav-border'>
             <view class='nav-content'>
               <view class='nav-contentup'>
@@ -35,6 +34,7 @@
             <video src='{{item.url}}'></video>
           </view>
         </view>
+        <view class='none-data'  wx:if="{{guanzhuList ==''}}">暂无数据</view>
       </scroll-view>
     </swiper-item>
 
@@ -48,11 +48,11 @@
             <text class='swiper_con-left2'>{{item.addtime}}</text>
           </view>
           <view class='swiper_con-righrt'>
-            <text class='swiper_con-righrt1'>查看</text>
+            <text class='swiper_con-righrt1' data-id="{{item.id}}" bindtap='viewDetails'>查看</text>
           </view>
         </view>
+        <view class='none-data'  wx:if="{{huodongList ==''}}">暂无数据</view>
       </scroll-view>
-      <view class='none-data'  wx:if="{{huodongList ==''}}">暂无数据</view>
     </swiper-item>
   </swiper>
 

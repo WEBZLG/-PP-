@@ -1,260 +1,20 @@
-/* pages/subject/subject.wxss */
-
+/* pages/video/video.wxss */
 page {
-  height: 100%;
-  overflow: hidden;
-}
-
-.swiper {
-  height: 100%;
-}
-
-.slide-image {
+  background: #eeecec;
   width: 100%;
   height: 100%;
 }
-
-.reload {
-  position: absolute;
-  left: 5rpx;
-  top: 10rpx;
-  height: 100px;
-}
-
-.tools {
-  display: flex;
-  position: absolute;
-  right: 5rpx;
-  top:66rpx;
-  flex-direction: column;
-}
-
-.userinfo-avatar {
-  width: 80rpx;
-  height: 80rpx;
-  margin:20rpx 20rpx 0 20rpx;
-  border-radius: 50%;
-}
-
-.icon {
-  width: 60rpx;
-  height:60rpx;
-}
-
-.right-icon {
-  margin: 16rpx 30rpx 0rpx;
-}
-
-.text {
-  color: white;
-  font-size:30rpx;
-  text-align: center;
-  margin: 0rpx 20rpx;
-  width:80rpx;
-  overflow:hidden;
-
-}
-
-.desc {
-  position:absolute;
-  left:20rpx;
-  bottom:10rpx;
-  width:400rpx;
-  font-size:24rpx;
-  color:#fff;
-
-}
-.gifts{
-  position:absolute;
-  right:20rpx;
-  bottom:10rpx;
-  width:200rpx;
-  font-size:24rpx;
-  color:#fff;
-}
-
-/* 框架  */
-
-.talks-layer {
-  position: absolute;
-  bottom: -100%;
-  height: 0;
-  width: 100%;
-  overflow: hidden;
-  /* background-color: blue; */
-}
-
-.layer-white-space {
-  height: 100%;
-  width: 100%;
-  /* background-color: green; */
-}
-
-.talks {
-  position: absolute;
-  height: 900rpx;
-  width: 100%;
-  bottom: 0rpx;
-  background-color: #2f2d2e;
-  border-top-left-radius: 5%;
-  border-top-right-radius: 5%;
-  /* background-color: red; */
-}
-
-.talk-header {
-  width: 100%;
-  height: 70rpx;
-  padding-top: 30rpx;
-  text-align: center;
-}
-
-.talk-body {
-  height: 700rpx;
-}
-
-.talk-footer {
-  position: absolute;
-  bottom: 0rpx;
-  width: 100%;
-  height: 100rpx;
-  background-color: #151515;
-}
-
-/* 顶部元素  */
-
-.talk-count {
-  font-size: 0.8rem;
-  height: 40rpx;
-  color: #6b696a;
-}
-
-.talk-close {
-  position: absolute;
-  top: 40rpx;
-  right: 40rpx;
-  width: 40rpx;
-  height: 40rpx;
-}
-
-/* 中部元素  */
-
-.talk-item {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  width: 100%;
-  color: white;
-}
-
-.talk-item-left {
-  display: flex;
-  flex-direction: row;
-  margin: 20rpx 30rpx;
-}
-
-.talk-item-face {
-  width: 80rpx;
-  height: 80rpx;
-  border-radius: 50%;
-}
-
-.talk-item-right {
-  width: 100%;
-  border-bottom: solid 1rpx #6a6869;
-  margin-right: 30rpx;
-  margin-bottom: 30rpx;
-}
-
-.talk-item-nickname {
-  font-size: 0.7rem;
-  color: #aaa8a9;
-  margin-top: 20rpx;
-  margin-bottom: 14rpx;
-}
-
-.talk-item-content {
-  display: block;
-  margin-right: 30rpx;
-  width: 100%;
-  white-space: pre-line;
-}
-
-.talk-item-time {
-  font-size: 0.7rem;
-  color: #6a6869;
-  margin-bottom: 20rpx;
-}
-
-/* 底部元素  */
-
-.talk-input {
-  width: 100%;
-  padding: 20rpx 40rpx;
-  color: white;
-  border-top-left-radius: 5%;
-  border-top-right-radius: 5%;
-}
-
-/* 视频层 */
-
-.videoLayer {
-  background-color: blue;
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
+ 
 video {
   width: 100%;
-  height: 100%;
+  height: 100vh;
 }
-
-.controls {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
-.icon-box {
-  position: relative;
-  margin: 0 auto;
-  width: 100rpx;
-  height: 100%;
-}
-
-.icon-pause {
-  position: absolute;
-  display: block;
-  top: 50%;
-  transform: translate(0, -50%);
-  width: 100rpx;
-  height: 100rpx;
-}
-
-.play-box {
-  position: absolute;
-  display: block;
-  top: 50%;
-  width: 100%;
-  height: 100rpx;
-}
-
-.icon-play {
-  display: block;
-  width: 100rpx;
-  height: 100rpx;
-  margin: 0 auto;
-}
-/* 滚动公告 */
+ /* 滚动公告 */
 .srcoll_view{
   height: 60rpx;
   font-size: 30rpx;
   white-space: nowrap;
-  line-height: 60rpx;
+  line-height: 50rpx;
   color: #fff;
   animation:myfirst 20s linear infinite;
 }
@@ -263,12 +23,16 @@ video {
 position:absolute;
 top:10rpx;
 width:90%;
-height:60rpx;
-line-height:60rpx;
-margin-left:5%;
+height:50rpx;
+line-height:50rpx;
 overflow:hidden;
 border-radius: 30rpx;
 background:rgba(0, 0, 0, 0.4);
+}
+::-webkit-scrollbar{
+  width: 0rpx;
+  height: 0rpx;
+  color: transparent;
 }
 @keyframes myfirst{
   0% {margin-left: 750rpx;}
@@ -280,41 +44,269 @@ background:rgba(0, 0, 0, 0.4);
   top:80rpx;
   left:5%;
   color:#fff;
-  font-size:30rpx;
+  font-size:25rpx;
   display: flex;
+  flex-direction: row;
 }
 .address{
+  display: flex;
+  flex-direction: row;
   height: 60rpx;
   line-height: 60rpx;
   border-radius: 30rpx;
   padding: 0 30rpx;
-  background: rgba(0, 0, 0, 0.4)
+  background: rgba(0, 0, 0, 0.4);
+  justify-content:center;
+  align-items: center;
+
 }
 .search{
+  display: flex;
   height: 60rpx;
   line-height: 60rpx;
   width: 60rpx;
   text-align: center;
   border-radius: 30rpx;
   margin-left: 20rpx;
-  background: rgba(0, 0, 0, 0.4)
+  background: rgba(0, 0, 0, 0.4);
+  justify-content:center;
+  align-items: center;
 }
-/* 描述 */
+.small-icon{
+  height: 30rpx;
+  width: 30rpx;
+}
+/* 蒙版 */
+.ball2{
+  background-color: rgba(0, 0, 0, 0.103);
+  width: 100%;
+  height:100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.ball1 {
+  background-color: rgba(0, 0, 0, 0.103);
+  width: 100%;
+  height: 45vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/* 播放按钮 */
+.videoplay {
+  width: 160rpx;
+  height: 160rpx;
+  z-index: 100;
+  position: absolute;
+  left: 300rpx;
+  top: 42%;
+}
+/* 右侧列表 */
+.comment_border {
+  position: absolute;
+  top: 10%;
+  right: 30rpx;
+  text-align: center;
+}
+ 
+.head_img {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  border: 5rpx #fff solid;
+}
+.comment_img {
+  width: 60rpx;
+  height: 60rpx;
+  margin-left: 15rpx;
+  margin-top: 20rpx
+}
+.comment_num {
+  color: #fff;
+  font-size: 24rpx;
+  text-align: center;
+  margin-top: 10rpx;
+}
+.comment__button{
+    width: 60rpx;
+  height: 70rpx;
+  text-align: center;
+  line-height: 40rpx;
+  background-color: rgba(3, 2, 2, 0);
+  margin-top: 20rpx;
+}
+button::after {
+  border: none;
+}
+/* 评论弹出层样式 */
+ 
+.commodity_screen {
+  width: 100%;
+  height: 50%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #000;
+  opacity: 0.2;
+  overflow: hidden;
+  z-index: 1000;
+  color: #fff;
+}
+ 
+/*对话框 */
+ 
+.commodity_attr_box {
+  height: 50%;
+  width: 100%;
+  overflow: hidden;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 2000;
+  background: #fff;
+  padding-bottom: 60rpx;
+}
+ 
+/* 评论区 */
+ 
+.down {
+  width: 22rpx;
+  height: 22rpx;
+  float:right;
+  margin: 10rpx;
+}
+ 
+.commentTitle {
+  font-size: 34rpx;
+  padding: 10rpx 20rpx;
+  background: #fff;
+}
+ 
+.commentTitle .img {
+  width: 36rpx; 
+  height: 36rpx;
+  margin-right: 20rpx;
+}
+.commentTime{
+  position: absolute;
+  right: 40rpx;
+  display: flex;
+  flex-direction: column;
+}
+.commentContent {
+  width: 90%;
+  margin: 0 40rpx;
+  padding-top: 10rpx;
+  padding-bottom: 15rpx;
+  display: flex;
+  flex-direction: row;
+}
+
+.contentLeft {
+  margin-left: 20rpx;
+  font-size: 26rpx;
+  color: #666;
+  display: flex;
+  flex-direction: row;
+}
+ 
+.Comment {
+  margin: 10rpx 0rpx 20rpx 20rpx;
+  display: flex;
+  flex-direction: row;
+  font-size: 28rpx;
+}
+ 
+.commentInput {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #f0f0f0;
+  display: flex;
+  flex-direction: row;
+  height: 80rpx
+}
+ 
+.input_box {
+  width: 75%;
+  height: 60rpx;
+  line-height: 60rpx;
+  margin: 8rpx;
+  padding-left: 10rpx;
+  background: #fff;
+  border: 1rpx solid #f3f3f3;
+  border-radius: 10rpx;
+  font-size: 28rpx;
+}
+ 
+.comment_btn {
+  font-size: 28rpx;
+  float: right;
+  width: 20%;
+  border-radius: 10rpx;
+  height: 60rpx;
+  margin: 10rpx 0;
+  line-height: 60rpx;
+  background: #dedede;
+}
+.smallb-icon{
+  height: 40rpx;
+  width: 40rpx;
+}
+/* 视频内容简介 */
+.desc {
+  display: flex;
+  flex-direction: column;
+  position:absolute;
+  left:20rpx;
+  bottom:70rpx;
+  width:400rpx;
+  font-size:24rpx;
+  color:#fff;
+}
+.pding{
+  padding: 0 20rpx;
+}
+.length-icon{
+  height:36rpx;
+  width:80rpx;
+
+}
 .nick-name,
 .music{
-  display: flex
+  display: flex;
 }
 .desc-text{
-  width:100%;
+  width:320rpx;
+  height:90rpx;
   word-break:break-all;
   display: -webkit-box;
   -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
   -webkit-line-clamp: 2;
-  overflow: hidden;
+  white-space:pre-wrap; 
 }
 /* 礼物top3 */
+.gifts{
+  position:absolute;
+  display: flex;
+  flex-direction: column;
+  right:20rpx;
+  bottom:70rpx;
+  font-size:24rpx;
+  color:#fff;
+}
 .top-name{
   display: flex;
+
 }
 .top-img{
   height: 30rpx;
@@ -337,6 +329,8 @@ background:rgba(0, 0, 0, 0.4);
 .top-name{
   padding-left: 0;
   line-height: 30rpx;
+  overflow: hidden;
+  
 }
 .top-one{
   border-color: #FFB001;
@@ -347,3 +341,4 @@ background:rgba(0, 0, 0, 0.4);
 .top-three{
   border-color: #D8760B;
 }
+

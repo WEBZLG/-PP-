@@ -1,138 +1,127 @@
-
-<!-- 轮播图片 -->
-<!-- <swiper duration="{{duration}}" vertical="true" bindchange="bindSwiperChange" current="{{current}}" class='swiper'>
-  <block wx:for="{{subjectList}}" wx:key="index">
-    <swiper-item>
-      <image src="{{item.coverUrl}}" mode='aspectFill' class="slide-image" bindtap='previewSubject' />
-    </swiper-item>
-  </block>
-</swiper> -->
-<swiper duration="{{duration}}" vertical="true" bindchange="bindSwiperChange" current="{{current}}" class='swiper'>
-  <block>
-    <swiper-item>
-      <!-- <image src="../../image/demo.jpg" mode='aspectFill' class ="slide-image" bindtap='previewSubject' /> -->
-    </swiper-item>
-  </block>
-</swiper>
-<!-- 播放提示按钮 -->
-<view class='play-box' wx:if="{{subject.type == 'video'}}">
-  <image src="/image/play.png" mode='aspectFill' class="icon-play" bindtap='previewSubject' />
-</view>
-<view class='scroll_view_border'>
-  <view class="srcoll_view" bindtap="textclick">这武器那都好，就是不吃药只能战斗15秒，15秒内不是你死就是我亡，这才是90级史诗该有的王者风范!</view>
-</view>
-<view class='my-address'>
-  <view class='address'   bindtap='switchcity'>
-    <view><image class='small-icon' src='/image/site.png'></image><text class='public-text'>哈尔滨</text></view>
-  </view>
-  <view class='search'><image class='small-icon' src='/image/search.png'></image></view>
-</view>
-
-<!-- 操作按钮 -->
-<view class="tools">
-  <view>
-    <image class="userinfo-avatar" src="{{subject.avatarUrl}}" bindtap='showAvatar'></image>
-    <!-- <image class="userinfo-avatar" src="../../image/demo.jpg" bindtap='showAvatar'></image> -->
-  </view>
-  <view>
-    <image class="icon right-icon" src='/image/gift.png' bindtap='gift'>礼物</image>
-    <view class="text" bindtap='apply'>{{subject.gift}}0</view>
-  </view>
-  <view>
-    <image wx:if="{{subject.like}}" class="icon right-icon" src='/image/like_red.png' bindtap='like'>喜欢</image>
-    <image wx:if="{{!subject.like}}" class="icon right-icon" src='/image/like.png' bindtap='like'>喜欢</image>
-    <view class="text" bindtap='like'>{{subject.likes}}0</view>
-  </view>
-  <view>
-    <image class="icon right-icon" src='/image/talk.png' bindtap='talk'>评论</image>
-    <view class="text" bindtap='apply'>{{subject.talks}}0</view>
-  </view>
-  <view>
-    <image class="icon right-icon" src='/image/share.png' bindtap='share'>分享</image>
-    <view class="text">{{subject.shares}}0</view>
-  </view>
-  <view>
-    <image class="icon right-icon" src='/image/join.png' bindtap='activity'>活动</image>
-  </view>
-</view>
-
-<!-- 刷新 -->
-<!-- <view class="reload">
-  <view>
-    <image class="icon" src='/image/reload.png' bindtap='reload'></image>
-  </view>
-</view> -->
-
-  <!-- 描述 -->
-  <view class="desc">
-    <view class='nick-name'>
-      <text>@djmajipeng</text>
-      <view class='focus pding'>
-        <image wx:if="{{!focus}}" class='length-icon' src='../../image/follow.png' bindtap='focus'></image>
-        <image wx:if="{{focus}}" class='length-icon' src='../../image/followed.png' bindtap='focus'></image>
-      </view> 
-    </view>
-    <view class='activition'><image class='length-icon' src='../../image/activity.png'></image></view>
-    <view >
-      <text class="desc-text">{{subject.title}}666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666</text>
-    </view>
-    <view class='music'>
-      <view><image class='small-icon' src='../../image/bgm.png'></image></view>
-      <text class='public-text'>that girl</text>
-    </view>
-  </view>
-  <!-- 礼物 -->
-  <view class='gifts'>
-    <view class='contribution'>贡献榜单Top3</view>
-    <view class='top-name'>
-      <image class='top-img top-one' src='/image/talk.png'></image>
-      <text>majipeng</text>
-    </view>
-    <view class='top-name'>
-      <image class='top-img top-two' src='/image/talk.png'></image>
-      <text>majipeng</text>
-    </view>
-    <view class='top-name'>
-      <image class='top-img top-three' src='/image/talk.png'></image>
-      <text>majipeng</text>
-    </view>
-  </view>
-<!-- 评论 -->
-<view class='talks-layer' animation='{{talksAnimationData}}'>
-  <view class='layer-white-space' bindtap='hideMusec'>
-  </view>
-  <view class='talks'>
-    <view class='talk-header'>
-      <view class='talk-count'>{{subject.talks}} 条评论</view>
-      <image src='/image/close.png' class='talk-close' bindtap='hideTalks'></image>
-    </view>
-
-    <scroll-view class='talk-body' scroll-y="true" bindscrolltolower="onScrollLoad">
-      <view class='talk-item' wx:for="{{talks}}" wx:key="index">
-        <view class='talk-item-left'>
-          <image class='talk-item-face' src='{{item.avatarUrl}}'></image>
-        </view>
-        <view class='talk-item-right'>
-          <text class='talk-item-nickname'>{{item.nickName}}</text>
-          <text class='talk-item-content'>{{item.content}}</text>
-          <text class='talk-item-time'>{{item.talkTime}}</text>
-        </view>
-      </view>
-    </scroll-view>
-
-    <view class='talk-footer'>
-      <input class='talk-input' type='text' bindinput='talkInput' bindconfirm='talkConfirm' placeholder='有爱评论，说点儿好听的~' value='{{inputTalk}}'></input>
-    </view>
-  </view>
-</view>
-
-<!-- 视频层  -->
-<view class="videoLayer" hidden='{{isHiddenVideo}}'>
-  <video id="myVideo" src="{{videoSrc}}" binderror="videoErrorCallback" autoplay='{{true}}' controls='{{false}}' class='slide-image' loop='true' show-progress='false' show-play-btn='false' show-center-play-btn='true' show-fullscreen-btn='false' objectFit='fill' enable-danmu>
-    <cover-view class='controls' bindtap="bindSwitchControls">
-      <cover-view class="icon-box" hidden='{{isHiddenControls}}'>
-        <cover-image class='icon-pause' src="/image/pause.png" bindtap="hidePreview" />
-      </cover-view>
+<!--pages/video/video.wxml-->
+<!-- 视频资源 -->
+<view style='position: relative;height:100vh' wx:for='{{IndexList}}' wx:key='index'>
+<video id="myVideo" src="{{item.url}}" danmu-list="{{danmuList}}" autoplay='true' show-fullscreen-btn='{{false}}' show-center-play-btn="{{false}}" objectFit='fill'  style='height:{{video_heighe}}vh;' data-id='{{index}}' data-item='{{item}}' custom-cache='{{false}}'></video>
+<!-- 点击滑动蒙版图层 -->
+<cover-view data-time="{{lastTapTime}}" class="ball{{ball_height}}" id="id" bindtap="multipleTap" bindtouchstart='touchstart' bindtouchend='touchend'>
+<!-- 公告 -->
+<cover-view class='scroll_view_border' >
+  <cover-view class="srcoll_view" bindtap="textclick">1111111111111111111111111111111111111</cover-view>
+</cover-view>
+<!-- 地址 -->
+<cover-view class='my-address'>
+  <cover-view class='address'   bindtap='switchcity'>
+    <cover-view>
+      <cover-image class='small-icon' src='/image/site.png'></cover-image>
     </cover-view>
-  </video>
+      <cover-view class='public-text'>哈尔滨</cover-view>
+  </cover-view>
+  <cover-view class='search' bindtap='search'><cover-image class='small-icon' src='/image/search.png'></cover-image></cover-view>
+</cover-view>
+  <!-- 播放按钮 -->
+  <cover-image src='../../image/play.png' class='videoplay' style='display:{{display_play}}'></cover-image>
+</cover-view>
+<cover-view class='comment_border' style='display:{{display_pl}}'>
+  <cover-view class='sidebar_b_rt'>
+    <!-- 头像 -->
+    <cover-image src='{{item.wximage}}' data-userid='{{item.userid}}' class='head_img' catchtap=''></cover-image>
+  </cover-view>
+  <cover-view class='sidebar_b_rt'>
+    <!-- 礼物 -->
+    <cover-image src='../../image/gift.png' data-userid='{{item.userid}}' class='comment_img' catchtap=''></cover-image>
+    <!-- 礼物数 -->
+    <!-- <cover-view class='comment_num'>1</cover-view> -->
+  </cover-view>
+  <!-- 赞 -->
+  <cover-view class='sidebar_b_rt'>
+    <cover-image src="../../image/like_red.png" catchtap='toCollect' class='comment_img ' data-id='{{index}}' data-item='{{item}}' wx:if='{{item.if_like==0}}'></cover-image>
+    <cover-image src="../../image/like.png" catchtap='toCollect' class='comment_img ' data-id='{{index}}' data-item='{{item}}' wx:else></cover-image>
+    <!-- 赞数 -->
+    <cover-view class='comment_num' catchtap='toCollect' data-id='{{index}}' data-item='{{item}}'>{{item.likenum}}</cover-view>
+  </cover-view>
+  <!-- 评论 -->
+  <cover-view class='sidebar_b_rt'>
+    <cover-image src='../../image/talk.png' class='comment_img ' catchtap='showModal' data-vid="{{item.vid}}" data-img_url='{{item.wapimg}}'></cover-image>
+    <!-- 评论数 -->
+    <cover-view class='comment_num' catchtap='showModal' data-id="{{item.id}}" data-img_url='{{item.wapimg}}'>{{item.commentnum}}</cover-view>
+  </cover-view>
+  <!-- 分享 -->
+  <cover-view class='sidebar_b_rt'>
+    <button class='comment__button' open-type='share'>
+      <cover-image src='../../image/share.png' class='comment_num'>转发</cover-image>
+    </button>
+    <!-- 转发数 -->
+    <cover-view class='comment_num'>分享</cover-view>
+  </cover-view>
+  <cover-view class='sidebar_b_rt'>
+    <!-- 活动 -->
+    <cover-image src='../../image/join.png' data-userid='{{item.userid}}' class='comment_img' catchtap=''></cover-image>
+    <!-- 活动人数 -->
+    <cover-view class='comment_num'>1</cover-view>
+  </cover-view>
+</cover-view>
+<!-- 描述 -->
+  <cover-view class="desc" >
+    <cover-view class='nick-name'>
+      <cover-view>{{item.wxname}}</cover-view>
+      <cover-view class='focus pding'>
+        <cover-image wx:if="{{item.relation==0}}" class='length-icon' src='../../image/follow.png' bindtap='focus' data-id='{{index}}' data-item='{{item}}'></cover-image >
+        <cover-image wx:else class='length-icon' src='../../image/followed.png' bindtap='focus' data-id='{{index}}' data-item='{{item}}'></cover-image >
+      </cover-view> 
+    </cover-view>
+    <cover-view class='activition'><cover-image class='length-icon' src='../../image/activity.png'></cover-image></cover-view>
+    <cover-view >
+      <cover-view class="desc-text">{{item.content}}</cover-view>
+    </cover-view>
+    <cover-view class='music'>
+      <cover-view><cover-image class='small-icon' src='../../image/bgm.png'></cover-image></cover-view>
+      <cover-view class='public-text'>{{item.name}}</cover-view>
+    </cover-view>
+  </cover-view>
+  <!-- 礼物 -->
+  <cover-view class='gifts'>
+    <cover-view class='contribution'>贡献榜单Top3</cover-view>
+    <cover-view class='top-name' wx:for='{{item.top}}' wx:for-item='top' wx:for-index='topindex' wx:key='*this'>
+      <cover-image class='top-img top-one' src='{{item.wximage}}'></cover-image>
+      <cover-view>{{top.wxname}}</cover-view>
+    </cover-view>
+  </cover-view>
+<!-- 隐藏评论窗口按钮 -->
+<view animation="{{animationData}}" class="commodity_attr_box" wx:if="{{showModalStatus}}">
+  <!-- 评论遍历 -->
+  <view class="commentTitle">
+    <text style='margin-left:40%'>全部评论({{commentList.length}})</text>
+    <image class='down' src='../../image/close@2x.png' bindtap='hideModal'></image>
+  </view>
+  <scroll-view scroll-y='true' style='height:500rpx'>
+    <block wx:for='{{commentList}}' wx:key='item.vid'>
+      <view class="commentContent">
+        <view>
+          <image src='{{item.userimg}}' class='head_img'></image>
+        </view>
+        <view>
+          <view class="contentLeft">
+            <view style='color:#000000'>{{item.username}}</view>
+            <view class='commentTime'>{{item.ComTime}}</view>
+          </view>
+          <!-- <view class="clear"></view> -->
+          <view class="Comment">
+            <text style='width:480rpx;color:#666;'>{{item.ComContent}}</text>
+            <view class='commentTime'>
+              <!-- <image src='../../image/like_m.png' class='smallb-icon'></image> -->
+              <image src='{{comment_not_zan?"../../image/liked_m.png":"../../image/like_m.png"}}' class='smallb-icon' catchtap='commentCollect'></image>
+              <text style='font-size:17rpx;'>100</text>
+            </view>
+          </view>
+        </view>  
+      </view>
+    </block>
+  </scroll-view>
+  <view class="commentInput">
+    <input placeholder="留下你的精彩评论吧" class="input_box" bindblur='getComment' />
+    <button class="comment_btn" bindtap='bindContent' data-vid='{{vid}}'>
+      <text class='comment_txt'>发布</text>
+    </button>
+  </view>
+</view>
 </view>

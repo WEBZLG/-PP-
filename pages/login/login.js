@@ -14,7 +14,6 @@ Page({
   },
   globalData: {
     userInfo: null,
-    uid: null
   },
   onLoad: function () {
     if (app.globalData.userInfo) {
@@ -71,7 +70,11 @@ Page({
                 method: 'POST',
                 success: function (res) {
                   console.log(res)
-
+                  // 缓存openid
+                  wx.setStorage({
+                    key: 'openId',
+                    data: res.data.openid
+                  })
                   that.setData({
                     // userInfo: e.detail.userInfo,
                     hasUserInfo: true,
@@ -120,8 +123,6 @@ Page({
       },
       method: 'POST',
       success: function (res) {
-        console.log(res);
-        app.globalData.uid = res.data.uid
         // 缓存uid
         wx.setStorage({
           key: 'userUid',

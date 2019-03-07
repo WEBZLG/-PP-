@@ -26,12 +26,23 @@ Page({
         });
     },
     onLoad: function() {
-        this.setData({
-            UnionID: t.globalData.openid
+      const that = this;
+      wx.setNavigationBarTitle({
+        title: '我的相册',
+      }),
+        wx.getStorage({
+          key: 'openId',
+          success(res) {
+            console.log(res.data)
+            that.setData({
+              UnionID: res.data
+            })
+          }
         });
     },
     onShow: function() {
-        this.photoLoad(t.globalData.openid);
+      const that = this;
+      this.photoLoad(that.data.UnionID);
     },
     newphoto: function() {
         var t = this;

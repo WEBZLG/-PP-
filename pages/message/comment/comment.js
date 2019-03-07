@@ -20,6 +20,16 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    const that = this;
+    wx.getStorage({
+      key: 'userUid',
+      success(res) {
+        console.log(res.data)
+        that.setData({
+          uid: res.data
+        })
+      }
+    });
     wx.setNavigationBarTitle({
       title: '评论',
     }),
@@ -27,35 +37,14 @@ Page({
       frontColor: '#ffffff',
       backgroundColor: '#434343',
     }),
-      // this.setData({
-      // commentList: [
-      //     { img_url: "/img/head@2x.png", 
-      //     text_id: "@shirley", 
-      //     comment:"这么巧啊我也在活动现场",
-      //     time: "2019-02-01 12：39", 
-      //     video_img: "/img/zan-img.png" }, 
-      //     { img_url: "/img/head@2x.png", 
-      //     text_id: "@Luka Addway", 
-      //     comment:"兄弟你这个车不错",
-      //     time: "2019-02-16 02：39", 
-      //     video_img: "/img/zan-img.png" }, 
-      //     { img_url: "/img/head@2x.png", 
-      //     text_id: "@barbara", 
-      //     comment:"男神经！",
-      //     time: "2019-02-01 12：39", 
-      //     video_img: "/img/zan-img.png" }
-      //   ]
-      // })
       this.getdata()
-
   },
   getdata: function () {
     var that = this;
     wx.request({
       url: app.globalData.serverPath +'commentlist',//请求地址
       data: {//发送给后台的数据
-        // uid: app.globalData.uid
-        uid: 3
+        uid: that.data.uid
       },
       header: {//请求头
         "Content-Type": "application/x-www-form-urlencoded"

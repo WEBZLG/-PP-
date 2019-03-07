@@ -1,19 +1,15 @@
-// pages/zan/zan.js
+// pages/message/noticeDetails/noticeDetails.js
 const app = getApp()
+const WxParse = require('../../../wxParse/wxParse.js');
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    Zan:[],//数组
-    id:'',//作品ID
-    pic:'',//作品封面
-    time:'',//点赞时间
-    uid:'',//点赞人ID
-    wximage:'',//头像
-    wxname:'',//昵称
-
+    title:'',
+    time:'',
+    content:''
   },
 
   /**
@@ -21,42 +17,24 @@ Page({
    */
   onLoad: function (options) {
     var that = this;
-    // 缓存获取uid
-    wx.getStorage({
-      key: 'userUid',
-      success(res) {
-        console.log(res.data)
-        that.setData({
-          uid: res.data
-        })
-      }
-    });
-    wx.setNavigationBarTitle({
-      title: '赞',
-    }),
-    wx.setNavigationBarColor({
-      frontColor: '#ffffff',
-      backgroundColor: '#434343',
-    }),
-    this.getdata()
-  },
-  getdata: function () {
-    var that = this;
     wx.request({
-      url: app.globalData.serverPath +'likelist',//请求地址
+      url: app.globalData.serverPath + 'infocontent',//请求地址
       data: {//发送给后台的数据
-        uid: that.data.uid
+        id: options.id
       },
       header: {//请求头
         "Content-Type": "application/x-www-form-urlencoded"
       },
       method: "POST",//get为默认方法/POST
       success: function (res) {
-        console.log(res.data)
+        console.log(res)
+        const article = res.data.content;
+        WxParse.wxParse('article', 'html', article, that, 5);
+        console.log(res)
         that.setData({
-          Zan: res.data
-        })
-
+          title: res.data.title,
+          time:res.data.time,
+　　　　　})
       },
       fail: function (err) { },//请求失败
       complete: function () { }//请求完成后执行的函数

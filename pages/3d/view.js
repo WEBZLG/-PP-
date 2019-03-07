@@ -3,23 +3,39 @@ var e = getApp(), i = require("../../utils/config.js");
 Page({
     data: {
         dview: "",
-        id: 0
+        id: 0,
+      UnionID:""
     },
     onLoad: function(a) {
         var t = this;
-        wx.login({
-            success: function(s) {
-                wx.request({
-                    url: i.requestUrl + "&a=getOpenid&code=" + s.code,
-                    success: function(s) {
-                        e.globalData.openid = s.data, t.setData({
-                            dview: i.host + "index.php?c=D3View&a=overall&id=" + a.id + "&share=" + a.share,
-                            id: a.id
-                        });
-                    }
-                });
-            }
-        }), console.log(i.host + "index.php?c=D3View&a=overall&id=" + a.id + "&share=" + a.share), 
+      wx.getStorage({
+        key: 'openId',
+        success(res) {
+          console.log(res.data)
+          t.setData({
+            UnionID: res.data
+          })
+        }
+      });
+        // wx.login({
+        //     success: function(s) {
+        //         wx.request({
+        //             url: i.requestUrl + "&a=getOpenid&code=" + s.code,
+        //             success: function(s) {
+        //                 e.globalData.openid = s.data, 
+        //                 t.setData({
+        //                     dview: i.host + "index.php?c=D3View&a=overall&id=" + a.id + "&share=" + a.share,
+        //                     id: a.id
+        //                 });
+        //             }
+        //         });
+        //     }
+        // }),
+        t.setData({
+            dview: i.host + "index.php?c=D3View&a=overall&id=" + a.id + "&share=" + a.share,
+            id: a.id
+          });
+         console.log(i.host + "index.php?c=D3View&a=overall&id=" + a.id + "&share=" + a.share), 
         wx.showLoading({
             title: "等待...",
             mask: 1

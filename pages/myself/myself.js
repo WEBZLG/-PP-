@@ -47,6 +47,16 @@ Page({
     }),
     // 缓存中取信息
     wx.getStorage({
+      key: 'userUid',
+      success(res) {
+        console.log(res.data)
+        that.setData({
+          uid: res.data
+        });
+        that.myselfinfo();
+      }
+    });
+    wx.getStorage({
       key: 'userMessage',
       success(res) {
         console.log(res.data)
@@ -60,15 +70,7 @@ Page({
         })
       }
     });
-    wx.getStorage({
-      key: 'userUid',
-      success(res) {
-        console.log(res.data)
-        that.setData({
-          uid:res.data
-        })
-      }
-    });
+
 
     // 评论弹出层动画创建
     this.animation = wx.createAnimation({
@@ -89,12 +91,22 @@ Page({
         });
       }
     });
-    this.myselfinfo();
   },
 
   // 个人信息
   myselfinfo: function (e) {
     var that = this;
+    // 缓存中取信息
+    wx.getStorage({
+      key: 'userUid',
+      success(res) {
+        console.log(res.data)
+        that.setData({
+          uid: res.data
+        });
+      }
+    });
+    console.log(that.data.uid)
     wx.request({
       url: app.globalData.serverPath+"myselfinfo",
       data: {
@@ -152,8 +164,7 @@ Page({
     wx.request({
       url: app.globalData.serverPath+"myselflike",
       data: {
-        // "uid": this.data.uid
-        "uid": 3
+        "uid": that.data.uid
       },
       method: 'POST',
       success: function (res) {
@@ -170,8 +181,7 @@ Page({
     wx.request({
       url: app.globalData.serverPath+"sendgift",
       data: {
-        // "uid": this.data.uid
-        "uid": 3
+        "uid": that.data.uid
       },
       method: 'POST',
       success: function (res) {
@@ -188,8 +198,7 @@ Page({
     wx.request({
       url: app.globalData.serverPath+"incomegift",
       data: {
-        // "uid": this.data.uid
-        "uid": 3
+        "uid": that.data.uid
       },
       method: 'POST',
       success: function (res) {
@@ -205,8 +214,7 @@ Page({
     wx.request({
       url: app.globalData.serverPath+"letters",
       data: {
-        // "uid": this.data.uid
-        "uid": 3
+        "uid": that.data.uid
       },
       method: 'POST',
       success: function (res) {
@@ -233,8 +241,7 @@ Page({
         console.log(res);
         that.setData({
           noteListDetails: res.data,
-          // isDialog: that.data.uid
-          isDialog: 3
+          isDialog: that.data.uid
         })
         that.showDialog()
       }

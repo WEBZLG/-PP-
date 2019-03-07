@@ -7,6 +7,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    uid:"",
     Fans:[],
     wximage:'',
     wxname:'',
@@ -32,10 +33,8 @@ Page({
     wx.request({
       url: app.globalData.serverPath + 'attention',//请求地址
       data: {//发送给后台的数据
-        uid: 3,
-        // uid:app.globalData.uid
-        // attentid:attentid
-        attentid: 5
+        uid:that.data.uid,
+        attentid:attentid
       },
       header: {//请求头
         "Content-Type": "application/x-www-form-urlencoded"
@@ -70,22 +69,31 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    const that =this;
+    wx.getStorage({
+      key: 'userUid',
+      success(res) {
+        console.log(res.data)
+        that.setData({
+          uid: res.data
+        })
+      }
+    });
     wx.setNavigationBarTitle({
       title: '粉丝',
     }),
-      wx.setNavigationBarColor({
-        frontColor: '#ffffff',
-        backgroundColor: '#434343',
-      }),
-      this.getdata()
+    wx.setNavigationBarColor({
+      frontColor: '#ffffff',
+      backgroundColor: '#434343',
+    }),
+    this.getdata()
   },
   getdata: function () {
     const that = this;
     wx.request({
       url: app.globalData.serverPath +'fanlist',//请求地址
       data: {//发送给后台的数据
-        uid: 3
-        // uid:app.globalData.uid
+        uid:that.data.uid
       },
       header: {//请求头
         "Content-Type": "application/x-www-form-urlencoded"

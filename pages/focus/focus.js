@@ -6,6 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    uid:"",
     currentTab: 0,
     selectPerson: true,
     huodongList:[],
@@ -17,14 +18,21 @@ Page({
   onLoad: function (options) {
 
     var that = this
-    //初始化页面数据
-   
+    //缓存中取uid
+    wx.getStorage({
+      key: 'userUid',
+      success(res) {
+        console.log(res.data)
+        that.setData({
+          uid: res.data
+        })
+      }
+    });
     //1.开始初始化第一个TAB页的关注列表数据
     wx.request({
       url: app.globalData.serverPath +'attentionlist',
-      data: { uid: app.globalData.uid},
+      data: { uid: that.data.uid},
       success:function(res){
-        //请求成功
         console.log(res)
         that.setData({
           guanzhuList:res.data
@@ -40,8 +48,9 @@ Page({
     //2.开始初始化活动页面的数据
     wx.request({
       url: app.globalData.serverPath +"apply",
-      data: { uid: app.globalData.uid},
+      data: { uid: that.data.uid},
       success:function(res){
+        console.log(res)
         that.setData({
           huodongList:res.data
         });
@@ -92,5 +101,12 @@ Page({
         currentTab: e.target.dataset.current
       })
     }
-  }
+  },
+  // 跳转详情
+  viewDetails: function (e) {
+    var id = e.currentTarget.dataset.id
+    wx.navigateTo({
+      url: './active/active?id=' + id,
+    })
+  },
 })

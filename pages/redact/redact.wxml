@@ -3,7 +3,7 @@
   <view class='person'>
     <image class='headimg' src='{{headUrl}}'></image>
     <view class='nickName'>{{nickName}}</view>
-    <view class='sex-addr'>{{sex == 0 ? "男" : "女"}} {{place}}</view>
+    <view class='sex-addr'>{{sex == 1 ? "男" : "女"}} {{place}}</view>
   </view>
   <view class='message'>
     <view class='item'>

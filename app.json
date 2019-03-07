@@ -8,7 +8,6 @@
     "pages/viewdetails/viewdetails",
     "pages/depositapply/depositapply",
     "pages/add/add",
-    "pages/home/home",
     "pages/focus/focus",
     "pages/switchcity/switchcity",
     "pages/message/message",
@@ -27,7 +26,9 @@
     "pages/3d/view",
     "pages/3d/mybook",
     "pages/3d/share",
-    "pages/message/noticeDetails/noticeDetails"
+    "pages/message/noticeDetails/noticeDetails",
+    "pages/focus/active/active",
+    "pages/help/helpDetails/helpDetails"
   ],
   "permission": {
     "scope.userLocation": {

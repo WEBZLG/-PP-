@@ -8,6 +8,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    uid:"",
     withdraw: "",
     bank: "",
     card_number: "",
@@ -20,9 +21,19 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    const that = this;
     wx.setNavigationBarTitle({
       title: '提现',
     })
+    wx.getStorage({
+      key: 'userUid',
+      success(res) {
+        console.log(res.data)
+        that.setData({
+          uid: res.data
+        })
+      }
+    });
   },
 
   /**
@@ -113,7 +124,7 @@ Page({
       url: app.globalData.serverPath+'withdraw',
       method: 'POST',
       data: {
-        uid: app.globalData.uid,
+        uid: that.data.uid,
         withdraw: that.data.withdraw,
         bank: that.data.bank,
         card_number: that.data.card_number,

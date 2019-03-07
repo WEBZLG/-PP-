@@ -7,9 +7,9 @@ Page({
    * 页面的初始数据
    */
   data: {
-    title:'',
-    time:'',
-    content:''
+    title: '',
+    time: '',
+    content: ''
   },
 
   /**
@@ -32,8 +32,8 @@ Page({
         console.log(res)
         that.setData({
           title: res.data.title,
-          time:res.data.time,
-　　　　　})
+          time: res.data.time,
+        　　　　　})
       },
       fail: function (err) { },//请求失败
       complete: function () { }//请求完成后执行的函数

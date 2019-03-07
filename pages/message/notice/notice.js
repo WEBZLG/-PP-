@@ -7,10 +7,10 @@ Page({
    */
   data: {
     Notice: [],
-    title:'',//标题
-    content:'',//内容
-    time:'',//时间
-    id:''
+    title: '',//标题
+    content: '',//内容
+    time: '',//时间
+    id: ''
   },
 
   /**
@@ -20,45 +20,42 @@ Page({
     wx.setNavigationBarTitle({
       title: '公告',
     }),
-    wx.setNavigationBarColor({
+      wx.setNavigationBarColor({
         frontColor: '#ffffff',
         backgroundColor: '#434343',
-    }),
-    this.getdata()
-
+      }),
+      this.getdata()
   },
   getdata: function () {
-    var that = this;  
+    var that = this;
     wx.request({
-      url: app.globalData.serverPath +'infolist',//请求地址
-      data: {//发送给后台的数据
-        id:15
-      },
+      url: app.globalData.serverPath + 'infolist',//请求地址
+      data: {},
       header: {//请求头
         "Content-Type": "application/x-www-form-urlencoded"
       },
       method: "POST",//get为默认方法/POST
       success: function (res) {
         console.log(res)
-　　　  that.setData({
-　　　　　　Notice: res.data
-　　　　　　})
+        that.setData({
+          　　　　　　Notice: res.data
+        　　　　　　})
       },
       fail: function (err) { },//请求失败
       complete: function () { }//请求完成后执行的函数
     })
   },
-  viewDetails:function(e){
+  viewDetails: function (e) {
     const id = e.currentTarget.dataset.id;
     wx.navigateTo({
-      url: '../noticeDetails/noticeDetails?id='+id,
+      url: '../noticeDetails/noticeDetails?id=' + id,
     })
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    
+
   },
 
   /**

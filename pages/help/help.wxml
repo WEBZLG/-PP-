@@ -1,29 +1,19 @@
 <!--pages/help/help.wxml-->
 <view>
-  <view class='help-item'>
-    <text class='help-text'>意见反馈</text>
-    <view class='help-action' bindtap='chooseSezi'>发表</view>
-  </view>
-  <view class='help-item'>
-    <text class='help-text'>问题投诉</text>
-    <view class='help-action' bindtap='chooseSezi'>发表</view>
-  </view>
-  <view class='help-item'>
-    <text class='help-text'>问题列表</text>
-    <view class='help-action'>查看</view>
-  </view>
-  <view class='help-item'>
-    <text class='help-text'>帮助文档</text>
-    <view class='help-action'>查看</view>
-  </view>
-  <view class='help-item'>
-    <text class='help-text'>法律公约</text>
-    <view class='help-action'>查看</view>
-  </view>
+    <view class='help-item'>
+      <text class='help-text'>意见、问题反馈</text>
+      <view class='help-action' bindtap='chooseSezi'>发表</view>
+    </view>
+  <block wx:for="{{helpList}}" wx:key="{{index}}">
+    <view class='help-item'>
+      <text class='help-text'>{{item.title}}</text>
+      <view class='help-action' bindtap='viewDetails'  data-id='{{item.id}}'>查看</view>
+    </view>
+  </block>
   <view class='window-bg' wx:if="{{chooseSize}}">
     <view class='public-box' animation='{{animationData}}'>
-      <textarea placeholder="说点什么..." bindinput="bindKeyInput" /> 
-      <button type='button'>提交</button>
+      <textarea placeholder="说点什么...(5字以上30字以内的描述)" bindinput="bindKeyInput"  minlength="5" maxlength="30"/> 
+      <button type='button' bindtap='problem'>提交</button>
     </view>
   </view>
 </view>

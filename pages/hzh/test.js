@@ -12,6 +12,15 @@ Page({
     onLoad: function() {
         e.autoplay = !1, e.src = this.data.src, e.loop = !0;
         var o = this;
+      wx.getStorage({
+        key: 'openId',
+        success(res) {
+          console.log(res.data)
+          o.setData({
+            openid: res.data
+          })
+        }
+      });
         wx.request({
             url: a.host + "index.php?c=Sharetxt&a=contxt",
             method: "post",
@@ -23,18 +32,19 @@ Page({
                     sharearr: t.data
                 });
             }
-        }), wx.login({
-            success: function(e) {
-                wx.request({
-                    url: a.requestUrl + "&a=getOpenid&code=" + e.code,
-                    success: function(a) {
-                        t.globalData.openid = a.data, o.setData({
-                            openid: a.data
-                        }), console.log(o.data.openid);
-                    }
-                });
-            }
-        });
+        }) 
+        // wx.login({
+        //     success: function(e) {
+        //         wx.request({
+        //             url: a.requestUrl + "&a=getOpenid&code=" + e.code,
+        //             success: function(a) {
+        //                 t.globalData.openid = a.data, o.setData({
+        //                     openid: a.data
+        //                 }), console.log(o.data.openid);
+        //             }
+        //         });
+        //     }
+        // });
     },
     zhizuo: function() {
         var t = this;
