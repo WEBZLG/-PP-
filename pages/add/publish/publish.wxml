@@ -15,8 +15,8 @@
         </cover-view>
         <cover-view class="camera-menu">
             <cover-view catchtap="{{cameraType==0?'chooseVideo':'chooseImage'}}" class="camera-menu-image" hidden="{{recordState!=0}}">
-                <cover-image class="icon-cam-image" src="/image/icon_cam_image.png"></cover-image>
-                <cover-view class="t-1">{{cameraType==0?'本地视频':'本地图片'}}</cover-view>
+                <!-- <cover-image class="icon-cam-image" src="/image/icon_cam_image.png"></cover-image>
+                <cover-view class="t-1">{{cameraType==0?'本地视频':'本地图片'}}</cover-view> -->
             </cover-view>
             <cover-view class="camera-menu-play">
                 <block wx:if="{{cameraType==0}}">
@@ -26,13 +26,13 @@
                 <cover-image catchtap="takePhoto" class="icon-camera-play" src="/image/icon_image_play.png" wx:else></cover-image>
             </cover-view>
             <cover-view catchtap="chooseImage" class="camera-menu-txt" hidden="{{recordState!=0}}">
-                <cover-image class="icon-cam-txt" src="/image/icon_video_menu.png"></cover-image>
-                <cover-view class="t-1">图文视频</cover-view>
+                <!-- <cover-image class="icon-cam-txt" src="/image/icon_video_menu.png"></cover-image>
+                <cover-view class="t-1">图文视频</cover-view> -->
             </cover-view>
         </cover-view>
         <cover-view class="camera-tab-tools" hidden="{{recordState!=0}}">
-            <cover-view catchtap="switchChange" class="t-1" data-type="0" style="{{cameraType==0?'color:#FFD402;margin-left:140rpx;':''}}">录像</cover-view>
-            <cover-view catchtap="switchChange" class="t-1" data-type="1" style="{{cameraType==1?'color:#FFD402;margin-right:140rpx;':''}}">拍照</cover-view>
+            <!-- <cover-view catchtap="switchChange" class="t-1" data-type="0" style="{{cameraType==0?'color:#FFD402;margin-left:140rpx;':''}}">录像</cover-view>
+            <cover-view catchtap="switchChange" class="t-1" data-type="1" style="{{cameraType==1?'color:#FFD402;margin-right:140rpx;':''}}">拍照</cover-view> -->
         </cover-view>
     </camera>
     <view wx:if="{{camSetBtn}}">
