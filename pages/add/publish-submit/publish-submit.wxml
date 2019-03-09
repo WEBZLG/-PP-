@@ -1,97 +1,60 @@
 <view class="description-warp">
-    <form bindsubmit="publishWorks" data-name="publish" reportSubmit="true">
-        <view class="des-w-left">
-            <view class="min-hei200">
-                <view class="des-topic-follow">
-                    <button bindtap="delTopic" class="des-tf-btn topic-item" data-value="{{item}}" wx:for="{{topicList}}" wx:key="{{indx}}">#{{item}}</button>
-                    <button bindtap="delFollow" class="des-tf-btn follow-item" data-name="{{item.userName}}" data-userid="{{item.userId}}" wx:for="{{followList}}" wx:key="{{item.userId}}">@{{item.userName}}</button>
-                </view>
-                <textarea class="des-textarea" hidden="{{topicAreaShow}}" maxlength="140" name="textarea" placeholder="说点什么..." value="{{description}}"></textarea>
-            </view>
-            <view class="clearfix">
-                <button bindtap="addTopic" class="des-topic-btn"># 话题</button>
-                <button bindtap="addFollow" class="des-follow-btn">@ 关注</button>
-            </view>
-        </view>
-        <view class="fixed-bottom">
-            <button bindtap="gotoPubOriginPage" class="draft-btn" data-status="3">取消</button>
-            <button class="publish-btn" data-status="0" formType="submit">发布</button>
-        </view>
-    </form>
-    <view bindtap="previewBoxShow" class="des-w-right">
-        <image class="des-view-img" src="{{previewData.detailData[0].src}}"></image>
+  <form bindsubmit="publishWorks" data-name="publish" reportSubmit="true">
+    <view class="des-w-left">
+      <view class="min-hei200">
+        <textarea class="des-textarea" hidden="{{topicAreaShow}}" maxlength="140" name="textarea" placeholder="说点什么..." value="{{description}}"></textarea>
+      </view>
     </view>
+    <view class="fixed-bottom">
+      <button bindtap="gotoPubOriginPage" class="draft-btn" data-status="3">取消</button>
+      <button class="publish-btn" data-status="0" formType="submit">发布</button>
+    </view>
+  </form>
+  <view bindtap="previewBoxShow" class="des-w-right">
+    <image class="des-view-img" src="{{previewData.detailData[0].src}}"></image>
+  </view>
 </view>
 <view class="works-attr">
-    <view class="attr-category">
-        <view class="works-attr-hd">
-            <image class="icon-category" src="/image/icon_category.png"></image>
-            <text class="attr-tit">内容分类<text class="t-1">*</text>
-            </text>
-        </view>
-        <view class="category-list">
-            <button bindtap="chooesCategory" class="{{item.id==categoryId?'category-btn current':'category-btn'}}" data-categoryid="{{item.id}}" wx:for="{{categoryList}}" wx:key="{{item.id}}">{{item.categoryName}}</button>
-        </view>
-    </view>
-    <view bindtap="gotoCarSeries" class="works-attr-hd attr-car">
-        <image class="icon-car" src="/image/icon_car.png"></image>
-        <text class="attr-tit">关联车圈</text>
-        <view class="attr-txt" data-seriesid="{{originData.carClubId}}">
-            <text class="t-1">{{originData.clubName}}</text>
-            <image class="icon-arrow-right" src="/image/icon_arrow_right.png"></image>
-        </view>
-    </view>
-    <view class="works-attr-hd attr-location">
-        <image class="icon-location" src="/image/icon_location.png"></image>
-        <view class="attr-tit">添加位置 
+  <view class="works-attr-hd attr-location">
+    <image class="icon-location" src="/image/icon_location.png"></image>
+    <view class="attr-tit">添加位置
       <switch bindchange="locationSwitch" checked="{{locationFlag}}" color="#7C63FF" type="switch"></switch>
-        </view>
-        <view bindtap="chooseLocation" class="attr-txt" hidden="{{!locationFlag}}">
-            <text class="t-1">{{address.location}}</text>
-            <image class="icon-arrow-right" src="/image/icon_arrow_right.png"></image>
-        </view>
     </view>
-</view>
-<view class="topicArea" hidden="{{!topicAreaShow}}">
-    <view class="tc-area-con">
-        <view class="tc-tips">话题最多10个字，以空格结束，最多5个话题</view>
-        <form bindsubmit="submitTopicArea" data-name="topic" reportSubmit="true">
-            <textarea class="tc-area-text" name="textarea" placeholder="#请输入话题" placeholderClass="tc-area-placeholder" value="{{topicAreaValue}}"></textarea>
-            <view class="tc-area-bottom">
-                <button bindtap="cancelTopicArea" class="tc-area-btn">取消</button>
-                <button class="tc-area-btn" formType="submit">确定</button>
-            </view>
-        </form>
+    <view bindtap="chooseLocation" class="attr-txt" hidden="{{!locationFlag}}">
+      <text class="t-1">{{address.location}}</text>
+      <image class="icon-arrow-right" src="/image/icon_arrow_right.png"></image>
     </view>
+  </view>
 </view>
 <view class="showModal" hidden="{{!showModalFlag}}">
-    <view class="s-modal-bg"></view>
-    <view class="s-modal-con">
-        <view class="s-modal-title">是否要打开设置页面</view>
-        <view class="s-modal-info">需要获取您的位置信息，请到小程序的设置中打开授权</view>
-        <view class="s-modal-bottom claerfix">
-            <form data-name="showModal" reportSubmit="true">
-                <button bindtap="closeModal" class="s-modal-btn modal-btn-close" hoverCalss="modal-btn-hover">取消</button>
-                <button bindtap="openSetting" class="s-modal-btn modal-btn-confirm" formType="submit" hoverCalss="modal-btn-hover">确定</button>
-            </form>
-        </view>
+  <view class="s-modal-bg"></view>
+  <view class="s-modal-con">
+    <view class="s-modal-title">是否要打开设置页面</view>
+    <view class="s-modal-info">需要获取您的位置信息，请到小程序的设置中打开授权</view>
+    <view class="s-modal-bottom claerfix">
+      <form data-name="showModal" reportSubmit="true">
+        <button bindtap="closeModal" class="s-modal-btn modal-btn-close" hoverCalss="modal-btn-hover">取消</button>
+        <button bindtap="openSetting" class="s-modal-btn modal-btn-confirm" formType="submit" hoverCalss="modal-btn-hover">确定</button>
+      </form>
     </view>
+  </view>
 </view>
 <view bindtap="previewBoxHide" class="preview-box" hidden="{{!previewBoxFlag}}">
-    <view class="text-preview" wx:if="{{previewData.type=='text'}}">
-        <image class="text-preview-img" mode="aspectFill" src="{{previewData.detailData[0].src}}"></image>
-        <view class="text-preview-cont-old clearfix">{{previewData.detailData[0].text}}</view>
-    </view>
-    <view class="image-preview" wx:if="{{previewData.type=='image'}}">
-        <view class="image-preview-box2"></view>
-        <swiper autoplay="{{imagePreview.autoplay}}" bindchange="swiperBindchange" circular="{{imagePreview.circular}}" class="swiper-image" current="{{imagePreview.current}}" duration="{{imagePreview.duration}}" indicatorDots="{{imagePreview.indicatorDots}}" interval="{{imagePreview.interval}}">
-            <swiper-item catchtouchend="stopTouchMove" catchtouchmove="stopTouchMove" catchtouchstart="stopTouchMove" class="swiper-item" wx:for="{{previewData.detailData}}" wx:for-index="idx">
-                <image class="slide-image" mode="widthFix" src="{{item.src}}"></image>
-                <view class="text-preview-cont" style="bottom:{{item.bottom}}" wx:if="{{item.text}}">{{item.text}}</view>
-            </swiper-item>
-        </swiper>
-    </view>
-    <video autoplay="{{true}}" class="video-preview" controls="{{false}}" id="myVideo" loop="{{true}}" objectFit="{{previewData.videoType==1?'cover':'contain'}}" src="{{previewData.videoUrl.tempFilePath}}" wx:if="{{previewData.type=='video'}}">
-        <cover-view bindtap="previewBoxHide" class="video-preview"></cover-view>
-    </video>
+  <view class="text-preview" wx:if="{{previewData.type=='text'}}">
+    <image class="text-preview-img" mode="aspectFill" src="{{previewData.detailData[0].src}}"></image>
+    <view class="text-preview-cont-old clearfix">{{previewData.detailData[0].text}}</view>
+  </view>
+  <view class="image-preview" wx:if="{{previewData.type=='image'}}">
+    <view class="image-preview-box2"></view>
+    <swiper autoplay="{{imagePreview.autoplay}}" bindchange="swiperBindchange" circular="{{imagePreview.circular}}" class="swiper-image" current="{{imagePreview.current}}" duration="{{imagePreview.duration}}" indicatorDots="{{imagePreview.indicatorDots}}"
+      interval="{{imagePreview.interval}}">
+      <swiper-item catchtouchend="stopTouchMove" catchtouchmove="stopTouchMove" catchtouchstart="stopTouchMove" class="swiper-item" wx:for="{{previewData.detailData}}" wx:for-index="idx">
+        <image class="slide-image" mode="widthFix" src="{{item.src}}"></image>
+        <view class="text-preview-cont" style="bottom:{{item.bottom}}" wx:if="{{item.text}}">{{item.text}}</view>
+      </swiper-item>
+    </swiper>
+  </view>
+  <video autoplay="{{true}}" class="video-preview" controls="{{false}}" id="myVideo" loop="{{true}}" objectFit="{{previewData.videoType==1?'cover':'contain'}}" src="{{previewData.videoUrl.tempFilePath}}" wx:if="{{previewData.type=='video'}}">
+    <cover-view bindtap="previewBoxHide" class="video-preview"></cover-view>
+  </video>
 </view>

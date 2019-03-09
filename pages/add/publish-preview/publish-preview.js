@@ -5,6 +5,7 @@ Page({
   data: {
     previewData: {},
     isMunted:"false",//是否静音
+    isShow:"flex",
     musicList:[
       { id: 0,
         src: 'http://ws.stream.qqmusic.qq.com/M500001VfvsJ21xFqb.mp3?guid=ffffffff82def4af4b12b3cd9337d5e7&uin=346897220&vkey=6292F51E1E384E06DCBDC9AB7C49FD713D632D313AC4858BACB8DDD29067D3C601481D36E62053BF8DFEAF74C0A5CCFADD6471160CAF3E6A&fromtag=46',
@@ -25,8 +26,6 @@ Page({
     musicAnimationData: {},//音乐弹窗
     pictureAnimationData: {},//贴纸弹窗
     // networkImageUrl: t.globalData.IMAGE_URL,
-
-
     winHeight: "",//窗口高度
     currentTab: 0, //预设当前项的值
     scrollLeft: 0//tab标题的滚动条位置
@@ -153,7 +152,8 @@ Page({
     this.animation.bottom("0rpx").height("100%").step()
     this.setData({
       talksPage: 1,
-      musicAnimationData: this.animation.export()
+      musicAnimationData: this.animation.export(),
+      isShow:"none"
     })
   },
 
@@ -162,7 +162,8 @@ Page({
     this.animation.bottom("-100%").height("0rpx").step()
     this.setData({
       talksPage: 1,
-      musicAnimationData: this.animation.export()
+      musicAnimationData: this.animation.export(),
+      isShow: "flex"
     })
   },
   loadMusic: function () {
@@ -187,7 +188,8 @@ Page({
     this.animation.bottom("0rpx").height("100%").step()
     this.setData({
       talksPage: 1,
-      pictureAnimationData: this.animation.export()
+      pictureAnimationData: this.animation.export(),
+      isShow: "none"
     })
   },
 
@@ -195,7 +197,8 @@ Page({
     this.animation.bottom("-100%").height("0rpx").step()
     this.setData({
       talksPage: 1,
-      pictureAnimationData: this.animation.export()
+      pictureAnimationData: this.animation.export(),
+      isShow: "flex"
     })
   },
   loadPicture: function () {

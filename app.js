@@ -5,7 +5,9 @@ App({
   },
   globalData: {
     // userInfo: null,
-    serverPath : 'http://192.168.1.180/index/port/'
+    // serverPath: 'http://192.168.1.180/index/port/'
+    serverPath: 'http://xcx.mamyself.top/index/port/'
+    
   },
   onLaunch: function () {
     // 获取用户信息

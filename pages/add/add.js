@@ -80,7 +80,7 @@ Page({
             tempFilePath: a.tempFilePath
           },
           "previewData.detailData": [{
-            src: t.data.networkImageUrl + "textpreviewbg.jpg"
+            src: a.thumbTempFilePath
           }]
         }), t.data.previewData.videoType = i, t.gotoPreviewPage()) : wx.showModal({
           content: "上传视频超过15s, 请重新上传",

@@ -1,50 +1,10 @@
-<view class="text-preview" wx:if="{{previewData.type=='text'}}">
-    <!-- <view class="choose-music fixed-top" data-musicid="{{previewData.music.id}}">
-        <text bindtap="gotoMusicPage" class="t-1">当前音乐: {{previewData.music.name}}</text>
-        <view bindtap="gotoMusicPage" class="v-1">
-            <image class="icon-music" src="/image/icon_music.png"></image>更换
-    </view> 
-    </view>-->
-    <image class="text-preview-img" mode="aspectFill" src="{{previewData.detailData[0].src}}"></image>
-    <view class="text-preview-cont-old clearfix">{{previewData.detailData[0].text}}</view>
-    <view class='icon-box'>
-        <cover-image catchtap="showMusicBox" class="icon-cam-music" src="/image/cm.png"></cover-image>
-        <cover-image catchtap="showPicture" class="icon-cam-picture" src="/image/cp.png"></cover-image>
-        <cover-image catchtap="gotoPubSubmitPage" class="icon-cam-save" src="/image/nt.png"></cover-image>
-    </view>
-</view>
-<view class="image-preview" wx:if="{{previewData.type=='image'}}">
-    <!-- <view class="choose-music fixed-top" data-musicid="{{previewData.music.id}}">
-        <text bindtap="gotoMusicPage" class="t-1">当前音乐: {{previewData.music.name}}</text>
-        <view bindtap="gotoMusicPage" class="v-1">
-            <image class="icon-music" src="/image/icon_music.png"></image>更换
-        </view>
-    </view> -->
-    <swiper autoplay="{{imagePreview.autoplay}}" bindchange="swiperBindchange" circular="{{imagePreview.circular}}" class="swiper-image" current="{{imagePreview.current}}" duration="{{imagePreview.duration}}" indicatorDots="{{imagePreview.indicatorDots}}" interval="{{imagePreview.interval}}">
-        <swiper-item catchtouchend="stopTouchMove" catchtouchmove="stopTouchMove" catchtouchstart="stopTouchMove" class="swiper-item" wx:for="{{previewData.detailData}}" wx:for-index="idx">
-            <image class="slide-image" mode="widthFix" src="{{item.src}}"></image>
-            <view class="text-preview-cont" style="bottom:{{item.bottom}}" wx:if="{{item.text}}">{{item.text}}</view>
-        </swiper-item>
-    </swiper>
-    <view class='icon-box'>
-        <cover-image catchtap="showMusicBox" class="icon-cam-music" src="/image/cm.png"></cover-image>
-        <cover-image catchtap="showPicture" class="icon-cam-picture" src="/image/cp.png"></cover-image>
-        <cover-image catchtap="gotoPubSubmitPage" class="icon-cam-save" src="/image/nt.png"></cover-image>
-    </view>
-</view>
-<view class="video-preview" wx:if="{{previewData.type=='video'}}">
-    <!-- <view class="choose-music fixed-top" data-musicid="{{previewData.music.id}}">
-        <text bindtap="gotoMusicPage" class="t-1">当前音乐: {{previewData.music.name}}</text>
-        <view bindtap="gotoMusicPage" class="v-1">
-            <image class="icon-music" src="/image/icon_music.png"></image>更换
-        </view>
-    </view> -->
-  <video autoplay="{{true}}" class="video-preview" controls="{{false}}" id="myVideo" loop="{{true}}" muted="{{isMunted}}" objectFit="{{previewData.videoType==1?'cover':'contain'}}" src="{{previewData.videoUrl.tempFilePath}}" wx:if="{{previewData.type=='video'}}">
+<view class="video-preview">
+  <video autoplay="{{true}}" class="video-preview" controls="{{false}}" id="myVideo" loop="{{true}}" muted="{{isMunted}}"  src="{{previewData.videoUrl.tempFilePath}}">
   </video>
-  <view class='icon-box'>
-      <cover-image catchtap="showMusicBox" class="icon-cam-music" src="/image/cm.png"></cover-image>
-      <cover-image catchtap="showPicture" class="icon-cam-picture" src="/image/cp.png"></cover-image>
-      <cover-image catchtap="gotoPubSubmitPage" class="icon-cam-save" src="/image/nt.png"></cover-image>
+  <view class='icon-box' style='display:{{isShow}}'>
+    <cover-image catchtap="showMusicBox" class="icon-cam-music" src="/image/cm.png"></cover-image>
+    <cover-image catchtap="showPicture" class="icon-cam-picture" src="/image/cp.png"></cover-image>
+    <cover-image catchtap="gotoPubSubmitPage" class="icon-cam-save" src="/image/nt.png"></cover-image>
   </view>
   <!-- 配乐弹窗 -->
   <view class='music-layer' animation='{{musicAnimationData}}'>
@@ -52,27 +12,26 @@
     </view>
     <view class='music'>
       <view class='music-content'>
-        <swiper class="tab-content" current="{{currentTab}}" duration="300" bindchange="switchTab"
-          style="height:{{winHeight}}rpx">
-            <swiper-item wx:for="{{[0,1,2,3,4]}}" wx:key="index">
-                <scroll-view scroll-y="true" class="scoll-h" >
-                  <view class='music-list'>
-                    <block wx:for="{{musicList}}" wx:key="index">
-                      <view class='music-item' bindtap="audioPlay" data-index="{{index}}" data-id='{{index}}' data-item='{{item}}'>
-                        <image class='music-icon' src='../../../image/play_m.png'></image>
-                        <image class='music-icon' src='../../../image/bgm.png'></image>
-                        <text>{{item.name}}</text>
-                        <image class='music-icon' src='../../../image/add_m.png'></image>
-                      </view>
-                    </block>
+        <swiper class="tab-content" current="{{currentTab}}" duration="300" bindchange="switchTab" style="height:{{winHeight}}rpx">
+          <swiper-item wx:for="{{[0,1,2,3,4]}}" wx:key="index">
+            <scroll-view scroll-y="true" class="scoll-h">
+              <view class='music-list'>
+                <block wx:for="{{musicList}}" wx:key="index">
+                  <view class='music-item' bindtap="audioPlay" data-index="{{index}}" data-id='{{index}}' data-item='{{item}}'>
+                    <image class='music-icon' src='../../../image/play_m.png'></image>
+                    <image class='music-icon' src='../../../image/bgm.png'></image>
+                    <text>{{item.name}}</text>
+                    <image class='music-icon' src='../../../image/add_m.png'></image>
                   </view>
-                </scroll-view>
-            </swiper-item>
+                </block>
+              </view>
+            </scroll-view>
+          </swiper-item>
         </swiper>
       </view>
       <view class='music-nav'>
         <scroll-view scroll-x="true" class="tab-h" scroll-left="{{scrollLeft}}">
-          <view class="tab-item {{currentTab==0?'active':''}}"  data-current="0" bindtap="swichNav">伤感
+          <view class="tab-item {{currentTab==0?'active':''}}" data-current="0" bindtap="swichNav">伤感
           </view>
           <view class="tab-item {{currentTab==1?'active':''}}" data-current="1" bindtap="swichNav">舒缓</view>
           <view class="tab-item {{currentTab==2?'active':''}}" data-current="2" bindtap="swichNav">欢快</view>
@@ -89,26 +48,26 @@
     <view class='picture'>
       <view class='picture-box'>
         <swiper class="tab-content" current="{{currentTab}}" duration="300" bindchange="switchTab">
-            <swiper-item wx:for="{{[0,1,2,3,4]}}" wx:key="index">
-                <scroll-view scroll-x="true" class="scoll-x" >
-                    <!-- <block wx:for="{{pictureList}}" wx:key="index"> -->
-                      <image src='../../../image/000.jpg' class='pic'></image>
-                      <image src='../../../image/000.jpg' class='pic'></image>
-                      <image src='../../../image/000.jpg' class='pic'></image>
-                      <image src='../../../image/000.jpg' class='pic'></image>
-                      <image src='../../../image/000.jpg' class='pic'></image>
-                      <image src='../../../image/000.jpg' class='pic'></image>
-                      <image src='../../../image/000.jpg' class='pic'></image>
-                      <image src='../../../image/000.jpg' class='pic'></image>
-                    <!-- </block> -->
-                </scroll-view>
-            </swiper-item>
-        </swiper> 
+          <swiper-item wx:for="{{[0,1,2,3,4]}}" wx:key="index">
+            <scroll-view scroll-x="true" class="scoll-x">
+              <!-- <block wx:for="{{pictureList}}" wx:key="index"> -->
+              <image src='../../../image/000.jpg' class='pic'></image>
+              <image src='../../../image/000.jpg' class='pic'></image>
+              <image src='../../../image/000.jpg' class='pic'></image>
+              <image src='../../../image/000.jpg' class='pic'></image>
+              <image src='../../../image/000.jpg' class='pic'></image>
+              <image src='../../../image/000.jpg' class='pic'></image>
+              <image src='../../../image/000.jpg' class='pic'></image>
+              <image src='../../../image/000.jpg' class='pic'></image>
+              <!-- </block> -->
+            </scroll-view>
+          </swiper-item>
+        </swiper>
       </view>
 
       <view class='picture-nav'>
         <scroll-view scroll-x="true" class="tab-h" scroll-left="{{scrollLeft}}">
-          <view class="tab-item {{currentTab==0?'active':''}}"  data-current="0" bindtap="swichNav">伤感
+          <view class="tab-item {{currentTab==0?'active':''}}" data-current="0" bindtap="swichNav">伤感
           </view>
           <view class="tab-item {{currentTab==1?'active':''}}" data-current="1" bindtap="swichNav">舒缓</view>
           <view class="tab-item {{currentTab==2?'active':''}}" data-current="2" bindtap="swichNav">欢快</view>

@@ -199,6 +199,7 @@ Page({
             maxDuration: 15,
             compressed: !1,
             success: function(a) {
+              console.log(a)
                 var i = a.width > a.height ? 0 : 1;
                 a.duration <= 15 ? (t.setData({
                     "previewData.type": "video",

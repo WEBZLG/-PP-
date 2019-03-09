@@ -390,8 +390,8 @@ Page({
         });
       }
     });
-    this.getdata()
-    this.getdata2()
+    // this.getdata()
+    // this.getdata2()
   },
   onShow:function(){
     

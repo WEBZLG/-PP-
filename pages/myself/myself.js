@@ -227,6 +227,7 @@ Page({
   },
 //私信留言详情
   getNoteDetails: function (event) {
+    console.log(event.currentTarget.dataset.id)
     const that = this;
     this.setData({
       "receiveid": event.currentTarget.dataset.id,
@@ -234,7 +235,8 @@ Page({
     wx.request({
       url: app.globalData.serverPath+"lettersinfo",
       data: {
-        "uid": event.currentTarget.dataset.id
+        "uid": event.currentTarget.dataset.id,
+        "myselfid":that.data.uid
       },
       method: 'POST',
       success: function (res) {
