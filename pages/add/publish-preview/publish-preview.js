@@ -3,9 +3,13 @@ var t ,app = getApp(), a = void 0;
 const innerAudioContext = wx.createInnerAudioContext();
 Page({
   data: {
-    previewData: {},
+    previewData: {},//发布数据
     isMunted:"false",//是否静音
     isShow:"flex",
+    musicId:0,
+    isMusic:-1,//是否是当前播放歌曲
+    musicTypeList:'',//音乐类型列表
+    musicType: 1,//音乐类型
     musicList:[
       { id: 0,
         src: 'http://ws.stream.qqmusic.qq.com/M500001VfvsJ21xFqb.mp3?guid=ffffffff82def4af4b12b3cd9337d5e7&uin=346897220&vkey=6292F51E1E384E06DCBDC9AB7C49FD713D632D313AC4858BACB8DDD29067D3C601481D36E62053BF8DFEAF74C0A5CCFADD6471160CAF3E6A&fromtag=46',
@@ -15,6 +19,7 @@ Page({
         name:"狂狼"}
 
     ],
+
     imagePreview: {
       indicatorDots: !1,
       current: 0,
@@ -34,9 +39,6 @@ Page({
   onReady: function (e) {
     
   },
-  onShow:function(){
-
-  },
   onLoad: function (t) {
     var that = this;
     //  高度自适应
@@ -52,26 +54,6 @@ Page({
         });
       }
     });
-		// /**
-		//  * 监听音乐播放
-		//  */
-    // wx.onBackgroundAudioPlay(function () {
-    //   console.log('onBackgroundAudioPlay')
-    // })
-
-		// /**
-		//  * 监听音乐暂停
-		//  */
-    // wx.onBackgroundAudioPause(function () {
-    //   console.log('onBackgroundAudioPause')
-    // })
-
-		// /**
-		//  * 监听音乐停止
-		//  */
-    // wx.onBackgroundAudioStop(function () {
-    //   console.log('onBackgroundAudioStop')
-    // })
 
     // 评论弹出层动画创建
     this.animation = wx.createAnimation({
@@ -105,8 +87,9 @@ Page({
       wx.navigateBack();
   },
   gotoPubSubmitPage: function () {
+    var musicid = this.data.musicId
     wx.navigateTo({
-      url: "../publish-submit/publish-submit"
+      url: "../publish-submit/publish-submit?musicId="+musicid
     });
   },
   gotoMusicPage: function (t) {
@@ -143,12 +126,24 @@ Page({
   swiperBindchange: function (t) {
     this.data.previewData.music && 0 == t.detail.current && this.playMusicFn(this.data.previewData.music.url);
   },
+  // 选择配乐
   showMusicBox: function () {
-    this.showMusic()
+    const that = this;
+    wx.request({
+      url: app.globalData.serverPath + "musictype",
+      data: {},
+      method: 'POST',
+      success: function (res) {
+        console.log(res);
+        that.setData({
+          musicTypeList:res.data
+        })
+        that.loadMusic()
+      }
+    })
   },
   // 配乐弹窗
   showMusic: function () {
-    this.loadMusic();
     this.animation.bottom("0rpx").height("100%").step()
     this.setData({
       talksPage: 1,
@@ -156,7 +151,7 @@ Page({
       isShow:"none"
     })
   },
-
+  //隐藏弹窗
   hideMusic: function () {
     this.audioPause();
     this.animation.bottom("-100%").height("0rpx").step()
@@ -166,25 +161,26 @@ Page({
       isShow: "flex"
     })
   },
-  loadMusic: function () {
-    var that = this;
-    // api.loadTalks({
-    //   data: {
-    //     subjectId: this.data.subject.subjectId,
-    //     page: that.data.talksPage
-    //   },
-    //   success: function (page) {
-    //     that.setData({
-    //       talks: page.content,
-    //       talksPages: page.pages,
-    //       musicAnimationData: that.animation.export()
-    //     })
-    //   }
-    // });
+  //加载音乐
+  loadMusic: function (e) {
+    const that = this;
+    wx.request({
+      url: app.globalData.serverPath + "musiclist",
+      data: {
+        typeid:that.data.musicType
+      },
+      method: 'POST',
+      success: function (res) {
+        console.log(res);
+        that.setData({
+          musicList: res.data
+        })
+        that.showMusic()
+      }
+    })
   },
   // 贴纸弹窗
   showPicture: function () {
-    this.loadMusic();
     this.animation.bottom("0rpx").height("100%").step()
     this.setData({
       talksPage: 1,
@@ -217,29 +213,30 @@ Page({
     //   }
     // });
   },
+  // 播放音乐
   audioPlay: function (e) {
-
-    // wx.playBackgroundAudio({
-    //   //播放地址
-    //   dataUrl: this.data.musicList[e.currentTarget.dataset.index].src,
-    //   title: '青云志',
-    //   //图片地址
-    //   coverImgUrl: 'http://r1.ykimg.com/050E0000576B75F667BC3C136B06E4E7'
-    // })
-
-
-    console.log(this)
+    var that = this;
     console.log(e)
-    innerAudioContext.src = this.data.musicList[e.currentTarget.dataset.index].src
-    innerAudioContext.play(()=>{
-      this.setData({
-        isMunted:"true"
+    const index = e.currentTarget.dataset.id;
+    if(that.data.isMusic == index){
+      that.audioPause();
+      that.setData({
+        isMusic: -1
       })
+    }else{
+      innerAudioContext.src = this.data.musicList[e.currentTarget.dataset.index].url
+      innerAudioContext.play();
+      that.setData({
+        isMunted: "true",
+        isMusic: index
+      })
+    }
 
-    });
+    console.log(index)
+  console.log(that.data.isMusic)
+
   },
   audioPause: function (e) {
-    // wx.pauseBackgroundAudio();
     innerAudioContext.pause(()=>{
       this.setData({
         isMunted: "false"
@@ -249,7 +246,21 @@ Page({
   },
 
 
-
+// 添加音乐
+  addMusic:function(e){
+    console.log(this)
+    console.log(e)
+    this.setData({
+      musicId: e.currentTarget.dataset.item.id
+    })
+    wx.showToast({
+      title: '添加成功',
+      icon: 'success',
+      duration: 2e3,
+      mask: true,
+    })
+    this.hideMusic()
+  },
 
   // 滚动切换标签样式
   switchTab: function (e) {
@@ -260,8 +271,12 @@ Page({
   },
   // 点击标题切换当前页时改变样式
   swichNav: function (e) {
-    console.log("chufa")
     var cur = e.target.dataset.current;
+    console.log(e)
+    this.setData({
+      musicType:e.currentTarget.dataset.id
+    })
+    this.loadMusic(e.currentTarget.dataset.id)
     if (this.data.currentTaB == cur) { return false; }
     else {
       this.setData({

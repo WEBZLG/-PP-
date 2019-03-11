@@ -65,15 +65,20 @@
 .music-item {
   display: flex;
   justify-content: space-between;
-  margin: 20rpx;
+  margin: 30rpx 20rpx;
   color: #eee;
 }
 
 .music-icon {
   height: 40rpx;
   width: 40rpx;
+  vertical-align:middle;
+  margin-right: 10rpx
 }
-
+.music-name{
+  font-size:28rpx;
+  color:#eee;
+}
 .music-list {
   height: 600rpx;
   overflow: auto;
@@ -91,7 +96,10 @@
   height: 600rpx;
   width: 100%;
 }
-
+.play-music{
+  width:90%;
+  text-align:left;
+}
 .tab-h {
   overflow: hidden;
   font-size: 16px;
@@ -107,7 +115,6 @@
   width: 120rpx;
   color: #cbcbcb;
   line-height: 180px;
-  background-image: url(https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1551414132155&di=b412eb371afe4fb01421188eac6cce94&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01891b573bbfb66ac7253f9a62bf7b.jpg%401280w_1l_2o_100sh.jpg);
   background-size:contain;
   background-repeat:no-repeat;
 

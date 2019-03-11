@@ -13,15 +13,17 @@
     <view class='music'>
       <view class='music-content'>
         <swiper class="tab-content" current="{{currentTab}}" duration="300" bindchange="switchTab" style="height:{{winHeight}}rpx">
-          <swiper-item wx:for="{{[0,1,2,3,4]}}" wx:key="index">
+          <swiper-item wx:for="{{musicTypeList}}" wx:key="index">
             <scroll-view scroll-y="true" class="scoll-h">
               <view class='music-list'>
                 <block wx:for="{{musicList}}" wx:key="index">
-                  <view class='music-item' bindtap="audioPlay" data-index="{{index}}" data-id='{{index}}' data-item='{{item}}'>
-                    <image class='music-icon' src='../../../image/play_m.png'></image>
-                    <image class='music-icon' src='../../../image/bgm.png'></image>
-                    <text>{{item.name}}</text>
-                    <image class='music-icon' src='../../../image/add_m.png'></image>
+                  <view class='music-item'>
+                    <view bindtap="audioPlay" class='play-music' data-item='{{item}}' data-index="{{index}}" data-id='{{item.id}}'>
+                      <image class='music-icon' src='../../../image/bgm.png' wx:if="{{isMusic == item.id}}"></image>
+                      <image class='music-icon' src='../../../image/play_m.png' wx:if="{{isMusic !== item.id}}"></image>
+                      <text class='music-name'>{{item.name}}</text>
+                    </view>
+                    <image bindtap="addMusic" data-item='{{item}}' class='music-icon' src='../../../image/add_m.png'></image>
                   </view>
                 </block>
               </view>
@@ -31,12 +33,9 @@
       </view>
       <view class='music-nav'>
         <scroll-view scroll-x="true" class="tab-h" scroll-left="{{scrollLeft}}">
-          <view class="tab-item {{currentTab==0?'active':''}}" data-current="0" bindtap="swichNav">伤感
-          </view>
-          <view class="tab-item {{currentTab==1?'active':''}}" data-current="1" bindtap="swichNav">舒缓</view>
-          <view class="tab-item {{currentTab==2?'active':''}}" data-current="2" bindtap="swichNav">欢快</view>
-          <view class="tab-item {{currentTab==3?'active':''}}" data-current="3" bindtap="swichNav">爵士</view>
-          <view class="tab-item {{currentTab==4?'active':''}}" data-current="4" bindtap="swichNav">流行</view>
+          <block wx:for="{{musicTypeList}}" wx:key="{{index}}">
+            <view class="tab-item {{currentTab == index ?'active':''}}" data-current="{{index}}" data-id="{{item.id}}" style='background-image:url({{item.pic}})' bindtap="swichNav">{{item.name}}</view>
+          </block>
         </scroll-view>
       </view>
     </view>

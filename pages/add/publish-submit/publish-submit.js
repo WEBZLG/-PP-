@@ -12,10 +12,22 @@ var t = getApp(),
 Page({
   data: {
     uid:"",
+    musicId:0,
     topicAreaShow: !1,
     topicAreaValue: "",
     description: "",
     submitData:'',
+    isVip:!1,//是否是会员
+    isDis:true,//是否限制人数
+    isLimit: 1,//是否限制人数
+    isShow:"none",//是否开启活动
+    isActive:0,//是否是活动视频
+    activeManNum:0,//男成员
+    activeWomanNum:0,//女成员
+    activeTitle:"",//活动标题
+    activeContent:"",//活动内容
+    activeTime:"",//活动时间
+    activeAdress:"",//活动地点
     locationFlag: !1,
     address: {
       longitude: "",
@@ -37,7 +49,11 @@ Page({
     worksPubSwitch: !0
   },
   onLoad: function(a) {
+    console.log(a)
     const that = this
+    this.setData({
+      musicId:a.musicId
+    })
     console.log(getCurrentPages())
     wx.getStorage({
       key: 'userUid',
@@ -147,6 +163,24 @@ Page({
       }
     });
   },
+  // 是否参加会员
+  vipSwitch:function(event){
+    const that = this;
+    console.log(event)
+    if (event.detail.value==true){
+      that.setData({
+        isShow : "block",
+        isActive:1
+      })
+    }else{
+      that.setData({
+        isShow : "none",
+        isActive:0
+      })
+    }
+  },
+
+  // 发布活动
   publishWorks:function(options){
     const that = this
     wx.showLoading({
@@ -156,11 +190,8 @@ Page({
       description: options.detail.value.textarea,
       worksPubSwitch: !1
       })
-    const videoUrl = that.data.previewData.videoUrl.tempFilePath
-    console.log(that.data.uid)    
-    console.log(that.data.description)
-    console.log(that.data.address.location)
     console.log(that.data.previewData)
+    const videoUrl = that.data.previewData.videoUrl.tempFilePath
     wx.uploadFile({
       url: app.globalData.serverPath +"release",
       filePath: videoUrl,
@@ -172,20 +203,85 @@ Page({
       formData: {
         'uid': that.data.uid,
         'rplace': that.data.address.location,
-        'if_activity':0,
-        'musicid':1,
-        'content': that.data.description
+        'musicid':that.data.musicId,
+        'content': that.data.description,
+        'if_activity': that.data.isActive,
+        'man':that.data.activeManNum,
+        'woman':that.data.activeWomanNum,
+        'if_limit':that.data.isLimit,
+        'time':that.data.activeTime,
+        'place':that.data.activeAdress,
+        'title':that.data.activeTitle,
+        'content':that.data.activeContent
       },
       success: function (res) {
-        
         console.log(res)
         if(res.data==1){
           wx.hideLoading();
-
+          wx.showToast({
+            title: '发布成功',
+            icon:"success"
+          })
+        }else{
+          wx.hideLoading();
+          wx.showToast({
+            title: '发布失败，请重新发布',
+            icon: "success"
+          })
         }
-        console.log(res.data)
       }
-
+    })
+  },
+  // 是否限制人数
+  checkboxChange:function(event){
+    const that = this
+    if(event.detail.value==""){
+      that.setData({
+        isLimit:1,
+        isDis:true
+      })      
+    }else{
+      that.setData({
+        isLimit: 0,
+        isDis:false
+      })
+    }
+  },
+  // 男成员
+  manInput:function(event){
+    console.log(event)
+    this.setData({
+      activeManNum:event.detail.value
+    })
+  },
+  // 女成员
+  womanInput: function (event){
+    this.setData({
+      activeWomanNum: event.detail.value
+    })
+  },
+  // 活动标题
+  activeInput: function (event) {
+    this.setData({
+      activeTitle: event.detail.value
+    })
+  },
+  // 活动内容
+  contentInput: function (event) {
+    this.setData({
+      activeContent: event.detail.value
+    })
+  },
+  // 活动时间
+  timeInput: function (event) {
+    this.setData({
+      activeTime: event.detail.value
+    })
+  },
+  // 活动地点
+  addressInput: function (event) {
+    this.setData({
+      activeAdress: event.detail.value
     })
   },
   // publishWorks: function(a) {
@@ -335,9 +431,9 @@ Page({
     // });
   },
   previewBoxShow: function() {
-    this.setData({
-      previewBoxFlag: !0
-    }), this.data.myVideo.play(), this.initMusicPlay();
+    // this.setData({
+    //   previewBoxFlag: !0
+    // }), this.data.myVideo.play(), this.initMusicPlay();
   },
   previewBoxHide: function() {
     this.setData({

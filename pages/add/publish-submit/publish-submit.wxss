@@ -131,7 +131,7 @@ body {
 }
 
 .works-attr {
-	padding: 20rpx;
+	padding:0 20rpx;
 	color: #fff;
 }
 
@@ -145,7 +145,7 @@ body {
 .attr-tit {
 	float: left;
 	width: 40%;
-	font-size: 34rpx;
+	font-size: 28rpx;
 	color: #fff;
 	white-space: nowrap;
 	text-overflow: ellipsis;
@@ -367,4 +367,27 @@ body {
 	right: 0;
 	z-index: 199;
 	background: #202020;
+}
+.activity .attr-tit{
+  width: 50%;
+}
+.ipt-text{
+  width: 75%;
+  display:inline-block;
+  vertical-align:middle;
+}
+.active-content{
+  font-size: 28rpx;
+  color: #eee;
+  padding:0 20rpx;
+}
+/* .active-person{
+  display: flex;
+} */
+.checkbox-title{
+  font-size: 28rpx;
+}
+.checkbox .wx-checkbox-input{
+  height: 28rpx;
+  width: 28rpx;
 }
