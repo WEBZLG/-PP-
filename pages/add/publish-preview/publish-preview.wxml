@@ -66,8 +66,7 @@
 
       <view class='picture-nav'>
         <scroll-view scroll-x="true" class="tab-h" scroll-left="{{scrollLeft}}">
-          <view class="tab-item {{currentTab==0?'active':''}}" data-current="0" bindtap="swichNav">伤感
-          </view>
+          <view class="tab-item {{currentTab==0?'active':''}}" data-current="0" bindtap="swichNav">伤感</view>
           <view class="tab-item {{currentTab==1?'active':''}}" data-current="1" bindtap="swichNav">舒缓</view>
           <view class="tab-item {{currentTab==2?'active':''}}" data-current="2" bindtap="swichNav">欢快</view>
           <view class="tab-item {{currentTab==3?'active':''}}" data-current="3" bindtap="swichNav">爵士</view>

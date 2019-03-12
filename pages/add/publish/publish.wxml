@@ -37,6 +37,6 @@
     </camera>
     <view wx:if="{{camSetBtn}}">
         <image catchtap="gotoPubOriginPage" class="icon-cam-close" src="/image/icon_cam_close.png"></image>
-        <button bindtap="cameraSetSwitch" class="cam-set-btn">去授权相机</button>
+        <button bindtap="cameraSetSwitch" class="cam-set-btn" style='color:#000'>去授权相机</button>
     </view>
 </view>

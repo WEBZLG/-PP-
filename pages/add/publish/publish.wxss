@@ -1,5 +1,5 @@
 /* pages/publish/publish.wxss */
-page{
+/* page{
   background-color: inherit;
 }
 .icon-cam-close,
@@ -83,4 +83,192 @@ page{
 	max-width: 100%;
 	-webkit-border-radius: 6rpx;
 	border-radius: 6rpx;
+} */
+
+
+
+.camera-container {
+	width: 100%;
+	height: 100vh;
+	overflow: hidden;
+	position: relative;
+	overflow: hidden;
+	color: #fff;
+}
+
+.camera-view {
+	width: 100%;
+	height: 100vh;
+}
+
+.c-time-warp {
+	height: 12rpx;
+	position: absolute;
+	top: 10rpx;
+	left: 10rpx;
+	right: 10rpx;
+	text-align: center;
+	-webkit-border-radius: 6rpx;
+	border-radius: 6rpx;
+	background: rgba(0, 0, 0, 0.1)
+}
+
+.c-time-warp .c-time {
+	height: 12rpx;
+	width: 0%;
+	background: #FFD402;
+	min-width: 0%;
+	max-width: 100%;
+	-webkit-border-radius: 6rpx;
+	border-radius: 6rpx;
+}
+
+.icon-cam-close {
+	width: 38rpx;
+	height: 38rpx;
+	padding: 10rpx;
+	position: absolute;
+	top: 20rpx;
+	left: 20rpx;
+}
+
+.camera-device,
+.camera-flash {
+	position: absolute;
+	right: 10rpx;
+	text-align: center;
+	width: 80rpx;
+}
+
+.camera-device .t-1,
+.camera-flash .t-1 {
+	margin-top: 10rpx;
+}
+
+.camera-device {
+	top: 20rpx;
+}
+
+.icon-cam-device {
+	display: inline-block;
+	width: 50rpx;
+	height: 50rpx;
+}
+
+.camera-flash {
+	position: absolute;
+	top: 150rpx;
+}
+
+.icon-camflash-on {
+	display: inline-block;
+	width: 65rpx;
+	height: 60rpx;
+}
+
+.icon-camflash-off {
+	display: inline-block;
+	width: 65rpx;
+	height: 60rpx;
+}
+
+.camera-menu {
+	position: absolute;
+	left: 4%;
+	right: 4%;
+	bottom: 98rpx;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-flex-direction: row;
+	flex-direction: row;
+	-webkit-justify-content: space-around;
+	justify-content: space-around;
+}
+
+.camera-menu-play {
+	width: 40%;
+	display: -webkit-flex;
+	display: flex;
+	text-align: center;
+	-webkit-flex-direction: column;
+	flex-direction: column;
+	-webkit-justify-content: center;
+	justify-content: center;
+	-webkit-align-items: center;
+	align-items: center;
+	white-space: nowrap;
+}
+
+.camera-menu-image,
+.camera-menu-txt {
+	width: 140rpx;
+	text-align: center;
+	position: absolute;
+	top: 60rpx;
+}
+
+.camera-menu-image {
+	left: 60rpx;
+}
+
+.camera-menu-txt {
+	right: 60rpx;
+}
+
+.camera-menu-play {
+	height: 220rpx;
+}
+
+.icon-camera-play {
+	display: inline-block;
+	vertical-align: middle;
+	width: 158rpx;
+	height: 158rpx;
+}
+
+.icon-cam-image,
+.icon-cam-txt {
+	display: block;
+	width: 62rpx;
+	height: 62rpx;
+	padding: 10rpx;
+	margin: 0 auto;
+}
+
+.camera-tab-tools {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	width: 100%;
+	height: 98rpx;
+	background: rgba(0, 0, 0, 0.15);
+	text-align: center;
+}
+
+.camera-tab-tools .t-1 {
+	display: inline-block;
+	height: 50rpx;
+	line-height: 50rpx;
+	color: #fff;
+	font-size: 34rpx;
+	padding: 10rpx;
+	margin: 0 20rpx;
+}
+
+.cam-set-btn {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	width: 332rpx;
+	height: 82rpx;
+	margin: -41rpx 0 0 -166rpx;
+	line-height: 82rpx;
+	-webkit-border-radius: 5rpx;
+	border-radius: 5rpx;
+	font-size: 30rpx;
+	color: rgba(255, 255, 255, 1);
+	text-align: center;
+	letter-spacing: 5rpx;
+	background: #7660FF;
 }

@@ -68,7 +68,7 @@ Page({
   chooseVideo: function () {
     var t = this;
     wx.chooseVideo({
-      sourceType: ["album"],
+      sourceType: ['album'],
       maxDuration: 15,
       compressed: !1,
       success: function (a) {
