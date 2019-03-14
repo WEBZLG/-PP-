@@ -1,9 +1,15 @@
-<view class="video-preview">
+<view class="">
   <video autoplay="{{true}}" class="video-preview" controls="{{false}}" id="myVideo" loop="{{true}}" muted="{{isMunted}}"  src="{{previewData.videoUrl.tempFilePath}}">
   </video>
+  <movable-area>
+    <movable-view  direction="all"  x="{{sticker.x}}" y="{{sticker.y}}"  data-id='{{sticker.id}}' data-src='{{sticker.src}}' bindtouchstart="touchstartCallback" bindtouchmove="touchmoveCallback" bindtouchend="touchendCallback" bindscale="onScale" style='display:{{isAddSticker}}'>
+      <image class='del' bindtap='delSticker' data-id="{{sticker.id}}" src='../../../image/cancel.png'></image>
+      <image class='img' src='{{sticker.src}}'></image>
+    </movable-view>
+  </movable-area>
   <view class='icon-box' style='display:{{isShow}}'>
     <cover-image catchtap="showMusicBox" class="icon-cam-music" src="/image/cm.png"></cover-image>
-    <cover-image catchtap="showPicture" class="icon-cam-picture" src="/image/cp.png"></cover-image>
+    <cover-image catchtap="loadPicture" class="icon-cam-picture" src="/image/cp.png"></cover-image>
     <cover-image catchtap="gotoPubSubmitPage" class="icon-cam-save" src="/image/nt.png"></cover-image>
   </view>
   <!-- 配乐弹窗 -->
@@ -46,33 +52,26 @@
     </view>
     <view class='picture'>
       <view class='picture-box'>
-        <swiper class="tab-content" current="{{currentTab}}" duration="300" bindchange="switchTab">
-          <swiper-item wx:for="{{[0,1,2,3,4]}}" wx:key="index">
+        <!-- <swiper class="tab-content" duration="300" bindchange="switchTab">
+          <swiper-item wx:for="{{stickerList}}" wx:key="index"> -->
             <scroll-view scroll-x="true" class="scoll-x">
-              <!-- <block wx:for="{{pictureList}}" wx:key="index"> -->
-              <image src='../../../image/000.jpg' class='pic'></image>
-              <image src='../../../image/000.jpg' class='pic'></image>
-              <image src='../../../image/000.jpg' class='pic'></image>
-              <image src='../../../image/000.jpg' class='pic'></image>
-              <image src='../../../image/000.jpg' class='pic'></image>
-              <image src='../../../image/000.jpg' class='pic'></image>
-              <image src='../../../image/000.jpg' class='pic'></image>
-              <image src='../../../image/000.jpg' class='pic'></image>
-              <!-- </block> -->
+              <block wx:for="{{stickerList}}" wx:key="index">
+                <image class='img' src='{{item.url}}' catchtap='addSticker' data-id='{{item.id}}' data-src='{{item.url}}'></image>
+              </block>
             </scroll-view>
-          </swiper-item>
-        </swiper>
+          <!-- </swiper-item>
+        </swiper> -->
       </view>
 
-      <view class='picture-nav'>
+      <!-- <view class='picture-nav'>
         <scroll-view scroll-x="true" class="tab-h" scroll-left="{{scrollLeft}}">
-          <view class="tab-item {{currentTab==0?'active':''}}" data-current="0" bindtap="swichNav">伤感</view>
-          <view class="tab-item {{currentTab==1?'active':''}}" data-current="1" bindtap="swichNav">舒缓</view>
-          <view class="tab-item {{currentTab==2?'active':''}}" data-current="2" bindtap="swichNav">欢快</view>
-          <view class="tab-item {{currentTab==3?'active':''}}" data-current="3" bindtap="swichNav">爵士</view>
-          <view class="tab-item {{currentTab==4?'active':''}}" data-current="4" bindtap="swichNav">流行</view>
-        </scroll-view>
-      </view>
+          <view class="tab-item {{currentTab==0?'active':''}}" data-current="0" bindtap="swichNavPic">伤感</view>
+          <view class="tab-item {{currentTab==1?'active':''}}" data-current="1" bindtap="swichNavPic">舒缓</view>
+          <view class="tab-item {{currentTab==2?'active':''}}" data-current="2" bindtap="swichNavPic">欢快</view>
+          <view class="tab-item {{currentTab==3?'active':''}}" data-current="3" bindtap="swichNavPic">爵士</view>
+          <view class="tab-item {{currentTab==4?'active':''}}" data-current="4" bindtap="swichNavPic">流行</view>
+        </scroll-view> 
+      </view>-->
     </view>
   </view>
 </view>

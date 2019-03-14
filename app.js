@@ -4,11 +4,8 @@ App({
 
   },
   globalData: {
-    // userInfo: null,
-    // serverPath: 'http://192.168.1.180/index/port/'
-    serverPath: 'http://xcx.mamyself.top/index/port/'
-    
-  },
+    serverPath: 'http://www.surenmedia.cn/index/port/'
+  }, 
   onLaunch: function () {
     // 获取用户信息
     wx.getSetting({

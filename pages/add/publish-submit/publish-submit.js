@@ -46,13 +46,20 @@ Page({
       duration: 0
     },
     previewBoxFlag: !1,
-    worksPubSwitch: !0
+    worksPubSwitch: !0,
+    stickerid:"",
+    stickerx:"",
+    stickery:""
   },
   onLoad: function(a) {
-    console.log(a)
+    console.log(JSON.parse(a.preData))
+    var options = JSON.parse(a.preData)
     const that = this
-    this.setData({
-      musicId:a.musicId
+    that.setData({
+      musicId: options.musicid,
+      stickerid: options.stickerid,
+      stickerx: options.stickerx,
+      stickery: options.stickery
     })
     console.log(getCurrentPages())
     wx.getStorage({
@@ -192,6 +199,44 @@ Page({
       })
     console.log(that.data.previewData)
     const videoUrl = that.data.previewData.videoUrl.tempFilePath
+
+    var formData = {};
+    if(that.data.stickerid==""){
+      formData = {
+        'uid': that.data.uid,
+        'rplace': that.data.address.location,
+        'musicid': that.data.musicId,
+        'content': that.data.description,
+        'if_activity': that.data.isActive,
+        'man': that.data.activeManNum,
+        'woman': that.data.activeWomanNum,
+        'if_limit': that.data.isLimit,
+        'time': that.data.activeTime,
+        'place': that.data.activeAdress,
+        'title': that.data.activeTitle,
+        'content': that.data.activeContent,
+      }
+    }else{
+      formData = {
+        'uid': that.data.uid,
+        'rplace': that.data.address.location,
+        'musicid': that.data.musicId,
+        'content': that.data.description,
+        'if_activity': that.data.isActive,
+        'man': that.data.activeManNum,
+        'woman': that.data.activeWomanNum,
+        'if_limit': that.data.isLimit,
+        'time': that.data.activeTime,
+        'place': that.data.activeAdress,
+        'title': that.data.activeTitle,
+        'content': that.data.activeContent,
+        "str": JSON.stringify([{
+          "img": that.data.stickerid,
+          "overlay": that.data.stickerx + ":" + that.data.stickery,
+          "scale": "50:50"
+        }])
+      }
+    }
     wx.uploadFile({
       url: app.globalData.serverPath +"release",
       filePath: videoUrl,
@@ -200,20 +245,7 @@ Page({
       header:{
         'content-type':'multipart/form-data'
       },
-      formData: {
-        'uid': that.data.uid,
-        'rplace': that.data.address.location,
-        'musicid':that.data.musicId,
-        'content': that.data.description,
-        'if_activity': that.data.isActive,
-        'man':that.data.activeManNum,
-        'woman':that.data.activeWomanNum,
-        'if_limit':that.data.isLimit,
-        'time':that.data.activeTime,
-        'place':that.data.activeAdress,
-        'title':that.data.activeTitle,
-        'content':that.data.activeContent
-      },
+      formData: formData ,
       success: function (res) {
         console.log(res)
         if(res.data==1){
@@ -222,11 +254,14 @@ Page({
             title: '发布成功',
             icon:"success"
           })
+          wx.reLaunch({
+            url: '../../myself/myself',
+          })
         }else{
           wx.hideLoading();
           wx.showToast({
-            title: '发布失败，请重新发布',
-            icon: "success"
+            title: '发布失败,请检查网络重试！',
+            icon: "none"
           })
         }
       }
@@ -284,66 +319,6 @@ Page({
       activeAdress: event.detail.value
     })
   },
-  // publishWorks: function(a) {
-  //   var i = this;
-  //   if (this.data.worksPubSwitch)
-  //     wx.showLoading({
-  //       title: "发布中"
-  //     });
-  //   var s = this,
-  //     n = {
-  //       status: a.detail.target.dataset.status
-  //     };
-  //     this.setData({
-  //       description: a.detail.value.textarea
-  //     }),
-  //     this.setData({
-  //       worksPubSwitch: !1
-  //     }),
-  //     n = Object.assign({}, n, {
-  //       description: s.data.description,
-  //     }),
-  //     console.log(n)
-  //     s.data.locationFlag && (n = Object.assign({}, n, {
-  //       longitude: s.data.address.longitude,
-  //       latitude: s.data.address.latitude,
-  //       location: s.data.address.location,
-  //       city: s.data.address.city
-  //     })),
-  //     this.setData({
-  //       submitData: n
-  //     }),
-  //     s.setData({
-  //       "submitData.type": 3
-  //     }),
-  //     o.start({
-  //       videoFile: s.data.previewData.videoUrl,
-  //       getSignature: s.getSignature,
-  //       success: function(t) {},
-  //       error: function(t) {
-  //         wx.showModal({
-  //           title: "视频上传失败"
-  //         }), i.setData({
-  //           worksPubSwitch: !0
-  //         }), wx.hideLoading();
-  //       },
-  //       progress: function(t) {},
-  //       finish: function(a) {
-  //         var i = [{
-  //           text: "",
-  //           src: a.videoUrl
-  //         }];
-  //         s.setData({
-  //           "submitData.videoFileId": a.fileId,
-  //           "submitData.detailData": JSON.stringify(i)
-  //         }), e({
-  //           url: t.globalData.SAVE_WORKS_URL,
-  //           data: s.data.submitData,
-  //           callback: s.getPublishInfo
-  //         });
-  //       }
-  //     });
-  // },
   getPublishInfo: function(t) {
     if (this.setData({
         worksPubSwitch: !0
@@ -381,11 +356,6 @@ Page({
   },
   gotoPubOriginPage: function() {
     wx.navigateBack()
-    // t.globalData.publishOrigin.path.includes("/tabBar/") ? wx.switchTab({
-    //   url: t.globalData.publishOrigin.path
-    // }) : wx.reLaunch({
-    //   url: t.globalData.publishOrigin.path
-    // }), t.globalData.previewData = {}, t.globalData.publishOrigin = {};
   },
   uploadDIY: function(a, i, o) {
     var s = this,
@@ -420,15 +390,7 @@ Page({
     });
   },
   getSignature: function(a) {
-    // wx.request({
-    //   url: app.globalData.serverPath,
-    //   method: "GET",
-    //   success: function(t) {
-    //     if (!t.data.code || 100200 != t.data.code) return "获取签名失败";
-    //     a(t.data.flag);
-    //   },
-    //   error: function(t) {}
-    // });
+
   },
   previewBoxShow: function() {
     // this.setData({

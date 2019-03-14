@@ -7,6 +7,8 @@ Page({
     isMunted:"false",//是否静音
     isShow:"flex",
     musicId:0,
+    isAddSticker:"none",//是否添加贴纸
+    sticker:"",
     isMusic:-1,//是否是当前播放歌曲
     musicTypeList:'',//音乐类型列表
     musicType: 1,//音乐类型
@@ -19,7 +21,8 @@ Page({
         name:"狂狼"}
 
     ],
-
+    areaStickerList:[],//移动区域贴纸列表
+    stickerList: [],//贴纸列表
     imagePreview: {
       indicatorDots: !1,
       current: 0,
@@ -33,8 +36,19 @@ Page({
     // networkImageUrl: t.globalData.IMAGE_URL,
     winHeight: "",//窗口高度
     currentTab: 0, //预设当前项的值
-    scrollLeft: 0//tab标题的滚动条位置
-
+    scrollLeft: 0, //tab标题的滚动条位置
+    stv: {
+      offsetX: 160,
+      offsetY: 50,
+      zoom: false, //是否缩放状态
+      distance: 0,  //两指距离
+      scale: 1,  //缩放倍数
+      width: 50,
+      height: 50,
+    },
+    stickerX:"",
+    stickerY:"",
+    stickerId:""
   },
   onReady: function (e) {
     
@@ -87,9 +101,14 @@ Page({
       wx.navigateBack();
   },
   gotoPubSubmitPage: function () {
-    var musicid = this.data.musicId
+    var preData = JSON.stringify({
+      "musicid": this.data.musicId,
+      "stickerid": this.data.stickerId,
+      "stickerx" : this.data.stickerX,
+      "stickery" : this.data.stickerY})
+  
     wx.navigateTo({
-      url: "../publish-submit/publish-submit?musicId="+musicid
+      url: "../publish-submit/publish-submit?preData=" + preData
     });
   },
   gotoMusicPage: function (t) {
@@ -199,19 +218,162 @@ Page({
   },
   loadPicture: function () {
     var that = this;
-    // api.loadTalks({
-    //   data: {
-    //     subjectId: this.data.subject.subjectId,
-    //     page: that.data.talksPage
-    //   },
-    //   success: function (page) {
-    //     that.setData({
-    //       talks: page.content,
-    //       talksPages: page.pages,
-    //       pictureAnimationData: that.animation.export()
-    //     })
-    //   }
-    // });
+    wx.request({
+      url: app.globalData.serverPath + "pastepic",
+      data: {},
+      method: 'POST',
+      success: function (res) {
+        console.log(res);
+        that.setData({
+          stickerList: res.data
+        })
+        that.showPicture()
+      }
+    })
+
+  },
+  // 第一张贴图触摸开始
+  touchstartCallback: function (e) {
+    // console.log('touchstartCallback');
+    // console.log(e);
+    if (e.touches.length === 1) {
+      let { clientX, clientY } = e.touches[0];
+      this.startX = clientX;
+      this.startY = clientY;
+      this.touchStartEvent = e.touches;
+    } else {
+      let xMove = e.touches[1].clientX - e.touches[0].clientX;
+      let yMove = e.touches[1].clientY - e.touches[0].clientY;
+      let distance = Math.sqrt(xMove * xMove + yMove * yMove);
+      this.setData({
+        'stv.distance': distance,
+        'stv.zoom': true, //缩放状态
+      })
+    }
+  },
+
+  // 第一张贴图触摸移动中
+  touchmoveCallback: function (e) {
+    // console.log('touchmoveCallback');
+    // console.log(e);
+    if (e.touches.length === 1) {
+      //单指移动
+      if (this.data.stv.zoom) {
+        //缩放状态，不处理单指
+        return;
+      }
+      let { clientX, clientY } = e.touches[0];
+      let offsetX = clientX - this.startX;
+      let offsetY = clientY - this.startY;
+      this.startX = clientX;
+      this.startY = clientY;
+      let { stv } = this.data;
+      stv.offsetX += offsetX;
+      stv.offsetY += offsetY;
+      stv.offsetLeftX = -stv.offsetX;
+      stv.offsetLeftY = -stv.offsetLeftY;
+      var nowWidth = this.data.stv.width;
+      var maxoffsetX = 320 - nowWidth;
+      var nowHeight = this.data.stv.height;
+      var maxoffsetY = 178.125 - nowHeight;
+
+      if (stv.offsetX > maxoffsetX) {
+        stv.offsetX = maxoffsetX;
+      } else if (stv.offsetX < 0) {
+        stv.offsetX = 0;
+      }
+      if (stv.offsetY > maxoffsetY) {
+        stv.offsetY = maxoffsetY;
+      } else if (stv.offsetY < 0) {
+        stv.offsetY = 0;
+      }
+      this.setData({
+        stv: stv
+      });
+
+    } else {
+      //双指缩放
+      let xMove = e.touches[1].clientX - e.touches[0].clientX;
+      let yMove = e.touches[1].clientY - e.touches[0].clientY;
+      let distance = Math.sqrt(xMove * xMove + yMove * yMove);
+
+      let distanceDiff = distance - this.data.stv.distance;
+      let newScale = this.data.stv.scale + 0.005 * distanceDiff;
+      if (newScale < 0.5) {
+        newScale = 0.5;
+      }
+      if (newScale > 4) {
+        newScale = 4;
+      }
+      let newWidth = newScale * 50;
+      let newHeight = newScale * 50;
+
+      this.setData({
+        'stv.distance': distance,
+        'stv.scale': newScale,
+        'stv.width': newWidth,
+        'stv.height': newWidth,
+      })
+      //console.log(this.data.stv.scale)
+    }
+  },
+
+  // 第一张贴图触摸结束
+  touchendCallback: function (e) {
+    // console.log('touchendCallback');
+    console.log(e);
+    this.setData({
+      stickerX: e.changedTouches[0].pageX,
+      stickerY: e.changedTouches[0].pageY,
+      stickerId: e.currentTarget.dataset.id
+    })
+
+    if (e.touches.length === 0) {
+      this.setData({
+        'stv.zoom': false, //重置缩放状态
+      })
+    }
+  },
+
+  // 缩放贴纸
+  onScale(e) {
+    console.log(e.detail)
+  },
+  // 添加贴纸
+  addSticker(e) {
+    var that = this;
+    if (that.data.isAddSticker=="block"){
+      wx.showToast({
+        title: '仅限一张贴纸',
+        icon:"none"
+      })
+      that.hidePicture();
+    }else{
+      that.setData({
+        sticker: {
+          id: e.currentTarget.dataset.id,
+          x: 0,
+          y: 0,
+          src: e.currentTarget.dataset.src
+        },
+        isAddSticker:"block",
+      })
+      that.hidePicture();
+    }
+  },
+
+  // 删除贴纸
+  delSticker(e){
+    console.log("删除")
+    this.setData({
+      sticker: {
+        id: "",
+        x: 0,
+        y: 0,
+        src: ""
+      },
+      isAddSticker: "none"
+    })
   },
   // 播放音乐
   audioPlay: function (e) {
@@ -231,10 +393,6 @@ Page({
         isMusic: index
       })
     }
-
-    console.log(index)
-  console.log(that.data.isMusic)
-
   },
   audioPause: function (e) {
     innerAudioContext.pause(()=>{
@@ -277,6 +435,20 @@ Page({
       musicType:e.currentTarget.dataset.id
     })
     this.loadMusic(e.currentTarget.dataset.id)
+    if (this.data.currentTaB == cur) { return false; }
+    else {
+      this.setData({
+        currentTab: cur
+      })
+    }
+  },
+  swichNavPic: function (e) {
+    var cur = e.target.dataset.current;
+    console.log(e)
+    // this.setData({
+    //   musicType: e.currentTarget.dataset.id
+    // })
+    // this.loadMusic(e.currentTarget.dataset.id)
     if (this.data.currentTaB == cur) { return false; }
     else {
       this.setData({
