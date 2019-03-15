@@ -1,0 +1,48 @@
+/* pages/deposit/deposit.wxss */
+page{
+  width: 100%;
+  height: 100%;
+  color: #cbcbcb;
+}
+/* 内容 */
+.content{
+  padding: 0rpx 30rpx;
+}
+/* 标题 */
+.title{
+  font-size: 26rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+/* 分数 */
+.score{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding:40rpx 0rpx; 
+  border-bottom: 1rpx #565656 solid; 
+}
+/* 充值 */
+.deposit{
+  margin-top: 48rpx;
+}
+/*充值列表*/
+.depositList{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 50rpx;
+}
+/* 充值按钮 */
+.deposit_btn{
+  font-size: 20rpx;
+  line-height: 32rpx;
+  width: 116rpx;
+  height: 32rpx;
+  border: 2rpx #ffffff solid;
+  border-radius: 16rpx;
+  /* font-weight: bold; */
+  text-align: center;
+}

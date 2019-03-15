@@ -312,19 +312,6 @@ Page({
   },
   loadDialog: function () {
     var that = this;
-    // api.loadTalks({
-    //   data: {
-    //     subjectId: this.data.subject.subjectId,
-    //     page: that.data.talksPage
-    //   },
-    //   success: function (page) {
-    //     that.setData({
-    //       talks: page.content,
-    //       talksPages: page.pages,
-    //       animationData: that.animation.export()
-    //     })
-    //   }
-    // });
   },
   //获取对话内容
   getDialogWords: function (e) {
@@ -368,6 +355,7 @@ Page({
       }
     })
   },
+  // 时间格式
   formatTime: function (date) {
     var year = date.getFullYear()
     var month = date.getMonth() + 1
@@ -377,7 +365,23 @@ Page({
     var second = date.getSeconds()
     return year + "年" + month + "月" + day + "日" + hour + "时" + minute + "分" + second + "秒";
   },
-
+// 播放单独的视频
+  playVideo:function(e){
+    console.log(e)
+    var that = this;
+    var videoId = e.currentTarget.dataset.id
+    wx.request({
+      url: app.globalData.serverPath + "release_one",
+      data: {
+        "uid": that.data.uid,
+        "rid": videoId
+      },
+      method: 'POST',
+      success: function (res) {
+        console.log(res);
+      }
+    })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

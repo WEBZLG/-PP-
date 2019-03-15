@@ -1,0 +1,25 @@
+<!--pages/deposit/deposit.wxml-->
+<view class='none-data'  wx:if="{{huodongList ==''}}">暂无数据</view>
+<view class='content'>
+  <view class='title'>
+    <text>积分余额</text>
+    <text bindtap='depositRecord'>充值记录</text>
+  </view>
+  <view class='score'>
+  <image src='../../image/score_l.png' style='width:58rpx;height:58rpx;padding-right:20rpx;'></image>
+  <!-- 积分余额 -->
+  <text style='font-size:58rpx;color:#fefefe'>1234567890</text>
+  </view>
+  <view class='deposit'>
+    <text>充值</text>
+    <view class='depositList' wx:for='{{Deposite}}' wx:key='id'>
+      <view>
+      <image src='../../image/score.png' style='width:30rpx;height:29rpx;padding-right:25rpx;'></image>
+      <!-- 积分 -->
+      <text>{{item.score}}</text>
+      </view>
+      <!-- 充值按钮 -->
+      <view class='deposit_btn' bindtap='deposit'>￥{{item.rmb}}</view>
+    </view>
+  </view>
+</view>

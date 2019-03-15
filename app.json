@@ -28,7 +28,11 @@
     "pages/3d/share",
     "pages/message/noticeDetails/noticeDetails",
     "pages/focus/active/active",
-    "pages/help/helpDetails/helpDetails"
+    "pages/help/helpDetails/helpDetails",
+    "pages/index/userdetail/userdetail",
+    "pages/index/deposit/deposit",
+    "pages/index/depositrecord/depositrecord",
+    "pages/index/search/search"
   ],
   "permission": {
     "scope.userLocation": {

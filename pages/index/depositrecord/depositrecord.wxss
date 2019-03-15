@@ -1,0 +1,21 @@
+/* pages/depositrecord/depositrecord.wxss */
+page{
+  width: 100%;
+  height: 100%;
+  color: #cbcbcb;
+}
+/* 内容 */
+.content{
+  padding: 50rpx 30rpx 0rpx;
+}
+/* 充值记录列表 */
+.depositRecordList{
+  padding-bottom: 37rpx;
+}
+/* 标题 */
+.title{
+  font-size: 26rpx; 
+  display: flex; 
+  flex-direction: row;
+  justify-content: space-between;
+}

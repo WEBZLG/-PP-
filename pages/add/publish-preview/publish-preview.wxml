@@ -1,5 +1,5 @@
 <view class="">
-  <video autoplay="{{true}}" class="video-preview" controls="{{false}}" id="myVideo" loop="{{true}}" muted="{{isMunted}}"  src="{{previewData.videoUrl.tempFilePath}}">
+  <video autoplay="{{true}}" class="video-preview" controls="{{false}}" id="myVideo" loop="{{true}}" muted="{{isMunted}}"  src="{{previewData.videoUrl.tempFilePath}}" objectFit="cover">
   </video>
   <movable-area>
     <movable-view  direction="all"  x="{{sticker.x}}" y="{{sticker.y}}"  data-id='{{sticker.id}}' data-src='{{sticker.src}}' bindtouchstart="touchstartCallback" bindtouchmove="touchmoveCallback" bindtouchend="touchendCallback" bindscale="onScale" style='display:{{isAddSticker}}'>

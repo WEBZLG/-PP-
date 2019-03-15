@@ -7,7 +7,7 @@ page {
  
 video {
   width: 100%;
-  height: 100vh;
+  height: 100%;
 }
  /* 滚动公告 */
 .srcoll_view{
@@ -77,16 +77,19 @@ background:rgba(0, 0, 0, 0.4);
   width: 30rpx;
 }
 /* 蒙版 */
-.ball2{
+.ball{
   background-color: rgba(0, 0, 0, 0.103);
-  width: 100%;
-  height:100%;
+  /* width: 100%;
+  height:100%; */
   position: absolute;
   top: 0;
   left: 0;
-  display: flex;
+  bottom: 0;
+  right: 0;
+  overflow: hidden;
+  /* display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: center; */
 }
 .ball1 {
   background-color: rgba(0, 0, 0, 0.103);
@@ -177,10 +180,11 @@ button::after {
 /* 评论区 */
  
 .down {
-  width: 22rpx;
-  height: 22rpx;
-  float:right;
-  margin: 10rpx;
+width:30rpx;
+height:30rpx;
+float:right;
+margin:20rpx;
+
 }
  
 .commentTitle {
@@ -341,4 +345,50 @@ button::after {
 .top-three{
   border-color: #D8760B;
 }
-
+/* 送礼物列表弹出层 */
+.gifts_attr_box {
+  height: 50%;
+  width: 100%;
+  overflow: hidden;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 2000;
+  background: #fff;
+  padding-bottom: 60rpx;
+}
+.giftsTitle {
+  font-size: 34rpx;
+  padding: 10rpx 20rpx;
+  background: #fff;
+}
+.giftsLists{
+  display: flex;
+  flex-direction: row;
+  flex-wrap:wrap;
+  
+}
+.giftsList{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding:0rpx 15rpx;
+  margin:0rpx 15rpx;
+}
+.giftsId{
+  font-size: 20rpx;
+}
+.giftsScore{
+  font-size: 20rpx;
+}
+.depositList{
+  display: flex;
+  flex-direction: row;
+  padding: 50rpx 30rpx 0rpx;
+  justify-content: space-between
+}
+.deposit{
+  display: flex;
+  flex-direction:row;
+  align-items: center;
+}

@@ -1,3 +1,4 @@
+<!--pages/userdetail/userdetail.wxml-->
 <view class='bg-color'>
   <view class='top-content'>
     <view class='person'>
@@ -5,7 +6,7 @@
         <view class='infor-mark'>
           <view class='infor-name'>{{nickname}}</view>
           <view class='infor-img' wx:if="{{if_verified==1}}"><image class='vip' src='../../image/VIP@2x.png'></image></view>
-          <view class='infor-approve'>{{if_verified==0?"未认证":"已认证"}}</view>
+          <view class='infor-approve' bindtap='changeMotto'>{{eachother==0?"关注":"+关注"}}</view>
         </view>
         <view class='sign-text'>{{signature}}</view>
         <view class='infor-more'>
@@ -13,15 +14,11 @@
             <view class='infor-birth'>{{gender==1 ? "男":"女"}} {{birthday==null ? "1990-09-09" : birthday}} {{city==null ? "哈尔滨" : city}}</view>
             <view class='infor-call'>{{phone==null ? "18888888888" : phone}} {{wx==null ? "wx666666" : wx}}</view>
           </view>
-          <view class='redact' bindtap='redact'>编辑资料</view>
         </view>
       </view>
       <view class='headimg'>
         <view class='head-box'>
           <image class='head' src='{{avatarUrl}}'></image>
-        </view>
-        <view class='small-box' bindtap='help'>
-          <image class='smallhead' src='../../image/about.png'></image>
         </view>
       </view>
     </view>
@@ -40,12 +37,7 @@
           <view class='text'>粉丝</view>
         </view>
       </view>
-      <view class='action'>
-        <view class='integral'>{{integral}}积分</view>
-        <view class='view-detail' bindtap='viewDetails'>查看明细</view>
-        <view class='deposit-apply' bindtap='depositApply'>提现申请</view>
       </view>
-    </view>
   </view>
   <view >
     <scroll-view scroll-x="true" class="tab-h" scroll-left="{{scrollLeft}}">
@@ -53,7 +45,6 @@
         <view class="tab-item {{currentTab==1?'active':''}}" data-current="1" bindtap='swichNav'>点赞视频</view>
         <view class="tab-item {{currentTab==2?'active':''}}" data-current="2" bindtap='swichNav'>送出礼物</view>
         <view class="tab-item {{currentTab==3?'active':''}}" data-current="3" bindtap='swichNav'>收到礼物</view>
-        <view class="tab-item {{currentTab==4?'active':''}}" data-current="4" bindtap='swichNav'>私信留言</view>
     </scroll-view>
     <swiper class="tab-content" current="{{currentTab}}" duration="300" bindchange="switchTab"
      style="height:{{winHeight}}rpx">
@@ -63,11 +54,11 @@
               <view class='block-item'>
                 <block wx:for="{{sendVideo}}" wx:key="{{index}}" data-id="{{item.id}}">
                   <view class='item-ans'>
-                    <image class='cover' src='{{item.pic}}' data-id="{{item.id}}" bindtap='playVideo'></image>
-                    <!-- <view>
+                    <image class='cover' src='{{item.pic}}'></image>
+                    <view>
                       <cover-image  class='cover-img' src='../../image/like.png'></cover-image>
                       <text class='cover-text'>42.1w</text>
-                    </view> -->
+                    </view>
                   </view>
                 </block>
               </view>
@@ -79,7 +70,7 @@
               <view class='block-item'>
                 <block wx:for="{{getVideo}}" wx:key="{{index}}"  data-id="{{item.id}}">
                   <view class='item-ans'>
-                    <image class='cover' src='{{item.pic}}' data-id="{{item.id}}" bindtap='playVideo'></image>
+                    <image class='cover' src='{{item.pic}}'></image>
                   </view>
                 </block>
               </view>
@@ -173,3 +164,4 @@
     </view>
   </view>
 </view>
+

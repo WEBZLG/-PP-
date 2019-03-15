@@ -22,20 +22,18 @@ Page({
     if_like: '', //0未点赞  1点赞了
     // 评论
     content: '',//内容
-    // CommentList: [],
     commentList: [{
       // userzan:0,
       userimg:'../../image/like_red.png',
       username: 'Luka Addway',
       ComTime: '02-19 11:25',
-      ComContent: '兄弟你这也太帅了,兄弟你这也太帅了,兄弟你这也太帅了,兄弟你这也太帅了',
+      ComContent: '兄弟你这也太帅了',
     }, {
         userimg: '../../image/like_red.png',
         username: '叫我老王',
         ComTime: '02-19 11:25',
         ComContent: '可以可以',
       }],
-    ball_height: 2,
     //播放按钮
     display_play: 'none',
     //点击评论隐藏图标
@@ -47,10 +45,22 @@ Page({
     inputValue: '',
     index: 1,
     vid: 0,
-    pagey: '',
-    vsrc: ['http://wxsnsdy.tc.qq.com/105/20210/snsdyvideodownload?filekey=30280201010421301f0201690402534804102ca905ce620b1241b726bc41dcff44e00204012882540400&bizid=1023&hy=SH&fileparam=302c020101042530230204136ffd93020457e3c4ff02024ef202031e8d7f02030f42400204045a320a0201000400" binderror="videoErrorCallback', 'http://v2018.zhuoxuncn.com/zhuoxunvideo/20181220/0104_1.mp4', 'http://v2018.zhuoxuncn.com/zhuoxunvideo/20181123/27.mp4', 'http://wxsnsdy.tc.qq.com/105/20210/snsdyvideodownload?filekey=30280201010421301f0201690402534804102ca905ce620b1241b726bc41dcff44e00204012882540400&bizid=1023&hy=SH&fileparam=302c020101042530230204136ffd93020457e3c4ff02024ef202031e8d7f02030f42400204045a320a0201000400" ,binderror="videoErrorCallback', 'http://v2018.zhuoxuncn.com/zhuoxunvideo/20181220/0104_1.mp4', 'http://v2018.zhuoxuncn.com/zhuoxunvideo/20181123/27.mp4', 'http://wxsnsdy.tc.qq.com/105/20210/snsdyvideodownload?filekey=30280201010421301f0201690402534804102ca905ce620b1241b726bc41dcff44e00204012882540400&bizid=1023&hy=SH&fileparam=302c020101042530230204136ffd93020457e3c4ff02024ef202031e8d7f02030f42400204045a320a0201000400" binderror="videoErrorCallback', 'http://v2018.zhuoxuncn.com/zhuoxunvideo/20181220/0104_1.mp4',],
-    src: '',
-
+    pageIndex: 0,
+    videoToggle: {
+      data: {},
+      isReady: !1,
+      loading: !1,
+      flag: 0
+    },
+    videoPlay: !0,
+    videoPlayFlag: !0,
+    isShow:"blcok"//蒙版展示
+  },
+  // 视频用户详情页
+  userdetail: function () {
+    wx.navigateTo({
+      url: './userdetail/userdetail',
+    })
   },
   //地址
   switchcity: function () {
@@ -61,7 +71,13 @@ Page({
   //搜索
   search: function () {
     wx.navigateTo({
-      url: '../search/search'
+      url: './search/search'
+    })
+  },
+  // 充值
+  deposit:function(){
+    wx.navigateTo({
+      url: './deposit/deposit',
     })
   },
   // 关注
@@ -122,6 +138,7 @@ Page({
         if (that.data.index_num % 2 == 1) {
           // console.log('播放')
           that.videoContext.play()
+          // console.log(that.videoContext)
           that.setData({
             display_play: 'none'
           })
@@ -132,6 +149,7 @@ Page({
             display_play: 'block'
           })
         }
+        // console.log(that.videoContext)
       }, 300);
     }
 
@@ -140,14 +158,15 @@ Page({
   toCollect: function (e) {
 
     var that = this;
-    // 获取脚标
+    // 爱心获取脚标
     const index = e.currentTarget.dataset.id;
-    // console.log(e.currentTarget.dataset.id)
-    // 获取点赞的值
+    // console.log(e.currentTarget.dataset.item.likenum)
+    // 获取点赞按钮的值
     const eachiflike = e.currentTarget.dataset.item.if_like;
+    // 点赞的值
+    // const eachlikenum = e.currentTarget.dataset.item.likenum;
     const iflikeIndex = "IndexList[" + index + "].if_like";
-    // console.log(iflikeIndex)
-    // console.log(eachoiflike)
+    // console.log(eachlikenum)
     this.setData({
       [iflikeIndex]: 1,
       eachiflike: eachiflike,
@@ -160,16 +179,15 @@ Page({
     } else {
       this.setData({
         [iflikeIndex]: 0,
+        // [eachlikenum]: -1,
       })
     }
   },
-  onReady: function (res) {
-    this.videoContext = wx.createVideoContext('myVideo')
-  },
+
   
 // 评论点赞
   commentCollect:function(e){
-    console.log(e);
+    // console.log(e);
     var that=this;
     // var vid = e.currentTarget.dataset.id;
     if (this.data.commentcount == 1) {
@@ -186,94 +204,103 @@ Page({
       })
     }
   },
-  bindPlay: function () {
-    this.videoContext.play()
-    
-  },
-  touchstart: function (res) {
-    this.setData({
-      pagey: res.changedTouches[0].pageY
-    })
-    // console.log(res)
-  },
-  touchend: function (res) {
-    if (res.changedTouches[0].pageY - this.data.pagey > 100) {
 
-      var isZero = this.data.vid == 0
-      var id = this.data.vid == 0 ? 0 : this.data.vid - 1
-      if (isZero) {
-        wx.showToast({
-          title: '已是第一个！',
-        })
-      } else {
-        this.setData({
-          vid: id,
-          index: 1
+  handletouchmove: function (a) {
+    if (0 === this.data.videoToggle.flag) {
+      var t = a.touches[0].pageX,
+        e = a.touches[0].pageY,
+        o = t - this.data.lastX,
+        s = e - this.data.lastY, i = "";
+      switch (Math.abs(o) > Math.abs(s) ? o < -10 ? (i = "向左滑动", this.setData({
+        "videoToggle.flag": 1
+      })) : o > 10 && (i = "向右滑动", this.setData({
+        "videoToggle.flag": 2
+      })) : s < -10 ? (i = "向上滑动", this.setData({
+        "videoToggle.flag": 3
+      })) : s > 10 && (i = "向下滑动", this.setData({
+        "videoToggle.flag": 4
+      })), i) {
+        case "向上滑动":
+          this.videoToggleNext();
+          // console.log("向上")
+          break;
 
-        })
-        var that = this
-        setTimeout(function () {
-          that.bindPlay()
-        }, 500)
+        case "向下滑动":
+          this.videoTogglePrev();
+          // console.log("向下")
       }
-    } else if (this.data.pagey - res.changedTouches[0].pageY > 100) {
-      var islast = this.data.vid == this.data.vsrc.length - 1
-      var lid = this.data.vid == this.data.vsrc.length - 1 ? this.data.vsrc.length - 1 : this.data.vid + 1
-      if (islast) {
-        wx.showToast({
-          title: '已是最后一个！',
-        })
-      } else {
-        this.setData({
-          vid: lid,
-          index: 1
-        })
-      }
-      var that = this
-      setTimeout(function () {
-        that.bindPlay()
-      }, 500)
+      this.setData({
+        lastX: t,
+        lastY: e
+      });
     }
   },
+  handletouchstart: function (a) {
+    this.setData({
+      lastX: a.touches[0].pageX,
+      lastY: a.touches[0].pageY
+    });
+  },
+  handletouchend: function (a) {
+    this.setData({
+      "videoToggle.flag": 0
+    });
+  },
+  videoTogglePrev: function () {
+    var that = this;
+    if (this.data.pageIndex==0){
+      wx.showToast({
+        title: '到顶了哦~木有视频了！',
+        icon:"none"
+      })
+    }else{
+      this.setData({
+        pageIndex : that.data.pageIndex-1
+      })
+      console.log(that.data.pageIndex)
+      that.getPageVideoMessage()
+    }
+  },
+  videoToggleNext: function () {
+    var that = this;
+    this.setData({
+      pageIndex: that.data.pageIndex + 1
+    })
+    console.log(that.data.pageIndex)
+    that.getPageVideoMessage()
+  },
+  videoHandle: function (a) {
+    this.data.videoPlay ? (
+      this.setData({
+      videoPlayFlag: !1,
+      videoInfoHide: !1,
+      videoPlay: !1,
+      display_play: 'block'
+    }), 
+    this.videoContext.pause()
+    ) : (
+      this.setData({
+      videoPlayFlag: !0,
+      videoInfoHide: !0,
+      videoPlay:!0,
+      display_play: 'none'
+      }), 
+      this.videoContext.play()
+      );
+  },
+
   bindInputBlur: function (e) {
     this.inputValue = e.detail.value
   },
-  bindSendDanmu: function () {
-    this.videoContext.sendDanmu({
-      text: this.inputValue,
-      color: getRandomColor()
-    })
-  },
-  // 播放
-  bindPlay: function () {
-    this.videoContext.play()
-  },
-  // 暂停播放
-  bindPause: function () {
-    this.videoContext.pause()
-    display_play: 'block'
-  },
-  //播放结束
-  bindend: function () {
-    var a = this.data.index
-    var a_dow = a + 1
-    // console.log(a + 1);
-    this.setData({
-      index: a_dow,
-      vid: this.data.scrollTop_list[parseInt(a_dow)].vid,
-      display_play: 'none',
-      video: [],
-    })
-    // 获取视频
-    this.tab_video()
-    // 获取评论列表
-    this.getcomment()
-  },
-  videoErrorCallback: function (e) {
-    // console.log('视频错误信息:')
-    // console.log(e.detail.errMsg)
 
+  //播放结束
+  bindended:function(e){
+    this.setData({
+      display_play: 'block',
+      videoPlay: !1,
+    })
   },
+
 
   //评论
   showModal: function () {
@@ -290,7 +317,8 @@ Page({
       heighTrue: false,
       video_heighe: 45,
       ball_height: 1,
-      display_pl: 'none'
+      display_pl: 'none',
+      isShow:"none"
     })
     setTimeout(function () {
       animation.translateY(0).step()
@@ -299,7 +327,7 @@ Page({
       })
     }.bind(this), 200)
   },
-  //隐藏对话框
+  //隐藏礼物
   hideModal: function () {
     // 隐藏遮罩层
     var animation = wx.createAnimation({
@@ -316,54 +344,167 @@ Page({
       animation.translateY(0).step()
       this.setData({
         animationData: animation.export(),
-        showModalStatus: false,
+        showGiftsStatus: false,
         heighTrue: true,
-        video_heighe: 100,
-        ball_height: 2,
+        isShow: "block",
         display_pl: 'block'
       })
     }.bind(this), 200)
   },
-  getComment:function(e){
-    console.log(this)
+  //礼物显示
+  showgiftsModal: function () {
+    console.log("zhe")
+    var animation = wx.createAnimation({
+      duration: 200,
+      timingFunction: "linear",
+      delay: 0
+    })
+    this.animation = animation
+    animation.translateY(300).step()
+    this.setData({
+      animationgifts: animation.export(),
+      showGiftsStatus: true,
+      isShow: "none",
+      display_pl: 'none'
+    })
+    setTimeout(function () {
+      animation.translateY(0).step()
+      this.setData({
+        animationgifts: animation.export()
+      })
+    }.bind(this), 200)
+
   },
-  getdata: function () {
+  //隐藏评论
+  hidegiftsModal: function () {
+    // 隐藏遮罩层
+    var animation = wx.createAnimation({
+      duration: 200,
+      timingFunction: "linear",
+      delay: 0
+    })
+    this.animation = animation
+    animation.translateY(300).step()
+    this.setData({
+      animationgifts: animation.export(),
+    })
+    setTimeout(function () {
+      animation.translateY(0).step()
+      this.setData({
+        animationgifts: animation.export(),
+        showModalStatus: false,
+        heighTrue: true,
+        isShow: "block",
+        display_pl: 'block',
+      })
+    }.bind(this), 200)
+  },
+  // 获取视频信息
+  getVideoMessage: function () {
     var that = this;
+    wx.showLoading()
     wx.request({
-      url: app.globalData.serverPath + 'index',//请求地址
-      data: {//发送给后台的数据
-        // uid: that.data.uid
-        uid:3
+      url: app.globalData.serverPath + 'index',
+      data: {
+        uid: that.data.uid
       },
       header: {//请求头
         "Content-Type": "application/x-www-form-urlencoded"
       },
-      method: "POST",//get为默认方法/POST
+      method: "POST",
       success: function (res) {
-        console.log(res.data)
+        wx.hideLoading()
+        console.log(res)
         that.setData({
+          display_play: 'none',
           IndexList: res.data
         })
+      },
+      fail: function (err) { },
+      complete: function () { }
+    })
+  },
+  // 获取分页视频
+  getPageVideoMessage:function(e){
+    var that = this;
+    wx.showLoading()
+    wx.request({
+      url: app.globalData.serverPath + 'indexpage',
+      data: {
+        uid: that.data.uid,
+        page:that.data.pageIndex
+      },
+      header: {//请求头
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      method: "POST",
+      success: function (res) {
+        // console.log(res)
+        wx.hideLoading()
+        if(res.data.length == 0){
+          // console.log("我空了")
+          that.getVideoMessage();
+          that.setData({
+            display_play: 'none',
+            pageIndex:0
+          })
+        }else{
+          that.setData({
+            display_play: 'none',
+            IndexList: res.data
+          })
+        }
+      },
+      fail: function (err) { },
+      complete: function () { }
+    })
+  },
+  // 获取评论信息
+  getCommentMessage: function (e) {
+    var that = this;
+    console.log(e)
+    var rid = e.currentTarget.dataset.id
+    wx.showLoading()
+    wx.request({
+      url: app.globalData.serverPath + 'indexcomment',
+      data: {
+        rid: rid
+      },
+      header: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      method: "POST",
+      success: function (res) {
+        console.log(res.data)
+        wx.hideLoading()
+        that.setData({
+          CommentList: res.data
+        })
+        that.showModal()
 
       },
       fail: function (err) { },//请求失败
       complete: function () { }//请求完成后执行的函数
     })
   },
-  getdata2: function () {
+  // 发送评论
+  sendCommentMessage: function () {
     var that = this;
+    wx.showLoading()
     wx.request({
-      url: app.globalData.serverPath + 'indexcomment',//请求地址
-      data: {//发送给后台的数据
-
-
+      url: app.globalData.serverPath + 'sendcomment',
+      data: {
+        uid:"", 
+        rid: "",
+        content:""
       },
-      header: {//请求头
+      header: {
         "Content-Type": "application/x-www-form-urlencoded"
       },
-      method: "POST",//get为默认方法/POST
+      method: "POST",
       success: function (res) {
         // console.log(res.data)
+        wx.hideLoading()
         that.setData({
           CommentList: res.data
         })
@@ -372,6 +513,9 @@ Page({
       fail: function (err) { },//请求失败
       complete: function () { }//请求完成后执行的函数
     })
+  },
+  onReady: function (res) {
+    this.videoContext = wx.createVideoContext('myVideo')
   },
   /**
    * 生命周期函数--监听页面加载
@@ -384,18 +528,50 @@ Page({
     wx.getStorage({
       key: 'userUid',
       success(res) {
-        console.log(res.data)
         that.setData({
           uid: res.data
         });
       }
     });
-    this.getdata()
-    this.getdata2()
+    this.getVideoMessage()
+    // 获取存储图片的权限
+    // wx.getSetting({
+    //   success(res) {
+    //     if (!res.authSetting['scope.writePhotosAlbum']) {
+    //       wx.authorize({
+    //         scope: 'scope.writePhotosAlbum',
+    //         success() {
+    //           console.log('授权成功')
+    //         }
+    //       })
+    //     }
+    //   }
+    // })
+    
   },
   onShow:function(){
     
+  },
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function (ops) {
+    // console.log(ops)
+    if(ops.from==='button'){
+      // console.log(ops.target)
+    }
+    return {
+      title:'小pp短视频',
+      path: 'pages/index/index',
+      success: function (res) {
+        
+        // 转发成功
+        console.log("转发成功:" + JSON.stringify(res));
+      },
+      fail: function (res) {
+        // 转发失败
+        console.log("转发失败:" + JSON.stringify(res));
+      }
+    }
   }
-  
-
 })
