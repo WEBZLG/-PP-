@@ -1,36 +1,12 @@
 // pages/depositrecord/depositrecord.js
+const app = getApp()
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    huodongList: [],
-    Depositrecord:[{
-      id:1,
-      rmb:100,
-      time: 2019.3
-    }, {
-        id: 1,
-        rmb: 1000,
-        time: 2019.3
-      }, {
-        id: 2,
-        rmb: 200,
-        time: 2019.3
-      }, {
-        id: 3,
-        rmb: 300,
-        time: 2019.3
-      }, {
-        id: 4,
-        rmb: 400,
-        time: 2019.3
-      }, {
-        id: 5,
-        rmb: 500,
-        time: 2019.3
-      }]
+    Depositrecord:[]
 
   },
 
@@ -38,7 +14,30 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    var that = this;
+    // 缓存中取信息
+    wx.getStorage({
+      key: 'userUid',
+      success(res) {
+        console.log(res.data)
+        that.setData({
+          uid: res.data
+        });
+      }
+    });
+    wx.request({
+      url: app.globalData.serverPath + "recharge_record",
+      data: {
+        "uid": that.data.uid
+      },
+      method: 'POST',
+      success: function (res) {
+        console.log(res);
+        that.setData({
+          Depositrecord: res.data
+        })
+      }
+    })
   },
 
   /**

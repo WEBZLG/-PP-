@@ -4,7 +4,7 @@ App({
 
   },
   globalData: {
-    serverPath: 'http://www.surenmedia.cn/index/port/'
+    serverPath: 'https://www.surenmedia.cn/index/port/'
   }, 
   onLaunch: function () {
     // 获取用户信息

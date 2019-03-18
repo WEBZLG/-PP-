@@ -16,25 +16,26 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    console.log(options.id)
     var that = this;
     wx.request({
-      url: app.globalData.serverPath + 'infocontent',//请求地址
+      url: app.globalData.serverPath + 'activityinfo',//请求地址
       data: {//发送给后台的数据
         id: options.id
       },
       header: {//请求头
         "Content-Type": "application/x-www-form-urlencoded"
       },
-      method: "POST",//get为默认方法/POST
+      method: "GET",//get为默认方法/POST
       success: function (res) {
         console.log(res)
-        const article = res.data.content;
-        WxParse.wxParse('article', 'html', article, that, 5);
-        console.log(res)
-        that.setData({
-          title: res.data.title,
-          time:res.data.time,
-　　　　　})
+//         const article = res.data.content;
+//         WxParse.wxParse('article', 'html', article, that, 5);
+//         console.log(res)
+//         that.setData({
+//           title: res.data.title,
+//           time:res.data.time,
+// 　　　　　})
       },
       fail: function (err) { },//请求失败
       complete: function () { }//请求完成后执行的函数

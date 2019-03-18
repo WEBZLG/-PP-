@@ -4,7 +4,8 @@ Page({
 
   data: {
     IndexList: [],//获取首页数组
-    uid: '',//发布人的ID
+    sendId:"",//发布人的id
+    uid: '',//自己的id
     content: '',//发布介绍
     url: '',//视频地址
     pic: '',//第一帧图片
@@ -22,18 +23,7 @@ Page({
     if_like: '', //0未点赞  1点赞了
     // 评论
     content: '',//内容
-    commentList: [{
-      // userzan:0,
-      userimg:'../../image/like_red.png',
-      username: 'Luka Addway',
-      ComTime: '02-19 11:25',
-      ComContent: '兄弟你这也太帅了',
-    }, {
-        userimg: '../../image/like_red.png',
-        username: '叫我老王',
-        ComTime: '02-19 11:25',
-        ComContent: '可以可以',
-      }],
+    commentList: [],
     //播放按钮
     display_play: 'none',
     //点击评论隐藏图标
@@ -42,7 +32,7 @@ Page({
     commentcount:1,//评论点赞
     index_num: 1,
     play: 'none',
-    inputValue: '',
+    inputValue: '',//发送评论的内容
     index: 1,
     vid: 0,
     pageIndex: 0,
@@ -54,7 +44,9 @@ Page({
     },
     videoPlay: !0,
     videoPlayFlag: !0,
-    isShow:"blcok"//蒙版展示
+    isShow:"blcok",//蒙版展示,
+    goodsList:[],//礼物列表
+    goodIntegral:""//礼物积分
   },
   // 视频用户详情页
   userdetail: function () {
@@ -76,6 +68,7 @@ Page({
   },
   // 充值
   deposit:function(){
+    this.hideModal()
     wx.navigateTo({
       url: './deposit/deposit',
     })
@@ -266,7 +259,7 @@ Page({
     this.setData({
       pageIndex: that.data.pageIndex + 1
     })
-    console.log(that.data.pageIndex)
+    // console.log(that.data.pageIndex)
     that.getPageVideoMessage()
   },
   videoHandle: function (a) {
@@ -289,8 +282,11 @@ Page({
       );
   },
 
-  bindInputBlur: function (e) {
-    this.inputValue = e.detail.value
+  bindInput: function (e) {
+    this.setData({
+      inputValue : e.detail.value
+    })
+    console.log(e.detail.value)
   },
 
   //播放结束
@@ -302,7 +298,7 @@ Page({
   },
 
 
-  //评论
+  //评论弹窗
   showModal: function () {
     var animation = wx.createAnimation({
       duration: 200,
@@ -351,9 +347,37 @@ Page({
       })
     }.bind(this), 200)
   },
+  // 获取礼物数据
+  getGoods:function(e){
+  var that = this;
+    wx.request({
+      url: app.globalData.serverPath + 'giftlist',
+      data: {},
+      header: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      method: "POST",
+      success: function (res) {
+        console.log(res)
+        wx.hideLoading()
+        res.data.giftlist && res.data.giftlist.map((item, index) => {
+          item.pic = "https://" + item.pic
+        })
+        that.setData({
+          goodsList:res.data.giftlist,
+          goodIntegral:res.data.nowintegral
+          })
+       that.showgiftsModal()
+      },
+      fail: function (err) { },//请求失败
+      complete: function () { }//请求完成后执行的函数
+    })
+  },
+  imageError:function(e){
+    console.log(e)
+  },
   //礼物显示
   showgiftsModal: function () {
-    console.log("zhe")
     var animation = wx.createAnimation({
       duration: 200,
       timingFunction: "linear",
@@ -373,7 +397,39 @@ Page({
         animationgifts: animation.export()
       })
     }.bind(this), 200)
-
+  },
+  // 送出礼物
+  
+  sendGift:function(e){
+    var that = this;
+    console.log(e)
+    wx.request({
+      url: app.globalData.serverPath + 'indexsendgift',
+      data: {
+        uid:that.data.uid,
+        income_uid:that.data.sendId,
+        sendintegral:e.currentTarget.dataset.score
+      },
+      header: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      method: "POST",
+      success: function (res) {
+        console.log(res)
+        if (res.data.info =="Insufficient integral"){
+          wx.showToast({
+            title: '积分不足，请充值！',
+            icon:"none"
+          })
+        } else if(res.data.info =="succss"){
+          console.log(res.data.info)
+        }else{
+          console.log(res.data.info)
+        }
+      },
+      fail: function (err) { },//请求失败
+      complete: function () { }//请求完成后执行的函数
+    })
   },
   //隐藏评论
   hidegiftsModal: function () {
@@ -417,7 +473,8 @@ Page({
         console.log(res)
         that.setData({
           display_play: 'none',
-          IndexList: res.data
+          IndexList: res.data,
+          sendId:res.data[0].uid
         })
       },
       fail: function (err) { },
@@ -478,7 +535,7 @@ Page({
         console.log(res.data)
         wx.hideLoading()
         that.setData({
-          CommentList: res.data
+          commentList: res.data
         })
         that.showModal()
 
@@ -494,21 +551,30 @@ Page({
     wx.request({
       url: app.globalData.serverPath + 'sendcomment',
       data: {
-        uid:"", 
-        rid: "",
-        content:""
+        uid:that.data.uid, 
+        rid: that.data.id,
+        content: that.data.inputValue
       },
       header: {
         "Content-Type": "application/x-www-form-urlencoded"
       },
       method: "POST",
       success: function (res) {
-        // console.log(res.data)
+        console.log(res)
         wx.hideLoading()
-        that.setData({
-          CommentList: res.data
-        })
-
+        if(res.info == success){
+            that.setData({
+              inputText:""
+            })
+            wx.showToast({
+              title: '评论成功！',
+            })
+        }else{
+          wx.showToast({
+            title: '评论失败！' + res.info,
+            icon:"none"
+          })
+        }
       },
       fail: function (err) { },//请求失败
       complete: function () { }//请求完成后执行的函数
@@ -533,7 +599,6 @@ Page({
         });
       }
     });
-    this.getVideoMessage()
     // 获取存储图片的权限
     // wx.getSetting({
     //   success(res) {
@@ -550,7 +615,7 @@ Page({
     
   },
   onShow:function(){
-    
+    this.getVideoMessage()
   },
   /**
    * 用户点击右上角分享

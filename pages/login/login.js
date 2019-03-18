@@ -61,13 +61,12 @@ Page({
                 data: data.userInfo
               })
               app.globalData.userInfo = data.userInfo
-              typeof cb == "function" && cb(that.globalData.userInfo)
               wx.request({
                 url: app.globalData.serverPath+"login",
                 data: {
                   "code": code,
                 },
-                method: 'POST',
+                method: 'GET',
                 success: function (res) {
                   console.log(res)
                   // 缓存openid

@@ -1,10 +1,10 @@
 <!--pages/depositrecord/depositrecord.wxml-->
-<view class='none-data'  wx:if="{{huodongList ==''}}">暂无数据</view>
+<view class='none-data'  wx:if="{{Depositrecord ==''}}">暂无数据</view>
 <view class='content'>
-  <view class='depositRecordList' wx:for='{{Depositrecord}}' wx:key='id'>
+  <view class='depositRecordList' wx:for='{{Depositrecord}}' wx:key='index'>
     <view class='title'>
       <text style='color:#fefefe'>充值</text>
-      <text>￥{{item.rmb}}</text>
+      <text>￥{{item.integral}}</text>
     </view>
     <text style='font-size:20rpx;color:#cbcbcb'>{{item.time}}</text> 
   </view>

@@ -6,7 +6,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    huodongList: [],
+    uid:"",
+    integral:0,//积分
     Deposite:[{
       id:1,
       score:50,
@@ -49,77 +50,108 @@ Page({
     })
   },
   // 充值
-  deposit:function(){
-      this.setData({
-        gold: ""
-      })
-
-      if (app.globalData.util.isNumber(this.data.moneyId) == true && this.data.moneyId != 0) {
-        const params = {
-          "customerId": this.data.mine.customerId,
-          "money": this.data.moneyId,
-          "terminal": 52
-        };
-        console.log(params);
-        let paramsObj = {}
-        app.globalData.api.GetHttp(app.globalData.api.API.customerRecharge.url, params)
-          .then((data) => {
-            if (data.data.status == 200) {
-              paramsObj = data.data.data;
-              wx.requestPayment(
-                {
-                  'timeStamp': paramsObj.timeStamp,
-                  'nonceStr': paramsObj.nonceStr,
-                  'package': paramsObj.package_value,
-                  'signType': paramsObj.signType,
-                  'paySign': paramsObj.paySign,
-                  'success': function (res) {
-                    console.log(res);
-                    wx.navigateBack({
-                      delta: 1,
-                      success: function (res) {
-                      },
-                      fail: function (res) { },
-                      complete: function (res) { },
-                    })
-                  },
-                  'fail': function (res) {
-                    console.log(res);
-                    if (res.errMsg == 'requestPayment:fail cancel') {
-                      wx.showModal({
-                        title: '提示',
-                        content: '微信支付已取消',
-                        showCancel: false
-                      })
-                    }
-                  },
-                  'complete': function (res) {
-                    console.log(res);
-                  }
-                })
-            } else {
-              console.log('充值接口失败');
-              wx.showModal({
-                title: '提示',
-                content: data.data.info,
-                showCancel: false
-              })
-            }
-          })
-
-      } else {
-        wx.showModal({
-          title: '提示',
-          content: '请输入正确充值金额',
-          showCancel: false
-        })
+  deposit:function(e){
+    console.log(e)
+    wx.showModal({
+      title: '提示',
+      content: '确定充值' + e.currentTarget.dataset.rmb+"元？",
+      success: function (sm) {
+        if (sm.confirm) {
+          // 用户点击了确定 可以调用删除方法了
+        } else if (sm.cancel) {
+          console.log('用户点击取消')
+        }
       }
+    })
+      // if (app.globalData.util.isNumber(this.data.moneyId) == true && this.data.moneyId != 0) {
+      //   const params = {
+      //     "customerId": this.data.mine.customerId,
+      //     "money": this.data.moneyId,
+      //     "terminal": 52
+      //   };
+      //   console.log(params);
+      //   let paramsObj = {}
+      //   app.globalData.api.GetHttp(app.globalData.api.API.customerRecharge.url, params)
+      //     .then((data) => {
+      //       if (data.data.status == 200) {
+      //         paramsObj = data.data.data;
+      //         wx.requestPayment(
+      //           {
+      //             'timeStamp': paramsObj.timeStamp,
+      //             'nonceStr': paramsObj.nonceStr,
+      //             'package': paramsObj.package_value,
+      //             'signType': paramsObj.signType,
+      //             'paySign': paramsObj.paySign,
+      //             'success': function (res) {
+      //               console.log(res);
+      //               wx.navigateBack({
+      //                 delta: 1,
+      //                 success: function (res) {
+      //                 },
+      //                 fail: function (res) { },
+      //                 complete: function (res) { },
+      //               })
+      //             },
+      //             'fail': function (res) {
+      //               console.log(res);
+      //               if (res.errMsg == 'requestPayment:fail cancel') {
+      //                 wx.showModal({
+      //                   title: '提示',
+      //                   content: '微信支付已取消',
+      //                   showCancel: false
+      //                 })
+      //               }
+      //             },
+      //             'complete': function (res) {
+      //               console.log(res);
+      //             }
+      //           })
+      //       } else {
+      //         console.log('充值接口失败');
+      //         wx.showModal({
+      //           title: '提示',
+      //           content: data.data.info,
+      //           showCancel: false
+      //         })
+      //       }
+      //     })
+
+      // } else {
+      //   wx.showModal({
+      //     title: '提示',
+      //     content: '请输入正确充值金额',
+      //     showCancel: false
+      //   })
+      // }
     },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+      var that = this;
+      // 缓存中取信息
+      wx.getStorage({
+        key: 'userUid',
+        success(res) {
+          console.log(res.data)
+          that.setData({
+            uid: res.data
+          });
+        }
+      });
+      wx.request({
+        url: app.globalData.serverPath + "myselfinfo",
+        data: {
+          "uid": that.data.uid
+        },
+        method: 'POST',
+        success: function (res) {
+          console.log(res);
+          that.setData({
+            integral: res.data.integral
+          })
+        }
+      })
   },
 
   /**

@@ -23,6 +23,7 @@ video {
 position:absolute;
 top:10rpx;
 width:90%;
+left:5%;
 height:50rpx;
 line-height:50rpx;
 overflow:hidden;
@@ -75,6 +76,9 @@ background:rgba(0, 0, 0, 0.4);
 .small-icon{
   height: 30rpx;
   width: 30rpx;
+}
+.activition{
+  margin: 10rpx 0;
 }
 /* 蒙版 */
 .ball{
@@ -361,6 +365,9 @@ margin:20rpx;
   font-size: 34rpx;
   padding: 10rpx 20rpx;
   background: #fff;
+  height:60rpx;
+  line-height:60rpx;
+
 }
 .giftsLists{
   display: flex;
@@ -370,10 +377,19 @@ margin:20rpx;
 }
 .giftsList{
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
   align-items: center;
   padding:0rpx 15rpx;
   margin:0rpx 15rpx;
+  flex-wrap:wrap;
+  text-align:center;
+
+}
+.gift-item{
+  padding:20rpx;
+}
+.gift-box{
+  height: 470rpx;
 }
 .giftsId{
   font-size: 20rpx;
@@ -384,8 +400,8 @@ margin:20rpx;
 .depositList{
   display: flex;
   flex-direction: row;
-  padding: 50rpx 30rpx 0rpx;
-  justify-content: space-between
+  padding:10rpx 20rpx;
+  justify-content: space-between;
 }
 .deposit{
   display: flex;
