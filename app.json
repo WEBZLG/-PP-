@@ -32,7 +32,8 @@
     "pages/index/userdetail/userdetail",
     "pages/index/deposit/deposit",
     "pages/index/depositrecord/depositrecord",
-    "pages/index/search/search"
+    "pages/index/search/search",
+    "pages/playvideo/playvideo"
   ],
   "permission": {
     "scope.userLocation": {

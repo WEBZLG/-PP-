@@ -40,9 +40,7 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  changeMotto:function(e){
-    
-  },
+
   onLoad: function (options) {
     var that = this;
     wx.setNavigationBarTitle({
@@ -130,30 +128,6 @@ Page({
   getSendVideo: function () {
     this.myselfinfo()
   },
-  // 编辑资料
-  redact: function () {
-    wx.navigateTo({
-      url: '../redact/redact'
-    })
-  },
-  // 查看明细
-  viewDetails: function () {
-    wx.navigateTo({
-      url: '../viewdetails/viewdetails'
-    })
-  },
-  // 提现申请
-  depositApply: function () {
-    wx.navigateTo({
-      url: '../depositapply/depositapply'
-    })
-  },
-  // 帮助跳转
-  help: function () {
-    wx.navigateTo({
-      url: '../help/help'
-    })
-  },
   // 点赞视频
   getLikeVideo: function () {
     const that = this;
@@ -202,6 +176,14 @@ Page({
           getGoodsList: res.data
         })
       }
+    })
+  },
+  // 播放单独的视频
+  playVideo: function (e) {
+    var videoId = e.currentTarget.dataset.id
+    var uid = this.data.uid
+    wx.navigateTo({
+      url: '../../playvideo/playvideo?uid=' + uid + '&videoId=' + videoId,
     })
   },
   // 滚动切换标签样式

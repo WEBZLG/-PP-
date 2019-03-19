@@ -4,7 +4,7 @@
     <!-- 搜索方向选择 -->
       <view class="selectBox">
         <view class="select" catchtap="selectTap">
-          <image src='../../image/down.png' style='margin-left:30rpx;width:30rpx;height:30rpx;'></image>
+          <image src='../../../image/down.png' style='margin-left:30rpx;width:30rpx;height:30rpx;'></image>
           <text class="selectText">{{selectData[index]}}</text>
           <view wx:if="{{show==false}}" class="fa fa-sort-desc"></view> 
           <view wx:else="{{show==true}}" class="fa fa-sort-asc"></view>      
@@ -15,8 +15,8 @@
       </view>
       <!-- 搜索内容 -->
       <input class="searchInput" placeholder="请输入搜索内容" bindinput="getSearchInput" value="{{searchInput}}"/>
-      <image src='../../image/search@2x.png' class='searchIcon' style='display:{{display_play}}' wx:if="{{searchInput}}" bindtap="searchSubmitFn"></image>
-      <image src='../../image/searchclose.png' class='searchIcon' style='display:{{display_play}};z-index:10000' wx:if="{{!searchInput}}" bindtap="returnLastPage"></image>
+      <image src='../../../image/search@2x.png' class='searchIcon' style='display:{{display_play}}' wx:if="{{searchInput}}" bindtap="searchSubmitFn"></image>
+      <image src='../../../image/searchclose.png' class='searchIcon' style='display:{{display_play}};z-index:10000' wx:if="{{!searchInput}}" bindtap="returnLastPage"></image>
     </view>
   </view>
   <!-- 历史记录 -->
@@ -25,7 +25,7 @@
       <block wx:for="{{searchRecord}}" wx:key="{{item}}">
         <view class="historyItem" data-name="{{item}}" data-id='{{index}}' catchtap="turnSearch">
         {{item}} 
-          <image src='../../image/delsearch.png' class='closehistory' style='width:20rpx;height:20rpx;' catchtap='closeHistory' data-name="{{item}}" data-id='{{index}}'></image>
+          <image src='../../../image/delsearch.png' class='closehistory' style='width:20rpx;height:20rpx;' catchtap='closeHistory' data-name="{{item}}" data-id='{{index}}'></image>
         </view>
       </block> 
     </view>
@@ -37,7 +37,7 @@
   <!-- 热搜排名 -->
   <view class='navList'>
     <view class='topTitle'>
-      <image src='../../image/hot.png' style='width:28rpx;height:28rpx;'></image>
+      <image src='../../../image/hot.png' style='width:28rpx;height:28rpx;'></image>
       热搜排名
     </view>
     <view class='listTitle'>
@@ -55,14 +55,14 @@
   <!-- 明星榜单 -->
   <view class='navList'>
     <view class='topTitle'>
-      <image src='../../image/ranking.png' style='width:28rpx;height:28rpx;'></image>
+      <image src='../../../image/ranking.png' style='width:28rpx;height:28rpx;'></image>
       明星榜单
     </view>
     <view class='submenu'>
       <view>
         <view class='submenuList'>
           <view>
-            <image src='../../image/girls.png' class='submenuListimg'></image>
+            <image src='../../../image/girls.png' class='submenuListimg'></image>
           </view>
           <view class='url-img color1'>
             <image src='' style='width:100rpx;height:100rpx;'></image>
@@ -74,7 +74,7 @@
         </view>
         <view class='submenuList'>
           <view>
-            <image src='../../image/music.png' class='submenuListimg'></image>
+            <image src='../../../image/music.png' class='submenuListimg'></image>
           </view>
           <view class='url-img color2'>
           <image src='' style='width:100rpx;height:100rpx;'></image>
@@ -88,7 +88,7 @@
       <view> 
       <view class='submenuList'>
         <view>
-            <image src='../../image/model.png' class='submenuListimg'></image>
+            <image src='../../../image/model.png' class='submenuListimg'></image>
         </view>
         <view class='url-img color3'>
         <image src='' style='width:100rpx;height:100rpx;'></image>
@@ -100,7 +100,7 @@
       </view>
       <view class='submenuList'>
         <view>
-            <image src='../../image/dance.png' class='submenuListimg'></image>
+            <image src='../../../image/dance.png' class='submenuListimg'></image>
         </view>
         <view class='url-img color4'>
         <image src='' style='width:100rpx;height:100rpx;'></image>
@@ -116,19 +116,19 @@
   <!-- 精彩推荐 -->
   <view class='navList'>
     <view class='topTitle'>
-      <image src='../../image/great.png' style='width:28rpx;height:28rpx;'></image>
+      <image src='../../../image/great.png' style='width:28rpx;height:28rpx;'></image>
       精彩推荐
     </view>
     <scroll-view style='height:220rpx;'>
       <swiper>
         <swiper-item>
-<image src='../../image/greatimg.png' style='width:690rpx;height:220rpx;'></image>
+<image src='../../../image/greatimg.png' style='width:690rpx;height:220rpx;'></image>
         </swiper-item>
         <swiper-item>
-<image src='../../image/greatimg.png' style='width:690rpx;height:220rpx;'></image>
+<image src='../../../image/greatimg.png' style='width:690rpx;height:220rpx;'></image>
         </swiper-item>
         <swiper-item>
-<image src='../../image/greatimg.png' style='width:690rpx;height:220rpx;'></image>
+<image src='../../../image/greatimg.png' style='width:690rpx;height:220rpx;'></image>
         </swiper-item>
       </swiper>
     </scroll-view>
@@ -136,7 +136,7 @@
   <!-- 活动 -->
   <view class='navList' style='display:{{display_pl}}'>
     <view class='topTitle'>
-      <image src='../../image/searchactivity.png' style='width:28rpx;height:28rpx;'></image>
+      <image src='../../../image/searchactivity.png' style='width:28rpx;height:28rpx;'></image>
       活动
     </view>
     <view class='activity'>
@@ -152,7 +152,7 @@
   </view>
   <!-- 更多 -->
   <view class='more'>
-    <image src='../../image/more.png' wx:if="{{more}}" catchtap='more' style='width:32rpx;height:32rpx;'></image>
-    <image src='../../image/up.png' wx:if="{{!more}}" catchtap='up'  style='width:32rpx;height:32rpx;'></image>
+    <image src='../../../image/more.png' wx:if="{{more}}" catchtap='more' style='width:32rpx;height:32rpx;'></image>
+    <image src='../../../image/up.png' wx:if="{{!more}}" catchtap='up'  style='width:32rpx;height:32rpx;'></image>
   </view>
 </view>

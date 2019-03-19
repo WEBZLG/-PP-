@@ -314,6 +314,7 @@ margin:20rpx;
   font-size:24rpx;
   color:#fff;
   height:200rpx;
+
 }
 .top-name{
   display: flex;

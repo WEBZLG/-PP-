@@ -52,13 +52,13 @@
         <swiper-item>
             <scroll-view scroll-y="true" class="scoll-h video-list" >
               <view class='block-item'>
-                <block wx:for="{{sendVideo}}" wx:key="{{index}}" data-id="{{item.id}}">
+                <block wx:for="{{sendVideo}}" wx:key="{{index}}" >
                   <view class='item-ans'>
-                    <image class='cover' src='{{item.pic}}'></image>
-                    <view>
+                    <image class='cover' src='{{item.pic}}' data-id="{{item.id}}" bindtap='playVideo'></image>
+                    <!-- <view>
                       <cover-image  class='cover-img' src='../../image/like.png'></cover-image>
                       <text class='cover-text'>42.1w</text>
-                    </view>
+                    </view> -->
                   </view>
                 </block>
               </view>
@@ -70,7 +70,7 @@
               <view class='block-item'>
                 <block wx:for="{{getVideo}}" wx:key="{{index}}"  data-id="{{item.id}}">
                   <view class='item-ans'>
-                    <image class='cover' src='{{item.pic}}'></image>
+                    <image class='cover' src='{{item.pic}}' data-id="{{item.id}}" bindtap='playVideo'></image>
                   </view>
                 </block>
               </view>
@@ -133,7 +133,7 @@
     <view class='dialog-white-space' bindtap='hideDialog'></view>
     <view class='dialog-content'>
       <view class='close'>
-        <image class='close-btn' bindtap='hideDialog' src='../../image/close.png'></image>
+        <image class='close-btn' bindtap='hideDialog' src='../../../image/close.png'></image>
       </view>
       <scroll-view scroll-y="true" class="scroll-h">
         <block wx:for="{{noteListDetails}}" wx:key="{{index}}">

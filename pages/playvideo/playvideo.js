@@ -79,23 +79,23 @@ Page({
   // 关注
   focus: function (e) {
     var that=this;
-    const index=e.currentTarget.dataset.id;
-    const eachrelation = e.currentTarget.dataset.item.relation;
-    const relationIndex = "IndexList[" + index + "].relation";
-    this.setData({
-      [relationIndex]: 1,
-      eachrelation: eachrelation,
-      IndexList: this.data.IndexList,
-    })
-    if (eachrelation == 0) {
-      this.setData({
-        [relationIndex]: 1,
-      })
-    } else {
-      this.setData({
-        [relationIndex]: 0,
-      })
-    }
+    // const index=e.currentTarget.dataset.id;
+    // const eachrelation = e.currentTarget.dataset.item.relation;
+    // const relationIndex = "IndexList[" + index + "].relation";
+    // this.setData({
+    //   [relationIndex]: 1,
+    //   eachrelation: eachrelation,
+    //   IndexList: this.data.IndexList,
+    // })
+    // if (eachrelation == 0) {
+    //   this.setData({
+    //     [relationIndex]: 1,
+    //   })
+    // } else {
+    //   this.setData({
+    //     [relationIndex]: 0,
+    //   })
+    // }
   },
   /// 单击、双击
   multipleTap: function (e) {
@@ -663,8 +663,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    const that = this;
-    this.videoContext = wx.createVideoContext('myVideo')
+    console.log(options)
+    wx.showLoading()
+    var that = this;
     wx.setNavigationBarTitle({
       title: "小PP短视频",
     })
@@ -679,13 +680,33 @@ Page({
     wx.getStorage({
       key: 'userMessage',
       success(res) {
-        
         var sex = res.data.gender==1?"男":"女"
         that.setData({
           activeSex: sex
         });
       }
     });
+    wx.request({
+      url: app.globalData.serverPath + "release_one",
+      data: {
+        "uid": options.uid,
+        "rid": options.videoId
+      },
+      method: 'POST',
+      success: function (res) {
+        wx.hideLoading()
+        that.setData({
+          display_play: 'none',
+          IndexList: res.data,
+          sendId: res.data.uid,
+          isActiveVideo: res.data.if_activity,
+          isVip: res.data.if_pass,
+          if_like: res.data.if_like,
+          activeId:res.data.aid
+        })
+
+      }
+    })
     // 获取存储图片的权限
     // wx.getSetting({
     //   success(res) {
@@ -702,15 +723,11 @@ Page({
     
   },
   onShow:function(){
-    this.getVideoMessage();
   },
   onHide:function(){
     this.setData({
       display_play: 'block'
     })
-    
-  },
-  onUnload: function () {
     this.videoContext.pause();
   },
   /**

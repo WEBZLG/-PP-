@@ -148,8 +148,9 @@ Page({
   },
   // 提现申请
   depositApply: function () {
+    var integral = this.data.integral
     wx.navigateTo({
-      url: '../depositapply/depositapply'
+      url: '../depositapply/depositapply?integral=' + integral
     })
   },
   // 帮助跳转
@@ -367,19 +368,10 @@ Page({
   },
 // 播放单独的视频
   playVideo:function(e){
-    console.log(e)
-    var that = this;
     var videoId = e.currentTarget.dataset.id
-    wx.request({
-      url: app.globalData.serverPath + "release_one",
-      data: {
-        "uid": that.data.uid,
-        "rid": videoId
-      },
-      method: 'POST',
-      success: function (res) {
-        console.log(res);
-      }
+    var uid = this.data.uid
+    wx.navigateTo({
+      url: '../playvideo/playvideo?uid=' + uid +'&videoId=' + videoId,
     })
   },
   /**

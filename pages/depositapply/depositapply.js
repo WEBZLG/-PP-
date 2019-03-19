@@ -14,7 +14,8 @@ Page({
     card_number: "",
     cardholder: "",
     bankaddress: "",
-    isDis:false
+    isDis:false,
+    integral:""
   },
 
   /**
@@ -25,12 +26,15 @@ Page({
     wx.setNavigationBarTitle({
       title: '提现',
     })
+    this.setData({
+      integral: options.integral
+    })
     wx.getStorage({
       key: 'userUid',
       success(res) {
         console.log(res.data)
         that.setData({
-          uid: res.data
+          uid: res.data   
         })
       }
     });

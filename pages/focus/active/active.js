@@ -9,7 +9,11 @@ Page({
   data: {
     title:'',
     time:'',
-    content:''
+    content:'',
+    place:"",
+    woman: "无限制",
+    man:"无限制",
+    wxname:""
   },
 
   /**
@@ -29,13 +33,17 @@ Page({
       method: "GET",//get为默认方法/POST
       success: function (res) {
         console.log(res)
-//         const article = res.data.content;
-//         WxParse.wxParse('article', 'html', article, that, 5);
-//         console.log(res)
-//         that.setData({
-//           title: res.data.title,
-//           time:res.data.time,
-// 　　　　　})
+        const article = res.data.content;
+        WxParse.wxParse('article', 'html', article, that, 5);
+        console.log(res)
+        that.setData({
+          title: res.data.title,
+          time:res.data.time,
+          place: res.data.place,
+          woman: res.data.woman,
+          man: res.data.man,
+          wxname: res.data.wxname
+　　　　　})
       },
       fail: function (err) { },//请求失败
       complete: function () { }//请求完成后执行的函数

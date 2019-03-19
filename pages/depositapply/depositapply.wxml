@@ -19,7 +19,7 @@
     <view class='apply-item'>
       <view>
         <text class='title'>提现金额</text>
-        <view class='balance'>积分余额 7800000</view>
+        <view class='balance'>积分余额 {{integral}}</view>
       </view>
       <input class='ipt'  placeholder="" bindinput='getApplyNum'/>
     </view>

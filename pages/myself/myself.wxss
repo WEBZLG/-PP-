@@ -164,6 +164,7 @@
 
 .item-ans {
   width: 32.8%;
+  height: 480rpx;
   border: 1rpx solid #c2c2c2;
   justify-content: space-between;
   position: relative;

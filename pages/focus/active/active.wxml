@@ -1,7 +1,10 @@
 <!--pages/message/noticeDetails/noticeDetails.wxml-->
 <import src="../../../wxParse/wxParse.wxml" />
 <view class='content'>
-  <view class='title'>{{title}}</view>
-  <view class='time'>{{time}}</view>
-  <template is="wxParse" data="{{wxParseData:article.nodes}}" />
+  <view class='wxname'>发起人：{{wxname}}</view>
+  <view class='title'>活动标题：{{title}}</view>
+  <view class='time'>活动时间：{{time}}</view>
+  <view class='woman'>活动人员（女）：{{woman}}</view>
+  <view class='man'>活动人员（男）：{{man}}</view>
+  <view>活动内容：<template is="wxParse" data="{{wxParseData:article.nodes}}" /></view>
 </view>

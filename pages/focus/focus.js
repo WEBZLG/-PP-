@@ -1,5 +1,4 @@
-//index.js
-//引入路径列表JS
+
 const app=getApp()
 Page({
   /**

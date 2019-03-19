@@ -23,3 +23,6 @@ page{
 text{
   font-size: 26rpx;
 }
+.navigator-hover{
+  background-color: inherit
+}
