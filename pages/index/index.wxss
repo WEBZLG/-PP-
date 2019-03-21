@@ -133,7 +133,7 @@ background:rgba(0, 0, 0, 0.4);
   width: 60rpx;
   height: 60rpx;
   margin-left: 15rpx;
-  margin-top: 20rpx
+  margin-top: 36rpx
 }
 .comment_num {
   color: #fff;
@@ -279,7 +279,7 @@ margin:20rpx;
   width:400rpx;
   font-size:24rpx;
   color:#fff;
-  height:200rpx;
+  height:210rpx;
 
 }
 .pding{
@@ -313,7 +313,7 @@ margin:20rpx;
   bottom:70rpx;
   font-size:24rpx;
   color:#fff;
-  height:200rpx;
+  height:210rpx;
 }
 .top-name{
   display: flex;
@@ -415,5 +415,11 @@ margin:20rpx;
   height:28rpx;
   width:28rpx;
   margin-left:5px;
-
+}
+.focus{
+  border:1px solid #eee;
+  border-radius:20rpx;
+  font-size:20rpx;
+  padding:4rpx 16rpx;
+  margin-left:8rpx;
 }

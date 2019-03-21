@@ -34,7 +34,9 @@ Page({
     sendGoodsList: [],//送出礼物
     getGoodsList: [],//收到礼物
     dialogWords: "",//对话发送内容
-    receiveid: ""//接受消息人id
+    receiveid: "",//接受消息人id,
+    ifRelation:"",//是否关注
+    otherId:""
   },
 
   /**
@@ -42,53 +44,34 @@ Page({
    */
 
   onLoad: function (options) {
+    console.log(options)
     var that = this;
     wx.setNavigationBarTitle({
-      title: '',
+      title: '个人信息',
     }),
-      // 缓存中取信息
-      wx.getStorage({
-        key: 'userUid',
-        success(res) {
-          // console.log(res.data)
-          that.setData({
-            uid: res.data
-          });
-          that.myselfinfo();
-        }
-      });
-    wx.getStorage({
-      key: 'userMessage',
-      success(res) {
-        // console.log(res.data)
-        that.setData({
-          nickname: res.data.nickName,
-          gender: res.data.gender,
-          city: res.data.city,
-          province: res.data.province,
-          country: res.data.country,
-          avatarUrl: res.data.avatarUrl,
-        })
-      }
-    });
-    
+
+    this.setData({
+      ifRelation: options.ifRelation,
+      otherId: options.otherId
+    })
     //  高度自适应
     wx.getSystemInfo({
       success: function (res) {
         var clientHeight = res.windowHeight,
           clientWidth = res.windowWidth,
           rpxR = 750 / clientWidth;
-        var calc = clientHeight * rpxR - 550;
+        var calc = clientHeight * rpxR - 480;
         // console.log(calc)
         that.setData({
           winHeight: calc
         });
       }
     });
+    this.otherInfo();
   },
  
   // 个人信息
-  myselfinfo: function (e) {
+  otherInfo: function (e) {
     var that = this;
     // 缓存中取信息
     wx.getStorage({
@@ -102,31 +85,32 @@ Page({
     });
     // console.log(that.data.uid)
     wx.request({
-      url: app.globalData.serverPath + "myselfinfo",
+      url: app.globalData.serverPath + "otherpeople",
       data: {
-        "uid": that.data.uid
+        "uid": that.data.uid,
+        "otherpeopleid":that.data.otherId
       },
       method: 'POST',
       success: function (res) {
-        // console.log(res);
+        console.log(res);
         that.setData({
           sendVideo: res.data.release,
           attention: res.data.attention,
           fans: res.data.fans,
-          if_verified: res.data.if_verified,
-          integral: res.data.integral,
-          like: res.data.like,
+          like: res.data.obtainlike,
           birthday: res.data.birthday,
           phone: res.data.phone,
           wx: res.data.wx,
           signature: res.data.signature,
+          avatarUrl: res.data.wximage,
+          nickname:res.data.wxname
         })
       }
     })
   },
   // 发布的视频
   getSendVideo: function () {
-    this.myselfinfo()
+    this.otherInfo()
   },
   // 点赞视频
   getLikeVideo: function () {
@@ -134,7 +118,7 @@ Page({
     wx.request({
       url: app.globalData.serverPath + "myselflike",
       data: {
-        "uid": that.data.uid
+        "uid": that.data.otherId
       },
       method: 'POST',
       success: function (res) {
@@ -151,7 +135,7 @@ Page({
     wx.request({
       url: app.globalData.serverPath + "sendgift",
       data: {
-        "uid": that.data.uid
+        "uid": that.data.otherId
       },
       method: 'POST',
       success: function (res) {
@@ -168,7 +152,7 @@ Page({
     wx.request({
       url: app.globalData.serverPath + "incomegift",
       data: {
-        "uid": that.data.uid
+        "uid": that.data.otherId
       },
       method: 'POST',
       success: function (res) {
@@ -181,7 +165,7 @@ Page({
   // 播放单独的视频
   playVideo: function (e) {
     var videoId = e.currentTarget.dataset.id
-    var uid = this.data.uid
+    var uid = this.data.otherId
     wx.navigateTo({
       url: '../../playvideo/playvideo?uid=' + uid + '&videoId=' + videoId,
     })
@@ -226,7 +210,38 @@ Page({
       })
     }
   },
-  
+  // 关注
+  focus: function (e) {
+    var that = this;
+    console.log(that.data.uid, that.data.otherId)
+    wx.request({
+      url: app.globalData.serverPath + "attention",
+      data: {
+        "uid": that.data.uid,
+        "attentid": that.data.otherId
+        // "uid": 103,
+        // "attentid": 105
+      },
+      method: 'POST',
+      success: function (res) {
+        console.log(res)
+        if(res.data.info=="success"){
+          if(res.data.status==0){
+            that.setData({
+              ifRelation: "已关注"
+            })
+          }else{
+            that.setData({
+              ifRelation: "未关注"
+            })
+          }
+        }else{
+          console.log(res)
+        }
+        
+      }
+    })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

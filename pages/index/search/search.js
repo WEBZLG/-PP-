@@ -1,16 +1,21 @@
+const app = getApp()
 Page({
 
   data: {
+    uid:"",
     show: false,//控制下拉列表的显示隐藏，false隐藏、true显示
     selectData: ['全部', '视频','用户'],//下拉列表的数据
     index: 0,//选择的下拉列表下标
-    searchInput:'',
+    searchInput: '',//搜索内容
     searchRecord: [],
-    hotSearchData:['重庆重机机车文化节','上海车友会','不老车神彪哥'],
+    hotSearchData:[],
     more:true,
     display_play:'none',
     display_pl:'none',
     more:true,//控制活动下拉  true是显示   false是隐藏
+    advertising:"",//活动图片
+    activity:[],//活动
+    hotuser:[]//明星
   },
   // 点击下拉显示框
   selectTap() {
@@ -35,6 +40,24 @@ Page({
   },
 
   openHistorySearch: function () {
+    var that = this;
+    wx.request({
+      url: app.globalData.serverPath + "searchshow",
+      data: {
+        "uid": that.data.uid
+      },
+      method: 'POST',
+      success: function (res) {
+        console.log(res);
+        res.data.advertising = "https://" + res.data.advertising
+        that.setData({
+          hotSearchData:res.data.rank,
+          advertising: res.data.advertising,
+          activity: res.data.activity,
+          hotuser: res.data.hotuser
+        })
+      }
+    })
     this.setData({
       searchRecord: wx.getStorageSync('searchRecord') || [],//若无储存则为空
     })
@@ -60,12 +83,23 @@ Page({
         searchRecord.splice(arrnum, 1)
         searchRecord.unshift(searchInput)
       }
-      wx.setStorageSync('searchRecord', searchRecord)
-
+      wx.setStorageSync('searchRecord', searchRecord)  
     }
     this.setData({
       searchRecord: this.data.searchRecord
     })  
+    wx.request({
+      url: app.globalData.serverPath + "search",
+      data: {
+        "uid": that.data.uid,
+        "content": that.data.searchInput
+      },
+      method: 'POST',
+      success: function (res) {
+        console.log(res);
+        
+      }
+    })
   },
   // 删除单条历史记录
   closeHistory: function (e) {
@@ -114,7 +148,18 @@ Page({
     })
   },
   onLoad: function (options) {
-    this.openHistorySearch();
+    var that = this
+    // 缓存中取信息
+    wx.getStorage({
+      key: 'userUid',
+      success(res) {
+        console.log(res.data)
+        that.setData({
+          uid: res.data
+        });
+        that.openHistorySearch();
+      }
+    });
   }
   
 })

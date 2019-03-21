@@ -44,6 +44,7 @@
         <view class='integral'>{{integral}}积分</view>
         <view class='view-detail' bindtap='viewDetails'>查看明细</view>
         <view class='deposit-apply' bindtap='depositApply'>提现申请</view>
+        <view class='deposit-apply' bindtap='authentication'>手机认证</view>
       </view>
     </view>
   </view>

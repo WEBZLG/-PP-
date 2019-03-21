@@ -30,6 +30,11 @@ App({
       }
     })
   },
+  onUnload: function () {
+    wx.clearStorageSync()
+    wx.clearStorage()
+    console.log("清除了")
+  }
 
 })
 /**
@@ -61,3 +66,5 @@ function wxRequest(method, url, data, callback, errFun) {
 module.exports = {
   wxRequest: wxRequest
 }
+
+

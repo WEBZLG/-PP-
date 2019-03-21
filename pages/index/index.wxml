@@ -35,10 +35,10 @@
       </cover-view>
       <!-- 赞 -->
       <cover-view class='sidebar_b_rt'>
-        <cover-image src="../../image/like_red.png" catchtap='like' class='comment_img ' data-id='{{index}}' data-item='{{item}}' wx:if='{{if_like==0}}'></cover-image>
-        <cover-image src="../../image/like.png" catchtap='like' class='comment_img ' data-id='{{index}}' data-item='{{item}}' wx:else></cover-image>
+        <cover-image src="../../image/like_red.png" catchtap='like' class='comment_img 'data-id='{{item.id}}' data-item='{{item}}' wx:if='{{if_like==0}}'></cover-image>
+        <cover-image src="../../image/like.png" catchtap='like' class='comment_img ' data-id='{{item.id}}' data-item='{{item}}' wx:else></cover-image>
         <!-- 赞数 -->
-        <cover-view class='comment_num' catchtap='like' data-id='{{index}}' data-item='{{item}}'>{{item.likenum}}</cover-view>
+        <cover-view class='comment_num' catchtap='like' data-id='{{item.id}}' data-item='{{item}}'>{{item.likenum}}</cover-view>
       </cover-view>
       <!-- 评论 -->
       <cover-view class='sidebar_b_rt'>
@@ -65,9 +65,10 @@
       <cover-view class='nick-name'>
         <cover-view>{{item.wxname}}</cover-view>
         <cover-image class='vip-icon' wx:if="{{isVip!=null}}" src='../../image/VIP@2x.png'></cover-image>
-        <cover-view class='focus pding'>
-          <cover-image wx:if="{{item.relation==0}}" class='length-icon' src='../../image/follow.png' bindtap='focus' data-id='{{index}}' data-item='{{item}}'></cover-image>
-          <cover-image wx:else class='length-icon' src='../../image/followed.png' bindtap='focus' data-id='{{index}}' data-item='{{item}}'></cover-image>
+        <cover-view class='focus'>
+          {{item.relation}}
+          <!-- <cover-image wx:if="{{item.relation=='未关注'}}" class='length-icon' src='../../image/follow.png'></cover-image>
+          <cover-image wx:else class='length-icon' src='../../image/followed.png'></cover-image> -->
         </cover-view>
       </cover-view>
       <cover-view class='activition'  wx:if="{{isActiveVideo==1}}">

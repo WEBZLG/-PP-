@@ -109,6 +109,15 @@ page{
   font-style: italic;
   padding-right: 22rpx;
 }
+.listNum0{
+  color:#ffae03;
+}
+.listNum1{
+  color:#dddddd;
+}
+.listNum2{
+  color:#d5760a;
+}
 .submenu{
   display: flex;
   flex-direction: row;

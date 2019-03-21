@@ -16,16 +16,17 @@
         </cover-view>
         <cover-view class='public-text'>哈尔滨</cover-view>
       </cover-view>
-      <cover-view class='search' bindtap='search'>
+      <!-- <cover-view class='search' bindtap='search'>
         <cover-image class='small-icon' src='/image/search.png'></cover-image>
-      </cover-view>
+      </cover-view> -->
     </cover-view>
     <!-- 播放按钮 -->
     <cover-image src='../../image/play.png' class='videoplay' style='display:{{display_play}}'></cover-image>
     <cover-view class='comment_border' style='display:{{display_pl}}'>
       <cover-view class='sidebar_b_rt'>
         <!-- 头像 -->
-        <cover-image src='{{IndexList.wximage}}' data-userid='{{IndexList.id}}' class='head_img' catchtap='userdetail'></cover-image>
+        <cover-image src='{{IndexList.wximage}}' data-userid='{{IndexList.id}}' class='head_img'></cover-image>
+        <!-- <cover-image src='{{IndexList.wximage}}' data-userid='{{IndexList.id}}' class='head_img' catchtap='userdetail'></cover-image> -->
       </cover-view>
       <cover-view class='sidebar_b_rt'>
         <!-- 礼物 -->
@@ -35,10 +36,10 @@
       </cover-view>
       <!-- 赞 -->
       <cover-view class='sidebar_b_rt'>
-        <cover-image src="../../image/like_red.png" catchtap='like' class='comment_img ' data-id='{{index}}' data-item='{{IndexList}}' wx:if='{{if_like==0}}'></cover-image>
+        <cover-image src="../../image/like_red.png" catchtap='like' class='comment_img ' data-id='{{index}}' data-item='{{IndexList}}' wx:if='{{if_like==1}}'></cover-image>
         <cover-image src="../../image/like.png" catchtap='like' class='comment_img ' data-id='{{index}}' data-item='{{IndexList}}' wx:else></cover-image>
         <!-- 赞数 -->
-        <cover-view class='comment_num' catchtap='like' data-id='{{index}}' data-item='{{IndexList}}'>{{IndexList.likenum}}</cover-view>
+        <cover-view class='comment_num' catchtap='like' data-id='{{index}}' data-item='{{IndexList}}'>{{likeNum}}</cover-view>
       </cover-view>
       <!-- 评论 -->
       <cover-view class='sidebar_b_rt'>

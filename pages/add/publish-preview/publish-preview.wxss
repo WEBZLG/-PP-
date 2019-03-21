@@ -2,7 +2,7 @@
 
 .video-preview {
   text-align: center;
-  height: 600rpx;
+  /* height:100vh; */
   width: 100%;
 }
 
@@ -251,13 +251,11 @@ movable-view {
 }
 
 movable-area {
-  height: 600rpx;
   width: 100%;
   overflow: hidden;
   position: absolute;
-  top:0;
   left:0;
-
+  top: 0;
 }
 
 .max {
@@ -294,4 +292,13 @@ movable-area {
   left:0;
   z-index:99999;
 
+}
+.preview-box{
+  height: 100%;
+}
+.preview-video{
+  width: 100%; 
+  height: 100vh; 
+  overflow: hidden; 
+  position: relative;
 }

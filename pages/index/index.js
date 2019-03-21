@@ -19,7 +19,7 @@ Page({
     commentnum: '',//评论数
     sharenum: '',//分享数
     top: '',//送礼物排行榜
-    relation: '',//关注/为关注
+    ifRelation: '',//关注/为关注
     if_like: '', //0点赞  1未点赞
     isVip:null,// 是否是vip
     content: '',//内容
@@ -51,10 +51,61 @@ Page({
     activeId:"",//活动id
     activeSex:""//参加活动性别
   },
+  onReady: function (res) {
+    this.videoContext = wx.createVideoContext('myVideo')
+  },
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
+    const that = this;
+    this.videoContext = wx.createVideoContext('myVideo')
+    wx.setNavigationBarTitle({
+      title: "小PP短视频",
+    })
+    wx.getStorage({
+      key: 'userUid',
+      success(res) {
+        console.log(res)
+        that.setData({
+          uid: res.data
+        });
+      }
+    });
+    wx.getStorage({
+      key: 'userMessage',
+      success(res) {
+        console.log(res)
+        var sex = res.data.gender == 1 ? "男" : "女"
+        that.setData({
+          activeSex: sex
+        });
+      }
+    });
+    // 获取存储图片的权限
+    // wx.getSetting({
+    //   success(res) {
+    //     if (!res.authSetting['scope.writePhotosAlbum']) {
+    //       wx.authorize({
+    //         scope: 'scope.writePhotosAlbum',
+    //         success() {
+    //           console.log('授权成功')
+    //         }
+    //       })
+    //     }
+    //   }
+    // })
+
+  },
+  onShow: function () {
+    this.getVideoMessage();
+  },
   // 视频用户详情页
   userdetail: function () {
+    var ifRelation = this.data.ifRelation
+    var otherId = this.data.sendId
     wx.navigateTo({
-      url: './userdetail/userdetail',
+      url: './userdetail/userdetail?ifRelation=' + ifRelation + "&otherId=" + otherId,
     })
   },
   //地址
@@ -76,27 +127,7 @@ Page({
       url: './deposit/deposit',
     })
   },
-  // 关注
-  focus: function (e) {
-    var that=this;
-    const index=e.currentTarget.dataset.id;
-    const eachrelation = e.currentTarget.dataset.item.relation;
-    const relationIndex = "IndexList[" + index + "].relation";
-    this.setData({
-      [relationIndex]: 1,
-      eachrelation: eachrelation,
-      IndexList: this.data.IndexList,
-    })
-    if (eachrelation == 0) {
-      this.setData({
-        [relationIndex]: 1,
-      })
-    } else {
-      this.setData({
-        [relationIndex]: 0,
-      })
-    }
-  },
+
   /// 单击、双击
   multipleTap: function (e) {
     var that = this
@@ -480,7 +511,8 @@ Page({
           isActiveVideo: res.data[0].if_activity,
           isVip: res.data[0].if_pass,
           if_like:res.data[0].if_like,
-          activeId: res.data[0].aid
+          activeId: res.data[0].aid,
+          ifRelation:res.data[0].relation
         })
       },
       fail: function (err) { },
@@ -591,11 +623,13 @@ Page({
   // 点赞功能
   like:function(e){
     var that = this;
+    console.log(that.data.uid)
+    console.log(e)
     wx.request({
       url: app.globalData.serverPath + 'index_like',
       data: {
         uid: that.data.uid,
-        rid: that.data.id,
+        rid: e.currentTarget.dataset.id
       },
       header: {
         "Content-Type": "application/x-www-form-urlencoded"
@@ -622,93 +656,57 @@ Page({
   // 参加活动
   joinAvtive:function(e){
     var that = this
-    wx.request({
-      url: app.globalData.serverPath + 'join_activity',
-      data: {
-        uid: that.data.uid,
-        aid:that.data.activeId,
-        sex:that.data.activeSex
-      },
-      header: {
-        "Content-Type": "application/x-www-form-urlencoded"
-      },
-      method: "POST",
-      success: function (res) {
-        console.log(res)
-        if (res.data.result == "success") {
-          wx.showToast({
-            title: res.data.info,
-            icon: "success"
+    wx.showModal({
+      title: '提示',
+      content: '确定充值参加此活动？',
+      success: function (sm) {
+        if (sm.confirm) {
+          wx.request({
+            url: app.globalData.serverPath + 'join_activity',
+            data: {
+              uid: that.data.uid,
+              aid: that.data.activeId,
+              sex: that.data.activeSex
+            },
+            header: {
+              "Content-Type": "application/x-www-form-urlencoded"
+            },
+            method: "POST",
+            success: function (res) {
+              console.log(res)
+              if (res.data.result == "success") {
+                wx.showToast({
+                  title: res.data.info,
+                  icon: "success"
+                })
+              } else if (res.data.result == "no") {
+                wx.showToast({
+                  title: res.data.info,
+                  icon: "none"
+                })
+              } else if (res.data.result == "not") {
+                wx.showToast({
+                  title: res.data.info,
+                  icon: "none"
+                })
+              }
+            },
+            fail: function (err) { },//请求失败
+            complete: function () { }//请求完成后执行的函数
           })
-        } else if (res.data.result == "no"){
-          wx.showToast({
-            title: res.data.info,
-            icon: "none"
-          })
-        } else if (res.data.result == "not"){
-          wx.showToast({
-            title: res.data.info,
-            icon: "none"
-          })
+        } else if (sm.cancel) {
+          console.log('用户点击取消')
         }
-      },
-      fail: function (err) { },//请求失败
-      complete: function () { }//请求完成后执行的函数
-    })
-  },
-  onReady: function (res) {
-    this.videoContext = wx.createVideoContext('myVideo')
-  },
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-    const that = this;
-    this.videoContext = wx.createVideoContext('myVideo')
-    wx.setNavigationBarTitle({
-      title: "小PP短视频",
-    })
-    wx.getStorage({
-      key: 'userUid',
-      success(res) {
-        that.setData({
-          uid: res.data
-        });
       }
-    });
-    wx.getStorage({
-      key: 'userMessage',
-      success(res) {
-        
-        var sex = res.data.gender==1?"男":"女"
-        that.setData({
-          activeSex: sex
-        });
-      }
-    });
-    // 获取存储图片的权限
-    // wx.getSetting({
-    //   success(res) {
-    //     if (!res.authSetting['scope.writePhotosAlbum']) {
-    //       wx.authorize({
-    //         scope: 'scope.writePhotosAlbum',
-    //         success() {
-    //           console.log('授权成功')
-    //         }
-    //       })
-    //     }
-    //   }
-    // })
-    
+    })
+
   },
-  onShow:function(){
-    this.getVideoMessage();
-  },
+
   onHide:function(){
     this.setData({
       display_play: 'block'
     })
-    
+    this.videoContext.pause();
   },
   onUnload: function () {
     this.videoContext.pause();

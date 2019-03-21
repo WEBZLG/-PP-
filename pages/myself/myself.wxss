@@ -86,7 +86,7 @@
 }
 
 .other-data {
-  width: 70%;
+  width: 80%;
   color: #fff;
   font-size: 32rpx;
   line-height: 40rpx;
@@ -163,9 +163,8 @@
 }
 
 .item-ans {
-  width: 32.8%;
+  width: 33.33%;
   height: 480rpx;
-  border: 1rpx solid #c2c2c2;
   justify-content: space-between;
   position: relative;
 }

@@ -73,7 +73,7 @@ Page({
   deposit:function(){
     this.hideModal()
     wx.navigateTo({
-      url: './deposit/deposit',
+      url: '../index/deposit/deposit',
     })
   },
   // 关注
@@ -605,9 +605,25 @@ Page({
         console.log(res)
         wx.hideLoading()
         if (res.data.info == "success") {
+          if (res.data.if_like==0){
             that.setData({
-              if_like: res.data.if_like
+              if_like: 1
             })
+          }else{
+            that.setData({
+              if_like: 0
+            })
+          }
+          var likeNum = that.data.IndexList.likenum
+            if(res.data.if_like==0){
+              that.setData({
+                likeNum:that.data.likeNum +1 
+              })
+            }else{
+              that.setData({
+                likeNum: that.data.likeNum -1
+              })
+            }
         } else {
           wx.showToast({
             title: '点赞失败！' + res.data.info,
@@ -694,6 +710,7 @@ Page({
       },
       method: 'POST',
       success: function (res) {
+        console.log(res)
         wx.hideLoading()
         that.setData({
           display_play: 'none',
@@ -702,7 +719,8 @@ Page({
           isActiveVideo: res.data.if_activity,
           isVip: res.data.if_pass,
           if_like: res.data.if_like,
-          activeId:res.data.aid
+          activeId:res.data.aid,
+          likeNum: res.data.likenum
         })
 
       }

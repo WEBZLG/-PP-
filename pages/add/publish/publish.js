@@ -17,10 +17,24 @@ Page({
         camSetBtn:0,
         previewData: {
         },
+        vWidth: "",
+        vHeight: "",
         networkImageUrl: e.globalData.IMAGE_URL
     },
     onLoad: function(e) {
-        wx.hideTabBar(), t = wx.createCameraContext();
+      var that = this;
+      wx.hideTabBar(), t = wx.createCameraContext();
+      wx.getSystemInfo({
+        success: function (res) {
+          var ww = res.windowWidth
+          var wh = res.windowHeight
+          console.log(ww, wh)
+          that.setData({
+            vWidth: ww,
+            vHeight: wh
+          })
+        }
+      })
     },
     onShow: function() {
         var t = this;
@@ -226,43 +240,42 @@ Page({
     //         }
     //     });
     // },
-    chooseVideo: function() {
-        var t = this;
-        wx.chooseVideo({
-            sourceType: [ "album" ],
-            maxDuration: t.data.limitTime,
-            compressed: !1,
-            success: function(a) {
-              console.log(a)
-                var i = a.width > a.height ? 0 : 1;
-              a.duration <= t.data.limitTime ? (t.setData({
-                    "previewData.type": "video",
-                    "previewData.videoType": i,
-                    "previewData.videoUrl": {
-                        tempFilePath: a.tempFilePath
-                    },
-                    "previewData.detailData": [ {
-                        src: t.data.networkImageUrl + "textpreviewbg.jpg"
-                    } ]
-                }), t.data.previewData.videoType = i, t.gotoPreviewPage()) : wx.showModal({
-                  content: "上传视频超过" + t.data.limitTime+"s, 请重新上传",
-                    cancelText: "取消",
-                    confirmText: "重新上传",
-                    success: function(t) {}
-                });
-            }
-        });
+    // chooseVideo: function() {
+    //     var t = this;
+    //     wx.chooseVideo({
+    //         sourceType: [ "album" ],
+    //         maxDuration: t.data.limitTime,
+    //         compressed: !1,
+    //         success: function(a) {
+    //           console.log(a)
+    //             var i = a.width > a.height ? 0 : 1;
+    //           a.duration <= t.data.limitTime ? (t.setData({
+    //                 "previewData.type": "video",
+    //                 "previewData.videoType": i,
+    //                 "previewData.videoUrl": {
+    //                     tempFilePath: a.tempFilePath
+    //                 },
+    //                 "previewData.detailData": [ {
+    //                     src: t.data.networkImageUrl + "textpreviewbg.jpg"
+    //                 } ]
+    //             }), t.data.previewData.videoType = i, t.gotoPreviewPage()) : wx.showModal({
+    //               content: "上传视频超过" + t.data.limitTime+"s, 请重新上传",
+    //                 cancelText: "取消",
+    //                 confirmText: "重新上传",
+    //                 success: function(t) {}
+    //             });
+    //         }
+    //     });
+    // },
+    gotoPreviewPage: function () {
+      var vWidth = this.data.vWidth
+      var vHeight = this.data.vHeight
+      console.log(vWidth, vHeight)
+      wx.navigateTo({
+        url: "../publish-preview/publish-preview?vWidth=" + vWidth + "&vHeight=" + vHeight
+      });
     },
-    gotoEditPage: function() {
-        wx.navigateTo({
-            url: "../publish-edit/publish-edit"
-        });
-    },
-    gotoPreviewPage: function() {
-        wx.navigateTo({
-            url: "../publish-preview/publish-preview"
-        });
-    },
+
     writeTextHandle: function() {
         this.setData({
             "previewData.type": "text"

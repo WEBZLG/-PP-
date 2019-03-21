@@ -28,6 +28,7 @@ Page({
     activeContent:"",//活动内容
     activeTime:"",//活动时间
     activeAdress:"",//活动地点
+    isPublish:false,
     locationFlag: !1,
     address: {
       longitude: "",
@@ -195,7 +196,8 @@ Page({
     });
     that.setData({
       description: options.detail.value.textarea,
-      worksPubSwitch: !1
+      worksPubSwitch: !1,
+      isPublish:true
       })
     console.log(that.data.previewData)
     const videoUrl = that.data.previewData.videoUrl.tempFilePath
@@ -233,7 +235,7 @@ Page({
         "str": JSON.stringify([{
           "img": that.data.stickerid,
           "overlay": that.data.stickerx + ":" + that.data.stickery,
-          "scale": "50:50"
+          "scale": "60:60"
         }])
       }
     }
@@ -254,6 +256,9 @@ Page({
             title: '发布成功',
             icon:"success"
           })
+          that.setData({
+            isPublish:false
+          })
           wx.reLaunch({
             url: '../../myself/myself',
           })
@@ -262,6 +267,9 @@ Page({
           wx.showToast({
             title: '发布失败,请检查网络重试！',
             icon: "none"
+          })
+          that.setData({
+            isPublish: false
           })
         }
       }

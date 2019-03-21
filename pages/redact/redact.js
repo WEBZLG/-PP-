@@ -13,7 +13,9 @@ Page({
     sex:"",
     birthday:"",
     phone:"",
+    phoneValue:0,
     wx:"",
+    wxValue:0,
     dayStyle: [
       { month: 'current', day: new Date().getDate(), color: 'white', background: '#AAD4F5' },
       { month: 'current', day: new Date().getDate(), color: 'white', background: '#AAD4F5' }
@@ -121,9 +123,19 @@ Page({
       phone: e.detail.value
     })
   },
+  getCallNum: function (e) {
+    this.setData({
+      phoneValue: e.detail.value
+    })
+  },
   getWx: function (e) {
     this.setData({
       wx: e.detail.value
+    })
+  },
+  getWxNum: function (e) {
+    this.setData({
+      wxValue: e.detail.value
     })
   },
   dayClick: function (event) {
@@ -203,18 +215,22 @@ Page({
         "birthday": that.data.birthday,
         "phone": that.data.phone,
         "wx": that.data.wx,
+        "phone_integral": that.data.phoneValue,
+        "wx_integral":that.data.wxValue
       },
       method: 'POST',
       success: function (res) {
-        wx.showModal({
-          content: "保存成功!",
-          showCancel: false
-        });
+        wx.showToast({
+          title: '保存成功！',
+        })
+        wx.redirectTo({
+          url: '../myself/myself',
+        })
       },
       fail:function(error){
-        wx.showModal({
-          content: error,
-          showCancel: false
+        wx.showToast({
+          title: '保存成功！',
+          icon:"none"
         })
       }
     })

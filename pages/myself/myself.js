@@ -1,5 +1,5 @@
 const app = getApp()
-// const api = require('../utils/api.js')
+
 Page({
 
   /**
@@ -13,7 +13,7 @@ Page({
     provice:"黑龙江",
     country:"中国",
     avatarUrl:"",
-    signature:"小pp视频专家",
+    signature:"小pp视频",
     phone:"18888888888",
     birthday:"1999-09-09",
     wx:"wx88888888",
@@ -34,7 +34,7 @@ Page({
     sendGoodsList:[],//送出礼物
     getGoodsList:[],//收到礼物
     dialogWords:"",//对话发送内容
-    receiveid:""//接受消息人id
+    receiveid:""//接受消息人id,
   },
 
   /**
@@ -96,17 +96,6 @@ Page({
   // 个人信息
   myselfinfo: function (e) {
     var that = this;
-    // 缓存中取信息
-    wx.getStorage({
-      key: 'userUid',
-      success(res) {
-        console.log(res.data)
-        that.setData({
-          uid: res.data
-        });
-      }
-    });
-    console.log(that.data.uid)
     wx.request({
       url: app.globalData.serverPath+"myselfinfo",
       data: {

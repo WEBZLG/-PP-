@@ -12,15 +12,7 @@ Page({
     isMusic:-1,//是否是当前播放歌曲
     musicTypeList:'',//音乐类型列表
     musicType: 1,//音乐类型
-    musicList:[
-      { id: 0,
-        src: 'http://ws.stream.qqmusic.qq.com/M500001VfvsJ21xFqb.mp3?guid=ffffffff82def4af4b12b3cd9337d5e7&uin=346897220&vkey=6292F51E1E384E06DCBDC9AB7C49FD713D632D313AC4858BACB8DDD29067D3C601481D36E62053BF8DFEAF74C0A5CCFADD6471160CAF3E6A&fromtag=46',
-        name:"此时此刻"},
-      { id:1,
-        src: "http://www.170mv.com/kw/sd.sycdn.kuwo.cn/resource/n1/47/70/1534907298.mp3",
-        name:"狂狼"}
-
-    ],
+    musicList:[],//歌曲列表
     areaStickerList:[],//移动区域贴纸列表
     stickerList: [],//贴纸列表
     imagePreview: {
@@ -48,26 +40,41 @@ Page({
     },
     stickerX:"",
     stickerY:"",
-    stickerId:""
+    stickerId:"",
+    vWidth:"",
+    vHeight:""
   },
   onReady: function (e) {
     
   },
   onLoad: function (t) {
     var that = this;
-    //  高度自适应
     wx.getSystemInfo({
       success: function (res) {
-        var clientHeight = res.windowHeight,
-          clientWidth = res.windowWidth,
-          rpxR = 750 / clientWidth;
-        var calc = clientHeight * rpxR - 180;
-        console.log(calc)
+        var ww = res.windowWidth
+        var wh = res.windowHeight
+        console.log(ww, wh)
         that.setData({
-          winHeight: calc
-        });
+          vWidth: ww,
+          vHeight: ww*t.vHeight/t.vWidth
+        })
       }
-    });
+    })
+    console.log(t)
+
+    //  高度自适应
+    // wx.getSystemInfo({
+    //   success: function (res) {
+    //     var clientHeight = res.windowHeight,
+    //       clientWidth = res.windowWidth,
+    //       rpxR = 750 / clientWidth;
+    //     var calc = clientHeight * rpxR - 180;
+    //     console.log(calc)
+    //     that.setData({
+    //       winHeight: calc
+    //     });
+    //   }
+    // });
 
     // 评论弹出层动画创建
     this.animation = wx.createAnimation({

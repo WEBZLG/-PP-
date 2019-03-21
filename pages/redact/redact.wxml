@@ -19,8 +19,18 @@
       <input class='ipt'  bindinput='getCall' placeholder='填写手机号'/>
     </view>
     <view class='item'>
+      <view class='title'>电话获取值</view>
+      <input class='ipt'  bindinput='getCallNum' placeholder='填写手机号获取值'/>
+      <text class='notice'>粉丝送礼物达到相应分值时即可查看我的电话号码</text>
+    </view>
+    <view class='item'>
       <view class='title'>微信</view>
       <input class='ipt'  bindinput='getWx' placeholder='填写微信号'/>
+    </view>
+    <view class='item'>
+      <view class='title'>微信获取值</view>
+      <input class='ipt'  bindinput='getWxNum' placeholder='填写微信号获取值'/>
+      <text class='notice'>粉丝送礼物达到相应分值时即可查看我的微信号码</text>
     </view>
     <view class='item'>
       <button type='button' bindtap='save'>保存</button>

@@ -7,7 +7,7 @@
     </view>
     <view class="fixed-bottom">
       <button bindtap="gotoPubOriginPage" class="draft-btn" data-status="3">取消</button>
-      <button class="publish-btn" data-status="0" formType="submit">发布</button>
+      <button class="publish-btn" data-status="0" formType="submit" disabled='{{isPublish}}'>发布</button>
     </view>
   </form>
   <view bindtap="previewBoxShow" class="des-w-right">

@@ -6,7 +6,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    vWidth:"",
+    vHeight:""
   },
 
   /**
@@ -72,6 +73,11 @@ Page({
       maxDuration: 15,
       compressed: !1,
       success: function (a) {
+        console.log(a)
+        t.setData({
+          vWidth:a.width,
+          vHeight:a.height
+        })
         var i = a.width > a.height ? 0 : 1;
         a.duration <= 15 ? (t.setData({
           "previewData.type": "video",
@@ -92,8 +98,10 @@ Page({
     });
   },
   gotoPreviewPage: function () {
+    var vWidth = this.data.vWidth
+    var vHeight = this.data.vHeight
     wx.navigateTo({
-      url: "./publish-preview/publish-preview"
+      url: "./publish-preview/publish-preview?vWidth=" + vWidth+"&vHeight="+vHeight
     });
   },
   // 摄像功能

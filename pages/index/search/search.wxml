@@ -40,16 +40,10 @@
       <image src='../../../image/hot.png' style='width:28rpx;height:28rpx;'></image>
       热搜排名
     </view>
-    <view class='listTitle'>
+    <view class='listTitle' wx:for="{{hotSearchData}}" wx:key="{{index}}">
       <view>
-        <text class='listNum' style='color:#ffae03'>1.</text><text>重庆重机车机车文化节</text>
+        <text class='listNum listNum{{index}}'>{{index+1}}.</text><text>{{item.content}}</text>
       </view>
-      <view>
-        <text class='listNum' style='color:#dddddd'>2.</text><text>上海车友会</text>
-      </view>
-      <view>
-        <text class='listNum' style='color:#d5760a'>3.</text><text>不老车神彪哥</text>
-      </view>  
     </view>
   </view>
   <!-- 明星榜单 -->
@@ -122,13 +116,7 @@
     <scroll-view style='height:220rpx;'>
       <swiper>
         <swiper-item>
-<image src='../../../image/greatimg.png' style='width:690rpx;height:220rpx;'></image>
-        </swiper-item>
-        <swiper-item>
-<image src='../../../image/greatimg.png' style='width:690rpx;height:220rpx;'></image>
-        </swiper-item>
-        <swiper-item>
-<image src='../../../image/greatimg.png' style='width:690rpx;height:220rpx;'></image>
+          <image src='{{advertising}}' style='width:690rpx;height:220rpx;'></image>
         </swiper-item>
       </swiper>
     </scroll-view>
@@ -139,16 +127,18 @@
       <image src='../../../image/searchactivity.png' style='width:28rpx;height:28rpx;'></image>
       活动
     </view>
-    <view class='activity'>
-      <view class='head-img'>
-        <image src='{{item.wximage}}' style='width:100rpx;height:100rpx;'></image>
+    <block wx:for="{{activity}}" wx:key="{{index}}">
+      <view class='activity'>
+        <view class='head-img'>
+          <image src='{{item.wximage}}' style='width:100rpx;height:100rpx;'></image>
+        </view>
+        <view class='activity-text'>
+          <text>曾经的彪哥</text>
+          <text>秋名山老吊</text>
+        </view>
+        <text style='color:white;'>查看</text>
       </view>
-      <view class='activity-text'>
-        <text>曾经的彪哥</text>
-        <text>秋名山老吊</text>
-      </view>
-      <text style='color:white;'>查看</text>
-    </view>
+    </block>
   </view>
   <!-- 更多 -->
   <view class='more'>

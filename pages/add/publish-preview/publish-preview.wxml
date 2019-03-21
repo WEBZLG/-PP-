@@ -1,7 +1,9 @@
-<view class="">
-  <video autoplay="{{true}}" class="video-preview" controls="{{false}}" id="myVideo" loop="{{true}}" muted="{{isMunted}}"  src="{{previewData.videoUrl.tempFilePath}}" objectFit="cover">
-  </video>
-  <movable-area>
+<view class="preview-box">
+  <view class='preview-video'>
+    <video autoplay="{{true}}" class="video-preview" style='height:{{vHeight}}px' controls="{{false}}" id="myVideo" loop="{{true}}" muted="{{isMunted}}"  src="{{previewData.videoUrl.tempFilePath}}" objectFit="content">
+    </video>
+  </view>
+  <movable-area style="width:{{vWidth}}px;height:{{vHeight}}px;">
     <movable-view  direction="all"  x="{{sticker.x}}" y="{{sticker.y}}"  data-id='{{sticker.id}}' data-src='{{sticker.src}}' bindtouchstart="touchstartCallback" bindtouchmove="touchmoveCallback" bindtouchend="touchendCallback" bindscale="onScale" style='display:{{isAddSticker}}'>
       <image class='del' bindtap='delSticker' data-id="{{sticker.id}}" src='../../../image/cancel.png'></image>
       <image class='img' src='{{sticker.src}}'></image>

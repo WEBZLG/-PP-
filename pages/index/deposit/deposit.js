@@ -7,6 +7,7 @@ Page({
    */
   data: {
     uid:"",
+    money:"",//充值金额
     integral:0,//积分
     Deposite:[{
       id:1,
@@ -51,79 +52,45 @@ Page({
   },
   // 充值
   deposit:function(e){
-    console.log(e)
+    var that = this
+    that.setData({
+      money: e.currentTarget.dataset.rmb
+    })
     wx.showModal({
       title: '提示',
       content: '确定充值' + e.currentTarget.dataset.rmb+"元？",
       success: function (sm) {
         if (sm.confirm) {
           // 用户点击了确定 可以调用删除方法了
+          that.payorder()
         } else if (sm.cancel) {
           console.log('用户点击取消')
         }
       }
     })
-      // if (app.globalData.util.isNumber(this.data.moneyId) == true && this.data.moneyId != 0) {
-      //   const params = {
-      //     "customerId": this.data.mine.customerId,
-      //     "money": this.data.moneyId,
-      //     "terminal": 52
-      //   };
-      //   console.log(params);
-      //   let paramsObj = {}
-      //   app.globalData.api.GetHttp(app.globalData.api.API.customerRecharge.url, params)
-      //     .then((data) => {
-      //       if (data.data.status == 200) {
-      //         paramsObj = data.data.data;
-      //         wx.requestPayment(
-      //           {
-      //             'timeStamp': paramsObj.timeStamp,
-      //             'nonceStr': paramsObj.nonceStr,
-      //             'package': paramsObj.package_value,
-      //             'signType': paramsObj.signType,
-      //             'paySign': paramsObj.paySign,
-      //             'success': function (res) {
-      //               console.log(res);
-      //               wx.navigateBack({
-      //                 delta: 1,
-      //                 success: function (res) {
-      //                 },
-      //                 fail: function (res) { },
-      //                 complete: function (res) { },
-      //               })
-      //             },
-      //             'fail': function (res) {
-      //               console.log(res);
-      //               if (res.errMsg == 'requestPayment:fail cancel') {
-      //                 wx.showModal({
-      //                   title: '提示',
-      //                   content: '微信支付已取消',
-      //                   showCancel: false
-      //                 })
-      //               }
-      //             },
-      //             'complete': function (res) {
-      //               console.log(res);
-      //             }
-      //           })
-      //       } else {
-      //         console.log('充值接口失败');
-      //         wx.showModal({
-      //           title: '提示',
-      //           content: data.data.info,
-      //           showCancel: false
-      //         })
-      //       }
-      //     })
-
-      // } else {
-      //   wx.showModal({
-      //     title: '提示',
-      //     content: '请输入正确充值金额',
-      //     showCancel: false
-      //   })
-      // }
     },
+  payorder: function (e) {
+    var that = this
+    console.log(that.data.uid, that.data.money )
+    wx.request({
+      url: app.globalData.serverPath+"insert",
+      method: "POST",
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
+      data: {
+        'uid': that.data.uid,
+        'amount': that.data.money
+      },
+      success: function (res) {
+        res.success = function (res) {
+          console.log(res);
+        }
+        wx.requestPayment(res.data)
+        console.log(res);
+      }
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
