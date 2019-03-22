@@ -33,7 +33,8 @@
     "pages/index/deposit/deposit",
     "pages/index/depositrecord/depositrecord",
     "pages/index/search/search",
-    "pages/playvideo/playvideo"
+    "pages/playvideo/playvideo",
+    "pages/myself/bindPhone/bindPhone"
   ],
   "permission": {
     "scope.userLocation": {

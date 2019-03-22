@@ -1,0 +1,40 @@
+/* pages/bindPhone/bindPhone.wxss */
+.iptCodeBox,
+.iptPhoneBox{
+  display: flex;
+  line-height: 80rpx;
+  border-bottom: 1px solid rgb(31, 26, 26);
+}
+.approvePhone{
+  padding: 30rpx;
+  font-size: 28rpx;
+  color:#eee;
+}
+.getCode{
+margin-right:0;
+height:80rpx;
+line-height:80rpx;
+font-size:32rpx;
+}
+.iptBox{
+  width: 70%;
+}
+.iptCodeBox{
+  margin: 30rpx 0
+}
+.ipt{
+  width:56%;
+  height: 76rpx;
+  text-indent: 24rpx;
+}
+.submit{
+  border-radius:80rpx;
+}
+button{
+width:100%;
+background-color:inherit;
+border:2px solid #fff;
+border-radius:60rpx;
+color:#fff;
+margin-top: 30rpx;
+}

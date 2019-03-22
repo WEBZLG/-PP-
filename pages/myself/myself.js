@@ -345,6 +345,12 @@ Page({
       }
     })
   },
+  //手机认证
+  authentication:function(){
+    wx.navigateTo({
+      url: './bindPhone/bindPhone'
+    })
+  },
   // 时间格式
   formatTime: function (date) {
     var year = date.getFullYear()

@@ -1,0 +1,15 @@
+<!--pages/bindPhone/bindPhone.wxml-->
+<view class='approvePhone'>
+  <view class='iptPhoneBox'>
+    <view>手机号：</view>
+      <input class='iptPhone ipt' placeholder='请输入手机号码' value='' bindinput='iptPhone'/>
+  </view>
+  <view class='iptCodeBox'>
+    <view>验证码：</view>
+      <input class='iptCode ipt' placeholder='请输入验证码' value='' bindinput='iptCode'/>
+      <view class='getCode' catchtap='getCode' style='pointer-events:{{isGetCode}}'>{{btnText}}</view>
+  </view>
+  <view class='submitBox'>
+    <button class='submit' bindtap='submit'>提交验证</button>
+  </view>
+</view>

@@ -117,9 +117,9 @@ Page({
   apply:function(){
     var that = this;
     if (that.data.withdraw === "" || that.data.bank === "" || that.data.card_number === "" || that.data.cardholder === "" || that.data.bankaddress===""){
-      wx.showModal({
-        content: "请完善提现信息!",
-        showCancel: false
+      wx.showToast({
+        title: '请完善提现信息!',
+        icon:'none'
       })
       return false;
     }else{
@@ -136,18 +136,18 @@ Page({
         bankaddress: that.data.bankaddress
       },
       success: function (res) {
-        wx.showModal({
-          content: "提交成功!",
-          showCancel: false
+        wx.showToast({
+          title: '提交成功!',
+          icon: 'success'
         })
        that.setData({
          isDis:true
        })
       },
       fail:function(error){
-        wx.showModal({
-          content: error,
-          showCancel: false
+        wx.showToast({
+          title: '提交成功!',
+          icon: 'none'
         })
       }
     })
