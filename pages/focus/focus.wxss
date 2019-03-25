@@ -133,7 +133,7 @@
 .nav-contentup-img{
   width: 100rpx;
   height: 100rpx;
-  border: 5px solid #cdcdcf;
+  border: 2px solid #cdcdcf;
   border-radius: 50%;
 }
 .nav-contentdown {

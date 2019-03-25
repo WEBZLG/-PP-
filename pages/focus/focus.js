@@ -15,7 +15,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    wx.showLoading()
     var that = this
     //缓存中取uid
     wx.getStorage({
@@ -25,42 +25,47 @@ Page({
         that.setData({
           uid: res.data
         })
+
+        //1.开始初始化第一个TAB页的关注列表数据
+        wx.request({
+          url: app.globalData.serverPath + 'attentionlist',
+          data: { uid: that.data.uid },
+          method: 'POST',
+          success: function (res) {
+            console.log(res)
+            that.setData({
+              guanzhuList: res.data
+            })
+          }, fail: function (e) {
+            //请求失败
+            wx.showToast({
+              title: '请求失败' + e,
+              icon: 'none'
+            })
+          }
+        })
+        //2.开始初始化活动页面的数据
+        wx.request({
+          url: app.globalData.serverPath + "apply",
+          data: { uid: that.data.uid },
+          method: 'POST',
+          success: function (res) {
+            console.log(res)
+            that.setData({
+              huodongList: res.data
+            });
+          }, fail: function (e) {
+            //请求失败
+            wx.showToast({
+              title: '请求失败' + e,
+              icon: 'none'
+            })
+          }
+        })
+        wx.hideLoading()
       }
     });
-    //1.开始初始化第一个TAB页的关注列表数据
-    wx.request({
-      url: app.globalData.serverPath +'attentionlist',
-      data: { uid: that.data.uid},
-      success:function(res){
-        console.log(res)
-        that.setData({
-          guanzhuList:res.data
-        })
-      },fail:function(e){
-        //请求失败
-        wx.showToast({
-          title: '请求失败'+e,
-          icon:'none'
-        })
-      }
-    })
-    //2.开始初始化活动页面的数据
-    wx.request({
-      url: app.globalData.serverPath +"apply",
-      data: { uid: that.data.uid},
-      success:function(res){
-        console.log(res)
-        that.setData({
-          huodongList:res.data
-        });
-      },fail:function(e){
-        //请求失败
-        wx.showToast({
-          title: '请求失败'+e,
-          icon:'none'
-        })
-      }
-    })
+
 
     wx.getSystemInfo({
       success: function (res) {

@@ -17,6 +17,8 @@ Page({
     topicAreaValue: "",
     description: "",
     submitData:'',
+    date:"",
+    disabled: false,//设置是否能点击 false可以 true不能点击
     isVip:!1,//是否是会员
     isDis:true,//是否限制人数
     isLimit: 1,//是否限制人数
@@ -171,6 +173,18 @@ Page({
       }
     });
   },
+  /**
+* 日历控件绑定函数 
+* 点击日期返回
+*/
+  onPickerChange: function (e) {
+    console.log(e.detail);
+    this.setData({
+      date: e.detail.dateString,
+      activeTime: e.detail.dateString+":00",
+    })
+    console.log(this.data.activeTime)
+  },
   // 是否参加会员
   vipSwitch:function(event){
     const that = this;
@@ -315,12 +329,7 @@ Page({
       activeContent: event.detail.value
     })
   },
-  // 活动时间
-  timeInput: function (event) {
-    this.setData({
-      activeTime: event.detail.value
-    })
-  },
+ 
   // 活动地点
   addressInput: function (event) {
     this.setData({

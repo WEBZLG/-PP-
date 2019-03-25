@@ -84,8 +84,8 @@
                 <image class='head-img' src='{{item.wximage}}'></image>
               </view>
               <view class='gift-text'>
-                <view class='gift-type'>{{item.wxname}} 送过我 {{item.name}}</view>
-                <view class='gift-words'>【送礼留言】巴拉巴拉啦芭啦啦八零</view>
+                <view class='gift-type'>Ta送过{{item.wxname}} {{item.name}}</view>
+                <view class='gift-words'>【送礼留言】{{item.content}}</view>
                 <view class='gift-time'>{{item.time}}</view>
               </view>
             </view>
@@ -99,8 +99,8 @@
                 <image class='head-img' src='{{item.wximage}}'></image>
               </view>
               <view class='gift-text'>
-                <view class='gift-type'>{{item.wxname}} 送过我 {{item.name}}</view>
-                <view class='gift-words'>【送礼留言】巴拉巴拉啦芭啦啦八零</view>
+                <view class='gift-type'>{{item.wxname}} 送过Ta {{item.name}}</view>
+                <view class='gift-words'>【送礼留言】{{item.content}}</view>
                 <view class='gift-time'>{{item.time}}</view>
               </view>
             </view>

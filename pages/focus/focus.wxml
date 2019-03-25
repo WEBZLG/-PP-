@@ -8,7 +8,7 @@
 
   <swiper style="height: {{clientHeight?clientHeight+'px':'auto'}}" class='swiper' current="{{currentTab}}" duration="300" bindchange="swiperchange">
     <swiper-item>
-      <scroll-view scroll-y="{{true}}" style="height: {{clientHeight?clientHeight+'px':'auto'}}" bindscrolltolower="scrollbot" class='swiper_conone'>
+      <scroll-view scroll-y="{{true}}" style="height: {{clientHeight?clientHeight+'px':'auto'}}" class='swiper_conone'>
         <!-- 第一段内容 -->
         <view class='aaa' wx:for="{{guanzhuList}}" wx:key="{{index}}" wx:if="{{guanzhuList !==''}}">
           <view class='nav-border'>

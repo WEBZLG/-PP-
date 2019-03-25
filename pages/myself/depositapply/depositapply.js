@@ -143,6 +143,11 @@ Page({
        that.setData({
          isDis:true
        })
+        setTimeout(function () {
+          wx.reLaunch({
+            url: '../myself',
+          })
+        }, 500)
       },
       fail:function(error){
         wx.showToast({

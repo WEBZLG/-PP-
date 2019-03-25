@@ -1,4 +1,7 @@
 {
 
-    "disableScroll": true
+    "disableScroll": true,
+      "usingComponents": {
+        "pickerYMDHM": "../../pickerYMDHM/pickerYMDHM"
+      }
 }

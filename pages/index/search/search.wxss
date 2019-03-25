@@ -77,6 +77,7 @@ page{
   background-color: #565656;
   height: 100%;
   width:100%;
+  color:#eee;
   border-bottom-right-radius:2rem;
   border-top-right-radius: 2rem;
   font-size: 30rpx;

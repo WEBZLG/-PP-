@@ -1,5 +1,4 @@
 const app = getApp()
-// const api = require('../utils/api.js')
 Page({
 
   /**
@@ -72,6 +71,7 @@ Page({
  
   // 个人信息
   otherInfo: function (e) {
+    wx.showLoading()
     var that = this;
     // 缓存中取信息
     wx.getStorage({
@@ -93,6 +93,7 @@ Page({
       method: 'POST',
       success: function (res) {
         console.log(res);
+        wx.hideLoading()
         that.setData({
           sendVideo: res.data.release,
           attention: res.data.attention,
@@ -114,6 +115,7 @@ Page({
   },
   // 点赞视频
   getLikeVideo: function () {
+    wx.showLoading()
     const that = this;
     wx.request({
       url: app.globalData.serverPath + "myselflike",
@@ -122,6 +124,7 @@ Page({
       },
       method: 'POST',
       success: function (res) {
+        wx.hideLoading()
         // console.log(res);
         that.setData({
           getVideo: res.data
@@ -131,6 +134,7 @@ Page({
   },
   // 送出礼物
   getSendGoods: function () {
+    wx.showLoading()
     const that = this
     wx.request({
       url: app.globalData.serverPath + "sendgift",
@@ -139,6 +143,7 @@ Page({
       },
       method: 'POST',
       success: function (res) {
+        wx.hideLoading()
         // console.log(res);
         that.setData({
           sendGoodsList: res.data
@@ -148,6 +153,7 @@ Page({
   },
   // 收到礼物
   getReceiveGoods: function () {
+    wx.showLoading()
     var that = this;
     wx.request({
       url: app.globalData.serverPath + "incomegift",
@@ -156,6 +162,7 @@ Page({
       },
       method: 'POST',
       success: function (res) {
+        wx.hideLoading()
         that.setData({
           getGoodsList: res.data
         })

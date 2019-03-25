@@ -53,17 +53,17 @@
       明星榜单
     </view>
     <view class='submenu'>
-      <view>
-        <view class='submenuList'>
+      <view style='width:50%'>
+        <view class='submenuList' data-id='{{hotuser[0].id}}'>
           <view>
             <image src='../../../image/girls.png' class='submenuListimg'></image>
           </view>
           <view class='url-img color1'>
-            <image src='' style='width:100rpx;height:100rpx;'></image>
+            <image src='{{hotuser[0].wximage}}' style='width:100rpx;height:100rpx;border-radius:50%;'></image>
           </view>
           <view class='submenuTitle'>
             <text style='font-size:34rpx;'>摩女郎</text>
-            <text style='font-size:26rpx;'>MISS小怪兽</text>
+            <text style='font-size:26rpx;'>{{hotuser[0].wxname}}</text>
           </view>
         </view>
         <view class='submenuList'>
@@ -71,39 +71,39 @@
             <image src='../../../image/music.png' class='submenuListimg'></image>
           </view>
           <view class='url-img color2'>
-          <image src='' style='width:100rpx;height:100rpx;'></image>
+          <image src='{{hotuser[1].wximage}}' style='width:100rpx;height:100rpx;border-radius:50%;'></image>
           </view>
           <view class='submenuTitle'>
             <text style='font-size:34rpx;'>音乐达人</text>
-            <text style='font-size:26rpx;'>Luka Addway</text>
+            <text style='font-size:26rpx;'>{{hotuser[1].wxname}}</text>
           </view>
         </view>
       </view> 
-      <view> 
-      <view class='submenuList'>
-        <view>
-            <image src='../../../image/model.png' class='submenuListimg'></image>
+      <view  style='width:50%'> 
+        <view class='submenuList'>
+          <view>
+              <image src='../../../image/model.png' class='submenuListimg'></image>
+          </view>
+          <view class='url-img color3'>
+          <image src='{{hotuser[2].wximage}}' style='width:100rpx;height:100rpx;border-radius:50%;'></image>
+          </view>
+          <view class='submenuTitle'>
+            <text style='font-size:34rpx;'>模特</text>
+            <text style='font-size:26rpx;'>{{hotuser[2].wxname}}</text>
+          </view>
         </view>
-        <view class='url-img color3'>
-        <image src='' style='width:100rpx;height:100rpx;'></image>
+        <view class='submenuList'>
+          <view>
+              <image src='../../../image/dance.png' class='submenuListimg'></image>
+          </view>
+          <view class='url-img color4'>
+          <image src='{{hotuser[3].wximage}}' style='width:100rpx;height:100rpx;border-radius:50%;'></image>
+          </view>
+          <view class='submenuTitle'>
+            <text style='font-size:34rpx;'>舞蹈</text>
+            <text style='font-size:26rpx;'>{{hotuser[3].wxname}}</text>
+          </view>
         </view>
-        <view class='submenuTitle'>
-          <text style='font-size:34rpx;'>模特</text>
-          <text style='font-size:26rpx;'>王王王王王王</text>
-        </view>
-      </view>
-      <view class='submenuList'>
-        <view>
-            <image src='../../../image/dance.png' class='submenuListimg'></image>
-        </view>
-        <view class='url-img color4'>
-        <image src='' style='width:100rpx;height:100rpx;'></image>
-        </view>
-        <view class='submenuTitle'>
-          <text style='font-size:34rpx;'>摩女郎</text>
-          <text style='font-size:26rpx;'>lulu露露520</text>
-        </view>
-      </view>
       </view>
     </view>
   </view>
@@ -133,10 +133,10 @@
           <image src='{{item.wximage}}' style='width:100rpx;height:100rpx;'></image>
         </view>
         <view class='activity-text'>
-          <text>曾经的彪哥</text>
-          <text>秋名山老吊</text>
+          <text>{{item.wxname}}</text>
+          <text>{{item.title}}</text>
         </view>
-        <text style='color:white;'>查看</text>
+        <text style='color:white;' data-id='{{item.id}}'>查看</text>
       </view>
     </block>
   </view>

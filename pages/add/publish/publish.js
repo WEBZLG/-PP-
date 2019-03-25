@@ -19,9 +19,10 @@ Page({
         },
         vWidth: "",
         vHeight: "",
-        networkImageUrl: e.globalData.IMAGE_URL
+        networkImageUrl: e.globalData.IMAGE_URL,
     },
     onLoad: function(e) {
+      console.log(e)
       var that = this;
       wx.hideTabBar(), t = wx.createCameraContext();
       wx.getSystemInfo({
@@ -34,7 +35,11 @@ Page({
             vHeight: wh
           })
         }
+      });
+      that.setData({
+        limitTime: e.detal.value
       })
+      
     },
     onShow: function() {
         var t = this;

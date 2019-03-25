@@ -89,6 +89,7 @@ Page({
     this.getdata()
   },
   getdata: function () {
+    wx.showLoading()
     const that = this;
     wx.request({
       url: app.globalData.serverPath +'fanlist',//请求地址
@@ -101,6 +102,7 @@ Page({
       method: "POST",//get为默认方法/POST
       success: function (res) {
         console.log(res)
+        wx.hideLoading()
         that.setData({
           Fans: res.data
         })

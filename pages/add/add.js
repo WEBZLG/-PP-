@@ -6,15 +6,51 @@ Page({
    * 页面的初始数据
    */
   data: {
+    uid:"",
     vWidth:"",
-    vHeight:""
+    vHeight:"",
+    duration:15
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    var that = this
+    // 缓存中取信息
+    wx.getStorage({
+      key: 'userUid',
+      success(res) {
+        console.log(res.data)
+        that.setData({
+          uid: res.data
+        })
+      }
+    });
+    wx.request({
+      url: app.globalData.serverPath + "myselfinfo",
+      data: {
+        uid:that.data.uid
+      },
+      method: 'POST',
+      success: function (res) {
+        if (res.data.if_verified == 0) {
+          that.setData({
+            duration: 15,
+          })
+        } else {
+          that.setData({
+            duration: 30,
+          })
+        }
+      },
+      fail: function (error) {
+        wx.showToast({
+          title: '发送失败！',
+          icon: "none"
+        })
+      }
+    })
   },
 
   /**
@@ -70,7 +106,7 @@ Page({
     var t = this;
     wx.chooseVideo({
       sourceType: ['album'],
-      maxDuration: 15,
+      maxDuration: t.data.duration,
       compressed: !1,
       success: function (a) {
         console.log(a)
@@ -79,7 +115,7 @@ Page({
           vHeight:a.height
         })
         var i = a.width > a.height ? 0 : 1;
-        a.duration <= 15 ? (t.setData({
+        a.duration <= t.data.duration ? (t.setData({
           "previewData.type": "video",
           "previewData.videoType": i,
           "previewData.videoUrl": {
@@ -89,7 +125,7 @@ Page({
             src: a.thumbTempFilePath
           }]
         }), t.data.previewData.videoType = i, t.gotoPreviewPage()) : wx.showModal({
-          content: "上传视频超过15s, 请重新上传",
+            content: "上传视频超过" + t.data.duration +"s, 请重新上传",
           cancelText: "取消",
           confirmText: "重新上传",
           success: function (t) { }
@@ -106,22 +142,9 @@ Page({
   },
   // 摄像功能
   getLocalVideo: function () {
-    var that = this;
-    var session_key = wx.getStorageSync('session_key');
-    // wx.chooseVideo({
-    //   maxDuration: 15,
-    //   success: function (res) {
-    //     console.log(res)
-    //     // app.startOperating("上传中")
-    //     // 这个就是最终拍摄视频的临时路径了
-    //     var tempFilePath = res.tempFilePath;
-    //   },
-    //   fail: function () {
-    //     console.error("获取本地视频时出错");
-    //   }
-    // })
+    var duration = this.data.duration
     wx.navigateTo({
-      url: 'publish/publish',
+      url: 'publish/publish?duration=' + duration,
     })
   },
   get3dAlbum:function(){

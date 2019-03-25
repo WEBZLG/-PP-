@@ -95,6 +95,7 @@ Page({
 
   // 个人信息
   myselfinfo: function (e) {
+    wx.showLoading()
     var that = this;
     wx.request({
       url: app.globalData.serverPath+"myselfinfo",
@@ -103,6 +104,7 @@ Page({
       },
       method: 'POST',
       success: function (res) {
+        wx.hideLoading()
         console.log(res);
         that.setData({
           sendVideo: res.data.release,
@@ -126,30 +128,31 @@ Page({
   // 编辑资料
   redact:function(){
     wx.navigateTo({
-      url: '../redact/redact'
+      url: './redact/redact'
     })
   },
   // 查看明细
   viewDetails: function () {
     wx.navigateTo({
-      url: '../viewdetails/viewdetails'
+      url: './viewdetails/viewdetails'
     })
   },
   // 提现申请
   depositApply: function () {
     var integral = this.data.integral
     wx.navigateTo({
-      url: '../depositapply/depositapply?integral=' + integral
+      url: './depositapply/depositapply?integral=' + integral
     })
   },
   // 帮助跳转
   help: function () {
     wx.navigateTo({
-      url: '../help/help'
+      url: './help/help'
     })
   },
   // 点赞视频
   getLikeVideo:function(){
+    wx.showLoading()
     const that = this;
     wx.request({
       url: app.globalData.serverPath+"myselflike",
@@ -158,6 +161,7 @@ Page({
       },
       method: 'POST',
       success: function (res) {
+        wx.hideLoading()
         console.log(res);
         that.setData({
           getVideo:res.data
@@ -167,6 +171,7 @@ Page({
   },
   // 送出礼物
   getSendGoods:function(){
+    wx.showLoading()
     const that = this
     wx.request({
       url: app.globalData.serverPath+"sendgift",
@@ -175,7 +180,8 @@ Page({
       },
       method: 'POST',
       success: function (res) {
-        // console.log(res);
+        wx.hideLoading()
+        console.log(res);
         that.setData({
           sendGoodsList:res.data
         })
@@ -184,6 +190,7 @@ Page({
   },
   // 收到礼物
   getReceiveGoods:function(){
+    wx.showLoading()
     var that = this;
     wx.request({
       url: app.globalData.serverPath+"incomegift",
@@ -192,6 +199,7 @@ Page({
       },
       method: 'POST',
       success: function (res) {
+        wx.hideLoading()
         that.setData({
           getGoodsList: res.data
         })
@@ -200,6 +208,7 @@ Page({
   },
   //私信留言
   getNote:function(){
+    wx.showLoading()
     const that = this;
     wx.request({
       url: app.globalData.serverPath+"letters",
@@ -208,6 +217,7 @@ Page({
       },
       method: 'POST',
       success: function (res) {
+        wx.hideLoading()
         console.log(res);
         that.setData({
           noteList:res.data
@@ -217,7 +227,7 @@ Page({
   },
 //私信留言详情
   getNoteDetails: function (event) {
-    console.log(event.currentTarget.dataset.id)
+    wx.showLoading()
     const that = this;
     this.setData({
       "receiveid": event.currentTarget.dataset.id,
@@ -230,6 +240,7 @@ Page({
       },
       method: 'POST',
       success: function (res) {
+        wx.hideLoading()
         console.log(res);
         that.setData({
           noteListDetails: res.data,
@@ -311,6 +322,7 @@ Page({
   },
   //发送对话内容
   senWords: function () {
+    wx.showLoading()
     var that = this;
     const nowTime = this.formatTime(new Date())
     wx.request({
@@ -323,6 +335,7 @@ Page({
       },
       method: 'POST',
       success: function (res) {
+        wx.hideLoading()
         console.log(res);
         if (res.data.info == "success") {
           wx.showToast({

@@ -1,46 +1,18 @@
-// pages/message/noticeDetails/noticeDetails.js
-const app = getApp()
-const WxParse = require('../../../wxParse/wxParse.js');
+// pages/help/helpDetails/helpDetails.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    // title:'',
-    // time:'',
-    content:''
+
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    wx.setNavigationBarTitle({
-      title: '帮助详情',
-    });
-    var that = this;
-    wx.request({
-      url: app.globalData.serverPath + 'helpinfo',//请求地址
-      data: {//发送给后台的数据
-        id: options.id
-      },
-      header: {//请求头
-        "Content-Type": "application/x-www-form-urlencoded"
-      },
-      method: "POST",//get为默认方法/POST
-      success: function (res) {
-        const article = res.data.content;
-        WxParse.wxParse('article', 'html', article, that, 5);
-        console.log(res)
-//         that.setData({
-//           title: res.data.title,
-//           time:res.data.time,
-// 　　　　　})
-      },
-      fail: function (err) { },//请求失败
-      complete: function () { }//请求完成后执行的函数
-    })
+
   },
 
   /**

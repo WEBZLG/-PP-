@@ -63,18 +63,18 @@ Page({
     console.log(t)
 
     //  高度自适应
-    // wx.getSystemInfo({
-    //   success: function (res) {
-    //     var clientHeight = res.windowHeight,
-    //       clientWidth = res.windowWidth,
-    //       rpxR = 750 / clientWidth;
-    //     var calc = clientHeight * rpxR - 180;
-    //     console.log(calc)
-    //     that.setData({
-    //       winHeight: calc
-    //     });
-    //   }
-    // });
+    wx.getSystemInfo({
+      success: function (res) {
+        var clientHeight = res.windowHeight,
+          clientWidth = res.windowWidth,
+          rpxR = 750 / clientWidth;
+        var calc = clientHeight * rpxR - 180;
+        console.log(calc)
+        that.setData({
+          winHeight: calc
+        });
+      }
+    });
 
     // 评论弹出层动画创建
     this.animation = wx.createAnimation({

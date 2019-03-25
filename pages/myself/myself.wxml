@@ -5,7 +5,7 @@
         <view class='infor-mark'>
           <view class='infor-name'>{{nickname}}</view>
           <view class='infor-img' wx:if="{{if_verified==1}}"><image class='vip' src='../../image/VIP@2x.png'></image></view>
-          <view class='infor-approve'>{{if_verified==0?"未认证":"已认证"}}</view>
+          <view class='infor-approve' bindtap='authentication'>{{if_verified==0?"未认证":"已认证"}}</view>
         </view>
         <view class='sign-text'>{{signature}}</view>
         <view class='infor-more'>
@@ -44,7 +44,6 @@
         <view class='integral'>{{integral}}积分</view>
         <view class='view-detail' bindtap='viewDetails'>查看明细</view>
         <view class='deposit-apply' bindtap='depositApply'>提现申请</view>
-        <view class='deposit-apply' bindtap='authentication'>手机认证</view>
       </view>
     </view>
   </view>
@@ -62,7 +61,7 @@
         <swiper-item>
             <scroll-view scroll-y="true" class="scoll-h video-list" >
               <view class='block-item'>
-                <block wx:for="{{sendVideo}}" wx:key="{{index}}" data-id="{{item.id}}">
+                <block  wx:for="{{sendVideo}}" wx:key="{{index}}" data-id="{{item.id}}">
                   <view class='item-ans'>
                     <image class='cover' src='{{item.pic}}' data-id="{{item.id}}" bindtap='playVideo'></image>
                     <!-- <view>
@@ -94,8 +93,8 @@
                 <image class='head-img' src='{{item.wximage}}'></image>
               </view>
               <view class='gift-text'>
-                <view class='gift-type'>{{item.wxname}} 送过我 {{item.name}}</view>
-                <view class='gift-words'>【送礼留言】巴拉巴拉啦芭啦啦八零</view>
+                <view class='gift-type'>送给{{item.wxname}}{{item.name}}</view>
+                <view class='gift-words'>【送礼留言】{{item.content}}</view>
                 <view class='gift-time'>{{item.time}}</view>
               </view>
             </view>
@@ -110,7 +109,7 @@
               </view>
               <view class='gift-text'>
                 <view class='gift-type'>{{item.wxname}} 送过我 {{item.name}}</view>
-                <view class='gift-words'>【送礼留言】巴拉巴拉啦芭啦啦八零</view>
+                <view class='gift-words'>【送礼留言】{{item.content}}</view>
                 <view class='gift-time'>{{item.time}}</view>
               </view>
             </view>

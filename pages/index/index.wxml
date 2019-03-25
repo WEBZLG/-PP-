@@ -6,7 +6,7 @@
   <cover-view data-time="{{lastTapTime}}" class="ball" id="id" bindtouchend="handletouchend" bindtouchmove="handletouchmove" bindtouchstart="handletouchstart" catchtap="videoHandle" style='display:{{isShow}}'>
     <!-- 公告 -->
     <cover-view class='scroll_view_border' wx:if="{{isActiveVideo==1}}">
-      <cover-view class="srcoll_view" bindtap="textclick">{{item.content}}</cover-view>
+      <cover-view class="srcoll_view" catchtap="textclick">{{item.content}}</cover-view>
     </cover-view>
     <!-- 地址 -->
     <cover-view class='my-address'>
@@ -38,7 +38,7 @@
         <cover-image src="../../image/like_red.png" catchtap='like' class='comment_img 'data-id='{{item.id}}' data-item='{{item}}' wx:if='{{if_like==0}}'></cover-image>
         <cover-image src="../../image/like.png" catchtap='like' class='comment_img ' data-id='{{item.id}}' data-item='{{item}}' wx:else></cover-image>
         <!-- 赞数 -->
-        <cover-view class='comment_num' catchtap='like' data-id='{{item.id}}' data-item='{{item}}'>{{item.likenum}}</cover-view>
+        <cover-view class='comment_num' catchtap='like' data-id='{{item.id}}' data-item='{{item}}'>{{likenum}}</cover-view>
       </cover-view>
       <!-- 评论 -->
       <cover-view class='sidebar_b_rt'>
@@ -157,7 +157,7 @@
               <scroll-view scroll-y="true" class='gift-box'>
                   <view class='giftsList'>
                     <block wx:for="{{goodsList}}" wx:key="{{index}}">
-                      <view class='gift-item' catchtap='sendGift' data-score='{{item.integral}}'>
+                      <view class='gift-item' catchtap='chooseGift' data-score='{{item.integral}}' data-id='{{item.id}}'>
                         <image wx:if="{{item.pic}}" src='{{item.pic}}' style='width:130rpx;height:130rpx;'></image>
                         <view class='giftsId'>{{item.name}}</view>
                         <view class='giftsScore'>{{item.integral}}积分</view>
@@ -174,5 +174,23 @@
       </view>
       <view class='deposit' bindtap='deposit'>充值></view>
     </view>
+  </view>
+
+
+  <!-- 礼物留言 -->
+    <view animation="{{animationgifts}}" class="gifts_attr_box" wx:if="{{showWordsStatus}}">
+    <view class="giftsTitle">
+      <text>留言列表</text>
+      <image class='down' src='../../image/close@2x.png' bindtap='hideWordsModal'></image>
+    </view>
+    <!-- <swiper style='height:460rpx;' indicator-dots="true">
+        <swiper-item class='giftsLists' data-id="{{item.id}}"> -->
+              <scroll-view scroll-y="true" class='gift-box'>
+                <block wx:for="{{wordsList}}" wx:key="{{index}}">
+                  <view class='wordsItem' catchtap='sendGift' data-content="{{item.content}}">{{item.content}}</view>
+                </block>
+              </scroll-view>
+        <!-- </swiper-item>
+    </swiper> -->
   </view>
 </view>

@@ -40,6 +40,7 @@ Page({
       this.getdata()
   },
   getdata: function () {
+    wx.showLoading()
     var that = this;
     wx.request({
       url: app.globalData.serverPath +'commentlist',//请求地址
@@ -51,6 +52,7 @@ Page({
       },
       method: "POST",//get为默认方法/POST
       success: function (res) {
+        wx.hideLoading()
         console.log(res.data)
         that.setData({
           Comment: res.data

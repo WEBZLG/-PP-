@@ -223,16 +223,19 @@ Page({
         wx.showToast({
           title: '保存成功！',
         })
-        wx.redirectTo({
-          url: '../myself/myself',
-        })
+        setTimeout(function(){
+          wx.reLaunch({
+            url: '../myself',
+          })
+        },500)
       },
       fail:function(error){
         wx.showToast({
-          title: '保存成功！',
+          title: '保存失败！',
           icon:"none"
         })
       }
     })
+    
   },
 })

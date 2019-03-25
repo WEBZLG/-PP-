@@ -4,7 +4,7 @@ Page({
 
   data: {
     IndexList: [],//获取首页数组
-    sendId:"",//发布人的id
+    sendId: "",//发布人的id
     uid: '',//自己的id
     content: '',//发布介绍
     url: '',//视频地址
@@ -21,7 +21,7 @@ Page({
     top: '',//送礼物排行榜
     relation: '',//关注/为关注
     if_like: '', //0点赞  1未点赞
-    isVip:null,// 是否是vip
+    isVip: null,// 是否是vip
     content: '',//内容
     commentList: [],
     //播放按钮
@@ -29,7 +29,7 @@ Page({
     //点击评论隐藏图标
     display_pl: 'block',
     count: 1,//视频爱心点赞
-    commentcount:1,//评论点赞
+    commentcount: 1,//评论点赞
     index_num: 1,
     play: 'none',
     inputValue: '',//发送评论的内容
@@ -44,12 +44,12 @@ Page({
     },
     videoPlay: !0,
     videoPlayFlag: !0,
-    isShow:"blcok",//蒙版展示,
-    goodsList:[],//礼物列表
-    goodIntegral:"",//礼物积分,
-    isActiveVideo:false,
-    activeId:"",//活动id
-    activeSex:""//参加活动性别
+    isShow: "blcok",//蒙版展示,
+    goodsList: [],//礼物列表
+    goodIntegral: "",//礼物积分,
+    isActiveVideo: false,
+    activeId: "",//活动id
+    activeSex: ""//参加活动性别
   },
   // 视频用户详情页
   userdetail: function () {
@@ -70,7 +70,7 @@ Page({
     })
   },
   // 充值
-  deposit:function(){
+  deposit: function () {
     this.hideModal()
     wx.navigateTo({
       url: '../index/deposit/deposit',
@@ -78,7 +78,7 @@ Page({
   },
   // 关注
   focus: function (e) {
-    var that=this;
+    var that = this;
     // const index=e.currentTarget.dataset.id;
     // const eachrelation = e.currentTarget.dataset.item.relation;
     // const relationIndex = "IndexList[" + index + "].relation";
@@ -97,93 +97,12 @@ Page({
     //   })
     // }
   },
-  /// 单击、双击
-  multipleTap: function (e) {
-    var that = this
-    var currentTime = e.timeStamp
-    var lastTapTime = that.lastTapTime
-    that.lastTapTime = currentTime
-    if (currentTime - lastTapTime < 300) {
-      // 双击触发
-      // console.log("double tap")
-      clearTimeout(that.lastTapTimeoutFunc);
-      // console.log(this.data)
-      var that = this;
-      // 提交点赞
-      var vid = this.data.vid;
-      if (this.data.count == '1') {
-        that.setData({
-          fav: -1,
-          if_like: 0,
-          count: 2
-        })
-      } else if (this.data.count == '2') {
-        that.setData({
-          if_like: 1,
-          count: 1
-        })
-      }
-    } else {
-      //单击触发
-      that.lastTapTimeoutFunc = setTimeout(function () {
-        // console.log(that.data)
-        // console.log(that.data.index_num)
-        that.setData({
-          index_num: that.data.index_num + 1
-        });
-        if (that.data.index_num % 2 == 1) {
-          // console.log('播放')
-          that.videoContext.play()
-          // console.log(that.videoContext)
-          that.setData({
-            display_play: 'none'
-          })
-        } else {
-          // console.log('暂停')
-          that.videoContext.pause()
-          that.setData({
-            display_play: 'block'
-          })
-        }
-        // console.log(that.videoContext)
-      }, 300);
-    }
 
-  },
-  // 点击图片的点赞事件  
-  toCollect: function (e) {
-    var that = this;
-    // 爱心获取脚标
-    const index = e.currentTarget.dataset.id;
-    // console.log(e.currentTarget.dataset.item.likenum)
-    // 获取点赞按钮的值
-    const eachiflike = e.currentTarget.dataset.item.if_like;
-    // 点赞的值
-    // const eachlikenum = e.currentTarget.dataset.item.likenum;
-    const iflikeIndex = "IndexList[" + index + "].if_like";
-    // console.log(eachlikenum)
-    this.setData({
-      [iflikeIndex]: 1,
-      eachiflike: eachiflike,
-      IndexList: this.data.IndexList,
-    })
-    if (eachiflike == 0) {
-      this.setData({
-        [iflikeIndex]: 1,
-      })
-    } else {
-      this.setData({
-        [iflikeIndex]: 0,
-        // [eachlikenum]: -1,
-      })
-    }
-  },
 
-  
-// 评论点赞
-  commentCollect:function(e){
+  // 评论点赞
+  commentCollect: function (e) {
     // console.log(e);
-    var that=this;
+    var that = this;
     // var vid = e.currentTarget.dataset.id;
     if (this.data.commentcount == 1) {
       that.setData({
@@ -222,7 +141,7 @@ Page({
 
         case "向下滑动":
           this.videoTogglePrev();
-          // console.log("向下")
+        // console.log("向下")
       }
       this.setData({
         lastX: t,
@@ -243,14 +162,14 @@ Page({
   },
   videoTogglePrev: function () {
     var that = this;
-    if (this.data.pageIndex==0){
+    if (this.data.pageIndex == 0) {
       wx.showToast({
         title: '到顶了哦~木有视频了！',
-        icon:"none"
+        icon: "none"
       })
-    }else{
+    } else {
       this.setData({
-        pageIndex : that.data.pageIndex-1
+        pageIndex: that.data.pageIndex - 1
       })
       console.log(that.data.pageIndex)
       that.getPageVideoMessage()
@@ -267,32 +186,32 @@ Page({
   videoHandle: function (a) {
     this.data.videoPlay ? (
       this.setData({
-      videoPlayFlag: !1,
-      videoInfoHide: !1,
-      videoPlay: !1,
-      display_play: 'block'
-    }), 
-    this.videoContext.pause()
+        videoPlayFlag: !1,
+        videoInfoHide: !1,
+        videoPlay: !1,
+        display_play: 'block'
+      }),
+      this.videoContext.pause()
     ) : (
-      this.setData({
-      videoPlayFlag: !0,
-      videoInfoHide: !0,
-      videoPlay:!0,
-      display_play: 'none'
-      }), 
-      this.videoContext.play()
+        this.setData({
+          videoPlayFlag: !0,
+          videoInfoHide: !0,
+          videoPlay: !0,
+          display_play: 'none'
+        }),
+        this.videoContext.play()
       );
   },
 
   bindInput: function (e) {
     this.setData({
-      inputValue : e.detail.value
+      inputValue: e.detail.value
     })
     console.log(e.detail.value)
   },
 
   //播放结束
-  bindended:function(e){
+  bindended: function (e) {
     this.setData({
       display_play: 'block',
       videoPlay: !1,
@@ -316,7 +235,7 @@ Page({
       video_heighe: 45,
       ball_height: 1,
       display_pl: 'none',
-      isShow:"none"
+      isShow: "none"
     })
     setTimeout(function () {
       animation.translateY(0).step()
@@ -350,11 +269,11 @@ Page({
     }.bind(this), 200)
   },
   // 获取礼物数据
-  getGoods:function(e){
-  var that = this;
+  getGoods: function (e) {
+    var that = this;
     wx.request({
       url: app.globalData.serverPath + 'giftlist',
-      data: {},
+      data: {"uid":that.data.uid},
       header: {
         "Content-Type": "application/x-www-form-urlencoded"
       },
@@ -366,16 +285,16 @@ Page({
           item.pic = "https://" + item.pic
         })
         that.setData({
-          goodsList:res.data.giftlist,
-          goodIntegral:res.data.nowintegral
-          })
-       that.showgiftsModal()
+          goodsList: res.data.giftlist,
+          goodIntegral: res.data.nowintegral
+        })
+        that.showgiftsModal()
       },
       fail: function (err) { },//请求失败
       complete: function () { }//请求完成后执行的函数
     })
   },
-  imageError:function(e){
+  imageError: function (e) {
     console.log(e)
   },
   //礼物显示
@@ -401,16 +320,16 @@ Page({
     }.bind(this), 200)
   },
   // 送出礼物
-  
-  sendGift:function(e){
+
+  sendGift: function (e) {
     var that = this;
     console.log(e)
     wx.request({
       url: app.globalData.serverPath + 'indexsendgift',
       data: {
-        uid:that.data.uid,
-        income_uid:that.data.sendId,
-        sendintegral:e.currentTarget.dataset.score
+        uid: that.data.uid,
+        income_uid: that.data.sendId,
+        sendintegral: e.currentTarget.dataset.score
       },
       header: {
         "Content-Type": "application/x-www-form-urlencoded"
@@ -418,14 +337,14 @@ Page({
       method: "POST",
       success: function (res) {
         console.log(res)
-        if (res.data.info =="Insufficient integral"){
+        if (res.data.info == "Insufficient integral") {
           wx.showToast({
             title: '积分不足，请充值！',
-            icon:"none"
+            icon: "none"
           })
-        } else if(res.data.info =="succss"){
+        } else if (res.data.info == "succss") {
           console.log(res.data.info)
-        }else{
+        } else {
           console.log(res.data.info)
         }
       },
@@ -457,71 +376,7 @@ Page({
       })
     }.bind(this), 200)
   },
-  // 获取视频信息
-  getVideoMessage: function () {
-    var that = this;
-    wx.showLoading()
-    wx.request({
-      url: app.globalData.serverPath + 'index',
-      data: {
-        uid: that.data.uid
-      },
-      header: {//请求头
-        "Content-Type": "application/x-www-form-urlencoded"
-      },
-      method: "POST",
-      success: function (res) {
-        wx.hideLoading()
-        console.log(res)
-        that.setData({
-          display_play: 'none',
-          IndexList: res.data,
-          sendId:res.data[0].uid,
-          isActiveVideo: res.data[0].if_activity,
-          isVip: res.data[0].if_pass,
-          if_like:res.data[0].if_like,
-          activeId: res.data[0].aid
-        })
-      },
-      fail: function (err) { },
-      complete: function () { }
-    })
-  },
-  // 获取分页视频
-  getPageVideoMessage:function(e){
-    var that = this;
-    wx.showLoading()
-    wx.request({
-      url: app.globalData.serverPath + 'indexpage',
-      data: {
-        uid: that.data.uid,
-        page:that.data.pageIndex
-      },
-      header: {//请求头
-        "Content-Type": "application/x-www-form-urlencoded"
-      },
-      method: "POST",
-      success: function (res) {
-        // console.log(res)
-        wx.hideLoading()
-        if(res.data.length == 0){
-          // console.log("我空了")
-          that.getVideoMessage();
-          that.setData({
-            display_play: 'none',
-            pageIndex:0
-          })
-        }else{
-          that.setData({
-            display_play: 'none',
-            IndexList: res.data
-          })
-        }
-      },
-      fail: function (err) { },
-      complete: function () { }
-    })
-  },
+
   // 获取评论信息
   getCommentMessage: function (e) {
     var that = this;
@@ -557,7 +412,7 @@ Page({
     wx.request({
       url: app.globalData.serverPath + 'sendcomment',
       data: {
-        uid:that.data.uid, 
+        uid: that.data.uid,
         rid: that.data.id,
         content: that.data.inputValue
       },
@@ -568,18 +423,18 @@ Page({
       success: function (res) {
         console.log(res)
         wx.hideLoading()
-        if(res.data.info == "success"){
-            that.setData({
-              inputText:""
-            })
-            wx.showToast({
-              title: '评论成功！',
-            })
+        if (res.data.info == "success") {
+          that.setData({
+            inputText: ""
+          })
+          wx.showToast({
+            title: '评论成功！',
+          })
           that.hidegiftsModal()
-        }else{
+        } else {
           wx.showToast({
             title: '评论失败！' + res.info,
-            icon:"none"
+            icon: "none"
           })
           that.hidegiftsModal()
         }
@@ -589,7 +444,7 @@ Page({
     })
   },
   // 点赞功能
-  like:function(e){
+  like: function (e) {
     var that = this;
     wx.request({
       url: app.globalData.serverPath + 'index_like',
@@ -603,27 +458,26 @@ Page({
       method: "POST",
       success: function (res) {
         console.log(res)
-        wx.hideLoading()
         if (res.data.info == "success") {
-          if (res.data.if_like==0){
+          if (res.data.if_like == 0) {
             that.setData({
               if_like: 1
             })
-          }else{
+          } else {
             that.setData({
               if_like: 0
             })
           }
-          var likeNum = that.data.IndexList.likenum
-            if(res.data.if_like==0){
-              that.setData({
-                likeNum:that.data.likeNum +1 
-              })
-            }else{
-              that.setData({
-                likeNum: that.data.likeNum -1
-              })
-            }
+          // var likeNum = that.data.IndexList.likenum
+          if (res.data.if_like == 0) {
+            that.setData({
+              likeNum: that.data.likeNum + 1
+            })
+          } else {
+            that.setData({
+              likeNum: that.data.likeNum - 1
+            })
+          }
         } else {
           wx.showToast({
             title: '点赞失败！' + res.data.info,
@@ -636,14 +490,14 @@ Page({
     })
   },
   // 参加活动
-  joinAvtive:function(e){
+  joinAvtive: function (e) {
     var that = this
     wx.request({
       url: app.globalData.serverPath + 'join_activity',
       data: {
         uid: that.data.uid,
-        aid:that.data.activeId,
-        sex:that.data.activeSex
+        aid: that.data.activeId,
+        sex: that.data.activeSex
       },
       header: {
         "Content-Type": "application/x-www-form-urlencoded"
@@ -656,12 +510,12 @@ Page({
             title: res.data.info,
             icon: "success"
           })
-        } else if (res.data.result == "no"){
+        } else if (res.data.result == "no") {
           wx.showToast({
             title: res.data.info,
             icon: "none"
           })
-        } else if (res.data.result == "not"){
+        } else if (res.data.result == "not") {
           wx.showToast({
             title: res.data.info,
             icon: "none"
@@ -696,7 +550,7 @@ Page({
     wx.getStorage({
       key: 'userMessage',
       success(res) {
-        var sex = res.data.gender==1?"男":"女"
+        var sex = res.data.gender == 1 ? "男" : "女"
         that.setData({
           activeSex: sex
         });
@@ -719,7 +573,7 @@ Page({
           isActiveVideo: res.data.if_activity,
           isVip: res.data.if_pass,
           if_like: res.data.if_like,
-          activeId:res.data.aid,
+          activeId: res.data.aid,
           likeNum: res.data.likenum
         })
 
@@ -738,11 +592,11 @@ Page({
     //     }
     //   }
     // })
-    
+
   },
-  onShow:function(){
+  onShow: function () {
   },
-  onHide:function(){
+  onHide: function () {
     this.setData({
       display_play: 'block'
     })
@@ -753,14 +607,14 @@ Page({
    */
   onShareAppMessage: function (ops) {
     // console.log(ops)
-    if(ops.from==='button'){
+    if (ops.from === 'button') {
       // console.log(ops.target)
     }
     return {
-      title:'小pp短视频',
+      title: '小pp短视频',
       path: 'pages/index/index',
       success: function (res) {
-        
+
         // 转发成功
         console.log("转发成功:" + JSON.stringify(res));
       },
