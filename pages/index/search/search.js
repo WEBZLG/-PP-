@@ -88,17 +88,10 @@ Page({
     this.setData({
       searchRecord: this.data.searchRecord
     })  
-    wx.request({
-      url: app.globalData.serverPath + "search",
-      data: {
-        "uid": that.data.uid,
-        "content": that.data.searchInput
-      },
-      method: 'POST',
-      success: function (res) {
-        console.log(res);
-        
-      }
+    var uid = that.data.uid;
+    var content = that.data.searchInput
+    wx.navigateTo({
+      url: './searchDetail/searchDetail?uid=' + uid + '&content=' + content
     })
   },
   // 删除单条历史记录
@@ -145,6 +138,28 @@ Page({
     this.setData({
       display_pl: 'none',
       more:true
+    })
+  },
+  // 活动详情
+  viewActive:function(e){
+    var activeId = e.currentTarget.dataset.id
+    var uid = this.data.uid
+    wx.navigateTo({
+      url: '../../focus/active/active?id=' + activeId+'&uid='+uid,
+    })
+  },
+  //排行视频查看
+  viewVideo:function(e){
+    var vid = e.currentTarget.dataset.vid
+    wx.navigateTo({
+      url: '../../playvideo/playvideo?videoId=' + vid,
+    })
+  },
+  //查看明星信息
+  viewperson:function(e){
+    var otherId = e.currentTarget.dataset.id
+    wx.navigateTo({
+      url: '../userdetail/userdetail?otherId=' + otherId 
     })
   },
   onLoad: function (options) {

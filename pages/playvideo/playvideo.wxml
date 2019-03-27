@@ -1,7 +1,7 @@
 <!--pages/video/video.wxml-->
 <!-- 视频资源 -->
 <view style='position: relative;height:100%;overflow:hidden'>
-  <video id="myVideo" src="{{IndexList.url}}" autoplay='true' show-fullscreen-btn='{{false}}' show-center-play-btn="{{false}}" objectFit='cover' style='height:100%;' data-id='{{index}}' custom-cache='{{false}}' controls="{{false}}" bindended="bindended"></video>
+  <video id="myVideo" src="{{IndexList.url}}" autoplay='true' show-fullscreen-btn='{{false}}' show-center-play-btn="{{false}}" objectFit='{{IndexList.videoType==0?"cover":"contain"}}' style='height:100%;' data-id='{{index}}' custom-cache='{{false}}' controls="{{false}}" bindended="bindended"></video>
   <!-- 点击滑动蒙版图层 -->
   <cover-view data-time="{{lastTapTime}}" class="ball" id="id" catchtap="videoHandle" style='display:{{isShow}}'>
     <!-- 公告 -->
@@ -49,7 +49,7 @@
       </cover-view>
       <!-- 分享 -->
       <cover-view class='sidebar_b_rt'>
-        <button class='comment__button' open-type='share'>
+        <button class='comment__button' catchtap='showShareBox'>
           <cover-image src='../../image/share.png' class='comment_num'>转发</cover-image>
         </button>
         <!-- 转发数 -->
@@ -173,6 +173,35 @@
         <text> 积分: {{goodIntegral}}</text>
       </view>
       <view class='deposit' bindtap='deposit'>充值></view>
+    </view>
+  </view>
+
+
+   <!-- 海报 -->
+  <canvas
+    canvas-id="canvas"
+    class="canvas"
+    style="position:absolute;width:{{canvasWidth}};height:{{canvasHeight}};left:{{canvasLeft}};">
+  </canvas>
+  <!-- 分享 -->
+  <view animation="{{animationgifts}}" class="share_attr_box" wx:if="{{showShareStatus}}">
+    <view class="align-text">
+      <text>分享到</text>
+    </view>
+    <view class='share-type'>
+      <view style='text-align:center'>
+        <button class='shareFriend' open-type='share' data-uid='{{item.uid}}' data-vid='{{item.id}}'>
+          <cover-image src='../../image/wechat@2x.png' class=''>好友</cover-image>
+        </button>
+        <text>微信</text>
+      </view>
+      <view class='sharePoster' catchtap='create' data-uid='{{item.uid}}' data-vid='{{item.id}}'>
+        <cover-image src='../../image/pyq@2x.png' class=''>朋友圈</cover-image>
+        <text>朋友圈</text>
+      </view>
+    </view>
+    <view catchtap='hideShareModal' class='align-text cancel'>
+      <text>取消</text>
     </view>
   </view>
 </view>

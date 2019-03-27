@@ -1,12 +1,12 @@
 <!--pages/video/video.wxml-->
 <!-- 视频资源 -->
 <view style='position: relative;height:100%;overflow:hidden' wx:for='{{IndexList}}' wx:key='index'>
-  <video id="myVideo" src="{{item.url}}" autoplay='true' show-fullscreen-btn='{{false}}' show-center-play-btn="{{false}}" objectFit='cover'  data-id='{{index}}' custom-cache='{{false}}' controls="{{false}}" bindended="bindended"></video>
+  <video id="myVideo" src="{{item.url}}" autoplay='true' show-fullscreen-btn='{{false}}' show-center-play-btn="{{false}}" objectFit='{{item.videotype==0?"cover":"contain"}}'  data-id='{{index}}' custom-cache='{{false}}' controls="{{false}}" bindended="bindended"></video>
   <!-- 点击滑动蒙版图层 -->
   <cover-view data-time="{{lastTapTime}}" class="ball" id="id" bindtouchend="handletouchend" bindtouchmove="handletouchmove" bindtouchstart="handletouchstart" catchtap="videoHandle" style='display:{{isShow}}'>
     <!-- 公告 -->
     <cover-view class='scroll_view_border' wx:if="{{isActiveVideo==1}}">
-      <cover-view class="srcoll_view" catchtap="textclick">{{item.content}}</cover-view>
+      <cover-view class="srcoll_view" catchtap="textclick" data-aid='{{item.aid}}'>{{item.content}}</cover-view>
     </cover-view>
     <!-- 地址 -->
     <cover-view class='my-address'>
@@ -14,9 +14,9 @@
         <cover-view>
           <cover-image class='small-icon' src='/image/site.png'></cover-image>
         </cover-view>
-        <cover-view class='public-text'>哈尔滨</cover-view>
+        <cover-view class='public-text'>{{nowAddress}}</cover-view>
       </cover-view>
-      <cover-view class='search' bindtap='search'>
+      <cover-view class='search' catchtap='search'>
         <cover-image class='small-icon' src='/image/search.png'></cover-image>
       </cover-view>
     </cover-view>
@@ -48,7 +48,7 @@
       </cover-view>
       <!-- 分享 -->
       <cover-view class='sidebar_b_rt'>
-        <button class='comment__button' open-type='share'>
+        <button class='comment__button' catchtap='showShareBox'>
           <cover-image src='../../image/share.png' class='comment_num'>转发</cover-image>
         </button>
         <!-- 转发数 -->
@@ -178,7 +178,7 @@
 
 
   <!-- 礼物留言 -->
-    <view animation="{{animationgifts}}" class="gifts_attr_box" wx:if="{{showWordsStatus}}">
+  <view animation="{{animationgifts}}" class="gifts_attr_box" wx:if="{{showWordsStatus}}">
     <view class="giftsTitle">
       <text>留言列表</text>
       <image class='down' src='../../image/close@2x.png' bindtap='hideWordsModal'></image>
@@ -192,5 +192,32 @@
               </scroll-view>
         <!-- </swiper-item>
     </swiper> -->
+  </view>
+  <!-- 海报 -->
+  <canvas
+    canvas-id="canvas"
+    class="canvas"
+    style="position:absolute;width:{{canvasWidth}};height:{{canvasHeight}};left:{{canvasLeft}};">
+  </canvas>
+  <!-- 分享 -->
+  <view animation="{{animationgifts}}" class="share_attr_box" wx:if="{{showShareStatus}}">
+    <view class="align-text">
+      <text>分享到</text>
+    </view>
+    <view class='share-type'>
+      <view style='text-align:center'>
+        <button class='shareFriend' open-type='share' data-uid='{{item.uid}}' data-vid='{{item.id}}'>
+          <cover-image src='../../image/wechat@2x.png' class=''>好友</cover-image>
+        </button>
+        <text>微信</text>
+      </view>
+      <view class='sharePoster' catchtap='create' data-uid='{{item.uid}}' data-vid='{{item.id}}'>
+        <cover-image src='../../image/pyq@2x.png' class=''>朋友圈</cover-image>
+        <text>朋友圈</text>
+      </view>
+    </view>
+    <view catchtap='hideShareModal' class='align-text cancel'>
+      <text>取消</text>
+    </view>
   </view>
 </view>

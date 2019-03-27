@@ -1,0 +1,19 @@
+/* pages/index/search/searchDetail/searchDetail.wxss */
+.content-box{
+  margin: 20rpx;
+}
+.video-item{
+  width: 50%;
+  height: 480rpx;
+  position:relative;
+}
+image{
+  width: 100%;
+}
+.content{
+  position: absolute;
+  left: 0;
+  bottom: 10rpx;
+  color: #eee;
+  font-size: 28rpx;
+}

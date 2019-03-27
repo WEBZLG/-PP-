@@ -35,7 +35,10 @@ Page({
     dialogWords: "",//对话发送内容
     receiveid: "",//接受消息人id,
     ifRelation:"",//是否关注
-    otherId:""
+    otherId:"",
+    uid_send_otherpeopleid_integral:0,
+    wx_integral:0,
+    phone_integral:0
   },
 
   /**
@@ -48,11 +51,22 @@ Page({
     wx.setNavigationBarTitle({
       title: '个人信息',
     }),
-
-    this.setData({
-      ifRelation: options.ifRelation,
+    that.setData({
+      // ifRelation: options.ifRelation,
       otherId: options.otherId
-    })
+    });
+    // 缓存中取信息
+    wx.getStorage({
+      key: 'userUid',
+      success(res) {
+        console.log(res.data)
+        that.setData({
+          uid: res.data
+        });
+        that.otherInfo();
+      }
+    });
+
     //  高度自适应
     wx.getSystemInfo({
       success: function (res) {
@@ -66,24 +80,12 @@ Page({
         });
       }
     });
-    this.otherInfo();
   },
  
   // 个人信息
   otherInfo: function (e) {
     wx.showLoading()
     var that = this;
-    // 缓存中取信息
-    wx.getStorage({
-      key: 'userUid',
-      success(res) {
-        // console.log(res.data)
-        that.setData({
-          uid: res.data
-        });
-      }
-    });
-    // console.log(that.data.uid)
     wx.request({
       url: app.globalData.serverPath + "otherpeople",
       data: {
@@ -104,7 +106,11 @@ Page({
           wx: res.data.wx,
           signature: res.data.signature,
           avatarUrl: res.data.wximage,
-          nickname:res.data.wxname
+          nickname:res.data.wxname,
+          ifRelation:res.data.if_attention,
+          uid_send_otherpeopleid_integral: res.data.uid_send_otherpeopleid_integral,
+          phone_integral: res.data.phone_integral,
+          wx_integral: res.data.wx_integral
         })
       }
     })
@@ -226,8 +232,6 @@ Page({
       data: {
         "uid": that.data.uid,
         "attentid": that.data.otherId
-        // "uid": 103,
-        // "attentid": 105
       },
       method: 'POST',
       success: function (res) {
@@ -235,11 +239,11 @@ Page({
         if(res.data.info=="success"){
           if(res.data.status==0){
             that.setData({
-              ifRelation: "已关注"
+              ifRelation: 1
             })
           }else{
             that.setData({
-              ifRelation: "未关注"
+              ifRelation: 0
             })
           }
         }else{

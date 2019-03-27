@@ -206,6 +206,8 @@ button::after {
   z-index: 2000;
   background: #fff;
   padding-bottom: 60rpx;
+  border-top-left-radius: 10rpx;
+  border-top-right-radius: 10rpx;
 }
 
 /* 评论区 */
@@ -221,6 +223,8 @@ button::after {
   font-size: 34rpx;
   padding: 10rpx 20rpx;
   background: #fff;
+  border-top-left-radius: 10rpx;
+  border-top-right-radius: 10rpx;
 }
 
 .commentTitle .img {
@@ -403,6 +407,8 @@ button::after {
   z-index: 2000;
   background: #fff;
   padding-bottom: 60rpx;
+  border-top-left-radius: 10rpx;
+  border-top-right-radius: 10rpx;
 }
 
 .giftsTitle {
@@ -411,6 +417,8 @@ button::after {
   background: #fff;
   height: 60rpx;
   line-height: 60rpx;
+  border-top-left-radius: 10rpx;
+  border-top-right-radius: 10rpx;
 }
 
 .giftsLists {
@@ -478,4 +486,48 @@ button::after {
   text-align: center;
   border-bottom: 1px solid #eee;
   margin: 0 20rpx;
+}
+
+.share-type {
+  display:flex;
+  justify-content:space-around;
+  width:70%;
+  margin:30rpx auto 0;
+  color: #eee;
+}
+
+.shareFriend {
+  background-color: inherit;
+  margin: 0;
+  padding: 0;
+  height: 120rpx;
+  width: 120rpx;
+}
+
+.sharePoster {
+  height: 120rpx;
+  width: 120rpx;
+}
+
+.share_attr_box {
+  height: 30%;
+  width: 100%;
+  overflow: hidden;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 2000;
+  background: rgba(0,0,0,0.7);
+  padding-bottom: 60rpx;
+  border-top-left-radius: 10rpx;
+  border-top-right-radius: 10rpx;
+}
+.align-text{
+  text-align:center;
+  color:#eee;
+  padding:20rpx;
+}
+.cancel{
+  border-top:1px solid #eee;
+  margin-top:30rpx;
 }

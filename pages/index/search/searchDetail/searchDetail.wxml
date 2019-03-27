@@ -1,0 +1,10 @@
+<!--pages/index/search/searchDetail/searchDetail.wxml-->
+<view class='content-box'>
+  <view wx:if='{{information==""}}' class='none-data'>暂无搜索数据</view>
+  <block wx:for="{{information}}" wx:key='index' else>
+    <view class='video-item' data-id='{{item.id}}' data-uid='{{item.uid}}' catchtap='playVideo'>
+      <image src='{{item.pic}}'></image>
+      <cover-view class='content'>{{item.content}}</cover-view>
+    </view>
+  </block>
+</view>

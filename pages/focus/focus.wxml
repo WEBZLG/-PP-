@@ -8,7 +8,7 @@
 
   <swiper style="height: {{clientHeight?clientHeight+'px':'auto'}}" class='swiper' current="{{currentTab}}" duration="300" bindchange="swiperchange">
     <swiper-item>
-      <scroll-view scroll-y="{{true}}" style="height: {{clientHeight?clientHeight+'px':'auto'}}" class='swiper_conone'>
+      <scroll-view scroll-y="{{true}}"  style="height: {{clientHeight?clientHeight+'px':'auto'}}"  class='swiper_conone'>
         <!-- 第一段内容 -->
         <view class='aaa' wx:for="{{guanzhuList}}" wx:key="{{index}}" wx:if="{{guanzhuList !==''}}">
           <view class='nav-border'>
@@ -23,10 +23,10 @@
                   <text class='nav-contenttext-time'>{{item.time}}</text>
                 </view>
               </view>
-
+<!-- 
               <view class='nav-contentdown'>
                 <text class='nav-contentdown-text'>{{item.wxname}}</text>
-              </view>
+              </view> -->
             </view>
           </view>
           <!-- 视频部分 -->

@@ -52,17 +52,19 @@ Page({
     worksPubSwitch: !0,
     stickerid:"",
     stickerx:"",
-    stickery:""
+    stickery:"",
+    videoType:0
   },
   onLoad: function(a) {
-    console.log(JSON.parse(a.preData))
+    console.log(a)
     var options = JSON.parse(a.preData)
     const that = this
     that.setData({
       musicId: options.musicid,
       stickerid: options.stickerid,
       stickerx: options.stickerx,
-      stickery: options.stickery
+      stickery: options.stickery,
+      videoType: a.videoType
     })
     console.log(getCurrentPages())
     wx.getStorage({
@@ -231,6 +233,7 @@ Page({
         'place': that.data.activeAdress,
         'title': that.data.activeTitle,
         'content': that.data.activeContent,
+        "videoType": that.data.videoType
       }
     }else{
       formData = {
@@ -246,6 +249,7 @@ Page({
         'place': that.data.activeAdress,
         'title': that.data.activeTitle,
         'content': that.data.activeContent,
+        "videoType": that.data.videoType,
         "str": JSON.stringify([{
           "img": that.data.stickerid,
           "overlay": that.data.stickerx + ":" + that.data.stickery,

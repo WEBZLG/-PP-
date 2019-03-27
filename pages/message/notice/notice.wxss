@@ -1,6 +1,7 @@
 /* pages/notice/notice.wxss */
 page{
   background-color: #434343;
+  height: auto;
 }
 .notice-list{
   display: flex;

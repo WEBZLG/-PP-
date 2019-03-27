@@ -42,7 +42,8 @@ Page({
     stickerY:"",
     stickerId:"",
     vWidth:"",
-    vHeight:""
+    vHeight:"",
+    videoType:0
   },
   onReady: function (e) {
     
@@ -60,6 +61,15 @@ Page({
         })
       }
     })
+    if(that.data.vWidth>that.data.vHeight){
+      that.setData({
+        videoType:1
+      })
+    }else{
+      that.setData({
+        videoType: 0
+      })
+    }
     console.log(t)
 
     //  高度自适应
@@ -113,9 +123,9 @@ Page({
       "stickerid": this.data.stickerId,
       "stickerx" : this.data.stickerX,
       "stickery" : this.data.stickerY})
-  
+    var videoType = this.data.videoType
     wx.navigateTo({
-      url: "../publish-submit/publish-submit?preData=" + preData
+      url: "../publish-submit/publish-submit?preData=" + preData + "&videoType=" + videoType
     });
   },
   gotoMusicPage: function (t) {

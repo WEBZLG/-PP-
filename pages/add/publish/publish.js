@@ -37,7 +37,7 @@ Page({
         }
       });
       that.setData({
-        limitTime: e.detal.value
+        limitTime: e.duration
       })
       
     },

@@ -33,11 +33,12 @@
     "pages/index/depositrecord/depositrecord",
     "pages/index/search/search",
     "pages/playvideo/playvideo",
-    "pages/myself/bindPhone/bindPhone"
+    "pages/myself/bindPhone/bindPhone",
+    "pages/index/search/searchDetail/searchDetail"
   ],
   "permission": {
     "scope.userLocation": {
-      "desc": "我们将根据您的位置展示与您同城的视频"
+      "desc": "我们将根据位置展示同城的视频"
     }
   },
   "window": {

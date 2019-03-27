@@ -1,5 +1,8 @@
 const app = getApp()
-
+const ctx = wx.createCanvasContext('shareCanvas')
+const s = new (require("../../common/qqmap-wx-jssdk.min.js"))({
+  key: "W2GBZ-W6TA5-HSDI5-QNYNQ-6FP7Q-RNBQA"
+})
 Page({
 
   data: {
@@ -50,6 +53,7 @@ Page({
     isActiveVideo:false,
     activeId:"",//活动id
     activeSex:"",//参加活动性别
+    nowAddress:"火星",
     wordsList:[
       {
         id:1,
@@ -66,7 +70,12 @@ Page({
       }
     ],
     sendintegral:"",
-    giftId:""
+    giftId:"",
+    canvasWidth: "",
+    canvasHeight: "",
+    canvasLeft: "",
+    canvasTop: "",
+    showPoster:false
   },
   onReady: function (res) {
     this.videoContext = wx.createVideoContext('myVideo')
@@ -99,6 +108,7 @@ Page({
         });
       }
     });
+
     // 获取存储图片的权限
     // wx.getSetting({
     //   success(res) {
@@ -115,14 +125,40 @@ Page({
 
   },
   onShow: function () {
+    var t = this
     this.getVideoMessage();
+    wx.getLocation({
+      type: "gcj02",
+      success: function (a) {
+        t.setData({
+          locationFlag: !0
+        }), s.reverseGeocoder({
+          location: {
+            latitude: a.latitude,
+            longitude: a.longitude
+          },
+          coord_type: 5,
+          success: function (a) {
+            console.log(a)
+            t.setData({
+              nowAddress: a.result.ad_info.province + a.result.ad_info.city
+            });
+          },
+          fail: function (t) { }
+        });
+      },
+      fail: function (a) {
+        t.setData({
+          locationFlag: !1
+        });
+      }
+    });
   },
   // 视频用户详情页
   userdetail: function () {
-    var ifRelation = this.data.ifRelation
     var otherId = this.data.sendId
     wx.navigateTo({
-      url: './userdetail/userdetail?ifRelation=' + ifRelation + "&otherId=" + otherId,
+      url: './userdetail/userdetail?otherId=' + otherId 
     })
   },
   //地址
@@ -339,8 +375,8 @@ Page({
           })
        that.showgiftsModal()
       },
-      fail: function (err) { },//请求失败
-      complete: function () { }//请求完成后执行的函数
+      fail: function (err) { }, 
+      complete: function () { }  
     })
   },
   imageError:function(e){
@@ -597,8 +633,8 @@ Page({
         that.showModal()
 
       },
-      fail: function (err) { },//请求失败
-      complete: function () { }//请求完成后执行的函数
+      fail: function (err) { }, 
+      complete: function () { }  
     })
   },
   // 发送评论
@@ -636,8 +672,8 @@ Page({
           that.hidegiftsModal()
         }
       },
-      fail: function (err) { },//请求失败
-      complete: function () { }//请求完成后执行的函数
+      fail: function (err) { }, 
+      complete: function () { }  
     })
   },
   // 点赞功能
@@ -683,13 +719,17 @@ Page({
           })
         }
       },
-      fail: function (err) { },//请求失败
-      complete: function () { }//请求完成后执行的函数
+      fail: function (err) { },
+      complete: function () { }
     })
   },
   // 活动详情
   textclick:function(e){
     console.log(e)
+    var activeId = e.currentTarget.dataset.aid
+    wx.navigateTo({
+      url: '../focus/active/active?id='+activeId,
+    })
   },
   // 参加活动
   joinAvtive:function(e){
@@ -729,8 +769,8 @@ Page({
                 })
               }
             },
-            fail: function (err) { },//请求失败
-            complete: function () { }//请求完成后执行的函数
+            fail: function (err) { }, 
+            complete: function () { }  
           })
         } else if (sm.cancel) {
           console.log('用户点击取消')
@@ -749,26 +789,156 @@ Page({
   onUnload: function () {
     this.videoContext.pause();
   },
+  // 分享事件
+  showShareBox:function(){
+    this.showShareModal();
+    wx.hideTabBar();
+  },
+  showShareModal: function () {
+    var animation = wx.createAnimation({
+      duration: 200,
+      timingFunction: "linear",
+      delay: 0
+    })
+    this.animation = animation
+    animation.translateY(300).step()
+    this.setData({
+      animationgifts: animation.export(),
+      showShareStatus: true,
+      isShow: "none",
+    })
+    setTimeout(function () {
+      animation.translateY(0).step()
+      this.setData({
+        animationgifts: animation.export()
+      })
+    }.bind(this), 200)
+  },
+  hideShareModal: function () {
+    // 隐藏遮罩层
+    var animation = wx.createAnimation({
+      duration: 200,
+      timingFunction: "linear",
+      delay: 0
+    })
+    this.animation = animation
+    animation.translateY(300).step()
+    this.setData({
+      animationData: animation.export(),
+      isShow: "block",
+    })
+    setTimeout(function () {
+      animation.translateY(0).step()
+      this.setData({
+        animationData: animation.export(),
+        showShareStatus: false,
+        heighTrue: true,
+      })
+    }.bind(this), 200)
+    wx.showTabBar()
+  },
   /**
    * 用户点击右上角分享
    */
   onShareAppMessage: function (ops) {
-    // console.log(ops)
-    if(ops.from==='button'){
-      // console.log(ops.target)
-    }
+    console.log("分享")
+    console.log(ops)
+    var uid = ops.target.dataset.uid;
+    var videoId = ops.target.dataset.vid
+    // if(ops.from==='button'){}
     return {
       title:'小pp短视频',
-      path: 'pages/index/index',
+      path: '/pages/playvideo/playvideo?uid='+uid+'&videoId='+videoId,
       success: function (res) {
-        
+        console.log(res)
         // 转发成功
+        wx.showToast({
+          title: '转发成功！',
+        })
         console.log("转发成功:" + JSON.stringify(res));
       },
       fail: function (res) {
         // 转发失败
+        wx.showToast({
+          title: '转发失败',
+          icon:"none"
+        })
         console.log("转发失败:" + JSON.stringify(res));
       }
     }
+  },
+  // 生成海报
+  getImage: function (url) {
+    return new Promise((resolve, reject) => {
+      wx.getImageInfo({
+        src: url,
+        success: function (res) {
+          resolve(res)
+        },
+        fail: function () {
+          reject("")
+        }
+      })
+    })
+  },
+  getImageAll: function (image_src) {
+    let that = this;
+    var all = [];
+    image_src.map(function (item) {
+      all.push(that.getImage(item))
+    })
+    return Promise.all(all)
+  },
+  //创建
+  create: function () {
+    let that = this;
+    //图片一把是通过接口请求后台，返回俩点地址，或者网络图片
+    let bg = 'http://statics.logohhh.com/forum/201610/24/170644l325qooyabhioyaa.jpg';
+    let qr = 'http://image.weiued.com/UploadImages/question/20170420/3e384842-6af7-44cb-aeb1-f427731c8271.jpg';
+    //图片区别下载完成，生成临时路径后，在尽心绘制
+    this.getImageAll([bg, qr]).then((res) => {
+      let bg = res[0];
+      let qr = res[1];
+      //设置canvas width height position-left,  为图片宽高
+      this.setData({
+        canvasWidth: bg.width + 'px',
+        canvasHeight: bg.height + 'px',
+        canvasLeft: `-${bg.width + 100}px`,
+      })
+      let ctx = wx.createCanvasContext('canvas');
+      ctx.drawImage(bg.path, 0, 0, bg.width, bg.height);
+      ctx.drawImage(qr.path, bg.width - qr.width - 100, bg.height - qr.height - 150, qr.width * 0.8, qr.height * 0.8)
+      ctx.setFontSize(20)
+      ctx.setFillStyle('red')
+      ctx.fillText('Hello world', bg.width - qr.width - 50, bg.height - qr.height - 190)
+      ctx.draw()
+      wx.showModal({
+        title: '提示',
+        content: '图片绘制完成',
+        showCancel: false,
+        confirmText: "点击保存",
+        success: function () {
+          that.save()
+        }
+      })
+    })
+  },
+  //保存
+  save: function () {
+    wx.canvasToTempFilePath({//canvas 生成图片 生成临时路径
+      canvasId: 'canvas',
+      success: function (res) {
+        console.log(res)
+        wx.saveImageToPhotosAlbum({ //下载图片
+          filePath: res.tempFilePath,
+          success: function () {
+            wx.showToast({
+              title: "保存成功",
+              icon: "success",
+            })
+          }
+        })
+      }
+    })
   }
 })

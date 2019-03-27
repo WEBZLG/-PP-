@@ -84,7 +84,7 @@ Page({
         var clientHeight = res.windowHeight,
           clientWidth = res.windowWidth,
           rpxR = 750 / clientWidth;
-        var calc = clientHeight * rpxR - 550;
+        var calc = clientHeight * rpxR - 536;
         // console.log(calc)
         that.setData({
           winHeight: calc
@@ -376,6 +376,7 @@ Page({
   },
 // 播放单独的视频
   playVideo:function(e){
+    console.log(e)
     var videoId = e.currentTarget.dataset.id
     var uid = this.data.uid
     wx.navigateTo({

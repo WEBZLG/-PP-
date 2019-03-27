@@ -122,7 +122,7 @@ Page({
     },
     backindex: function() {
         wx.reLaunch({
-            url: "../aindex/index"
+            url: "../index/index"
         });
     },
     sharee: function(t) {

@@ -146,13 +146,13 @@
 }
 
 .camera-device {
-	top: 20rpx;
+	top: 50rpx;
 }
 
 .icon-cam-device {
 	display: inline-block;
-	width: 50rpx;
-	height: 50rpx;
+	width: 60rpx;
+	height: 60rpx;
 }
 
 .camera-flash {

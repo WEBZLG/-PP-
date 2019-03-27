@@ -6,12 +6,10 @@
         <!-- <cover-image catchtap="gotoPubOriginPage" class="icon-cam-close" hidden="{{recordState==1}}" src="/image/icon_cam_close.png"></cover-image> -->
         <cover-view catchtap="deviceRadioChange" class="camera-device" hidden="{{recordState==1}}">
             <cover-image class="icon-cam-device" src="/image/icon_cam_device.png"></cover-image>
-            <cover-view class="t-1">翻转</cover-view>
         </cover-view>
         <cover-view catchtap="flashRadioChange" class="camera-flash" hidden="{{recordState==1}}">
             <cover-image class="icon-camflash-on" hidden="{{flash=='off'}}" src="/image/icon_camflash_on.png"></cover-image>
             <cover-image class="icon-camflash-off" hidden="{{flash=='on'}}" src="/image/icon_camflash_off.png"></cover-image>
-            <cover-view class="t-1">闪光灯</cover-view>
         </cover-view>
         <cover-view class="camera-menu">
             <cover-view catchtap="{{cameraType==0?'chooseVideo':'chooseImage'}}" class="camera-menu-image" hidden="{{recordState!=0}}">

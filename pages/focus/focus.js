@@ -65,12 +65,10 @@ Page({
         wx.hideLoading()
       }
     });
-
-
     wx.getSystemInfo({
       success: function (res) {
         that.setData({
-          clientHeight: res.windowHeight
+          clientHeight: res.windowHeight-50
         });
       }
     })
