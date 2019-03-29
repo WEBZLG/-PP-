@@ -6,7 +6,9 @@ const s = new (require("../../common/qqmap-wx-jssdk.min.js"))({
 Page({
 
   data: {
-    IndexList: [],//获取首页数组
+    kongList:[],
+    pageList:[],//分页数组
+    indexList: [],//获取首页数组
     sendId:"",//发布人的id
     uid: '',//自己的id
     content: '',//发布介绍
@@ -71,11 +73,9 @@ Page({
     ],
     sendintegral:"",
     giftId:"",
-    canvasWidth: "",
-    canvasHeight: "",
-    canvasLeft: "",
-    canvasTop: "",
-    showPoster:false
+    showPoster:"none",
+    windowWidth: wx.getSystemInfoSync().windowWidth,
+    windowHeight: wx.getSystemInfoSync().screenHeight
   },
   onReady: function (res) {
     this.videoContext = wx.createVideoContext('myVideo')
@@ -109,50 +109,9 @@ Page({
       }
     });
 
-    // 获取存储图片的权限
-    // wx.getSetting({
-    //   success(res) {
-    //     if (!res.authSetting['scope.writePhotosAlbum']) {
-    //       wx.authorize({
-    //         scope: 'scope.writePhotosAlbum',
-    //         success() {
-    //           console.log('授权成功')
-    //         }
-    //       })
-    //     }
-    //   }
-    // })
-
   },
   onShow: function () {
-    var t = this
     this.getVideoMessage();
-    wx.getLocation({
-      type: "gcj02",
-      success: function (a) {
-        t.setData({
-          locationFlag: !0
-        }), s.reverseGeocoder({
-          location: {
-            latitude: a.latitude,
-            longitude: a.longitude
-          },
-          coord_type: 5,
-          success: function (a) {
-            console.log(a)
-            t.setData({
-              nowAddress: a.result.ad_info.province + a.result.ad_info.city
-            });
-          },
-          fail: function (t) { }
-        });
-      },
-      fail: function (a) {
-        t.setData({
-          locationFlag: !1
-        });
-      }
-    });
   },
   // 视频用户详情页
   userdetail: function () {
@@ -219,12 +178,10 @@ Page({
       })), i) {
         case "向上滑动":
           this.videoToggleNext();
-          // console.log("向上")
           break;
 
         case "向下滑动":
           this.videoTogglePrev();
-          // console.log("向下")
       }
       this.setData({
         lastX: t,
@@ -252,19 +209,31 @@ Page({
       })
     }else{
       this.setData({
-        pageIndex : that.data.pageIndex-1
+        pageIndex : that.data.pageIndex-1,
+        indexList: that.data.kongList.concat(that.data.pageList[that.data.pageIndex-1]),
       })
-      console.log(that.data.pageIndex)
-      that.getPageVideoMessage()
     }
   },
   videoToggleNext: function () {
     var that = this;
-    this.setData({
-      pageIndex: that.data.pageIndex + 1
-    })
-    // console.log(that.data.pageIndex)
-    that.getPageVideoMessage()
+    var pageIndexLength = that.data.pageIndex+1
+    var pageListLength = that.data.pageList.length
+    console.log(pageIndexLength,pageListLength)
+    if (pageIndexLength < pageListLength){
+      console.log(that.data.pageList)
+      console.log(that.data.pageIndex)
+
+      this.setData({
+        indexList: that.data.kongList.concat(that.data.pageList[that.data.pageIndex]),
+        pageIndex: that.data.pageIndex + 1,
+      })
+      console.log(that.data.pageIndex)
+    }else{
+      this.setData({
+        pageIndex: that.data.pageIndex + 1
+      })
+      that.getVideoMessage()
+    }
   },
   videoHandle: function (a) {
     this.data.videoPlay ? (
@@ -290,7 +259,6 @@ Page({
     this.setData({
       inputValue : e.detail.value
     })
-    console.log(e.detail.value)
   },
 
   //播放结束
@@ -559,7 +527,7 @@ Page({
         console.log(res)
         that.setData({
           display_play: 'none',
-          IndexList: res.data,
+          indexList: res.data,
           sendId:res.data[0].uid,
           isActiveVideo: res.data[0].if_activity,
           isVip: res.data[0].if_pass,
@@ -567,8 +535,36 @@ Page({
           activeId: res.data[0].aid,
           ifRelation:res.data[0].relation,
           likenum: res.data[0].likenum,
-          id:res.data[0].id
+          id:res.data[0].id,
+          pageList: that.data.pageList.concat(res.data[0])
         })
+        // 获取当前位置
+        wx.getLocation({
+          type: "gcj02",
+          success: function (a) {
+            that.setData({
+              locationFlag: !0
+            }), s.reverseGeocoder({
+              location: {
+                latitude: a.latitude,
+                longitude: a.longitude
+              },
+              coord_type: 5,
+              success: function (a) {
+                console.log(a)
+                that.setData({
+                  nowAddress: a.result.ad_info.province + a.result.ad_info.city
+                });
+              },
+              fail: function (t) { }
+            });
+          },
+          fail: function (a) {
+            that.setData({
+              locationFlag: !1
+            });
+          }
+        });
       },
       fail: function (err) { },
       complete: function () { }
@@ -577,7 +573,8 @@ Page({
   // 获取分页视频
   getPageVideoMessage:function(e){
     var that = this;
-    wx.showLoading()
+    console.log(that.data.uid, that.data.pageIndex)
+    console.log()
     wx.request({
       url: app.globalData.serverPath + 'indexpage',
       data: {
@@ -589,11 +586,9 @@ Page({
       },
       method: "POST",
       success: function (res) {
-        // console.log(res)
+        console.log(res)
         wx.hideLoading()
         if(res.data.length == 0){
-          // console.log("我空了")
-          that.getVideoMessage();
           that.setData({
             display_play: 'none',
             pageIndex:0
@@ -601,7 +596,7 @@ Page({
         }else{
           that.setData({
             display_play: 'none',
-            IndexList: res.data
+            indexList: res.data
           })
         }
       },
@@ -657,12 +652,15 @@ Page({
         console.log(res)
         wx.hideLoading()
         if(res.data.info == "success"){
+          var commentNum = `indexList[0].commentnum`
             that.setData({
-              inputText:""
+              inputText:"",
+              [commentNum]: that.data.indexList[0].commentnum+1
             })
             wx.showToast({
               title: '评论成功！',
             })
+          console.log(that.data.indexList[0].commentnum)
           that.hidegiftsModal()
         }else{
           wx.showToast({
@@ -841,6 +839,8 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function (ops) {
+    var that = this;
+    that.hideShareModal()
     console.log("分享")
     console.log(ops)
     var uid = ops.target.dataset.uid;
@@ -855,7 +855,11 @@ Page({
         wx.showToast({
           title: '转发成功！',
         })
-        console.log("转发成功:" + JSON.stringify(res));
+        var sharenum = `indexList[0].sharenum`
+        that.setData({
+          [sharenum]: that.data.indexList[0].sharenum + 1
+        })
+
       },
       fail: function (res) {
         // 转发失败
@@ -863,7 +867,7 @@ Page({
           title: '转发失败',
           icon:"none"
         })
-        console.log("转发失败:" + JSON.stringify(res));
+        that.hideShareModal()
       }
     }
   },
@@ -891,33 +895,42 @@ Page({
   },
   //创建
   create: function () {
+    console.log("哎呀！我被点了")
+    wx.showLoading()
     let that = this;
     //图片一把是通过接口请求后台，返回俩点地址，或者网络图片
     let bg = 'http://statics.logohhh.com/forum/201610/24/170644l325qooyabhioyaa.jpg';
     let qr = 'http://image.weiued.com/UploadImages/question/20170420/3e384842-6af7-44cb-aeb1-f427731c8271.jpg';
-    //图片区别下载完成，生成临时路径后，在尽心绘制
+    let wW = that.data.windowWidth;
+    let wH = that.data.windowHeight;
+    //图片区别下载完成，生成临时路径后，在进行绘制
     this.getImageAll([bg, qr]).then((res) => {
       let bg = res[0];
       let qr = res[1];
-      //设置canvas width height position-left,  为图片宽高
-      this.setData({
-        canvasWidth: bg.width + 'px',
-        canvasHeight: bg.height + 'px',
-        canvasLeft: `-${bg.width + 100}px`,
-      })
       let ctx = wx.createCanvasContext('canvas');
-      ctx.drawImage(bg.path, 0, 0, bg.width, bg.height);
-      ctx.drawImage(qr.path, bg.width - qr.width - 100, bg.height - qr.height - 150, qr.width * 0.8, qr.height * 0.8)
+      ctx.drawImage(bg.path, 0, 0, wW-100, wH-250);
+      ctx.drawImage(qr.path, qr.width-100, wH - qr.height - 130, qr.width * 0.4, qr.height * 0.4)
       ctx.setFontSize(20)
       ctx.setFillStyle('red')
-      ctx.fillText('Hello world', bg.width - qr.width - 50, bg.height - qr.height - 190)
+      ctx.fillText('Hello world', qr.width - 100, wH - qr.height - 150)
       ctx.draw()
+      wx.hideLoading()
+      that.setData({
+        showPoster: "block"
+      })
+
+      that.hideShareModal()
       wx.showModal({
         title: '提示',
-        content: '图片绘制完成',
+        content: '图片绘制完成请保存到相册',
         showCancel: false,
         confirmText: "点击保存",
-        success: function () {
+        success: function (res) {
+          var sharenum = `indexList[0].sharenum`
+          that.setData({
+            showPoster: "none",
+            [sharenum]: that.data.indexList[0].sharenum + 1
+          })
           that.save()
         }
       })

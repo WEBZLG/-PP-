@@ -1,6 +1,6 @@
 <!--pages/video/video.wxml-->
 <!-- 视频资源 -->
-<view style='position: relative;height:100%;overflow:hidden' wx:for='{{IndexList}}' wx:key='index'>
+<view style='position: relative;height:100%;overflow:hidden' wx:for='{{indexList}}' wx:key='index'>
   <video id="myVideo" src="{{item.url}}" autoplay='true' show-fullscreen-btn='{{false}}' show-center-play-btn="{{false}}" objectFit='{{item.videotype==0?"cover":"contain"}}'  data-id='{{index}}' custom-cache='{{false}}' controls="{{false}}" bindended="bindended"></video>
   <!-- 点击滑动蒙版图层 -->
   <cover-view data-time="{{lastTapTime}}" class="ball" id="id" bindtouchend="handletouchend" bindtouchmove="handletouchmove" bindtouchstart="handletouchstart" catchtap="videoHandle" style='display:{{isShow}}'>
@@ -194,11 +194,9 @@
     </swiper> -->
   </view>
   <!-- 海报 -->
-  <canvas
-    canvas-id="canvas"
-    class="canvas"
-    style="position:absolute;width:{{canvasWidth}};height:{{canvasHeight}};left:{{canvasLeft}};">
-  </canvas>
+  <view class='canvasBox' style='display:{{showPoster}}'>
+    <canvas canvas-id="canvas" class="canvas"  style='height:{{windowHeight-250}}px;width:{{windowWidth-100}}px'></canvas>
+  </view>
   <!-- 分享 -->
   <view animation="{{animationgifts}}" class="share_attr_box" wx:if="{{showShareStatus}}">
     <view class="align-text">
@@ -211,8 +209,10 @@
         </button>
         <text>微信</text>
       </view>
-      <view class='sharePoster' catchtap='create' data-uid='{{item.uid}}' data-vid='{{item.id}}'>
-        <cover-image src='../../image/pyq@2x.png' class=''>朋友圈</cover-image>
+      <view class='sharePoster'  >
+        <button class='shareFriend' catchtap='create' data-uid='{{item.uid}}' data-vid='{{item.id}}'>
+          <cover-image src='../../image/pyq@2x.png' class=''>朋友圈</cover-image>
+        </button>
         <text>朋友圈</text>
       </view>
     </view>

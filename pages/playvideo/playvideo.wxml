@@ -1,21 +1,21 @@
 <!--pages/video/video.wxml-->
 <!-- 视频资源 -->
 <view style='position: relative;height:100%;overflow:hidden'>
-  <video id="myVideo" src="{{IndexList.url}}" autoplay='true' show-fullscreen-btn='{{false}}' show-center-play-btn="{{false}}" objectFit='{{IndexList.videoType==0?"cover":"contain"}}' style='height:100%;' data-id='{{index}}' custom-cache='{{false}}' controls="{{false}}" bindended="bindended"></video>
+  <video id="myVideo" src="{{indexList.url}}" autoplay='true' show-fullscreen-btn='{{false}}' show-center-play-btn="{{false}}" objectFit='{{indexList.videoType==0?"cover":"contain"}}' style='height:100%;' data-id='{{index}}' custom-cache='{{false}}' controls="{{false}}" bindended="bindended"></video>
   <!-- 点击滑动蒙版图层 -->
   <cover-view data-time="{{lastTapTime}}" class="ball" id="id" catchtap="videoHandle" style='display:{{isShow}}'>
     <!-- 公告 -->
     <cover-view class='scroll_view_border' wx:if="{{isActiveVideo==1}}">
-      <cover-view class="srcoll_view" bindtap="textclick">{{IndexList.content}}</cover-view>
+      <cover-view class="srcoll_view" bindtap="textclick">{{indexList.content}}</cover-view>
     </cover-view>
     <!-- 地址 -->
     <cover-view class='my-address'>
-      <cover-view class='address'>
+      <!-- <cover-view class='address'>
         <cover-view>
           <cover-image class='small-icon' src='/image/site.png'></cover-image>
         </cover-view>
         <cover-view class='public-text'>哈尔滨</cover-view>
-      </cover-view>
+      </cover-view> -->
       <!-- <cover-view class='search' bindtap='search'>
         <cover-image class='small-icon' src='/image/search.png'></cover-image>
       </cover-view> -->
@@ -25,27 +25,27 @@
     <cover-view class='comment_border' style='display:{{display_pl}}'>
       <cover-view class='sidebar_b_rt'>
         <!-- 头像 -->
-        <cover-image src='{{IndexList.wximage}}' data-userid='{{IndexList.id}}' class='head_img'></cover-image>
-        <!-- <cover-image src='{{IndexList.wximage}}' data-userid='{{IndexList.id}}' class='head_img' catchtap='userdetail'></cover-image> -->
+        <cover-image src='{{indexList.wximage}}' data-userid='{{indexList.id}}' class='head_img'></cover-image>
+        <!-- <cover-image src='{{indexList.wximage}}' data-userid='{{indexList.id}}' class='head_img' catchtap='userdetail'></cover-image> -->
       </cover-view>
       <cover-view class='sidebar_b_rt'>
         <!-- 礼物 -->
-        <cover-image src='../../image/gift.png' data-userid='{{IndexList.id}}' class='comment_img' catchtap='getGoods'></cover-image>
+        <cover-image src='../../image/gift.png' data-userid='{{indexList.id}}' class='comment_img' catchtap='getGoods'></cover-image>
         <!-- 礼物数 -->
         <!-- <cover-view class='comment_num'>1</cover-view> -->
       </cover-view>
       <!-- 赞 -->
       <cover-view class='sidebar_b_rt'>
-        <cover-image src="../../image/like_red.png" catchtap='like' class='comment_img ' data-id='{{index}}' data-item='{{IndexList}}' wx:if='{{if_like==1}}'></cover-image>
-        <cover-image src="../../image/like.png" catchtap='like' class='comment_img ' data-id='{{index}}' data-item='{{IndexList}}' wx:else></cover-image>
+        <cover-image src="../../image/like_red.png" catchtap='like' class='comment_img ' data-id='{{index}}' data-item='{{indexList}}' wx:if='{{if_like==1}}'></cover-image>
+        <cover-image src="../../image/like.png" catchtap='like' class='comment_img ' data-id='{{index}}' data-item='{{indexList}}' wx:else></cover-image>
         <!-- 赞数 -->
-        <cover-view class='comment_num' catchtap='like' data-id='{{index}}' data-item='{{IndexList}}'>{{likeNum}}</cover-view>
+        <cover-view class='comment_num' catchtap='like' data-id='{{index}}' data-item='{{indexList}}'>{{likeNum}}</cover-view>
       </cover-view>
       <!-- 评论 -->
       <cover-view class='sidebar_b_rt'>
-        <cover-image src='../../image/talk.png' class='comment_img ' catchtap='getCommentMessage' data-id="{{IndexList.id}}" data-img_url='{{IndexList.wapimg}}'></cover-image>
+        <cover-image src='../../image/talk.png' class='comment_img ' catchtap='getCommentMessage' data-id="{{indexList.id}}" data-img_url='{{indexList.wapimg}}'></cover-image>
         <!-- 评论数 -->
-        <cover-view class='comment_num' catchtap='getCommentMessage' data-id="{{IndexList.id}}" data-img_url='{{IndexList.wapimg}}'>{{IndexList.commentnum}}</cover-view>
+        <cover-view class='comment_num' catchtap='getCommentMessage' data-id="{{indexList.id}}" data-img_url='{{indexList.wapimg}}'>{{indexList.commentnum}}</cover-view>
       </cover-view>
       <!-- 分享 -->
       <cover-view class='sidebar_b_rt'>
@@ -53,42 +53,42 @@
           <cover-image src='../../image/share.png' class='comment_num'>转发</cover-image>
         </button>
         <!-- 转发数 -->
-        <cover-view class='comment_num'>{{IndexList.sharenum}}</cover-view>
+        <cover-view class='comment_num'>{{indexList.sharenum}}</cover-view>
       </cover-view>
       <cover-view class='sidebar_b_rt'  wx:if="{{isActiveVideo==1}}">
         <!-- 活动 -->
-        <cover-image src='../../image/join.png' data-userid='{{IndexList.userid}}' class='comment_img' catchtap='joinAvtive'></cover-image>
+        <cover-image src='../../image/join.png' data-userid='{{indexList.userid}}' class='comment_img' catchtap='joinAvtive'></cover-image>
         <!-- 活动人数 -->
       </cover-view>
     </cover-view>
     <!-- 描述 -->
     <cover-view class="desc">
       <cover-view class='nick-name'>
-        <cover-view>{{IndexList.wxname}}</cover-view>
+        <cover-view>{{indexList.wxname}}</cover-view>
         <cover-image class='vip-icon' wx:if="{{isVip!=null}}" src='../../image/VIP@2x.png'></cover-image>
         <cover-view class='focus pding'>
-          <cover-image wx:if="{{IndexList.relation==0}}" class='length-icon' src='../../image/follow.png' bindtap='focus' data-id='{{index}}' data-item='{{IndexList}}'></cover-image>
-          <cover-image wx:else class='length-icon' src='../../image/followed.png' bindtap='focus' data-id='{{index}}' data-item='{{IndexList}}'></cover-image>
+          <cover-image wx:if="{{indexList.relation==0}}" class='length-icon' src='../../image/follow.png' bindtap='focus' data-id='{{index}}' data-item='{{indexList}}'></cover-image>
+          <cover-image wx:else class='length-icon' src='../../image/followed.png' bindtap='focus' data-id='{{index}}' data-item='{{indexList}}'></cover-image>
         </cover-view>
       </cover-view>
       <cover-view class='activition'  wx:if="{{isActiveVideo==1}}">
         <cover-image class='length-icon' src='../../image/activity.png'></cover-image>
       </cover-view>
       <cover-view>
-        <cover-view class="desc-text">{{IndexList.content}}</cover-view>
+        <cover-view class="desc-text">{{indexList.content}}</cover-view>
       </cover-view>
       <cover-view class='music'>
         <cover-view>
           <cover-image class='small-icon' src='../../image/bgm.png'></cover-image>
         </cover-view>
-        <cover-view class='public-text'>{{IndexList.name}}</cover-view>
+        <cover-view class='public-text'>{{indexList.name}}</cover-view>
       </cover-view>
     </cover-view>
     <!-- 礼物 -->
     <cover-view class='gifts'>
       <cover-view class='contribution'>贡献榜单Top3</cover-view>
-      <block wx:if="{{IndexList.top!=''}}">
-        <cover-view class='top-name' wx:for='{{IndexList.top}}' wx:for-item='top' wx:for-index='topindex' wx:key='index'>
+      <block wx:if="{{indexList.top!=''}}">
+        <cover-view class='top-name' wx:for='{{indexList.top}}' wx:for-item='top' wx:for-index='topindex' wx:key='index'>
           <cover-image class='top-img top-one' src='{{top.wximage}}'></cover-image>
           <cover-view>{{top.wxname}}</cover-view>
         </cover-view>
@@ -178,11 +178,9 @@
 
 
    <!-- 海报 -->
-  <canvas
-    canvas-id="canvas"
-    class="canvas"
-    style="position:absolute;width:{{canvasWidth}};height:{{canvasHeight}};left:{{canvasLeft}};">
-  </canvas>
+  <view class='canvasBox' style='display:{{showPoster}}'>
+      <canvas canvas-id="canvas" class="canvas"  style='height:{{windowHeight-250}}px;width:{{windowWidth-100}}px'></canvas>
+  </view>
   <!-- 分享 -->
   <view animation="{{animationgifts}}" class="share_attr_box" wx:if="{{showShareStatus}}">
     <view class="align-text">
@@ -195,7 +193,7 @@
         </button>
         <text>微信</text>
       </view>
-      <view class='sharePoster' catchtap='create' data-uid='{{item.uid}}' data-vid='{{item.id}}'>
+      <view class='sharePoster' style='text-align:center' catchtap='create' data-uid='{{item.uid}}' data-vid='{{item.id}}'>
         <cover-image src='../../image/pyq@2x.png' class=''>朋友圈</cover-image>
         <text>朋友圈</text>
       </view>

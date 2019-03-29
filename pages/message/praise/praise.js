@@ -29,6 +29,7 @@ Page({
         that.setData({
           uid: res.data
         })
+        that.getdata()
       }
     });
     wx.setNavigationBarTitle({
@@ -37,10 +38,12 @@ Page({
     wx.setNavigationBarColor({
       frontColor: '#ffffff',
       backgroundColor: '#434343',
-    }),
-    this.getdata()
+    })
+      // console.log(this.data.uid)
+    
   },
   getdata: function () {
+   
     wx.showLoading()
     var that = this;
     wx.request({

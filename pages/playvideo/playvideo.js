@@ -3,7 +3,7 @@ const ctx = wx.createCanvasContext('shareCanvas')
 Page({
 
   data: {
-    IndexList: [],//获取首页数组
+    indexList: [],//获取首页数组
     sendId: "",//发布人的id
     uid: '',//自己的id
     content: '',//发布介绍
@@ -50,11 +50,10 @@ Page({
     isActiveVideo: false,
     activeId: "",//活动id
     activeSex: "",//参加活动性别
-    canvasWidth: "",
-    canvasHeight: "",
-    canvasLeft: "",
-    canvasTop: "",
-    showPoster: false
+    nowAddress: "火星",
+    showPoster: "none",
+    windowWidth: wx.getSystemInfoSync().windowWidth,
+    windowHeight: wx.getSystemInfoSync().screenHeight
   },
   // 视频用户详情页
   userdetail: function () {
@@ -81,28 +80,6 @@ Page({
       url: '../index/deposit/deposit',
     })
   },
-  // 关注
-  focus: function (e) {
-    var that = this;
-    // const index=e.currentTarget.dataset.id;
-    // const eachrelation = e.currentTarget.dataset.item.relation;
-    // const relationIndex = "IndexList[" + index + "].relation";
-    // this.setData({
-    //   [relationIndex]: 1,
-    //   eachrelation: eachrelation,
-    //   IndexList: this.data.IndexList,
-    // })
-    // if (eachrelation == 0) {
-    //   this.setData({
-    //     [relationIndex]: 1,
-    //   })
-    // } else {
-    //   this.setData({
-    //     [relationIndex]: 0,
-    //   })
-    // }
-  },
-
 
   // 评论点赞
   commentCollect: function (e) {
@@ -427,8 +404,10 @@ Page({
         console.log(res)
         wx.hideLoading()
         if (res.data.info == "success") {
+          var commentNum = `indexList.commentnum`
           that.setData({
-            inputText: ""
+            inputText: "",
+            [commentNum]: that.data.indexList.commentnum + 1
           })
           wx.showToast({
             title: '评论成功！',
@@ -471,7 +450,7 @@ Page({
               if_like: 0
             })
           }
-          // var likeNum = that.data.IndexList.likenum
+          // var likeNum = that.data.indexList.likenum
           if (res.data.if_like == 0) {
             that.setData({
               likeNum: that.data.likeNum + 1
@@ -571,31 +550,17 @@ Page({
         wx.hideLoading()
         that.setData({
           display_play: 'none',
-          IndexList: res.data,
-          // sendId: res.data.uid,
-          // isActiveVideo: res.data.if_activity,
-          // isVip: res.data.if_pass,
-          // if_like: res.data.if_like,
-          // activeId: res.data.aid,
-          // likeNum: res.data.likenum
+          indexList: res.data,
+          sendId: res.data.uid,
+          isActiveVideo: res.data.if_activity,
+          isVip: res.data.if_pass,
+          if_like: res.data.if_like,
+          activeId: res.data.aid,
+          likeNum: res.data.likenum
         })
 
       }
     })
-    // 获取存储图片的权限
-    // wx.getSetting({
-    //   success(res) {
-    //     if (!res.authSetting['scope.writePhotosAlbum']) {
-    //       wx.authorize({
-    //         scope: 'scope.writePhotosAlbum',
-    //         success() {
-    //           console.log('授权成功')
-    //         }
-    //       })
-    //     }
-    //   }
-    // })
-
   },
   onShow: function () {
   },
@@ -657,8 +622,7 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function (ops) {
-    console.log("分享")
-    console.log(ops)
+    that.hideShareModal()
     var uid = ops.target.dataset.uid;
     var videoId = ops.target.dataset.vid
     // if(ops.from==='button'){}
@@ -666,12 +630,14 @@ Page({
       title: '小pp短视频',
       path: '/pages/playvideo/playvideo?uid=' + uid + '&videoId=' + videoId,
       success: function (res) {
-        console.log(res)
         // 转发成功
         wx.showToast({
           title: '转发成功！',
         })
-        console.log("转发成功:" + JSON.stringify(res));
+        var shareNum = `indexList.sharenum`
+        that.setData({
+          [shareNum]: that.data.indexList.sharenum + 1
+        })
       },
       fail: function (res) {
         // 转发失败
@@ -679,7 +645,7 @@ Page({
           title: '转发失败',
           icon: "none"
         })
-        console.log("转发失败:" + JSON.stringify(res));
+        that.hideShareModal()
       }
     }
   },
@@ -707,33 +673,40 @@ Page({
   },
   //创建
   create: function () {
+    // wx.showLoading()
     let that = this;
     //图片一把是通过接口请求后台，返回俩点地址，或者网络图片
     let bg = 'http://statics.logohhh.com/forum/201610/24/170644l325qooyabhioyaa.jpg';
     let qr = 'http://image.weiued.com/UploadImages/question/20170420/3e384842-6af7-44cb-aeb1-f427731c8271.jpg';
-    //图片区别下载完成，生成临时路径后，在尽心绘制
+    let wW = that.data.windowWidth;
+    let wH = that.data.windowHeight;
+    //图片区别下载完成，生成临时路径后，在进行绘制
     this.getImageAll([bg, qr]).then((res) => {
       let bg = res[0];
       let qr = res[1];
-      //设置canvas width height position-left,  为图片宽高
-      this.setData({
-        canvasWidth: bg.width + 'px',
-        canvasHeight: bg.height + 'px',
-        canvasLeft: `-${bg.width + 100}px`,
-      })
       let ctx = wx.createCanvasContext('canvas');
-      ctx.drawImage(bg.path, 0, 0, bg.width, bg.height);
-      ctx.drawImage(qr.path, bg.width - qr.width - 100, bg.height - qr.height - 150, qr.width * 0.8, qr.height * 0.8)
+      ctx.drawImage(bg.path, 0, 0, wW - 100, wH - 250);
+      ctx.drawImage(qr.path, qr.width - 100, wH - qr.height - 130, qr.width * 0.4, qr.height * 0.4)
       ctx.setFontSize(20)
       ctx.setFillStyle('red')
-      ctx.fillText('Hello world', bg.width - qr.width - 50, bg.height - qr.height - 190)
+      ctx.fillText('Hello world', qr.width - 100, wH - qr.height - 150)
       ctx.draw()
+      that.setData({
+        showPoster: "block"
+      })
+      console.log(that.data.showPoster)
+      that.hideShareModal()
       wx.showModal({
         title: '提示',
-        content: '图片绘制完成',
+        content: '图片绘制完成请保存到相册',
         showCancel: false,
         confirmText: "点击保存",
-        success: function () {
+        success: function (res) {
+          var shareNum = `indexList.sharenum`
+          that.setData({
+            showPoster: "none",
+            [shareNum]: that.data.indexList.sharenum + 1
+          })
           that.save()
         }
       })

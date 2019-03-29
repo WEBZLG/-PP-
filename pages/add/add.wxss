@@ -16,7 +16,7 @@ page{
 }
 .add-bg{
   height:230rpx;
-  margin-top:50%;
+  margin-top:188px;
   width:95%;
 }
 
@@ -25,7 +25,7 @@ page{
   justify-content:space-evenly;
   position:absolute;
   width:100%;
-  top:43%;
+  top:240px;
   left:0;
 }
 

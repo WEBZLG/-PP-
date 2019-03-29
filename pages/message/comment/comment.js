@@ -28,6 +28,7 @@ Page({
         that.setData({
           uid: res.data
         })
+        that.getdata()
       }
     });
     wx.setNavigationBarTitle({
@@ -36,8 +37,8 @@ Page({
     wx.setNavigationBarColor({
       frontColor: '#ffffff',
       backgroundColor: '#434343',
-    }),
-      this.getdata()
+    })
+      
   },
   getdata: function () {
     wx.showLoading()
