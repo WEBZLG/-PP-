@@ -81,7 +81,8 @@
         <cover-view>
           <cover-image class='small-icon' src='../../image/bgm.png'></cover-image>
         </cover-view>
-        <cover-view class='public-text'>{{indexList.name}}</cover-view>
+        <cover-view class='public-text' wx:if="{{indexList.name==null}}">{{indexList.wxname}}的原声</cover-view>
+        <cover-view class='public-text' wx:else>{{indexList.name}}</cover-view>
       </cover-view>
     </cover-view>
     <!-- 礼物 -->

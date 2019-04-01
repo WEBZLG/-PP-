@@ -56,7 +56,7 @@ Page({
     videoType:0
   },
   onLoad: function(a) {
-    console.log(a)
+    console.log(a.videoType)
     var options = JSON.parse(a.preData)
     const that = this
     that.setData({
@@ -220,6 +220,7 @@ Page({
 
     var formData = {};
     if(that.data.stickerid==""){
+      console.log("参数1")
       formData = {
         'uid': that.data.uid,
         'rplace': that.data.address.location,
@@ -233,9 +234,10 @@ Page({
         'place': that.data.activeAdress,
         'title': that.data.activeTitle,
         'content': that.data.activeContent,
-        "videoType": that.data.videoType
+        "videotype": that.data.videoType
       }
     }else{
+      console.log("参数2")
       formData = {
         'uid': that.data.uid,
         'rplace': that.data.address.location,
@@ -249,11 +251,11 @@ Page({
         'place': that.data.activeAdress,
         'title': that.data.activeTitle,
         'content': that.data.activeContent,
-        "videoType": that.data.videoType,
+        "videotype": that.data.videoType,
         "str": JSON.stringify([{
           "img": that.data.stickerid,
           "overlay": that.data.stickerx + ":" + that.data.stickery,
-          "scale": "60:60"
+          "scale": "80:80"
         }])
       }
     }

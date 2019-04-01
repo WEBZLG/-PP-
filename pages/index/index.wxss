@@ -368,14 +368,11 @@ button::after {
 
 .contribution, .top-name {
   background: rgba(0, 0, 0, 0.4);
-  padding: 0 20rpx;
+  padding: 6rpx 14rpx;
   border-radius: 30rpx;
   margin-bottom: 10rpx;
 }
 
-.contribution {
-  padding: 6rpx 20rpx;
-}
 
 .top-name {
   padding-left: 0;
@@ -488,7 +485,7 @@ button::after {
   border-bottom: 1px solid #eee;
   margin: 0 20rpx;
 }
-
+/* 分享 */
 .share-type {
   display:flex;
   justify-content:space-around;
@@ -540,4 +537,23 @@ button::after {
   left:50px;
   color: #eee;
   z-index:999999999;
+}
+/* 广告 */
+.advertising{
+  position:absolute;
+  top:0;
+  left:0;
+  bottom:0;
+  right:0;
+  z-index:999999999999999;
+  background-color: rgba(0,0,0,0.7)
+}
+.advertising-img{
+  margin: 80rpx;
+}
+.time-close{
+  display: flex;
+  color: #eee;
+  font-size: 32rpx;
+  justify-content: space-between;
 }

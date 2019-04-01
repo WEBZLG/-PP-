@@ -49,6 +49,8 @@ Page({
     },
     videoPlay: !0,
     videoPlayFlag: !0,
+    isAdvertising:'block',//广告弹窗
+    advertisingNum:'5',
     isShow:"blcok",//蒙版展示,
     goodsList:[],//礼物列表
     goodIntegral:"",//礼物积分,
@@ -78,7 +80,7 @@ Page({
     windowHeight: wx.getSystemInfoSync().screenHeight
   },
   onReady: function (res) {
-    this.videoContext = wx.createVideoContext('myVideo')
+    
   },
   /**
    * 生命周期函数--监听页面加载
@@ -89,29 +91,66 @@ Page({
     wx.setNavigationBarTitle({
       title: "小PP短视频",
     })
-    wx.getStorage({
-      key: 'userUid',
-      success(res) {
-        console.log(res)
-        that.setData({
-          uid: res.data
-        });
+    wx.getSetting({
+      success: res => {
+        if (res.authSetting['scope.userInfo']) {
+          // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
+          wx.getUserInfo({
+            success: res => {
+              // 可以将 res 发送给后台解码出 unionId
+              // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
+              // 所以此处加入 callback 以防止这种情况
+              if (this.userInfoReadyCallback) {
+                this.userInfoReadyCallback(res)
+              }
+              wx.getStorage({
+                key: 'userUid',
+                success(res) {
+                  console.log(res)
+                  that.setData({
+                    uid: res.data
+                  });
+                }
+              });
+              wx.getStorage({
+                key: 'userMessage',
+                success(res) {
+                  var sex = res.data.gender == 1 ? "男" : "女"
+                  that.setData({
+                    activeSex: sex
+                  });
+                }
+              });
+            }
+          })
+          that.getVideoMessage();
+        } else {
+          wx.reLaunch({
+            url: '/pages/login/login'
+          })
+        }
       }
-    });
-    wx.getStorage({
-      key: 'userMessage',
-      success(res) {
-        console.log(res)
-        var sex = res.data.gender == 1 ? "男" : "女"
-        that.setData({
-          activeSex: sex
-        });
-      }
-    });
-
+    })
   },
   onShow: function () {
-    this.getVideoMessage();
+    var that = this;
+    var advertising = setInterval(function(){
+      that.setData({
+        advertisingNum: that.data.advertisingNum-1
+      })
+      if (that.data.advertisingNum<=0){
+        clearInterval(advertising)
+        that.setData({
+          isAdvertising:"none"
+        })
+      }
+    },1000)
+  },
+  // 关闭广告
+  closeAvertising:function(){
+    this.setData({
+      isAdvertising: "none"
+    })
   },
   // 视频用户详情页
   userdetail: function () {

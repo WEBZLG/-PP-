@@ -73,7 +73,7 @@ Page({
     var that = this
     console.log(that.data.uid, that.data.money )
     wx.request({
-      url: app.globalData.serverPath+"insert",
+      url: "https://www.surenmedia.cn/index/pay/insert",
       method: "POST",
       header: {
         'content-type': 'application/json' // 默认值
@@ -83,11 +83,9 @@ Page({
         'amount': that.data.money
       },
       success: function (res) {
-        res.success = function (res) {
-          console.log(res);
-        }
-        wx.requestPayment(res.data)
-        console.log(res);
+        wx.redirectTo({
+          url: './deposit',
+        })
       }
     })
   },
@@ -104,21 +102,21 @@ Page({
           that.setData({
             uid: res.data
           });
-        }
-      });
-      wx.request({
-        url: app.globalData.serverPath + "myselfinfo",
-        data: {
-          "uid": that.data.uid
-        },
-        method: 'POST',
-        success: function (res) {
-          console.log(res);
-          that.setData({
-            integral: res.data.integral
+          wx.request({
+            url: app.globalData.serverPath + "myselfinfo",
+            data: {
+              "uid": that.data.uid
+            },
+            method: 'POST',
+            success: function (res) {
+              console.log(res);
+              that.setData({
+                integral: res.data.integral
+              })
+            }
           })
         }
-      })
+      });
   },
 
   /**

@@ -8,10 +8,11 @@
           <view class='infor-img' wx:if="{{if_verified==1}}"><image class='vip' src='../../image/VIP@2x.png'></image></view>
           <view class='infor-approve' bindtap='focus'>{{ifRelation==0? "未关注" : "已关注"}}</view>
         </view>
-        <view class='sign-text'>{{signature}}</view>
+        <view class='sign-text' wx:if="{{signature==null}}">主人很懒什么都木有写~</view>
+        <view class='sign-text' wx:else>{{signature}}</view>
         <view class='infor-more'>
           <view class='infor-details'>
-            <view class='infor-birth'>{{gender==1 ? "男":"女"}} {{birthday==null ? "1990-09-09" : birthday}} {{city==null ? "哈尔滨" : city}}</view>
+            <view class='infor-birth'>{{gender==1 ? "男":"女"}} {{birthday==null ? "1990-09-09" : birthday}} {{city==null ? "火星" : city}}</view>
             <view class='infor-call'>
               <blcok wx:if="{{uid_send_otherpeopleid_integral>phone_integral}}">
               {{phone==null ? "18888888888" : phone}}
