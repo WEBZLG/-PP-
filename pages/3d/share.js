@@ -18,6 +18,7 @@ Page({
         userInfo: []
     },
     onLoad: function(t) {
+      console.log("share")
         this.setData({
             id: t.id
         });

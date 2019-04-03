@@ -7,6 +7,7 @@ Page({
       UnionID:""
     },
     onLoad: function(a) {
+      console.log("view")
         var t = this;
       wx.getStorage({
         key: 'openId',

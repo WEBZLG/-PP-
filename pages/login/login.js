@@ -5,15 +5,12 @@ const app = getApp()
 Page({
   data: {
     motto: 'PP短视频',
-    // userInfo: {},
+    userInfo: {},
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     openid: '',
     wxname: '',
     wximage: ''
-  },
-  globalData: {
-    userInfo: null,
   },
   onLoad: function () {
     if (app.globalData.userInfo) {
@@ -55,12 +52,12 @@ Page({
           // 获取用户信息
           wx.getUserInfo({
             success: function (data) {
+              app.globalData.userInfo = data.userInfo
               // 缓存用户信息
               wx.setStorage({
                 key: 'userMessage',
                 data: data.userInfo
               })
-              app.globalData.userInfo = data.userInfo
               wx.request({
                 url: app.globalData.serverPath+"login",
                 data: {
@@ -74,8 +71,9 @@ Page({
                     key: 'openId',
                     data: res.data.openid
                   })
+                  app.globalData.openId = res.data.openid
                   that.setData({
-                    // userInfo: e.detail.userInfo,
+                    userInfo: e.detail.userInfo,
                     hasUserInfo: true,
                     openid: res.data.openid, //用户openid
                     wxname: data.userInfo.nickName,//用户昵称
@@ -96,7 +94,7 @@ Page({
         hasUserInfo: true
       });
       console.log("登录")
-      wx.switchTab({
+      wx.reLaunch({
         url: '../index/index'
       })
     } else {
@@ -123,10 +121,13 @@ Page({
       method: 'POST',
       success: function (res) {
         // 缓存uid
+        app.globalData.uid = res.data.uid
         wx.setStorage({
           key: 'userUid',
           data: res.data.uid
         })
+
+        console.log(app.globalData.uid)
       }
     })
   }

@@ -25,32 +25,33 @@ Page({
         that.setData({
           uid: res.data
         })
-      }
-    });
-    wx.request({
-      url: app.globalData.serverPath + "myselfinfo",
-      data: {
-        uid:that.data.uid
-      },
-      method: 'POST',
-      success: function (res) {
-        if (res.data.if_verified == 0) {
-          that.setData({
-            duration: 15,
-          })
-        } else {
-          that.setData({
-            duration: 30,
-          })
-        }
-      },
-      fail: function (error) {
-        wx.showToast({
-          title: '发送失败！',
-          icon: "none"
+        wx.request({
+          url: app.globalData.serverPath + "myselfinfo",
+          data: {
+            uid: that.data.uid
+          },
+          method: 'POST',
+          success: function (res) {
+            if (res.data.if_verified == 0) {
+              that.setData({
+                duration: 15,
+              })
+            } else {
+              that.setData({
+                duration: 30,
+              })
+            }
+          },
+          fail: function (error) {
+            wx.showToast({
+              title: '发送失败！',
+              icon: "none"
+            })
+          }
         })
       }
-    })
+    });
+
   },
 
   /**

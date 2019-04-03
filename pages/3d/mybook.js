@@ -26,6 +26,7 @@ Page({
         });
     },
     onLoad: function() {
+      console.log("mybook")
       const that = this;
       wx.setNavigationBarTitle({
         title: '我的相册',

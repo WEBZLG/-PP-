@@ -140,8 +140,8 @@
   <view class='dialog-layer' animation='{{animationData}}'>
     <view class='dialog-white-space' bindtap='hideDialog'></view>
     <view class='dialog-content'>
-      <view class='close'>
-        <image class='close-btn' bindtap='hideDialog' src='../../../image/close.png'></image>
+      <view class='close'  bindtap='hideDialog'>
+        <image class='close-btn' src='../../../image/close.png'></image>
       </view>
       <scroll-view scroll-y="true" class="scroll-h">
         <block wx:for="{{noteListDetails}}" wx:key="{{index}}">

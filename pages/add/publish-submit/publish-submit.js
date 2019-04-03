@@ -59,14 +59,6 @@ Page({
     console.log(a.videoType)
     var options = JSON.parse(a.preData)
     const that = this
-    that.setData({
-      musicId: options.musicid,
-      stickerid: options.stickerid,
-      stickerx: options.stickerx,
-      stickery: options.stickery,
-      videoType: a.videoType
-    })
-    console.log(getCurrentPages())
     wx.getStorage({
       key: 'userUid',
       success(res) {
@@ -76,6 +68,15 @@ Page({
         })
       }
     });
+    that.setData({
+      musicId: options.musicid,
+      stickerid: options.stickerid,
+      stickerx: options.stickerx,
+      stickery: options.stickery,
+      videoType: a.videoType
+    })
+    console.log(getCurrentPages())
+
     n = wx.createInnerAudioContext();
     var e = getCurrentPages(),
     

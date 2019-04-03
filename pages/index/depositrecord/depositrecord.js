@@ -19,25 +19,25 @@ Page({
     wx.getStorage({
       key: 'userUid',
       success(res) {
-        console.log(res.data)
         that.setData({
           uid: res.data
         });
-      }
-    });
-    wx.request({
-      url: app.globalData.serverPath + "recharge_record",
-      data: {
-        "uid": that.data.uid
-      },
-      method: 'POST',
-      success: function (res) {
-        console.log(res);
-        that.setData({
-          Depositrecord: res.data
+        wx.request({
+          url: app.globalData.serverPath + "recharge_record",
+          data: {
+            "uid": that.data.uid
+          },
+          method: 'POST',
+          success: function (res) {
+            console.log(res);
+            that.setData({
+              Depositrecord: res.data
+            })
+          }
         })
       }
-    })
+    });
+
   },
 
   /**

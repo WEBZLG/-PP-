@@ -7,11 +7,12 @@
           <view class='infor-img' wx:if="{{if_verified==1}}"><image class='vip' src='../../image/VIP@2x.png'></image></view>
           <view class='infor-approve' bindtap='authentication'>{{if_verified==0?"未认证":"已认证"}}</view>
         </view>
-        <view class='sign-text'>{{signature}}</view>
+        <view class='sign-text' wx:if="{{signature==null}}">写点什么呢？</view>
+        <view class='sign-text' wx:else>{{signature}}</view>
         <view class='infor-more'>
           <view class='infor-details'>
             <view class='infor-birth'>{{gender==1 ? "男":"女"}} {{birthday==null ? "1990-09-09" : birthday}} {{city==null ? "哈尔滨" : city}}</view>
-            <view class='infor-call'>{{phone==null ? "18888888888" : phone}} {{wx==null ? "wx666666" : wx}}</view>
+            <view class='infor-call'>{{phone==null ? "188****8888" : phone}} {{wx=='' ? "wx***666" : wx}}</view>
           </view>
           <view class='redact' bindtap='redact'>编辑资料</view>
         </view>

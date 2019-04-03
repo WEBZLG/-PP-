@@ -89,7 +89,7 @@
     <cover-view class='gifts'>
       <cover-view class='contribution'>贡献榜单Top3</cover-view>
       <block wx:if="{{item.top!=''}}">
-        <cover-view class='top-name' wx:for='{{item.top}}' wx:for-item='top' wx:for-index='topindex' wx:key='index'>
+        <cover-view class='top-name' wx:for='{{item.top}}' wx:for-item='top' wx:for-index='topindex' wx:key='index'  data-id='{{top.uid}}' catchtap='giftPersonMessage'>
           <cover-image class='top-img top-one' src='{{top.wximage}}'></cover-image>
           <cover-view>{{top.wxname}}</cover-view>
         </cover-view>
@@ -116,15 +116,15 @@
       <cover-view class='time-close'>{{advertisingNum}}秒后关闭
         <cover-view catchtap='closeAvertising'>直接跳过</cover-view>
       </cover-view>
-      <cover-image src='../../image/guanggao.png'></cover-image>
+      <cover-image src='{{advertisingData.pic}}'></cover-image>
     </cover-view>
   </cover-view>
   <!-- 隐藏评论窗口按钮 -->
   <view animation="{{animationData}}" class="commodity_attr_box" wx:if="{{showModalStatus}}">
     <!-- 评论遍历 -->
-    <view class="commentTitle">
+    <view class="commentTitle"  bindtap='hidegiftsModal'>
       <text style='margin-left:40%'>全部评论({{commentList.length}})</text>
-      <image class='down' src='../../image/close@2x.png' bindtap='hidegiftsModal'></image>
+      <image class='down' src='../../image/close@2x.png'></image>
     </view>
     <scroll-view scroll-y='true' style='height:480rpx'>
       <block wx:for='{{commentList}}' wx:key='index'>
@@ -158,9 +158,9 @@
   </view>
   <!-- 礼物列表 -->
   <view animation="{{animationgifts}}" class="gifts_attr_box" wx:if="{{showGiftsStatus}}">
-    <view class="giftsTitle">
+    <view class="giftsTitle"  bindtap='hideModal'>
       <text>礼物列表</text>
-      <image class='down' src='../../image/close@2x.png' bindtap='hideModal'></image>
+      <image class='down' src='../../image/close@2x.png'></image>
     </view>
     <!-- <swiper style='height:460rpx;' indicator-dots="true">
         <swiper-item class='giftsLists' data-id="{{item.id}}"> -->

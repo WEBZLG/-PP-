@@ -49,7 +49,8 @@ Page({
     },
     videoPlay: !0,
     videoPlayFlag: !0,
-    isAdvertising:'block',//广告弹窗
+    isAdvertising:'none',//广告弹窗
+    advertisingData:"",//广告数据
     advertisingNum:'5',
     isShow:"blcok",//蒙版展示,
     goodsList:[],//礼物列表
@@ -86,11 +87,13 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    const that = this;
+    this.getAdevertising();
+    var that = this;
     this.videoContext = wx.createVideoContext('myVideo')
     wx.setNavigationBarTitle({
       title: "小PP短视频",
     })
+
     wx.getSetting({
       success: res => {
         if (res.authSetting['scope.userInfo']) {
@@ -103,27 +106,67 @@ Page({
               if (this.userInfoReadyCallback) {
                 this.userInfoReadyCallback(res)
               }
-              wx.getStorage({
-                key: 'userUid',
-                success(res) {
-                  console.log(res)
-                  that.setData({
-                    uid: res.data
-                  });
-                }
-              });
+              
+            }
+          })
+          console.log(app.globalData.userInfo)
+          if (app.globalData.userInfo==null){
               wx.getStorage({
                 key: 'userMessage',
                 success(res) {
+                  console.log(res)
                   var sex = res.data.gender == 1 ? "男" : "女"
                   that.setData({
                     activeSex: sex
                   });
                 }
               });
+          } else if (app.globalData.uid == null){
+            wx.getStorage({
+              key: 'userUid',
+              success(res) {
+                console.log(res)
+                that.setData({
+                  uid: res.data
+                });
+              }
+            });
+          }else{
+            var sex = app.globalData.userInfo.gender == 1 ? "男" : "女"
+            that.setData({
+              uid: app.globalData.uid,
+              activeSex: sex
+            });
+          }
+          console.log("zouzhe")
+          that.getVideoMessage()
+          // 获取当前位置
+          wx.getLocation({
+            type: "gcj02",
+            success: function (a) {
+              that.setData({
+                locationFlag: !0
+              }), s.reverseGeocoder({
+                location: {
+                  latitude: a.latitude,
+                  longitude: a.longitude
+                },
+                coord_type: 5,
+                success: function (a) {
+                  console.log(a)
+                  that.setData({
+                    nowAddress: a.result.ad_info.province + a.result.ad_info.city
+                  });
+                },
+                fail: function (t) { }
+              });
+            },
+            fail: function (a) {
+              that.setData({
+                locationFlag: !1
+              });
             }
-          })
-          that.getVideoMessage();
+          });
         } else {
           wx.reLaunch({
             url: '/pages/login/login'
@@ -132,24 +175,55 @@ Page({
       }
     })
   },
+
   onShow: function () {
+    
+  },
+  // 广告
+  getAdevertising:function(){
     var that = this;
-    var advertising = setInterval(function(){
-      that.setData({
-        advertisingNum: that.data.advertisingNum-1
-      })
-      if (that.data.advertisingNum<=0){
-        clearInterval(advertising)
-        that.setData({
-          isAdvertising:"none"
-        })
-      }
-    },1000)
+    wx.request({
+      url: app.globalData.serverPath + 'index_advertising',
+      data: {},
+      header: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      method: "POST",
+      success: function (res) {
+        console.log(res)
+        if(res.data.start==0){
+            that.setData({
+              isAdvertising:"block",
+              advertisingData:res.data
+            })
+            var advertising = setInterval(function(){
+            that.setData({
+              advertisingNum: that.data.advertisingNum-1
+            })
+            if (that.data.advertisingNum<=0){
+              clearInterval(advertising)
+              that.setData({
+                isAdvertising:"none"
+              })
+            }
+          },1000)
+        }
+      },
+      fail: function (err) { },
+      complete: function () { }
+    })
   },
   // 关闭广告
   closeAvertising:function(){
     this.setData({
       isAdvertising: "none"
+    })
+  },
+  // 礼物top3详情
+  giftPersonMessage:function(e){
+    var otherId = e.currentTarget.dataset.id
+    wx.navigateTo({
+      url: './userdetail/userdetail?otherId=' + otherId
     })
   },
   // 视频用户详情页
@@ -550,6 +624,7 @@ Page({
   },
   // 获取视频信息
   getVideoMessage: function () {
+    console.log(132)
     var that = this;
     wx.showLoading()
     wx.request({
@@ -577,33 +652,7 @@ Page({
           id:res.data[0].id,
           pageList: that.data.pageList.concat(res.data[0])
         })
-        // 获取当前位置
-        wx.getLocation({
-          type: "gcj02",
-          success: function (a) {
-            that.setData({
-              locationFlag: !0
-            }), s.reverseGeocoder({
-              location: {
-                latitude: a.latitude,
-                longitude: a.longitude
-              },
-              coord_type: 5,
-              success: function (a) {
-                console.log(a)
-                that.setData({
-                  nowAddress: a.result.ad_info.province + a.result.ad_info.city
-                });
-              },
-              fail: function (t) { }
-            });
-          },
-          fail: function (a) {
-            that.setData({
-              locationFlag: !1
-            });
-          }
-        });
+
       },
       fail: function (err) { },
       complete: function () { }
@@ -818,10 +867,11 @@ Page({
   },
 
   onHide:function(){
-    this.setData({
-      display_play: 'block'
-    })
+    console.log("隐藏")
     this.videoContext.pause();
+    // this.setData({
+    //   display_play: 'block'
+    // })
   },
   onUnload: function () {
     this.videoContext.pause();

@@ -113,9 +113,9 @@
   <!-- 隐藏评论窗口按钮 -->
   <view animation="{{animationData}}" class="commodity_attr_box" wx:if="{{showModalStatus}}">
     <!-- 评论遍历 -->
-    <view class="commentTitle">
+    <view class="commentTitle"  bindtap='hidegiftsModal'>
       <text style='margin-left:40%'>全部评论({{commentList.length}})</text>
-      <image class='down' src='../../image/close@2x.png' bindtap='hidegiftsModal'></image>
+      <image class='down' src='../../image/close@2x.png'></image>
     </view>
     <scroll-view scroll-y='true' style='height:480rpx'>
       <block wx:for='{{commentList}}' wx:key='index'>
@@ -149,9 +149,9 @@
   </view>
   <!-- 礼物列表 -->
   <view animation="{{animationgifts}}" class="gifts_attr_box" wx:if="{{showGiftsStatus}}">
-    <view class="giftsTitle">
+    <view class="giftsTitle"  bindtap='hideModal'>
       <text>礼物列表</text>
-      <image class='down' src='../../image/close@2x.png' bindtap='hideModal'></image>
+      <image class='down' src='../../image/close@2x.png'></image>
     </view>
     <!-- <swiper style='height:460rpx;' indicator-dots="true">
         <swiper-item class='giftsLists' data-id="{{item.id}}"> -->

@@ -68,6 +68,6 @@
             <button class="zhizuo" formType="submit">创建全景立体相册</button>
         </form>
     </view>
-    <!-- <ad style="z-index:999;" unitId="{{ad}}"></ad> -->
+    <ad style="z-index:999;" unitId="{{ad}}"></ad>
 </view>
-<button bindtap="mybook" class="mybook">我的相册</button>
+<!-- <button bindtap="mybook" class="mybook">我的相册</button> -->

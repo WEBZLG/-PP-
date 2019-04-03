@@ -4,15 +4,9 @@
   color:#eee;
   padding:30rpx;
   line-height:48rpx;
-
-}
-.title{
-  font-size: 36rpx;
-}
-.time{
   font-size: 28rpx;
-  color: #c4c4c4;
 }
+
 
 .wxParse-p{
   color: #eee;
