@@ -15,6 +15,7 @@ Page({
     url: '',//视频地址
     pic: '',//第一帧图片
     id: '',//作品ID
+    videoContent:"",
     wxname: '',//发布人昵称
     wximage: '',//发布人头像
     name: '',//歌曲名
@@ -77,8 +78,12 @@ Page({
     sendintegral:"",
     giftId:"",
     showPoster:"none",
+    code:"",
+    videoType:"",
     windowWidth: wx.getSystemInfoSync().windowWidth,
-    windowHeight: wx.getSystemInfoSync().screenHeight
+    windowHeight: wx.getSystemInfoSync().screenHeight,
+    top:[],
+    musicName:""
   },
   onReady: function (res) {
     
@@ -109,7 +114,17 @@ Page({
               
             }
           })
-          console.log(app.globalData.userInfo)
+          wx.login({
+            success:function(res){
+              console.log(res)
+              that.setData({
+                code:res.code
+              })
+              that.loginAgain();
+              console.log("zouzhe" + that.data.uid)
+              
+            }
+          })
           if (app.globalData.userInfo==null){
               wx.getStorage({
                 key: 'userMessage',
@@ -138,35 +153,7 @@ Page({
               activeSex: sex
             });
           }
-          console.log("zouzhe")
-          that.getVideoMessage()
-          // 获取当前位置
-          wx.getLocation({
-            type: "gcj02",
-            success: function (a) {
-              that.setData({
-                locationFlag: !0
-              }), s.reverseGeocoder({
-                location: {
-                  latitude: a.latitude,
-                  longitude: a.longitude
-                },
-                coord_type: 5,
-                success: function (a) {
-                  console.log(a)
-                  that.setData({
-                    nowAddress: a.result.ad_info.province + a.result.ad_info.city
-                  });
-                },
-                fail: function (t) { }
-              });
-            },
-            fail: function (a) {
-              that.setData({
-                locationFlag: !1
-              });
-            }
-          });
+          
         } else {
           wx.reLaunch({
             url: '/pages/login/login'
@@ -178,6 +165,61 @@ Page({
 
   onShow: function () {
     
+  },
+  // 第二次登录
+  loginAgain:function(){
+    var that =this;
+    wx.request({
+      url: app.globalData.serverPath + 'againlogin',
+      data: {
+        code:that.data.code
+      },
+      method: "GET",
+      success: function (res) {
+        console.log(res)
+        app.globalData.uid = res.data.uid
+        that.setData({
+          uid:res.data.uid
+        })
+        wx.setStorage({
+          key: 'userUid',
+          data: res.data.uid,
+          success: function (res) {
+            console.log(res)
+          }
+        })
+        wx.setStorageSync('userUid', res.data.uid)
+        that.getVideoMessage()
+        // 获取当前位置
+        wx.getLocation({
+          type: "gcj02",
+          success: function (a) {
+            that.setData({
+              locationFlag: !0
+            }), s.reverseGeocoder({
+              location: {
+                latitude: a.latitude,
+                longitude: a.longitude
+              },
+              coord_type: 5,
+              success: function (a) {
+                that.setData({
+                  nowAddress: a.result.ad_info.province + a.result.ad_info.city
+                });
+              },
+              fail: function (t) { }
+            });
+          },
+          fail: function (a) {
+            that.setData({
+              locationFlag: !1
+            });
+          }
+        });
+      },
+      fail: function (err) { },
+      complete: function () { }
+    })
   },
   // 广告
   getAdevertising:function(){
@@ -321,9 +363,27 @@ Page({
         icon:"none"
       })
     }else{
-      this.setData({
-        pageIndex : that.data.pageIndex-1,
-        indexList: that.data.kongList.concat(that.data.pageList[that.data.pageIndex-1]),
+      console.log(that.data.pageIndex-1)
+      console.log(that.data.pageList[that.data.pageIndex-1])
+      this.setData({   
+        display_play: 'none',
+        sendId: that.data.pageList[that.data.pageIndex-1].uid,
+        videoUrl: that.data.pageList[that.data.pageIndex - 1].url,
+        isActiveVideo: that.data.pageList[that.data.pageIndex - 1].if_activity,
+        isVip: that.data.pageList[that.data.pageIndex - 1].if_pass,
+        if_like: that.data.pageList[that.data.pageIndex - 1].if_like,
+        activeId: that.data.pageList[that.data.pageIndex - 1].aid,
+        ifRelation: that.data.pageList[that.data.pageIndex - 1 ].relation,
+        likenum: that.data.pageList[that.data.pageIndex - 1].likenum,
+        id: that.data.pageList[that.data.pageIndex - 1].id,
+        sharenum: that.data.pageList[that.data.pageIndex - 1].sharenum,
+        commentnum: that.data.pageList[that.data.pageIndex - 1].commentnum,
+        wximage: that.data.pageList[that.data.pageIndex - 1].wximage,
+        wxname: that.data.pageList[that.data.pageIndex - 1].wxname,
+        videoContent: that.data.pageList[that.data.pageIndex - 1].content,
+        top: that.data.pageList[that.data.pageIndex - 1].top,
+        musicName: that.data.pageList[that.data.pageIndex - 1].name,
+        pageIndex : that.data.pageIndex-1,   
       })
     }
   },
@@ -331,22 +391,95 @@ Page({
     var that = this;
     var pageIndexLength = that.data.pageIndex+1
     var pageListLength = that.data.pageList.length
-    console.log(pageIndexLength,pageListLength)
     if (pageIndexLength < pageListLength){
-      console.log(that.data.pageList)
-      console.log(that.data.pageIndex)
-
+      var indexList = that.data.pageList[that.data.pageIndex]
+      console.log(indexList)
       this.setData({
-        indexList: that.data.kongList.concat(that.data.pageList[that.data.pageIndex]),
+        display_play: 'none',
+        sendId: indexList.uid,
+        videoUrl: indexList.url,
+        isActiveVideo: indexList.if_activity,
+        isVip: indexList.if_pass,
+        if_like: indexList.if_like,
+        activeId: indexList.aid,
+        ifRelation: indexList.relation,
+        likenum: indexList.likenum,
+        id: indexList.id,
+        sharenum: indexList.sharenum,
+        commentnum: indexList.commentnum,
+        wximage: indexList.wximage,
+        wxname: indexList.wxname,
+        videoContent: indexList.content,
+        top: indexList.top,
+        musicName: indexList.name,
         pageIndex: that.data.pageIndex + 1,
       })
-      console.log(that.data.pageIndex)
     }else{
       this.setData({
         pageIndex: that.data.pageIndex + 1
       })
       that.getVideoMessage()
     }
+  },
+  // 获取视频信息
+  getVideoMessage: function () {
+    console.log("uid=" + this.data.uid)
+    var that = this;
+    wx.showLoading()
+    wx.request({
+      url: app.globalData.serverPath + 'index',
+      data: {
+        uid: that.data.uid
+      },
+      header: {//请求头
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      method: "POST",
+      success: function (res) {
+        wx.hideLoading()
+        console.log(res)
+
+        if (res.data == "") {
+          wx.showToast({
+            title: '暂无数据',
+            icon: "none"
+          })
+          return false;
+        } else {
+          if (res.data.videotype == 0) {
+            that.setData({
+              videotype: 'cover'
+            })
+          } else {
+            that.setData({
+              videotype: 'contain'
+            })
+          }
+          that.setData({
+            display_play: 'none',
+            sendId: res.data.uid,
+            videoUrl: res.data.url,
+            isActiveVideo: res.data.if_activity,
+            isVip: res.data.if_pass,
+            if_like: res.data.if_like,
+            activeId: res.data.aid,
+            ifRelation: res.data.relation,
+            likenum: res.data.likenum,
+            id: res.data.id,
+            sharenum: res.data.sharenum,
+            commentnum: res.data.commentnum,
+            wximage: res.data.wximage,
+            wxname: res.data.wxname,
+            videoContent: res.data.content,
+            top: res.data.top,
+            musicName: res.data.name,
+            pageList: that.data.pageList.concat(res.data)
+          })
+        }
+      },
+      fail: function (err) { },
+      complete: function () { }
+    })
   },
   videoHandle: function (a) {
     this.data.videoPlay ? (
@@ -622,42 +755,7 @@ Page({
       })
     }.bind(this), 200)
   },
-  // 获取视频信息
-  getVideoMessage: function () {
-    console.log(132)
-    var that = this;
-    wx.showLoading()
-    wx.request({
-      url: app.globalData.serverPath + 'index',
-      data: {
-        uid: that.data.uid
-      },
-      header: {//请求头
-        "Content-Type": "application/x-www-form-urlencoded"
-      },
-      method: "POST",
-      success: function (res) {
-        wx.hideLoading()
-        console.log(res)
-        that.setData({
-          display_play: 'none',
-          indexList: res.data,
-          sendId:res.data[0].uid,
-          isActiveVideo: res.data[0].if_activity,
-          isVip: res.data[0].if_pass,
-          if_like:res.data[0].if_like,
-          activeId: res.data[0].aid,
-          ifRelation:res.data[0].relation,
-          likenum: res.data[0].likenum,
-          id:res.data[0].id,
-          pageList: that.data.pageList.concat(res.data[0])
-        })
-
-      },
-      fail: function (err) { },
-      complete: function () { }
-    })
-  },
+  
   // 获取分页视频
   getPageVideoMessage:function(e){
     var that = this;
@@ -740,15 +838,14 @@ Page({
         console.log(res)
         wx.hideLoading()
         if(res.data.info == "success"){
-          var commentNum = `indexList[0].commentnum`
+          
             that.setData({
               inputText:"",
-              [commentNum]: that.data.indexList[0].commentnum+1
+              commentNum: that.data.commentnum+1
             })
             wx.showToast({
               title: '评论成功！',
             })
-          console.log(that.data.indexList[0].commentnum)
           that.hidegiftsModal()
         }else{
           wx.showToast({
@@ -944,9 +1041,8 @@ Page({
         wx.showToast({
           title: '转发成功！',
         })
-        var sharenum = `indexList[0].sharenum`
         that.setData({
-          [sharenum]: that.data.indexList[0].sharenum + 1
+          sharenum: that.data.sharenum + 1
         })
 
       },
@@ -1018,7 +1114,7 @@ Page({
           var sharenum = `indexList[0].sharenum`
           that.setData({
             showPoster: "none",
-            [sharenum]: that.data.indexList[0].sharenum + 1
+            [sharenum]: that.data.pageList[that.data.pageIndex - 1][0].sharenum + 1
           })
           that.save()
         }

@@ -546,7 +546,7 @@ button::after {
 
 .advertising {
   position: absolute;
-  top: 0;
+  top: 30rpx;
   left: 0;
   bottom: 0;
   right: 0;
@@ -557,6 +557,7 @@ button::after {
 .advertising-img {
   /* height: 100%;
   width: 100%; */
+  position: relative;
 }
 
 .time-close {
@@ -568,4 +569,5 @@ button::after {
   left: 5%;
   top: 30rpx;
   font-weight: bold;
+  z-index: 9999999999999;
 }

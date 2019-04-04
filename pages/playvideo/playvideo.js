@@ -120,7 +120,6 @@ Page({
           this.videoToggleNext();
           // console.log("向上")
           break;
-
         case "向下滑动":
           this.videoTogglePrev();
         // console.log("向下")
@@ -151,6 +150,7 @@ Page({
       })
     } else {
       this.setData({
+        display_play: 'none',
         pageIndex: that.data.pageIndex - 1
       })
       console.log(that.data.pageIndex)
@@ -160,6 +160,7 @@ Page({
   videoToggleNext: function () {
     var that = this;
     this.setData({
+      display_play: 'none',
       pageIndex: that.data.pageIndex + 1
     })
     // console.log(that.data.pageIndex)

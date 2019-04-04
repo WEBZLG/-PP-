@@ -25,7 +25,7 @@ Page({
         that.setData({
           uid: res.data
         })
-
+        console.log(that.data.uid)
         //1.开始初始化第一个TAB页的关注列表数据
         wx.request({
           url: app.globalData.serverPath + 'attentionlist',

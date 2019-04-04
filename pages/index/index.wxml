@@ -1,12 +1,12 @@
 <!--pages/video/video.wxml-->
 <!-- 视频资源 -->
-<view style='position: relative;height:100%;overflow:hidden' wx:for='{{indexList}}' wx:key='index'>
-  <video id="myVideo" src="{{item.url}}" autoplay='true' show-fullscreen-btn='{{false}}' show-center-play-btn="{{false}}" objectFit='{{item.videotype==0?"cover":"contain"}}'  data-id='{{index}}' custom-cache='{{false}}' controls="{{false}}" bindended="bindended"></video>
+<view style='position: relative;height:100%;overflow:hidden'>
+  <video id="myVideo" src="{{videoUrl}}" objectFit='{{videotype}}' autoplay='true' show-fullscreen-btn='{{false}}' show-center-play-btn="{{false}}"  data-id='{{index}}' custom-cache='{{false}}' controls="{{false}}" bindended="bindended"></video>
   <!-- 点击滑动蒙版图层 -->
-  <cover-view  class="ball" id="id" bindtouchend="handletouchend" bindtouchmove="handletouchmove" bindtouchstart="handletouchstart" catchtap="videoHandle" style='display:{{isShow}}'>
+  <cover-view class="ball" id="id" bindtouchend="handletouchend" bindtouchmove="handletouchmove" bindtouchstart="handletouchstart" catchtap="videoHandle" style='display:{{isShow}}'>
     <!-- 公告 -->
     <cover-view class='scroll_view_border' wx:if="{{isActiveVideo==1}}">
-      <cover-view class="srcoll_view" catchtap="textclick" data-aid='{{item.aid}}'>{{item.content}}</cover-view>
+      <cover-view class="srcoll_view" catchtap="textclick" data-aid='{{activeId}}'>{{videoContent}}</cover-view>
     </cover-view>
     <!-- 地址 -->
     <cover-view class='my-address'>
@@ -25,26 +25,26 @@
     <cover-view class='comment_border' style='display:{{display_pl}}'>
       <cover-view class='sidebar_b_rt'>
         <!-- 头像 -->
-        <cover-image src='{{item.wximage}}' data-userid='{{item.id}}' class='head_img' catchtap='userdetail'></cover-image>
+        <cover-image src='{{wximage}}' data-userid='{{id}}' class='head_img' catchtap='userdetail'></cover-image>
       </cover-view>
       <cover-view class='sidebar_b_rt'>
         <!-- 礼物 -->
-        <cover-image src='../../image/gift.png' data-userid='{{item.id}}' class='comment_img' catchtap='getGoods'></cover-image>
+        <cover-image src='../../image/gift.png' data-userid='{{id}}' class='comment_img' catchtap='getGoods'></cover-image>
         <!-- 礼物数 -->
         <!-- <cover-view class='comment_num'>1</cover-view> -->
       </cover-view>
       <!-- 赞 -->
       <cover-view class='sidebar_b_rt'>
-        <cover-image src="../../image/like_red.png" catchtap='like' class='comment_img 'data-id='{{item.id}}' data-item='{{item}}' wx:if='{{if_like==0}}'></cover-image>
-        <cover-image src="../../image/like.png" catchtap='like' class='comment_img ' data-id='{{item.id}}' data-item='{{item}}' wx:else></cover-image>
+        <cover-image src="../../image/like_red.png" catchtap='like' class='comment_img ' data-id='{{id}}'  wx:if='{{if_like==0}}'></cover-image>
+        <cover-image src="../../image/like.png" catchtap='like' class='comment_img ' data-id='{{id}}'wx:else></cover-image>
         <!-- 赞数 -->
-        <cover-view class='comment_num' catchtap='like' data-id='{{item.id}}' data-item='{{item}}'>{{likenum}}</cover-view>
+        <cover-view class='comment_num' catchtap='like' data-id='{{id}}' >{{likenum}}</cover-view>
       </cover-view>
       <!-- 评论 -->
       <cover-view class='sidebar_b_rt'>
-        <cover-image src='../../image/talk.png' class='comment_img ' catchtap='getCommentMessage' data-id="{{item.id}}" data-img_url='{{item.wapimg}}'></cover-image>
+        <cover-image src='../../image/talk.png' class='comment_img ' catchtap='getCommentMessage' data-id="{{id}}" ></cover-image>
         <!-- 评论数 -->
-        <cover-view class='comment_num' catchtap='getCommentMessage' data-id="{{item.id}}" data-img_url='{{item.wapimg}}'>{{item.commentnum}}</cover-view>
+        <cover-view class='comment_num' catchtap='getCommentMessage' data-id="{{id}}">{{commentnum}}</cover-view>
       </cover-view>
       <!-- 分享 -->
       <cover-view class='sidebar_b_rt'>
@@ -52,44 +52,42 @@
           <cover-image src='../../image/share.png' class='comment_num'>转发</cover-image>
         </button>
         <!-- 转发数 -->
-        <cover-view class='comment_num'>{{item.sharenum}}</cover-view>
+        <cover-view class='comment_num'>{{sharenum}}</cover-view>
       </cover-view>
-      <cover-view class='sidebar_b_rt'  wx:if="{{isActiveVideo==1}}">
+      <cover-view class='sidebar_b_rt' wx:if="{{isActiveVideo==1}}">
         <!-- 活动 -->
-        <cover-image src='../../image/join.png' data-userid='{{item.userid}}' class='comment_img' catchtap='joinAvtive'></cover-image>
+        <cover-image src='../../image/join.png'  class='comment_img' catchtap='joinAvtive'></cover-image>
         <!-- 活动人数 -->
       </cover-view>
     </cover-view>
     <!-- 描述 -->
     <cover-view class="desc">
       <cover-view class='nick-name'>
-        <cover-view>{{item.wxname}}</cover-view>
+        <cover-view>{{wxname}}</cover-view>
         <cover-image class='vip-icon' wx:if="{{isVip!=null}}" src='../../image/VIP@2x.png'></cover-image>
         <cover-view class='focus'>
-          {{item.relation}}
-          <!-- <cover-image wx:if="{{item.relation=='未关注'}}" class='length-icon' src='../../image/follow.png'></cover-image>
-          <cover-image wx:else class='length-icon' src='../../image/followed.png'></cover-image> -->
+          {{ifRelation}}
         </cover-view>
       </cover-view>
-      <cover-view class='activition'  wx:if="{{isActiveVideo==1}}">
+      <cover-view class='activition' wx:if="{{isActiveVideo==1}}">
         <cover-image class='length-icon' src='../../image/activity.png'></cover-image>
       </cover-view>
       <cover-view>
-        <cover-view class="desc-text">{{item.content}}</cover-view>
+        <cover-view class="desc-text">{{activeContent}}</cover-view>
       </cover-view>
       <cover-view class='music'>
         <cover-view>
           <cover-image class='small-icon' src='../../image/bgm.png'></cover-image>
         </cover-view>
-        <cover-view class='public-text' wx:if="{{item.name==null}}">{{item.wxname}}的原声</cover-view>
-        <cover-view class='public-text' wx:else>{{item.name}}</cover-view>
+        <cover-view class='public-text' wx:if="{{musicName==null}}">{{wxname}}的原声</cover-view>
+        <cover-view class='public-text' wx:else>{{musicName}}</cover-view>
       </cover-view>
     </cover-view>
     <!-- 礼物 -->
     <cover-view class='gifts'>
       <cover-view class='contribution'>贡献榜单Top3</cover-view>
-      <block wx:if="{{item.top!=''}}">
-        <cover-view class='top-name' wx:for='{{item.top}}' wx:for-item='top' wx:for-index='topindex' wx:key='index'  data-id='{{top.uid}}' catchtap='giftPersonMessage'>
+      <block wx:if="{{top!=''}}">
+        <cover-view class='top-name' wx:for='{{top}}' wx:for-item='top' wx:for-index='topindex' wx:key='index' data-id='{{top.uid}}' catchtap='giftPersonMessage'>
           <cover-image class='top-img top-one' src='{{top.wximage}}'></cover-image>
           <cover-view>{{top.wxname}}</cover-view>
         </cover-view>
@@ -122,7 +120,7 @@
   <!-- 隐藏评论窗口按钮 -->
   <view animation="{{animationData}}" class="commodity_attr_box" wx:if="{{showModalStatus}}">
     <!-- 评论遍历 -->
-    <view class="commentTitle"  bindtap='hidegiftsModal'>
+    <view class="commentTitle" bindtap='hidegiftsModal'>
       <text style='margin-left:40%'>全部评论({{commentList.length}})</text>
       <image class='down' src='../../image/close@2x.png'></image>
     </view>
@@ -150,7 +148,7 @@
       </block>
     </scroll-view>
     <view class="commentInput">
-      <input placeholder="留下你的精彩评论吧" class="input_box" bindinput='bindInput' value='{{inputText}}'/>
+      <input placeholder="留下你的精彩评论吧" class="input_box" bindinput='bindInput' value='{{inputText}}' />
       <button class="comment_btn" bindtap='sendCommentMessage' data-vid='{{vid}}'>
         <text class='comment_txt'>发布</text>
       </button>
@@ -158,24 +156,24 @@
   </view>
   <!-- 礼物列表 -->
   <view animation="{{animationgifts}}" class="gifts_attr_box" wx:if="{{showGiftsStatus}}">
-    <view class="giftsTitle"  bindtap='hideModal'>
+    <view class="giftsTitle" bindtap='hideModal'>
       <text>礼物列表</text>
       <image class='down' src='../../image/close@2x.png'></image>
     </view>
     <!-- <swiper style='height:460rpx;' indicator-dots="true">
         <swiper-item class='giftsLists' data-id="{{item.id}}"> -->
-              <scroll-view scroll-y="true" class='gift-box'>
-                  <view class='giftsList'>
-                    <block wx:for="{{goodsList}}" wx:key="{{index}}">
-                      <view class='gift-item' catchtap='chooseGift' data-score='{{item.integral}}' data-id='{{item.id}}'>
-                        <image wx:if="{{item.pic}}" src='{{item.pic}}' style='width:130rpx;height:130rpx;'></image>
-                        <view class='giftsId'>{{item.name}}</view>
-                        <view class='giftsScore'>{{item.integral}}积分</view>
-                      </view>
-                    </block>
-                  </view>
-              </scroll-view>
-        <!-- </swiper-item>
+    <scroll-view scroll-y="true" class='gift-box'>
+      <view class='giftsList'>
+        <block wx:for="{{goodsList}}" wx:key="{{index}}">
+          <view class='gift-item' catchtap='chooseGift' data-score='{{item.integral}}' data-id='{{item.id}}'>
+            <image wx:if="{{item.pic}}" src='{{item.pic}}' style='width:130rpx;height:130rpx;'></image>
+            <view class='giftsId'>{{item.name}}</view>
+            <view class='giftsScore'>{{item.integral}}积分</view>
+          </view>
+        </block>
+      </view>
+    </scroll-view>
+    <!-- </swiper-item>
     </swiper> -->
     <view class='depositList'>
       <view class='deposit'>
@@ -195,17 +193,17 @@
     </view>
     <!-- <swiper style='height:460rpx;' indicator-dots="true">
         <swiper-item class='giftsLists' data-id="{{item.id}}"> -->
-              <scroll-view scroll-y="true" class='gift-box'>
-                <block wx:for="{{wordsList}}" wx:key="{{index}}">
-                  <view class='wordsItem' catchtap='sendGift' data-content="{{item.content}}">{{item.content}}</view>
-                </block>
-              </scroll-view>
-        <!-- </swiper-item>
+    <scroll-view scroll-y="true" class='gift-box'>
+      <block wx:for="{{wordsList}}" wx:key="{{index}}">
+        <view class='wordsItem' catchtap='sendGift' data-content="{{item.content}}">{{item.content}}</view>
+      </block>
+    </scroll-view>
+    <!-- </swiper-item>
     </swiper> -->
   </view>
   <!-- 海报 -->
   <view class='canvasBox' style='display:{{showPoster}}'>
-    <canvas canvas-id="canvas" class="canvas"  style='height:{{windowHeight-250}}px;width:{{windowWidth-100}}px'></canvas>
+    <canvas canvas-id="canvas" class="canvas" style='height:{{windowHeight-250}}px;width:{{windowWidth-100}}px'></canvas>
   </view>
   <!-- 分享 -->
   <view animation="{{animationgifts}}" class="share_attr_box" wx:if="{{showShareStatus}}">
@@ -214,13 +212,13 @@
     </view>
     <view class='share-type'>
       <view style='text-align:center'>
-        <button class='shareFriend' open-type='share' data-uid='{{item.uid}}' data-vid='{{item.id}}'>
+        <button class='shareFriend' open-type='share' data-uid='{{uid}}' data-vid='{{id}}'>
           <cover-image src='../../image/wechat@2x.png' class=''>好友</cover-image>
         </button>
         <text>微信</text>
       </view>
-      <view class='sharePoster'  >
-        <button class='shareFriend' catchtap='create' data-uid='{{item.uid}}' data-vid='{{item.id}}'>
+      <view class='sharePoster'>
+        <button class='shareFriend' catchtap='create' data-uid='{{uid}}' data-vid='{{id}}'>
           <cover-image src='../../image/pyq@2x.png' class=''>朋友圈</cover-image>
         </button>
         <text>朋友圈</text>

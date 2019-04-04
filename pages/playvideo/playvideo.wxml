@@ -1,7 +1,7 @@
 <!--pages/video/video.wxml-->
 <!-- 视频资源 -->
 <view style='position: relative;height:100%;overflow:hidden'>
-  <video id="myVideo" src="{{indexList.url}}" autoplay='true' show-fullscreen-btn='{{false}}' show-center-play-btn="{{false}}" objectFit='{{indexList.videoType==0?"cover":"contain"}}' style='height:100%;' data-id='{{index}}' custom-cache='{{false}}' controls="{{false}}" bindended="bindended"></video>
+  <video id="myVideo" src="{{indexList.url}}" autoplay='true' show-fullscreen-btn='{{false}}' show-center-play-btn="{{false}}" objectFit='{{indexList.videotype == 0 ? "cover":"contain"}}' style='height:100%;' data-id='{{index}}' custom-cache='{{false}}' controls="{{false}}" bindended="bindended"></video>
   <!-- 点击滑动蒙版图层 -->
   <cover-view data-time="{{lastTapTime}}" class="ball" id="id" catchtap="videoHandle" style='display:{{isShow}}'>
     <!-- 公告 -->

@@ -15,7 +15,7 @@ Page({
     musicId:0,
     topicAreaShow: !1,
     topicAreaValue: "",
-    description: "",
+    description: "",//视频内容
     submitData:'',
     date:"",
     disabled: false,//设置是否能点击 false可以 true不能点击
@@ -207,6 +207,7 @@ Page({
 
   // 发布活动
   publishWorks:function(options){
+    console.log(options)
     const that = this
     wx.showLoading({
       title: "发布中"
@@ -234,7 +235,7 @@ Page({
         'time': that.data.activeTime,
         'place': that.data.activeAdress,
         'title': that.data.activeTitle,
-        'content': that.data.activeContent,
+        'actcontent': that.data.activeContent,
         "videotype": that.data.videoType
       }
     }else{
@@ -251,7 +252,7 @@ Page({
         'time': that.data.activeTime,
         'place': that.data.activeAdress,
         'title': that.data.activeTitle,
-        'content': that.data.activeContent,
+        'actcontent': that.data.activeContent,
         "videotype": that.data.videoType,
         "str": JSON.stringify([{
           "img": that.data.stickerid,
@@ -260,6 +261,7 @@ Page({
         }])
       }
     }
+    console.log(that.data.description)
     wx.uploadFile({
       url: app.globalData.serverPath +"release",
       filePath: videoUrl,
@@ -343,41 +345,41 @@ Page({
       activeAdress: event.detail.value
     })
   },
-  getPublishInfo: function(t) {
-    if (this.setData({
-        worksPubSwitch: !0
-      }), 100777 != t.code)
-      if (100200 == t.code) {
-        if (this.setData({
-            uploadPics: [],
-            description: ""
-          }), wx.showToast({
-            title: "发布成功，等待审核中…",
-            icon: "none",
-            duration: 2e3
-          }), t.data.carClubId) {
-          var a = wx.getStorageSync("clubRecord") || [];
-          a.forEach(function(e, i) {
-            e.clubId == t.data.carClubId && a.splice(i, 1);
-          }), a.unshift({
-            clubId: t.data.carClubId,
-            clubName: t.data.clubName
-          }), a = a.length > 10 ? a.slice(0, 10) : a, wx.setStorageSync("clubRecord", a);
-        }
-        wx.reLaunch({
-          url: "/pages/publish/works-preview/works-preview?worksId=" + t.data.id + "&type=" + t.data.type
-        });
-      } else wx.showToast({
-        title: "发布失败, 请稍后重试",
-        icon: "none",
-        duration: 2e3
-      });
-    else wx.showToast({
-      title: "发布失败, 请检查是否包含敏感词等信息!",
-      icon: "none",
-      duration: 2e3
-    });
-  },
+  // getPublishInfo: function(t) {
+  //   if (this.setData({
+  //       worksPubSwitch: !0
+  //     }), 100777 != t.code)
+  //     if (100200 == t.code) {
+  //       if (this.setData({
+  //           uploadPics: [],
+  //           description: ""
+  //         }), wx.showToast({
+  //           title: "发布成功，等待审核中…",
+  //           icon: "none",
+  //           duration: 2e3
+  //         }), t.data.carClubId) {
+  //         var a = wx.getStorageSync("clubRecord") || [];
+  //         a.forEach(function(e, i) {
+  //           e.clubId == t.data.carClubId && a.splice(i, 1);
+  //         }), a.unshift({
+  //           clubId: t.data.carClubId,
+  //           clubName: t.data.clubName
+  //         }), a = a.length > 10 ? a.slice(0, 10) : a, wx.setStorageSync("clubRecord", a);
+  //       }
+  //       wx.reLaunch({
+  //         url: "/pages/publish/works-preview/works-preview?worksId=" + t.data.id + "&type=" + t.data.type
+  //       });
+  //     } else wx.showToast({
+  //       title: "发布失败, 请稍后重试",
+  //       icon: "none",
+  //       duration: 2e3
+  //     });
+  //   else wx.showToast({
+  //     title: "发布失败, 请检查是否包含敏感词等信息!",
+  //     icon: "none",
+  //     duration: 2e3
+  //   });
+  // },
   gotoPubOriginPage: function() {
     wx.navigateBack()
   },

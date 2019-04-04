@@ -128,11 +128,7 @@ Page({
       url: "../publish-submit/publish-submit?preData=" + preData + "&videoType=" + videoType
     });
   },
-  gotoMusicPage: function (t) {
-    wx.navigateTo({
-      url: "../publish/music/music"
-    });
-  },
+
   initMusicPlay: function () {
     var t = this;
     if (this.setData({

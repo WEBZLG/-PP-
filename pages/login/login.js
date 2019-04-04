@@ -10,7 +10,8 @@ Page({
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     openid: '',
     wxname: '',
-    wximage: ''
+    wximage: '',
+    code:""
   },
   onLoad: function () {
     if (app.globalData.userInfo) {
@@ -49,6 +50,9 @@ Page({
       wx.login({
         success: function (res) {
           var code = res.code
+          that.setData({
+            code:res.code
+          })
           // 获取用户信息
           wx.getUserInfo({
             success: function (data) {
@@ -56,12 +60,14 @@ Page({
               // 缓存用户信息
               wx.setStorage({
                 key: 'userMessage',
-                data: data.userInfo
+                data: data.userInfo,
               })
+              wx.setStorageSync('userMessage', data.userInfo)
+              console.log("code="+that.data.code)
               wx.request({
                 url: app.globalData.serverPath+"login",
                 data: {
-                  "code": code,
+                  "code": that.data.code,
                 },
                 method: 'GET',
                 success: function (res) {
@@ -71,6 +77,7 @@ Page({
                     key: 'openId',
                     data: res.data.openid
                   })
+                  wx.setStorageSync('openId', res.data.openid)
                   app.globalData.openId = res.data.openid
                   that.setData({
                     userInfo: e.detail.userInfo,
@@ -126,7 +133,7 @@ Page({
           key: 'userUid',
           data: res.data.uid
         })
-
+        wx.setStorageSync('userUid', res.data.uid)
         console.log(app.globalData.uid)
       }
     })
