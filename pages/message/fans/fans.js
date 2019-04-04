@@ -34,7 +34,7 @@ Page({
       url: app.globalData.serverPath + 'attention',//请求地址
       data: {//发送给后台的数据
         uid:that.data.uid,
-        attentid:attentid
+        attentid:that.data.attentid
       },
       header: {//请求头
         "Content-Type": "application/x-www-form-urlencoded"
