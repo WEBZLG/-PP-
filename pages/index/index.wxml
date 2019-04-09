@@ -66,7 +66,7 @@
         <cover-view>{{wxname}}</cover-view>
         <cover-image class='vip-icon' wx:if="{{isVip!=null}}" src='../../image/VIP@2x.png'></cover-image>
         <cover-view class='focus'>
-          {{ifRelation}}
+          {{ifRelation==0?"未关注":"已关注"}}
         </cover-view>
       </cover-view>
       <cover-view class='activition' wx:if="{{isActiveVideo==1}}">

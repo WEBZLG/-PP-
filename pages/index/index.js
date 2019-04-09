@@ -356,6 +356,7 @@ Page({
     });
   },
   videoTogglePrev: function () {
+    console.log(this.data.pageIndex)
     var that = this;
     if (this.data.pageIndex==0){
       wx.showToast({
@@ -364,7 +365,8 @@ Page({
       })
     }else{
       console.log(that.data.pageIndex-1)
-      console.log(that.data.pageList[that.data.pageIndex-1])
+      console.log(that.data.pageList)
+      console.log(that.data.pageList[that.data.pageIndex-2])
       this.setData({   
         display_play: 'none',
         sendId: that.data.pageList[that.data.pageIndex-1].uid,
@@ -388,11 +390,12 @@ Page({
     }
   },
   videoToggleNext: function () {
+    console.log(this.data.pageIndex)
     var that = this;
     var pageIndexLength = that.data.pageIndex+1
     var pageListLength = that.data.pageList.length
     if (pageIndexLength < pageListLength){
-      var indexList = that.data.pageList[that.data.pageIndex]
+      var indexList = that.data.pageList[that.data.pageIndex+1]
       console.log(indexList)
       this.setData({
         display_play: 'none',
@@ -415,9 +418,9 @@ Page({
         pageIndex: that.data.pageIndex + 1,
       })
     }else{
-      this.setData({
-        pageIndex: that.data.pageIndex + 1
-      })
+      // this.setData({
+      //   pageIndex: that.data.pageIndex + 1
+      // })
       that.getVideoMessage()
     }
   },
@@ -437,11 +440,11 @@ Page({
       method: "POST",
       success: function (res) {
         wx.hideLoading()
-        console.log(res)
+        console.log(res.data)
 
-        if (res.data == "") {
+        if (res.data == "no") {
           wx.showToast({
-            title: '暂无数据',
+            title: '无最新数据',
             icon: "none"
           })
           return false;
@@ -473,8 +476,10 @@ Page({
             videoContent: res.data.content,
             top: res.data.top,
             musicName: res.data.name,
+            pageIndex: that.data.pageIndex + 1,
             pageList: that.data.pageList.concat(res.data)
           })
+          console.log(that.data.pageList)
         }
       },
       fail: function (err) { },
