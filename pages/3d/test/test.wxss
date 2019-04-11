@@ -1,0 +1,101 @@
+/* pages/3d/test/test.wxss */
+/* 弹窗 */
+
+.music-layer {
+  position: absolute;
+  bottom: -100%;
+  height: 0;
+  width: 100%;
+  overflow: hidden;
+  /* background-color: blue; */
+}
+
+.music-white-space {
+  height: 100%;
+  width: 100%;
+  /* background-color: green; */
+}
+
+.music,
+.picture {
+  position: absolute;
+  height: 900rpx;
+  width: 100%;
+  bottom: 0rpx;
+  background-color: rgba(0, 0, 0, 0.7);
+  border-top-left-radius: 2%;
+  border-top-right-radius: 2%;
+}
+.picture{
+  height: 260rpx;
+}
+.music-item {
+  display: flex;
+  justify-content: space-between;
+  margin: 30rpx 20rpx;
+  color: #eee;
+}
+
+.music-icon {
+  height: 40rpx;
+  width: 40rpx;
+  vertical-align:middle;
+  margin-right: 10rpx
+}
+.music-name{
+  font-size:28rpx;
+  color:#eee;
+}
+.music-list {
+  height: 600rpx;
+  overflow: auto;
+}
+
+.music-nav {
+  height: 230rpx;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+.music-content {
+  height: 600rpx;
+  width: 100%;
+}
+.play-music{
+  width:90%;
+  text-align:left;
+}
+.tab-h {
+  overflow: hidden;
+  font-size: 16px;
+  white-space: nowrap;
+}
+
+.tab-item {
+  margin: 0 14rpx;
+  display: inline-block;
+  position: relative;
+  z-index: 999;
+  height: 200rpx;
+  width: 120rpx;
+  color: #cbcbcb;
+  line-height: 180px;
+  background-size:contain;
+  background-repeat:no-repeat;
+  text-align: center;
+}
+.upPhoto{
+  padding: 30rpx;
+  color: #eee;
+}
+.btns,
+.title,
+.chooseMusic{
+  display: flex;
+  margin-bottom: 30rpx;
+}
+.btns{
+  margin-top: 10%;
+}

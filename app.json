@@ -21,10 +21,6 @@
     "pages/message/detail/detail",
     "pages/message/notice/notice",
     "pages/message/praise/praise",
-    "pages/3d/index",
-    "pages/3d/view",
-    "pages/3d/mybook",
-    "pages/3d/share",
     "pages/message/noticeDetails/noticeDetails",
     "pages/focus/active/active",
     "pages/help/helpDetails/helpDetails",
@@ -34,7 +30,10 @@
     "pages/index/search/search",
     "pages/playvideo/playvideo",
     "pages/myself/bindPhone/bindPhone",
-    "pages/index/search/searchDetail/searchDetail"
+    "pages/index/search/searchDetail/searchDetail",
+    "pages/3d/test/test",
+    "pages/3d/view/view",
+    "pages/3d/book/book"
   ],
   "permission": {
     "scope.userLocation": {

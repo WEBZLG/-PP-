@@ -150,7 +150,7 @@ Page({
   },
   get3dAlbum:function(){
     wx.navigateTo({
-      url: '../3d/index',
+      url: '../3d/test/test',
     })
   }
 })

@@ -1,0 +1,11 @@
+/* pages/3d/book/book.wxss */
+.book{
+  display: flex;
+  padding: 30rpx;
+  color: #eee;
+}
+image{
+  height: 60rpx;
+  width: 60rpx;
+  margin: 0 30rpx;
+}
