@@ -90,12 +90,15 @@
   padding: 30rpx;
   color: #eee;
 }
-.btns,
+
 .title,
 .chooseMusic{
   display: flex;
   margin-bottom: 30rpx;
 }
 .btns{
-  margin-top: 10%;
+  position:absolute;
+  width:100%;
+  bottom:30rpx;
+  left:0;
 }

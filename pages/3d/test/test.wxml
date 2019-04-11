@@ -8,7 +8,7 @@
     <text >选择音乐：</text>
     <input value='{{musicName}}' catchtap='showMusicBox'  disabled></input>
   </view>
-  <view class='btns'>
+  <view class='btns' style='display:{{isShow}}'>
     <button catchtap='getBook'>我的相册</button>
     <button catchtap='choose'>上传照片</button>
   </view>

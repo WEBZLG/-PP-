@@ -11,7 +11,8 @@ Page({
     musicType: 1,
     musicId: 1,
     winHeight: "",
-    musicName: ""
+    musicName: "",
+    isShow:"flex"
   },
 
   choose: function () {//这里是选取图片的方法
@@ -120,7 +121,6 @@ Page({
   showMusic: function () {
     this.animation.bottom("0rpx").height("100%").step()
     this.setData({
-      talksPage: 1,
       musicAnimationData: this.animation.export(),
       isShow: "none"
     })
@@ -130,7 +130,6 @@ Page({
     this.audioPause();
     this.animation.bottom("-100%").height("0rpx").step()
     this.setData({
-      talksPage: 1,
       musicAnimationData: this.animation.export(),
       isShow: "flex"
     })
@@ -153,7 +152,6 @@ Page({
         console.log(res);
         that.setData({
           musicList: res.data,
-          musicName: res.data[0].name
         })
 
       }
@@ -164,7 +162,6 @@ Page({
     this.setData({
       currentTab: e.detail.current
     });
-    this.checkCor();
   },
   // 点击标题切换当前页时改变样式
   swichNav: function (e) {
