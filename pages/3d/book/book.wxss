@@ -3,9 +3,19 @@
   display: flex;
   padding: 30rpx;
   color: #eee;
+  justify-content:space-between;
 }
 image{
   height: 60rpx;
   width: 60rpx;
-  margin: 0 30rpx;
+}
+.addtime{
+  font-size:20rpx;
+  line-height:60rpx;
+}
+.content{
+  width:50%;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
 }

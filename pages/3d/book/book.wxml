@@ -3,7 +3,8 @@
   <block wx:for="{{bookList}}" wx:key="{{index}}">
     <view class='book' data-id='{{item.id}}' catchtap='viewBook'>
       <image src='../../../image/3dpic.png'></image>
-      <view>{{item.content}}</view>
+      <view class='content'>{{item.content}}</view>
+      <view class='addtime'>{{item.addtime}}</view>
     </view>
   </block>
 </view>

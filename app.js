@@ -56,6 +56,9 @@ function wxRequest(method, url, data, callback, errFun) {
 //多张图片上传
 
 function uploadimg(data) {
+  wx.showLoading({
+    title: '上传中...',
+  })
   var that = this
   wx.getStorage({
     key: 'userUid',
@@ -105,7 +108,7 @@ function uploadimg(data) {
       fail++;
 
       console.log('fail:' + i + "fail:" + fail);
-
+      wx.hideLoading()
     },
 
     complete: () => {
@@ -118,6 +121,7 @@ function uploadimg(data) {
       i++;
 
       if (i == data.path.length) { //当图片传完时，停止调用   
+        wx.hideLoading()
         console.log('执行完毕');
         var pid = getApp().data.pid
         console.log('成功：' + success + " 失败：" + fail);
