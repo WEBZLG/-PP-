@@ -1,10 +1,13 @@
 <!--pages/3d/book/book.wxml-->
 <view>
   <block wx:for="{{bookList}}" wx:key="{{index}}">
-    <view class='book' data-id='{{item.id}}' catchtap='viewBook'>
+    <view class='book' >
       <image src='../../../image/3dpic.png'></image>
-      <view class='content'>{{item.content}}</view>
-      <view class='addtime'>{{item.addtime}}</view>
+      <view class='content'>
+        <view>{{item.content}}</view>
+        <text  class='addtime'>{{item.addtime}}</text>
+      </view>
+      <view  class='viewBook'  data-id='{{item.id}}' catchtap='viewBook'>查看</view>
     </view>
   </block>
 </view>

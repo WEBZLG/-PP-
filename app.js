@@ -17,7 +17,7 @@ App({
     openId: null
   }, 
   onLaunch: function () {
-    // 获取用户信息
+
 
   },
   onUnload: function () {

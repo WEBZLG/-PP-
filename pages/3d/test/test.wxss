@@ -95,10 +95,25 @@
 .chooseMusic{
   display: flex;
   margin-bottom: 30rpx;
+  line-height:56rpx;
+  text-align: right;
 }
 .btns{
   position:absolute;
-  width:100%;
+  width:90%;
   bottom:30rpx;
-  left:0;
+  left:5%;
+}
+button{
+width:100%;
+background-color:inherit;
+border:2px solid #fff;
+border-radius:60rpx;
+color:#fff;
+margin: 30rpx auto;
+}
+.button-hover {
+color:rgba(0, 0, 0, 0.6);
+background-color:#DEDEDE;
+
 }

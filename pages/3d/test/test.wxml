@@ -1,7 +1,7 @@
 <!--pages/3d/test/test.wxml-->
 <view class='upPhoto'>
   <view class='title'>
-    <text>标题：</text>
+    <text>书写标题：</text>
     <input placeholder='写点什么' bindinput='musicContent'></input>
   </view>
   <view class='chooseMusic'>

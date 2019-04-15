@@ -1,21 +1,28 @@
 /* pages/3d/book/book.wxss */
-.book{
+
+.book {
   display: flex;
   padding: 30rpx;
   color: #eee;
-  justify-content:space-between;
+  justify-content: space-between;
 }
-image{
-  height: 60rpx;
-  width: 60rpx;
+
+image {
+  height: 100rpx;
+  width: 100rpx;
 }
-.addtime{
-  font-size:20rpx;
-  line-height:60rpx;
+
+.addtime {
+  font-size: 20rpx;
+  line-height: 60rpx;
 }
-.content{
-  width:50%;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  white-space:nowrap;
+
+.content {
+  width: 50%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.viewBook{
+  line-height:112rpx;
 }

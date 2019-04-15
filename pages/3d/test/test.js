@@ -11,8 +11,8 @@ Page({
     musicType: 1,
     musicId: 1,
     winHeight: "",
-    musicName: "",
-    isShow:"flex"
+    musicName: "选择音乐",
+    isShow:"block"
   },
 
   choose: function () {//这里是选取图片的方法
@@ -131,7 +131,7 @@ Page({
     this.animation.bottom("-100%").height("0rpx").step()
     this.setData({
       musicAnimationData: this.animation.export(),
-      isShow: "flex"
+      isShow: "block"
     })
   },
   // 选择配乐

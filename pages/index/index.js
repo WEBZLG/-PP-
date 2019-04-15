@@ -164,7 +164,7 @@ Page({
   },
 
   onShow: function () {
-    
+
   },
   // 第二次登录
   loginAgain:function(){
@@ -181,15 +181,6 @@ Page({
         that.setData({
           uid:res.data.uid
         })
-        wx.setStorage({
-          key: 'userUid',
-          data: res.data.uid,
-          success: function (res) {
-            console.log(res)
-          }
-        })
-        wx.setStorageSync('userUid', res.data.uid)
-        that.getVideoMessage()
         // 获取当前位置
         wx.getLocation({
           type: "gcj02",
@@ -216,6 +207,15 @@ Page({
             });
           }
         });
+        wx.setStorage({
+          key: 'userUid',
+          data: res.data.uid,
+          success: function (res) {
+            console.log(res)
+          }
+        })
+        wx.setStorageSync('userUid', res.data.uid)
+        that.getVideoMessage()
       },
       fail: function (err) { },
       complete: function () { }
