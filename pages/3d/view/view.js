@@ -15,7 +15,7 @@ Page({
   onLoad: function (options) {
     console.log(options)
     this.setData({
-      imgsrc: "http://www.surenmedia.cn/index/port/showphoto?pid=" + options.pid
+      imgsrc: "https://www.surenmedia.cn/index/port/showphoto?pid=" + options.pid
     })
   },
 

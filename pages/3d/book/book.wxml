@@ -1,6 +1,6 @@
 <!--pages/3d/book/book.wxml-->
 <view>
-  <block wx:for="{{bookList}}" wx:key="{{index}}">
+  <block wx:if="{{bookList !==''}}"  wx:for="{{bookList}}" wx:key="{{index}}">
     <view class='book' >
       <image src='../../../image/3dpic.png'></image>
       <view class='content'>
@@ -9,5 +9,8 @@
       </view>
       <view  class='viewBook'  data-id='{{item.id}}' catchtap='viewBook'>查看</view>
     </view>
+  </block>
+  <block wx:if="{{bookList==''}}">
+      <view class='nodata'>暂无数据</view>
   </block>
 </view>

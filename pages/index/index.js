@@ -53,7 +53,7 @@ Page({
     isAdvertising:'none',//广告弹窗
     advertisingData:"",//广告数据
     advertisingNum:'5',
-    isShow:"blcok",//蒙版展示,
+    homeIsShow:"blcok",//蒙版展示,
     goodsList:[],//礼物列表
     goodIntegral:"",//礼物积分,
     isActiveVideo:false,
@@ -164,7 +164,7 @@ Page({
   },
 
   onShow: function () {
-
+    console.log("看这里测试"+this.data.homeIsShow)
   },
   // 第二次登录
   loginAgain:function(){
@@ -220,6 +220,7 @@ Page({
       fail: function (err) { },
       complete: function () { }
     })
+    console.log("看这里测试" + this.data.homeIsShow)
   },
   // 广告
   getAdevertising:function(){
@@ -477,14 +478,16 @@ Page({
             top: res.data.top,
             musicName: res.data.name,
             pageIndex: that.data.pageIndex + 1,
-            pageList: that.data.pageList.concat(res.data)
+            pageList: that.data.pageList.concat(res.data),
+            homeIsShow:"block"
           })
-          console.log(that.data.pageList)
+          console.log("看这里"+that.data.homeIsShow)
         }
       },
       fail: function (err) { },
       complete: function () { }
     })
+    console.log("看这里测试" + this.data.homeIsShow)
   },
   videoHandle: function (a) {
     this.data.videoPlay ? (
@@ -537,7 +540,7 @@ Page({
       video_heighe: 45,
       ball_height: 1,
       display_pl: 'none',
-      isShow:"none"
+      homeIsShow:"none"
     })
     setTimeout(function () {
       animation.translateY(0).step()
@@ -558,7 +561,7 @@ Page({
     animation.translateY(300).step()
     this.setData({
       animationData: animation.export(),
-      isShow: "block",
+      homeIsShow: "block",
     })
     setTimeout(function () {
       animation.translateY(0).step()
@@ -613,7 +616,7 @@ Page({
     this.setData({
       animationgifts: animation.export(),
       showGiftsStatus: true,
-      isShow: "none",
+      homeIsShow: "none",
       display_pl: 'none'
     })
     setTimeout(function () {
@@ -625,9 +628,9 @@ Page({
   },
   //礼物留言显示
   showWordsModal: function () {
-    console.log(this.data.isShow)
+    console.log(this.data.homeIsShow)
     this.setData({
-      isShow:"none"
+      homeIsShow:"none"
     })
     var animation = wx.createAnimation({
       duration: 200,
@@ -639,7 +642,7 @@ Page({
     this.setData({
       animationgifts: animation.export(),
       showWordsStatus: true,
-      isShow: "none"
+      homeIsShow: "none"
     })
     setTimeout(function () {
       animation.translateY(0).step()
@@ -666,7 +669,7 @@ Page({
       this.setData({
         animationData: animation.export(),
         showWordsStatus: false,
-        isShow: "block"
+        homeIsShow: "block"
       })
     }.bind(this), 200)
   },
@@ -755,7 +758,7 @@ Page({
         animationgifts: animation.export(),
         showModalStatus: false,
         heighTrue: true,
-        isShow: "block",
+        homeIsShow: "block",
         display_pl: 'block',
       })
     }.bind(this), 200)
@@ -994,7 +997,7 @@ Page({
     this.setData({
       animationgifts: animation.export(),
       showShareStatus: true,
-      isShow: "none",
+      homeIsShow: "none",
     })
     setTimeout(function () {
       animation.translateY(0).step()
@@ -1014,7 +1017,7 @@ Page({
     animation.translateY(300).step()
     this.setData({
       animationData: animation.export(),
-      isShow: "block",
+      homeIsShow: "block",
     })
     setTimeout(function () {
       animation.translateY(0).step()
