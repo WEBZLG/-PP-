@@ -11,6 +11,6 @@
     </view>
   </block>
   <block wx:if="{{bookList==''}}">
-      <view class='nodata'>暂无数据</view>
+      <view class='none-data'>暂无数据</view>
   </block>
 </view>

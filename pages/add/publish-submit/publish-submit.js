@@ -261,7 +261,7 @@ Page({
         }])
       }
     }
-    console.log(that.data.description)
+    console.log(formData)
     wx.uploadFile({
       url: app.globalData.serverPath +"release",
       filePath: videoUrl,

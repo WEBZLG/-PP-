@@ -520,7 +520,7 @@ Page({
     wx.showLoading()
     var that = this;
     wx.setNavigationBarTitle({
-      title: "小PP短视频",
+      title: "五一一短视频",
     })
     wx.getStorage({
       key: 'userUid',

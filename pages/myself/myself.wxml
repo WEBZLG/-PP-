@@ -62,7 +62,7 @@
         <swiper-item>
             <scroll-view scroll-y="true" class="scoll-h video-list" >
               <view class='block-item'>
-                <block  wx:for="{{sendVideo}}" wx:key="{{index}}" data-id="{{item.id}}">
+                <block  wx:if="{{sendVideo !== ''}}"  wx:for="{{sendVideo}}" wx:key="{{index}}" data-id="{{item.id}}">
                   <view class='item-ans'>
                     <image class='cover' src='{{item.pic}}' data-id="{{item.id}}" bindtap='playVideo'></image>
                     <!-- <view>
@@ -71,6 +71,7 @@
                     </view> -->
                   </view>
                 </block>
+                <block wx:if="{{sendVideo == ''}}"><view class='none-data'>暂无数据</view></block>
               </view>
             </scroll-view>
         </swiper-item>
@@ -78,18 +79,19 @@
         <swiper-item>
             <scroll-view scroll-y="true" class="scoll-h" >
               <view class='block-item'>
-                <block wx:for="{{getVideo}}" wx:key="{{index}}"  data-id="{{item.id}}">
+                <block  wx:if="{{getVideo !== ''}}"  wx:for="{{getVideo}}" wx:key="{{index}}"  data-id="{{item.id}}">
                   <view class='item-ans'>
                     <image class='cover' src='{{item.pic}}' data-id="{{item.id}}" bindtap='playVideo'></image>
                   </view>
                 </block>
+                <block wx:if="{{getVideo == ''}}"><view class='none-data'>暂无数据</view></block>
               </view>
             </scroll-view>
         </swiper-item>
         <!-- 送出礼物 -->
         <swiper-item>
           <scroll-view scroll-y="true" class="scoll-h" >
-            <view class='gift-item' wx:for="{{sendGoodsList}}" wx:key="{{index}}">
+            <view class='gift-item'  wx:if="{{sendGoodsList !== ''}}"  wx:for="{{sendGoodsList}}" wx:key="{{index}}">
               <view>
                 <image class='head-img' src='{{item.wximage}}'></image>
               </view>
@@ -99,12 +101,13 @@
                 <view class='gift-time'>{{item.time}}</view>
               </view>
             </view>
+            <block wx:if="{{sendGoodsList == ''}}"><view class='none-data'>暂无数据</view></block>
           </scroll-view>
         </swiper-item>
         <!-- 收到礼物 -->
         <swiper-item>
           <scroll-view scroll-y="true" class="scoll-h" >
-            <view class='gift-item' wx:for="{{getGoodsList}}" wx:key="{{index}}">
+            <view class='gift-item'  wx:if="{{getGoodsList !== ''}}"  wx:for="{{getGoodsList}}" wx:key="{{index}}">
               <view>
                 <image class='head-img' src='{{item.wximage}}'></image>
               </view>
@@ -114,12 +117,13 @@
                 <view class='gift-time'>{{item.time}}</view>
               </view>
             </view>
+            <block wx:if="{{getGoodsList == ''}}"><view class='none-data'>暂无数据</view></block>
           </scroll-view>
         </swiper-item>
         <!-- 私信留言 -->
         <swiper-item>
           <scroll-view scroll-y="true" class="scoll-h" >
-            <view class='gift-item' catchtap="getNoteDetails" wx:for="{{noteList}}" wx:key="{{index}}"  data-id='{{item.id}}'>
+            <view class='gift-item' catchtap="getNoteDetails"  wx:if="{{noteList !== ' '}}"  wx:for="{{noteList}}" wx:key="{{index}}"  data-id='{{item.id}}'>
               <view>
                 <image class='head-img' src='{{item.wximage}}'></image>
               </view>
@@ -134,6 +138,7 @@
                 </view>
               </view>
             </view>
+            <block wx:if="{{noteList == ''}}"><view class='none-data'>暂无数据</view></block>
           </scroll-view>
         </swiper-item>
     </swiper>

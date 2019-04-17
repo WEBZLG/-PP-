@@ -95,7 +95,6 @@
 .chooseMusic{
   display: flex;
   margin-bottom: 30rpx;
-  line-height:56rpx;
   text-align: right;
 }
 .btns{

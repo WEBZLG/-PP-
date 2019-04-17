@@ -9,11 +9,11 @@
       <image class='img' src='{{sticker.src}}'></image>
     </movable-view>
   </movable-area>
-  <view class='icon-box' style='display:{{isShow}}'>
+  <cover-view class='icon-box' style='display:{{isShow}}'>
     <cover-image catchtap="showMusicBox" class="icon-cam-music" src="/image/cm.png"></cover-image>
     <cover-image catchtap="loadPicture" class="icon-cam-picture" src="/image/cp.png"></cover-image>
     <cover-image catchtap="gotoPubSubmitPage" class="icon-cam-save" src="/image/nt.png"></cover-image>
-  </view>
+  </cover-view>
   <!-- 配乐弹窗 -->
   <view class='music-layer' animation='{{musicAnimationData}}'>
     <view class='music-white-space' bindtap='hideMusic'>

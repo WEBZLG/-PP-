@@ -96,7 +96,7 @@ Page({
     var that = this;
     this.videoContext = wx.createVideoContext('myVideo')
     wx.setNavigationBarTitle({
-      title: "小PP短视频",
+      title: "五一一短视频",
     })
 
     wx.getSetting({
@@ -576,6 +576,7 @@ Page({
   },
   // 获取礼物数据
   getGoods:function(e){
+    wx.showLoading();
   var that = this;
   console.log(that.data.uid)
     wx.request({

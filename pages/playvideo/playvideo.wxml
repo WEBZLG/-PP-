@@ -1,7 +1,8 @@
 <!--pages/video/video.wxml-->
 <!-- 视频资源 -->
 <view style='position: relative;height:100%;overflow:hidden'>
-  <video id="myVideo" src="{{indexList.url}}" autoplay='true' show-fullscreen-btn='{{false}}' show-center-play-btn="{{false}}" objectFit='{{indexList.videotype == 0 ? "cover":"contain"}}' style='height:100%;' data-id='{{index}}' custom-cache='{{false}}' controls="{{false}}" bindended="bindended"></video>
+<view class='video-box'>
+  <video id="myVideo" src="{{indexList.url}}" autoplay='true' show-fullscreen-btn='{{false}}' show-center-play-btn="{{false}}" objectFit='{{indexList.videotype == 0 ? "cover":"contain"}}' style='height:100%;' data-id='{{index}}' custom-cache='{{false}}' controls="{{false}}" bindended="bindended"></video></view>
   <!-- 点击滑动蒙版图层 -->
   <cover-view data-time="{{lastTapTime}}" class="ball" id="id" catchtap="videoHandle" style='display:{{isShow}}'>
     <!-- 公告 -->
@@ -28,36 +29,36 @@
         <cover-image src='{{indexList.wximage}}' data-userid='{{indexList.id}}' class='head_img'></cover-image>
         <!-- <cover-image src='{{indexList.wximage}}' data-userid='{{indexList.id}}' class='head_img' catchtap='userdetail'></cover-image> -->
       </cover-view>
-      <cover-view class='sidebar_b_rt'>
+      <cover-view class='sidebar_b_rt' data-userid='{{indexList.id}}' catchtap='getGoods'>
         <!-- 礼物 -->
-        <cover-image src='../../image/gift.png' data-userid='{{indexList.id}}' class='comment_img' catchtap='getGoods'></cover-image>
+        <cover-image src='../../image/gift.png'  class='comment_img' ></cover-image>
         <!-- 礼物数 -->
         <!-- <cover-view class='comment_num'>1</cover-view> -->
       </cover-view>
       <!-- 赞 -->
-      <cover-view class='sidebar_b_rt'>
-        <cover-image src="../../image/like_red.png" catchtap='like' class='comment_img ' data-id='{{index}}' data-item='{{indexList}}' wx:if='{{if_like==1}}'></cover-image>
-        <cover-image src="../../image/like.png" catchtap='like' class='comment_img ' data-id='{{index}}' data-item='{{indexList}}' wx:else></cover-image>
+      <cover-view class='sidebar_b_rt'  catchtap='like' data-id='{{index}}' data-item='{{indexList}}'>
+        <cover-image src="../../image/like_red.png"  class='comment_img '  wx:if='{{if_like==1}}'></cover-image>
+        <cover-image src="../../image/like.png"  class='comment_img ' wx:else></cover-image>
         <!-- 赞数 -->
-        <cover-view class='comment_num' catchtap='like' data-id='{{index}}' data-item='{{indexList}}'>{{likeNum}}</cover-view>
+        <cover-view class='comment_num' >{{likeNum}}</cover-view>
       </cover-view>
       <!-- 评论 -->
-      <cover-view class='sidebar_b_rt'>
-        <cover-image src='../../image/talk.png' class='comment_img ' catchtap='getCommentMessage' data-id="{{indexList.id}}" data-img_url='{{indexList.wapimg}}'></cover-image>
+      <cover-view class='sidebar_b_rt' catchtap='getCommentMessage' data-id="{{indexList.id}}" data-img_url='{{indexList.wapimg}}'>
+        <cover-image src='../../image/talk.png' class='comment_img ' ></cover-image>
         <!-- 评论数 -->
-        <cover-view class='comment_num' catchtap='getCommentMessage' data-id="{{indexList.id}}" data-img_url='{{indexList.wapimg}}'>{{indexList.commentnum}}</cover-view>
+        <cover-view class='comment_num' >{{indexList.commentnum}}</cover-view>
       </cover-view>
       <!-- 分享 -->
-      <cover-view class='sidebar_b_rt'>
-        <button class='comment__button' catchtap='showShareBox'>
+      <cover-view class='sidebar_b_rt' catchtap='showShareBox'>
+        <button class='comment__button' >
           <cover-image src='../../image/share.png' class='comment_num'>转发</cover-image>
         </button>
         <!-- 转发数 -->
         <cover-view class='comment_num'>{{indexList.sharenum}}</cover-view>
       </cover-view>
-      <cover-view class='sidebar_b_rt'  wx:if="{{isActiveVideo==1}}">
+      <cover-view class='sidebar_b_rt'  wx:if="{{isActiveVideo==1}}" data-userid='{{indexList.userid}}' catchtap='joinAvtive'>
         <!-- 活动 -->
-        <cover-image src='../../image/join.png' data-userid='{{indexList.userid}}' class='comment_img' catchtap='joinAvtive'></cover-image>
+        <cover-image src='../../image/join.png'  class='comment_img' ></cover-image>
         <!-- 活动人数 -->
       </cover-view>
     </cover-view>
