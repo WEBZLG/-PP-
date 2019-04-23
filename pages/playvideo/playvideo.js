@@ -429,6 +429,7 @@ Page({
   // 点赞功能
   like: function (e) {
     var that = this;
+    console.log(that.data.id)
     wx.request({
       url: app.globalData.serverPath + 'index_like',
       data: {
@@ -511,6 +512,7 @@ Page({
   },
   onReady: function (res) {
     this.videoContext = wx.createVideoContext('myVideo')
+    
   },
   /**
    * 生命周期函数--监听页面加载
@@ -522,14 +524,23 @@ Page({
     wx.setNavigationBarTitle({
       title: "五一一短视频",
     })
-    wx.getStorage({
-      key: 'userUid',
-      success(res) {
-        that.setData({
-          uid: res.data
-        });
-      }
-    });
+    if (app.globalData.uid == null) {
+      wx.getStorage({
+        key: 'userUid',
+        success(res) {
+          console.log(res)
+          that.setData({
+            uid: res.data,
+            id: options.videoId
+          });
+        }
+      });
+    } else {
+      that.setData({
+        uid: app.globalData.uid,
+        id: options.videoId
+      });
+    }
     wx.getStorage({
       key: 'userMessage',
       success(res) {
@@ -539,6 +550,7 @@ Page({
         });
       }
     });
+  
     wx.request({
       url: app.globalData.serverPath + "release_one",
       data: {

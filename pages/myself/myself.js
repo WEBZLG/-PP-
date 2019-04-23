@@ -34,7 +34,13 @@ Page({
     sendGoodsList:[],//送出礼物
     getGoodsList:[],//收到礼物
     dialogWords:"",//对话发送内容
-    receiveid:""//接受消息人id,
+    receiveid:"",//接受消息人id
+    touchStartTime:0,
+    touchEndTime: 0,
+    // 最后一次单击事件点击发生时间
+    lastTapTime: 0,
+    // 单击事件点击后要触发的函数
+    lastTapTimeoutFunc: null, 
   },
 
   /**
@@ -374,6 +380,15 @@ Page({
     var second = date.getSeconds()
     return year + "年" + month + "月" + day + "日" + hour + "时" + minute + "分" + second + "秒";
   },
+  /// 按钮触摸开始触发的事件
+  touchStart: function (e) {
+    this.touchStartTime = e.timeStamp
+  },
+
+  /// 按钮触摸结束触发的事件
+  touchEnd: function (e) {
+    this.touchEndTime = e.timeStamp
+  },
 // 播放单独的视频
   playVideo:function(e){
     console.log(e)
@@ -381,6 +396,76 @@ Page({
     var uid = this.data.uid
     wx.navigateTo({
       url: '../playvideo/playvideo?uid=' + uid +'&videoId=' + videoId,
+    })
+  },
+  /// 单击、双击
+  multipleTap: function (e) {
+    var that = this
+    // 控制点击事件在350ms内触发，加这层判断是为了防止长按时会触发点击事件
+    if (that.touchEndTime - that.touchStartTime < 350) {
+      // 当前点击的时间
+      var currentTime = e.timeStamp
+      var lastTapTime = that.lastTapTime
+      // 更新最后一次点击时间
+      that.lastTapTime = currentTime
+
+      // 如果两次点击时间在300毫秒内，则认为是双击事件
+      if (currentTime - lastTapTime < 300) {
+        console.log("double tap")
+        // 成功触发双击事件时，取消单击事件的执行
+        clearTimeout(that.lastTapTimeoutFunc);
+        // wx.showModal({
+        //   title: '提示',
+        //   content: '双击事件被触发',
+        //   showCancel: false
+        // })
+      } else {
+        // 单击事件延时300毫秒执行，这和最初的浏览器的点击300ms延时有点像。
+        that.lastTapTimeoutFunc = setTimeout(function () {
+          console.log("tap")
+          that.playVideo(e)
+        }, 300);
+      }
+    }
+  },
+  // 长按删除视频
+  delVideo:function(e){
+    var that = this;
+    wx.showModal({
+      title: '提示',
+      content: '确定要删除此视频吗？',
+      success: function (sm) {
+        if (sm.confirm) {
+          wx.showLoading()
+          wx.request({
+            url: app.globalData.serverPath + "del_release",
+            data: {
+              "id": e.currentTarget.dataset.id,
+            },
+            method: 'POST',
+            success: function (res) {
+              wx.hideLoading()
+              console.log(res);
+              if (res.data == "1") {
+                wx.showToast({
+                  title: '删除成功',
+                  icon: 'succes',
+                  duration: 1000,
+                  mask: true
+                })
+                that.onLoad();
+              } else {
+                wx.showModal({
+                  content: "删除失败",
+                  showCancel: false
+                });
+              }
+            }
+          })
+        } else if (sm.cancel) {
+          console.log('用户点击取消')
+        }
+      }
     })
   },
   /**

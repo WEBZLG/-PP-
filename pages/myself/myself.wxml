@@ -64,7 +64,7 @@
               <view class='block-item'>
                 <block  wx:if="{{sendVideo !== ''}}"  wx:for="{{sendVideo}}" wx:key="{{index}}" data-id="{{item.id}}">
                   <view class='item-ans'>
-                    <image class='cover' src='{{item.pic}}' data-id="{{item.id}}" bindtap='playVideo'></image>
+                    <image class='cover' src='{{item.pic}}' data-id="{{item.id}}" bindtap='multipleTap'  bindlongpress='delVideo' bindtouchstart='touchStart' bindtouchend='touchEnd'></image>
                     <!-- <view>
                       <cover-image  class='cover-img' src='../../image/like.png'></cover-image>
                       <text class='cover-text'>42.1w</text>

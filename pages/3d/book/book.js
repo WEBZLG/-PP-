@@ -46,6 +46,33 @@ Page({
       url: '../view/view?pid='+pid,
     })
   },
+  delBook:function(e){
+    var that = this;
+    wx.showLoading()
+    wx.request({
+      url: app.globalData.serverPath + "del_photo",
+      data: {
+        "id": e.currentTarget.dataset.id
+      },
+      method: 'POST',
+      success: function (res) {
+        console.log(res)
+        wx.hideLoading()
+      if(res.data =="1"){
+          wx.showToast({
+            title: '删除成功！',
+            icon:"success"
+          })
+        that.onLoad()
+      }else{
+        wx.showToast({
+          title: '删除失败！',
+          icon: "none"
+        })
+      }
+      }
+    })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

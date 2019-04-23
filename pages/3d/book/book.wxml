@@ -8,6 +8,7 @@
         <text  class='addtime'>{{item.addtime}}</text>
       </view>
       <view  class='viewBook'  data-id='{{item.id}}' catchtap='viewBook'>查看</view>
+       <view  class='viewBook'  data-id='{{item.id}}' catchtap='delBook'>删除</view>
     </view>
   </block>
   <block wx:if="{{bookList==''}}">
