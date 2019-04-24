@@ -81,7 +81,7 @@
         <cover-view>
           <cover-image class='small-icon' src='../../image/bgm.png'></cover-image>
         </cover-view>
-        <cover-view class='public-text' wx:if="{{musicName==null}}">{{wxname}}的原声</cover-view>
+        <cover-view class='public-text' wx:if="{{musicName==null ||musicName==''}}">{{wxname}}的原声</cover-view>
         <cover-view class='public-text' wx:else>{{musicName}}</cover-view>
       </cover-view>
     </cover-view>

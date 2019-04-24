@@ -21,9 +21,9 @@ Page({
     name: '',//歌曲名
     if_pass: '',//是否认证
     if_activity: '',//1为发布活动 0为普通发布
-    likenum: '',//点赞数
-    commentnum: '',//评论数
-    sharenum: '',//分享数
+    likenum: 0,//点赞数
+    commentnum: 0,//评论数
+    sharenum: 0,//分享数
     top: '',//送礼物排行榜
     ifRelation: '',//关注/为关注
     if_like: '', //0点赞  1未点赞
@@ -365,9 +365,6 @@ Page({
         icon:"none"
       })
     }else{
-      console.log(that.data.pageIndex-1)
-      console.log(that.data.pageList)
-      console.log(that.data.pageList[that.data.pageIndex-2])
       this.setData({   
         display_play: 'none',
         sendId: that.data.pageList[that.data.pageIndex-1].uid,
@@ -459,6 +456,7 @@ Page({
               videotype: 'contain'
             })
           }
+          console.log(res)
           that.setData({
             display_play: 'none',
             sendId: res.data.uid,
@@ -888,20 +886,13 @@ Page({
         if (res.data.info == "success") {
           if (res.data.if_like == 0) {
             that.setData({
-              if_like: 0
+              if_like: 0,
+               likenum: parseInt(that.data.likenum) + 1
             })
           } else {
             that.setData({
-              if_like: 1
-            })
-          }
-          if (res.data.if_like == 0) {
-            that.setData({
-              likenum: that.data.likenum + 1
-            })
-          } else {
-            that.setData({
-              likenum: that.data.likenum - 1
+              if_like: 1,
+              likenum: parseInt(that.data.likenum) - 1
             })
           }
         } else {
