@@ -445,21 +445,13 @@ Page({
         if (res.data.info == "success") {
           if (res.data.if_like == 0) {
             that.setData({
-              if_like: 1
+              if_like: 0,
+              likeNum: parseInt(that.data.likeNum) + 1
             })
           } else {
             that.setData({
-              if_like: 0
-            })
-          }
-          // var likeNum = that.data.indexList.likenum
-          if (res.data.if_like == 0) {
-            that.setData({
-              likeNum: that.data.likeNum + 1
-            })
-          } else {
-            that.setData({
-              likeNum: that.data.likeNum - 1
+              if_like: 1,
+              likeNum: parseInt(that.data.likeNum) - 1
             })
           }
         } else {

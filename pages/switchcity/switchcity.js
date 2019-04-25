@@ -77,7 +77,7 @@ Page({
   loadCity: function (longitude, latitude) {
     var page = this
     wx.request({
-      url: 'https://api.map.baidu.com/geocoder/v2/?ak=MiypPsMhMQA5SMPMtQfDVrIKXyNFYCbt&location=' + latitude + ',' + longitude + '&output=json',
+      url: 'https://api.map.baidu.com/geocoder/v2/?ak=cmegKqfU4Y9XXA9ovENumVavNN5aeZKZ&location=' + latitude + ',' + longitude + '&output=json',
       data: {},
       header: {
         'Content-Type': 'application/json'
