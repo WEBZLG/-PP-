@@ -357,7 +357,8 @@ Page({
     });
   },
   videoTogglePrev: function () {
-    console.log(this.data.pageIndex)
+    console.log(this.data.pageIndex-1)
+    console.log(this.data.pageList)
     var that = this;
     if (this.data.pageIndex==0){
       wx.showToast({
@@ -365,26 +366,65 @@ Page({
         icon:"none"
       })
     }else{
-      this.setData({   
-        display_play: 'none',
-        sendId: that.data.pageList[that.data.pageIndex-1].uid,
-        videoUrl: that.data.pageList[that.data.pageIndex - 1].url,
-        isActiveVideo: that.data.pageList[that.data.pageIndex - 1].if_activity,
-        isVip: that.data.pageList[that.data.pageIndex - 1].if_pass,
-        if_like: that.data.pageList[that.data.pageIndex - 1].if_like,
-        activeId: that.data.pageList[that.data.pageIndex - 1].aid,
-        ifRelation: that.data.pageList[that.data.pageIndex - 1 ].relation,
-        likenum: that.data.pageList[that.data.pageIndex - 1].likenum,
-        id: that.data.pageList[that.data.pageIndex - 1].id,
-        sharenum: that.data.pageList[that.data.pageIndex - 1].sharenum,
-        commentnum: that.data.pageList[that.data.pageIndex - 1].commentnum,
-        wximage: that.data.pageList[that.data.pageIndex - 1].wximage,
-        wxname: that.data.pageList[that.data.pageIndex - 1].wxname,
-        videoContent: that.data.pageList[that.data.pageIndex - 1].content,
-        top: that.data.pageList[that.data.pageIndex - 1].top,
-        musicName: that.data.pageList[that.data.pageIndex - 1].name,
-        pageIndex : that.data.pageIndex-1,   
+      wx.showLoading()
+      wx.request({
+        url: app.globalData.serverPath + 'release_one',
+        data: {
+          "uid": that.data.pageList[that.data.pageIndex - 1].uid,
+          "rid": that.data.pageList[that.data.pageIndex - 1].id
+        },
+        header: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        method: "POST",
+        success: function (res) {
+          console.log(res)
+          wx.hideLoading()
+          that.setData({
+            display_play: 'none',
+            sendId: res.data.uid,
+            videoUrl: res.data.url,
+            isActiveVideo: res.data.if_activity,
+            isVip: res.data.if_pass,
+            if_like:res.data.if_like,
+            activeId: res.data.aid,
+            ifRelation: res.data.relation,
+            likenum: res.data.likenum,
+            id: res.data.id,
+            sharenum: res.data.sharenum,
+            commentnum: res.data.commentnum,
+            wximage: res.data.wximage,
+            wxname: res.data.wxname,
+            videoContent: res.data.content,
+            top: res.data.top,
+            musicName: res.data.name,
+            pageIndex: that.data.pageIndex - 1,
+          })
+        },
+        fail: function (err) { },
+        complete: function () { }
       })
+
+      // this.setData({   
+      //   display_play: 'none',
+      //   sendId: that.data.pageList[that.data.pageIndex-1].uid,
+      //   videoUrl: that.data.pageList[that.data.pageIndex - 1].url,
+      //   isActiveVideo: that.data.pageList[that.data.pageIndex - 1].if_activity,
+      //   isVip: that.data.pageList[that.data.pageIndex - 1].if_pass,
+      //   if_like: that.data.pageList[that.data.pageIndex - 1].if_like,
+      //   activeId: that.data.pageList[that.data.pageIndex - 1].aid,
+      //   ifRelation: that.data.pageList[that.data.pageIndex - 1 ].relation,
+      //   likenum: that.data.pageList[that.data.pageIndex - 1].likenum,
+      //   id: that.data.pageList[that.data.pageIndex - 1].id,
+      //   sharenum: that.data.pageList[that.data.pageIndex - 1].sharenum,
+      //   commentnum: that.data.pageList[that.data.pageIndex - 1].commentnum,
+      //   wximage: that.data.pageList[that.data.pageIndex - 1].wximage,
+      //   wxname: that.data.pageList[that.data.pageIndex - 1].wxname,
+      //   videoContent: that.data.pageList[that.data.pageIndex - 1].content,
+      //   top: that.data.pageList[that.data.pageIndex - 1].top,
+      //   musicName: that.data.pageList[that.data.pageIndex - 1].name,
+      //   pageIndex : that.data.pageIndex-1,   
+      // })
     }
   },
   videoToggleNext: function () {
@@ -394,27 +434,46 @@ Page({
     var pageListLength = that.data.pageList.length
     if (pageIndexLength < pageListLength){
       var indexList = that.data.pageList[that.data.pageIndex+1]
-      console.log(indexList)
-      this.setData({
-        display_play: 'none',
-        sendId: indexList.uid,
-        videoUrl: indexList.url,
-        isActiveVideo: indexList.if_activity,
-        isVip: indexList.if_pass,
-        if_like: indexList.if_like,
-        activeId: indexList.aid,
-        ifRelation: indexList.relation,
-        likenum: indexList.likenum,
-        id: indexList.id,
-        sharenum: indexList.sharenum,
-        commentnum: indexList.commentnum,
-        wximage: indexList.wximage,
-        wxname: indexList.wxname,
-        videoContent: indexList.content,
-        top: indexList.top,
-        musicName: indexList.name,
-        pageIndex: that.data.pageIndex + 1,
+      wx.showLoading()
+      console.log("uid和id下" + indexList.uid, indexList.id)
+      wx.request({
+        url: app.globalData.serverPath + 'release_one',
+        data: { 
+          "uid": indexList.uid,
+          "rid": indexList.id
+           },
+        header: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        method: "POST",
+        success: function (res) {
+          console.log(res)
+          wx.hideLoading()
+          that.setData({
+            display_play: 'none',
+            sendId: res.data.uid,
+            videoUrl: res.data.url,
+            isActiveVideo: res.data.if_activity,
+            isVip: res.data.if_pass,
+            if_like: res.data.if_like,
+            activeId: res.data.aid,
+            ifRelation: res.data.relation,
+            likenum: res.data.likenum,
+            id: res.data.id,
+            sharenum: res.data.sharenum,
+            commentnum: res.data.commentnum,
+            wximage: res.data.wximage,
+            wxname: res.data.wxname,
+            videoContent: res.data.content,
+            top: res.data.top,
+            musicName: res.data.name,
+            pageIndex: that.data.pageIndex + 1,
+          })
+        },
+        fail: function (err) { },
+        complete: function () { }
       })
+
     }else{
       // this.setData({
       //   pageIndex: that.data.pageIndex + 1

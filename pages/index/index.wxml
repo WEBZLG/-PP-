@@ -38,7 +38,7 @@
       <!-- 赞 -->
       <cover-view class='sidebar_b_rt' catchtap='like' data-id='{{id}}'>
         <cover-image src="../../image/like_red.png"  class='comment_img '  wx:if='{{if_like==0}}'></cover-image>
-        <cover-image src="../../image/like.png"  class='comment_img '  wx:else></cover-image>
+        <cover-image src="../../image/like.png"  class='comment_img '  wx:if='{{if_like==1}}'></cover-image>
         <!-- 赞数 -->
         <cover-view class='comment_num' >{{likenum}}</cover-view>
       </cover-view>

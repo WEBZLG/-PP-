@@ -37,8 +37,8 @@
       </cover-view>
       <!-- 赞 -->
       <cover-view class='sidebar_b_rt'  catchtap='like' data-id='{{index}}' data-item='{{indexList}}'>
-        <cover-image src="../../image/like_red.png"  class='comment_img '  wx:if='{{if_like==1}}'></cover-image>
-        <cover-image src="../../image/like.png"  class='comment_img ' wx:else></cover-image>
+        <cover-image src="../../image/like_red.png"  class='comment_img '  wx:if='{{if_like==0}}'></cover-image>
+        <cover-image src="../../image/like.png"  class='comment_img '  wx:if='{{if_like==1}}'></cover-image>
         <!-- 赞数 -->
         <cover-view class='comment_num' >{{likeNum}}</cover-view>
       </cover-view>
