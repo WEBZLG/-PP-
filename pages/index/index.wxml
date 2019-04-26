@@ -49,12 +49,12 @@
         <cover-view class='comment_num' >{{commentnum}}</cover-view>
       </cover-view>
       <!-- 分享 -->
-      <cover-view class='sidebar_b_rt' catchtap='showShareBox'>
+      <cover-view class='sidebar_b_rt' catchtap='showShareBox'  data-id="{{id}}"  data-uid = "{{uid}}">
         <button class='comment__button' >
           <cover-image src='../../image/share.png' class='comment_num'>转发</cover-image>
         </button>
         <!-- 转发数 -->
-        <cover-view class='comment_num'>{{sharenum}}</cover-view>
+        <!-- <cover-view class='comment_num'>{{sharenum}}</cover-view> -->
       </cover-view>
       <cover-view class='sidebar_b_rt' wx:if="{{isActiveVideo==1}}" catchtap='joinAvtive'>
         <!-- 活动 -->

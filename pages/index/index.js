@@ -1,44 +1,44 @@
 const app = getApp()
 const ctx = wx.createCanvasContext('shareCanvas')
-const s = new (require("../../common/qqmap-wx-jssdk.min.js"))({
-  key: "W2GBZ-W6TA5-HSDI5-QNYNQ-6FP7Q-RNBQA"
+const s = new(require("../../common/qqmap-wx-jssdk.min.js"))({
+  key: "JEPBZ-F25H2-4XBUJ-CKM64-6I7JQ-OHBB4"
 })
 Page({
 
   data: {
-    kongList:[],
-    pageList:[],//分页数组
-    indexList: [],//获取首页数组
-    sendId:"",//发布人的id
-    uid: '',//自己的id
-    content: '',//发布介绍
-    url: '',//视频地址
-    pic: '',//第一帧图片
-    id: '',//作品ID
-    videoContent:"",
-    wxname: '',//发布人昵称
-    wximage: '',//发布人头像
-    name: '',//歌曲名
-    if_pass: '',//是否认证
-    if_activity: '',//1为发布活动 0为普通发布
-    likenum: 0,//点赞数
-    commentnum: 0,//评论数
-    sharenum: 0,//分享数
-    top: '',//送礼物排行榜
-    ifRelation: '',//关注/为关注
+    kongList: [],
+    pageList: [], //分页数组
+    indexList: [], //获取首页数组
+    sendId: "", //发布人的id
+    uid: '', //自己的id
+    content: '', //发布介绍
+    url: '', //视频地址
+    pic: '', //第一帧图片
+    id: '', //作品ID
+    videoContent: "",
+    wxname: '', //发布人昵称
+    wximage: '', //发布人头像
+    name: '', //歌曲名
+    if_pass: '', //是否认证
+    if_activity: '', //1为发布活动 0为普通发布
+    likenum: 0, //点赞数
+    commentnum: 0, //评论数
+    sharenum: 0, //分享数
+    top: '', //送礼物排行榜
+    ifRelation: '', //关注/为关注
     if_like: '', //0点赞  1未点赞
-    isVip:null,// 是否是vip
-    content: '',//内容
+    isVip: null, // 是否是vip
+    content: '', //内容
     commentList: [],
     //播放按钮
     display_play: 'none',
     //点击评论隐藏图标
     display_pl: 'block',
-    count: 1,//视频爱心点赞
-    commentcount:1,//评论点赞
+    count: 1, //视频爱心点赞
+    commentcount: 1, //评论点赞
     index_num: 1,
     play: 'none',
-    inputValue: '',//发送评论的内容
+    inputValue: '', //发送评论的内容
     index: 1,
     vid: 0,
     pageIndex: 0,
@@ -50,48 +50,47 @@ Page({
     },
     videoPlay: !0,
     videoPlayFlag: !0,
-    isAdvertising:'none',//广告弹窗
-    advertisingData:"",//广告数据
-    advertisingNum:'5',
-    homeIsShow:"blcok",//蒙版展示,
-    goodsList:[],//礼物列表
-    goodIntegral:"",//礼物积分,
-    isActiveVideo:false,
-    activeId:"",//活动id
-    activeSex:"",//参加活动性别
-    nowAddress:"火星",
-    wordsList:[
-      {
-        id:1,
-        content:"大哥不差钱！"
-      },{
-        id:"2",
-        content:"视频太棒了，赏你的！"
-      }, {
-        id: "3",
-        content: "嗯！大哥看好你！"
-      }, {
-        id: "4",
-        content: "想和你去兜兜风！"
-      }
-    ],
-    sendintegral:"",
-    giftId:"",
-    showPoster:"none",
-    code:"",
-    videoType:"",
+    isAdvertising: 'none', //广告弹窗
+    advertisingData: "", //广告数据
+    advertisingNum: '5',
+    homeIsShow: "blcok", //蒙版展示,
+    goodsList: [], //礼物列表
+    goodIntegral: "", //礼物积分,
+    isActiveVideo: false,
+    activeId: "", //活动id
+    activeSex: "", //参加活动性别
+    nowAddress: "火星",
+    wordsList: [{
+      id: 1,
+      content: "大哥不差钱！"
+    }, {
+      id: "2",
+      content: "视频太棒了，赏你的！"
+    }, {
+      id: "3",
+      content: "嗯！大哥看好你！"
+    }, {
+      id: "4",
+      content: "想和你去兜兜风！"
+    }],
+    sendintegral: "",
+    giftId: "",
+    showPoster: "none",
+    code: "",
+    videoType: "",
     windowWidth: wx.getSystemInfoSync().windowWidth,
     windowHeight: wx.getSystemInfoSync().screenHeight,
-    top:[],
-    musicName:""
+    top: [],
+    musicName: "",
+    picname:""
   },
-  onReady: function (res) {
-    
+  onReady: function(res) {
+
   },
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
     this.getAdevertising();
     var that = this;
     this.videoContext = wx.createVideoContext('myVideo')
@@ -111,32 +110,32 @@ Page({
               if (this.userInfoReadyCallback) {
                 this.userInfoReadyCallback(res)
               }
-              
+
             }
           })
           wx.login({
-            success:function(res){
+            success: function(res) {
               console.log(res)
               that.setData({
-                code:res.code
+                code: res.code
               })
               that.loginAgain();
               console.log("zouzhe" + that.data.uid)
-              
+
             }
           })
-          if (app.globalData.userInfo==null){
-              wx.getStorage({
-                key: 'userMessage',
-                success(res) {
-                  console.log(res)
-                  var sex = res.data.gender == 1 ? "男" : "女"
-                  that.setData({
-                    activeSex: sex
-                  });
-                }
-              });
-          } else if (app.globalData.uid == null){
+          if (app.globalData.userInfo == null) {
+            wx.getStorage({
+              key: 'userMessage',
+              success(res) {
+                console.log(res)
+                var sex = res.data.gender == 1 ? "男" : "女"
+                that.setData({
+                  activeSex: sex
+                });
+              }
+            });
+          } else if (app.globalData.uid == null) {
             wx.getStorage({
               key: 'userUid',
               success(res) {
@@ -146,14 +145,14 @@ Page({
                 });
               }
             });
-          }else{
+          } else {
             var sex = app.globalData.userInfo.gender == 1 ? "男" : "女"
             that.setData({
               uid: app.globalData.uid,
               activeSex: sex
             });
           }
-          
+
         } else {
           wx.reLaunch({
             url: '/pages/login/login'
@@ -163,28 +162,28 @@ Page({
     })
   },
 
-  onShow: function () {
-    console.log("看这里测试"+this.data.homeIsShow)
+  onShow: function() {
+    console.log("看这里测试" + this.data.homeIsShow)
   },
   // 第二次登录
-  loginAgain:function(){
-    var that =this;
+  loginAgain: function() {
+    var that = this;
     wx.request({
       url: app.globalData.serverPath + 'againlogin',
       data: {
-        code:that.data.code
+        code: that.data.code
       },
       method: "GET",
-      success: function (res) {
+      success: function(res) {
         console.log(res)
         app.globalData.uid = res.data.uid
         that.setData({
-          uid:res.data.uid
+          uid: res.data.uid
         })
         // 获取当前位置
         wx.getLocation({
           type: "gcj02",
-          success: function (a) {
+          success: function(a) {
             that.setData({
               locationFlag: !0
             }), s.reverseGeocoder({
@@ -193,15 +192,15 @@ Page({
                 longitude: a.longitude
               },
               coord_type: 5,
-              success: function (a) {
+              success: function(a) {
                 that.setData({
                   nowAddress: a.result.ad_info.province + a.result.ad_info.city
                 });
               },
-              fail: function (t) { }
+              fail: function(t) {}
             });
           },
-          fail: function (a) {
+          fail: function(a) {
             that.setData({
               locationFlag: !1
             });
@@ -210,20 +209,20 @@ Page({
         wx.setStorage({
           key: 'userUid',
           data: res.data.uid,
-          success: function (res) {
+          success: function(res) {
             console.log(res)
           }
         })
         wx.setStorageSync('userUid', res.data.uid)
         that.getVideoMessage()
       },
-      fail: function (err) { },
-      complete: function () { }
+      fail: function(err) {},
+      complete: function() {}
     })
     console.log("看这里测试" + this.data.homeIsShow)
   },
   // 广告
-  getAdevertising:function(){
+  getAdevertising: function() {
     var that = this;
     wx.request({
       url: app.globalData.serverPath + 'index_advertising',
@@ -232,64 +231,64 @@ Page({
         "Content-Type": "application/x-www-form-urlencoded"
       },
       method: "POST",
-      success: function (res) {
+      success: function(res) {
         console.log(res)
-        if(res.data.start==0){
+        if (res.data.start == 0) {
+          that.setData({
+            isAdvertising: "block",
+            advertisingData: res.data
+          })
+          var advertising = setInterval(function() {
             that.setData({
-              isAdvertising:"block",
-              advertisingData:res.data
+              advertisingNum: that.data.advertisingNum - 1
             })
-            var advertising = setInterval(function(){
-            that.setData({
-              advertisingNum: that.data.advertisingNum-1
-            })
-            if (that.data.advertisingNum<=0){
+            if (that.data.advertisingNum <= 0) {
               clearInterval(advertising)
               that.setData({
-                isAdvertising:"none"
+                isAdvertising: "none"
               })
             }
-          },1000)
+          }, 1000)
         }
       },
-      fail: function (err) { },
-      complete: function () { }
+      fail: function(err) {},
+      complete: function() {}
     })
   },
   // 关闭广告
-  closeAvertising:function(){
+  closeAvertising: function() {
     this.setData({
       isAdvertising: "none"
     })
   },
   // 礼物top3详情
-  giftPersonMessage:function(e){
+  giftPersonMessage: function(e) {
     var otherId = e.currentTarget.dataset.id
     wx.navigateTo({
       url: './userdetail/userdetail?otherId=' + otherId
     })
   },
   // 视频用户详情页
-  userdetail: function () {
+  userdetail: function() {
     var otherId = this.data.sendId
     wx.navigateTo({
-      url: './userdetail/userdetail?otherId=' + otherId 
+      url: './userdetail/userdetail?otherId=' + otherId
     })
   },
   //地址
-  switchcity: function () {
+  switchcity: function() {
     wx.navigateTo({
       url: '../switchcity/switchcity'
     })
   },
   //搜索
-  search: function () {
+  search: function() {
     wx.navigateTo({
       url: './search/search'
     })
   },
   // 充值
-  deposit:function(){
+  deposit: function() {
     this.hideModal()
     wx.navigateTo({
       url: './deposit/deposit',
@@ -297,10 +296,10 @@ Page({
   },
 
 
-// 评论点赞
-  commentCollect:function(e){
+  // 评论点赞
+  commentCollect: function(e) {
     // console.log(e);
-    var that=this;
+    var that = this;
     // var vid = e.currentTarget.dataset.id;
     if (this.data.commentcount == 1) {
       that.setData({
@@ -317,12 +316,13 @@ Page({
     }
   },
 
-  handletouchmove: function (a) {
+  handletouchmove: function(a) {
     if (0 === this.data.videoToggle.flag) {
       var t = a.touches[0].pageX,
         e = a.touches[0].pageY,
         o = t - this.data.lastX,
-        s = e - this.data.lastY, i = "";
+        s = e - this.data.lastY,
+        i = "";
       switch (Math.abs(o) > Math.abs(s) ? o < -10 ? (i = "向左滑动", this.setData({
         "videoToggle.flag": 1
       })) : o > 10 && (i = "向右滑动", this.setData({
@@ -345,27 +345,27 @@ Page({
       });
     }
   },
-  handletouchstart: function (a) {
+  handletouchstart: function(a) {
     this.setData({
       lastX: a.touches[0].pageX,
       lastY: a.touches[0].pageY
     });
   },
-  handletouchend: function (a) {
+  handletouchend: function(a) {
     this.setData({
       "videoToggle.flag": 0
     });
   },
-  videoTogglePrev: function () {
-    console.log(this.data.pageIndex-1)
+  videoTogglePrev: function() {
+    console.log(this.data.pageIndex - 1)
     console.log(this.data.pageList)
     var that = this;
-    if (this.data.pageIndex==0){
+    if (this.data.pageIndex == 0) {
       wx.showToast({
         title: '到顶了哦~木有视频了！',
-        icon:"none"
+        icon: "none"
       })
-    }else{
+    } else {
       wx.showLoading()
       wx.request({
         url: app.globalData.serverPath + 'release_one',
@@ -377,7 +377,7 @@ Page({
           "Content-Type": "application/x-www-form-urlencoded"
         },
         method: "POST",
-        success: function (res) {
+        success: function(res) {
           console.log(res)
           wx.hideLoading()
           that.setData({
@@ -386,7 +386,7 @@ Page({
             videoUrl: res.data.url,
             isActiveVideo: res.data.if_activity,
             isVip: res.data.if_pass,
-            if_like:res.data.if_like,
+            if_like: res.data.if_like,
             activeId: res.data.aid,
             ifRelation: res.data.relation,
             likenum: res.data.likenum,
@@ -401,8 +401,8 @@ Page({
             pageIndex: that.data.pageIndex - 1,
           })
         },
-        fail: function (err) { },
-        complete: function () { }
+        fail: function(err) {},
+        complete: function() {}
       })
 
       // this.setData({   
@@ -427,26 +427,26 @@ Page({
       // })
     }
   },
-  videoToggleNext: function () {
+  videoToggleNext: function() {
     console.log(this.data.pageIndex)
     var that = this;
-    var pageIndexLength = that.data.pageIndex+1
+    var pageIndexLength = that.data.pageIndex + 1
     var pageListLength = that.data.pageList.length
-    if (pageIndexLength < pageListLength){
-      var indexList = that.data.pageList[that.data.pageIndex+1]
+    if (pageIndexLength < pageListLength) {
+      var indexList = that.data.pageList[that.data.pageIndex + 1]
       wx.showLoading()
       console.log("uid和id下" + indexList.uid, indexList.id)
       wx.request({
         url: app.globalData.serverPath + 'release_one',
-        data: { 
+        data: {
           "uid": indexList.uid,
           "rid": indexList.id
-           },
+        },
         header: {
           "Content-Type": "application/x-www-form-urlencoded"
         },
         method: "POST",
-        success: function (res) {
+        success: function(res) {
           console.log(res)
           wx.hideLoading()
           that.setData({
@@ -470,11 +470,11 @@ Page({
             pageIndex: that.data.pageIndex + 1,
           })
         },
-        fail: function (err) { },
-        complete: function () { }
+        fail: function(err) {},
+        complete: function() {}
       })
 
-    }else{
+    } else {
       // this.setData({
       //   pageIndex: that.data.pageIndex + 1
       // })
@@ -482,7 +482,7 @@ Page({
     }
   },
   // 获取视频信息
-  getVideoMessage: function () {
+  getVideoMessage: function() {
     console.log("uid=" + this.data.uid)
     var that = this;
     wx.showLoading()
@@ -491,11 +491,11 @@ Page({
       data: {
         uid: that.data.uid
       },
-      header: {//请求头
+      header: { //请求头
         "Content-Type": "application/x-www-form-urlencoded"
       },
       method: "POST",
-      success: function (res) {
+      success: function(res) {
         wx.hideLoading()
         console.log(res.data)
 
@@ -518,6 +518,7 @@ Page({
           console.log(res)
           that.setData({
             display_play: 'none',
+            wximage: res.data.wximage,
             sendId: res.data.uid,
             videoUrl: res.data.url,
             isActiveVideo: res.data.if_activity,
@@ -529,51 +530,50 @@ Page({
             id: res.data.id,
             sharenum: res.data.sharenum,
             commentnum: res.data.commentnum,
-            wximage: res.data.wximage,
             wxname: res.data.wxname,
             videoContent: res.data.content,
             top: res.data.top,
             musicName: res.data.name,
             pageIndex: that.data.pageIndex + 1,
             pageList: that.data.pageList.concat(res.data),
-            homeIsShow:"block"
+            homeIsShow: "block"
           })
-          console.log("看这里"+that.data.homeIsShow)
+          console.log("看这里" + that.data.homeIsShow)
         }
       },
-      fail: function (err) { },
-      complete: function () { }
+      fail: function(err) {},
+      complete: function() {}
     })
     console.log("看这里测试" + this.data.homeIsShow)
   },
-  videoHandle: function (a) {
+  videoHandle: function(a) {
     this.data.videoPlay ? (
       this.setData({
-      videoPlayFlag: !1,
-      videoInfoHide: !1,
-      videoPlay: !1,
-      display_play: 'block'
-    }), 
-    this.videoContext.pause()
+        videoPlayFlag: !1,
+        videoInfoHide: !1,
+        videoPlay: !1,
+        display_play: 'block'
+      }),
+      this.videoContext.pause()
     ) : (
       this.setData({
-      videoPlayFlag: !0,
-      videoInfoHide: !0,
-      videoPlay:!0,
-      display_play: 'none'
-      }), 
+        videoPlayFlag: !0,
+        videoInfoHide: !0,
+        videoPlay: !0,
+        display_play: 'none'
+      }),
       this.videoContext.play()
-      );
+    );
   },
 
-  bindInput: function (e) {
+  bindInput: function(e) {
     this.setData({
-      inputValue : e.detail.value
+      inputValue: e.detail.value
     })
   },
 
   //播放结束
-  bindended:function(e){
+  bindended: function(e) {
     this.setData({
       display_play: 'block',
       videoPlay: !1,
@@ -582,7 +582,7 @@ Page({
 
 
   //评论弹窗
-  showModal: function () {
+  showModal: function() {
     var animation = wx.createAnimation({
       duration: 200,
       timingFunction: "linear",
@@ -597,9 +597,9 @@ Page({
       video_heighe: 45,
       ball_height: 1,
       display_pl: 'none',
-      homeIsShow:"none"
+      homeIsShow: "none"
     })
-    setTimeout(function () {
+    setTimeout(function() {
       animation.translateY(0).step()
       this.setData({
         animationData: animation.export()
@@ -607,7 +607,7 @@ Page({
     }.bind(this), 200)
   },
   //隐藏礼物
-  hideModal: function () {
+  hideModal: function() {
     // 隐藏遮罩层
     var animation = wx.createAnimation({
       duration: 200,
@@ -620,50 +620,52 @@ Page({
       animationData: animation.export(),
       homeIsShow: "block",
     })
-    setTimeout(function () {
+    setTimeout(function() {
       animation.translateY(0).step()
       this.setData({
         animationData: animation.export(),
         showGiftsStatus: false,
         heighTrue: true,
-        
+
         display_pl: 'block'
       })
     }.bind(this), 200)
   },
   // 获取礼物数据
-  getGoods:function(e){
+  getGoods: function(e) {
     wx.showLoading();
-  var that = this;
-  console.log(that.data.uid)
+    var that = this;
+    console.log(that.data.uid)
     wx.request({
       url: app.globalData.serverPath + 'giftlist',
-      data: {"uid":that.data.uid},
+      data: {
+        "uid": that.data.uid
+      },
       header: {
         "Content-Type": "application/x-www-form-urlencoded"
       },
       method: "POST",
-      success: function (res) {
+      success: function(res) {
         console.log(res)
         wx.hideLoading()
         res.data.giftlist && res.data.giftlist.map((item, index) => {
           item.pic = "https://" + item.pic
         })
         that.setData({
-          goodsList:res.data.giftlist,
-          goodIntegral:res.data.nowintegral
-          })
-       that.showgiftsModal()
+          goodsList: res.data.giftlist,
+          goodIntegral: res.data.nowintegral
+        })
+        that.showgiftsModal()
       },
-      fail: function (err) { }, 
-      complete: function () { }  
+      fail: function(err) {},
+      complete: function() {}
     })
   },
-  imageError:function(e){
+  imageError: function(e) {
     console.log(e)
   },
   //礼物显示
-  showgiftsModal: function () {
+  showgiftsModal: function() {
     var animation = wx.createAnimation({
       duration: 200,
       timingFunction: "linear",
@@ -677,7 +679,7 @@ Page({
       homeIsShow: "none",
       display_pl: 'none'
     })
-    setTimeout(function () {
+    setTimeout(function() {
       animation.translateY(0).step()
       this.setData({
         animationgifts: animation.export()
@@ -685,10 +687,10 @@ Page({
     }.bind(this), 200)
   },
   //礼物留言显示
-  showWordsModal: function () {
+  showWordsModal: function() {
     console.log(this.data.homeIsShow)
     this.setData({
-      homeIsShow:"none"
+      homeIsShow: "none"
     })
     var animation = wx.createAnimation({
       duration: 200,
@@ -702,7 +704,7 @@ Page({
       showWordsStatus: true,
       homeIsShow: "none"
     })
-    setTimeout(function () {
+    setTimeout(function() {
       animation.translateY(0).step()
       this.setData({
         animationgifts: animation.export()
@@ -710,7 +712,7 @@ Page({
     }.bind(this), 200)
   },
   //隐藏礼物留言
-  hideWordsModal: function () {
+  hideWordsModal: function() {
     // 隐藏遮罩层
     var animation = wx.createAnimation({
       duration: 200,
@@ -722,7 +724,7 @@ Page({
     this.setData({
       animationData: animation.export(),
     })
-    setTimeout(function () {
+    setTimeout(function() {
       animation.translateY(0).step()
       this.setData({
         animationData: animation.export(),
@@ -731,23 +733,23 @@ Page({
       })
     }.bind(this), 200)
   },
-  chooseGift:function(e){
+  chooseGift: function(e) {
     this.setData({
-      sendintegral : e.currentTarget.dataset.score,
-      giftId : e.currentTarget.dataset.id,
-    
+      sendintegral: e.currentTarget.dataset.score,
+      giftId: e.currentTarget.dataset.id,
+
     })
     this.hideModal()
     this.showWordsModal()
   },
   // 送出礼物 
-  sendGift:function(e){
+  sendGift: function(e) {
     var that = this
     console.log(e)
     wx.showModal({
       title: '提示',
       content: '赠送礼物？',
-      success: function (sm) {
+      success: function(sm) {
         if (sm.confirm) {
           wx.request({
             url: app.globalData.serverPath + 'indexsendgift',
@@ -762,7 +764,7 @@ Page({
               "Content-Type": "application/x-www-form-urlencoded"
             },
             method: "POST",
-            success: function (res) {
+            success: function(res) {
               that.hideWordsModal()
               console.log(res)
               if (res.data.info == "Insufficient integral") {
@@ -784,8 +786,12 @@ Page({
                 })
               }
             },
-            fail: function (err) { that.hideWordsModal() },
-            complete: function () { that.hideWordsModal() }
+            fail: function(err) {
+              that.hideWordsModal()
+            },
+            complete: function() {
+              that.hideWordsModal()
+            }
           })
         } else if (sm.cancel) {
           console.log('用户点击取消')
@@ -798,7 +804,7 @@ Page({
 
   },
   //隐藏评论
-  hidegiftsModal: function () {
+  hidegiftsModal: function() {
     // 隐藏遮罩层
     var animation = wx.createAnimation({
       duration: 200,
@@ -810,7 +816,7 @@ Page({
     this.setData({
       animationgifts: animation.export(),
     })
-    setTimeout(function () {
+    setTimeout(function() {
       animation.translateY(0).step()
       this.setData({
         animationgifts: animation.export(),
@@ -821,9 +827,9 @@ Page({
       })
     }.bind(this), 200)
   },
-  
+
   // 获取分页视频
-  getPageVideoMessage:function(e){
+  getPageVideoMessage: function(e) {
     var that = this;
     console.log(that.data.uid, that.data.pageIndex)
     console.log()
@@ -831,33 +837,33 @@ Page({
       url: app.globalData.serverPath + 'indexpage',
       data: {
         uid: that.data.uid,
-        page:that.data.pageIndex
+        page: that.data.pageIndex
       },
-      header: {//请求头
+      header: { //请求头
         "Content-Type": "application/x-www-form-urlencoded"
       },
       method: "POST",
-      success: function (res) {
+      success: function(res) {
         console.log(res)
         wx.hideLoading()
-        if(res.data.length == 0){
+        if (res.data.length == 0) {
           that.setData({
             display_play: 'none',
-            pageIndex:0
+            pageIndex: 0
           })
-        }else{
+        } else {
           that.setData({
             display_play: 'none',
             indexList: res.data
           })
         }
       },
-      fail: function (err) { },
-      complete: function () { }
+      fail: function(err) {},
+      complete: function() {}
     })
   },
   // 获取评论信息
-  getCommentMessage: function (e) {
+  getCommentMessage: function(e) {
     var that = this;
     var rid = e.currentTarget.dataset.id
     console.log(rid)
@@ -871,7 +877,7 @@ Page({
         "Content-Type": "application/x-www-form-urlencoded"
       },
       method: "POST",
-      success: function (res) {
+      success: function(res) {
         console.log(res.data)
         wx.hideLoading()
         that.setData({
@@ -880,19 +886,19 @@ Page({
         that.showModal()
 
       },
-      fail: function (err) { }, 
-      complete: function () { }  
+      fail: function(err) {},
+      complete: function() {}
     })
   },
   // 发送评论
-  sendCommentMessage: function () {
+  sendCommentMessage: function() {
     var that = this;
     wx.showLoading()
     console.log(that.data.uid, that.data.id)
     wx.request({
       url: app.globalData.serverPath + 'sendcomment',
       data: {
-        uid:that.data.uid, 
+        uid: that.data.uid,
         rid: that.data.id,
         content: that.data.inputValue
       },
@@ -900,33 +906,33 @@ Page({
         "Content-Type": "application/x-www-form-urlencoded"
       },
       method: "POST",
-      success: function (res) {
+      success: function(res) {
         console.log(res)
         wx.hideLoading()
-        if(res.data.info == "success"){
-          
-            that.setData({
-              inputText:"",
-              commentNum: that.data.commentnum+1
-            })
-            wx.showToast({
-              title: '评论成功！',
-            })
+        if (res.data.info == "success") {
+
+          that.setData({
+            inputText: "",
+            commentnum: parseInt(that.data.commentnum) + 1
+          })
+          wx.showToast({
+            title: '评论成功！',
+          })
           that.hidegiftsModal()
-        }else{
+        } else {
           wx.showToast({
             title: '评论失败！' + res.info,
-            icon:"none"
+            icon: "none"
           })
           that.hidegiftsModal()
         }
       },
-      fail: function (err) { }, 
-      complete: function () { }  
+      fail: function(err) {},
+      complete: function() {}
     })
   },
   // 点赞功能
-  like:function(e){
+  like: function(e) {
     var that = this;
     console.log(that.data.uid)
     console.log(e)
@@ -940,13 +946,13 @@ Page({
         "Content-Type": "application/x-www-form-urlencoded"
       },
       method: "POST",
-      success: function (res) {
+      success: function(res) {
         console.log(res)
         if (res.data.info == "success") {
           if (res.data.if_like == 0) {
             that.setData({
               if_like: 0,
-               likenum: parseInt(that.data.likenum) + 1
+              likenum: parseInt(that.data.likenum) + 1
             })
           } else {
             that.setData({
@@ -961,25 +967,25 @@ Page({
           })
         }
       },
-      fail: function (err) { },
-      complete: function () { }
+      fail: function(err) {},
+      complete: function() {}
     })
   },
   // 活动详情
-  textclick:function(e){
+  textclick: function(e) {
     console.log(e)
     var activeId = e.currentTarget.dataset.aid
     wx.navigateTo({
-      url: '../focus/active/active?id='+activeId,
+      url: '../focus/active/active?id=' + activeId,
     })
   },
   // 参加活动
-  joinAvtive:function(e){
+  joinAvtive: function(e) {
     var that = this
     wx.showModal({
       title: '提示',
       content: '确定参加此活动？',
-      success: function (sm) {
+      success: function(sm) {
         if (sm.confirm) {
           wx.request({
             url: app.globalData.serverPath + 'join_activity',
@@ -992,7 +998,7 @@ Page({
               "Content-Type": "application/x-www-form-urlencoded"
             },
             method: "POST",
-            success: function (res) {
+            success: function(res) {
               console.log(res)
               if (res.data.result == "success") {
                 wx.showToast({
@@ -1011,8 +1017,8 @@ Page({
                 })
               }
             },
-            fail: function (err) { }, 
-            complete: function () { }  
+            fail: function(err) {},
+            complete: function() {}
           })
         } else if (sm.cancel) {
           console.log('用户点击取消')
@@ -1022,22 +1028,22 @@ Page({
 
   },
 
-  onHide:function(){
+  onHide: function() {
     console.log("隐藏")
     this.videoContext.pause();
     // this.setData({
     //   display_play: 'block'
     // })
   },
-  onUnload: function () {
+  onUnload: function() {
     this.videoContext.pause();
   },
   // 分享事件
-  showShareBox:function(){
+  showShareBox: function() {
     this.showShareModal();
     wx.hideTabBar();
   },
-  showShareModal: function () {
+  showShareModal: function() {
     var animation = wx.createAnimation({
       duration: 200,
       timingFunction: "linear",
@@ -1050,14 +1056,14 @@ Page({
       showShareStatus: true,
       homeIsShow: "none",
     })
-    setTimeout(function () {
+    setTimeout(function() {
       animation.translateY(0).step()
       this.setData({
         animationgifts: animation.export()
       })
     }.bind(this), 200)
   },
-  hideShareModal: function () {
+  hideShareModal: function() {
     // 隐藏遮罩层
     var animation = wx.createAnimation({
       duration: 200,
@@ -1070,7 +1076,7 @@ Page({
       animationData: animation.export(),
       homeIsShow: "block",
     })
-    setTimeout(function () {
+    setTimeout(function() {
       animation.translateY(0).step()
       this.setData({
         animationData: animation.export(),
@@ -1083,7 +1089,7 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function (ops) {
+  onShareAppMessage: function(ops) {
     var that = this;
     that.hideShareModal()
     console.log("分享")
@@ -1092,9 +1098,9 @@ Page({
     var videoId = ops.target.dataset.vid
     // if(ops.from==='button'){}
     return {
-      title:'小pp短视频',
-      path: '/pages/playvideo/playvideo?uid='+uid+'&videoId='+videoId,
-      success: function (res) {
+      title: '小pp短视频',
+      path: '/pages/playvideo/playvideo?uid=' + uid + '&videoId=' + videoId,
+      success: function(res) {
         console.log(res)
         // 转发成功
         wx.showToast({
@@ -1105,90 +1111,129 @@ Page({
         })
 
       },
-      fail: function (res) {
+      fail: function(res) {
         // 转发失败
         wx.showToast({
           title: '转发失败',
-          icon:"none"
+          icon: "none"
         })
         that.hideShareModal()
       }
     }
   },
   // 生成海报
-  getImage: function (url) {
+  getImage: function(url) {
     return new Promise((resolve, reject) => {
       wx.getImageInfo({
         src: url,
-        success: function (res) {
+        success: function(res) {
           resolve(res)
         },
-        fail: function () {
+        fail: function() {
           reject("")
         }
       })
     })
   },
-  getImageAll: function (image_src) {
+  getImageAll: function(image_src) {
     let that = this;
     var all = [];
-    image_src.map(function (item) {
+    image_src.map(function(item) {
       all.push(that.getImage(item))
     })
     return Promise.all(all)
   },
   //创建
-  create: function () {
+  create: function(e) {
     console.log("哎呀！我被点了")
+    console.log(e)
     wx.showLoading()
-    let that = this;
-    //图片一把是通过接口请求后台，返回俩点地址，或者网络图片
-    let bg = 'http://statics.logohhh.com/forum/201610/24/170644l325qooyabhioyaa.jpg';
-    let qr = 'http://image.weiued.com/UploadImages/question/20170420/3e384842-6af7-44cb-aeb1-f427731c8271.jpg';
-    let wW = that.data.windowWidth;
-    let wH = that.data.windowHeight;
-    //图片区别下载完成，生成临时路径后，在进行绘制
-    this.getImageAll([bg, qr]).then((res) => {
-      let bg = res[0];
-      let qr = res[1];
-      let ctx = wx.createCanvasContext('canvas');
-      ctx.drawImage(bg.path, 0, 0, wW-100, wH-250);
-      ctx.drawImage(qr.path, qr.width-100, wH - qr.height - 130, qr.width * 0.4, qr.height * 0.4)
-      ctx.setFontSize(20)
-      ctx.setFillStyle('red')
-      ctx.fillText('Hello world', qr.width - 100, wH - qr.height - 150)
-      ctx.draw()
-      wx.hideLoading()
-      that.setData({
-        showPoster: "block"
-      })
-
-      that.hideShareModal()
-      wx.showModal({
-        title: '提示',
-        content: '图片绘制完成请保存到相册',
-        showCancel: false,
-        confirmText: "点击保存",
-        success: function (res) {
-          var sharenum = `indexList[0].sharenum`
+    var that = this;
+    wx.request({
+      url: app.globalData.serverPath + 'qrcode',
+      data: {
+        uid: e.currentTarget.dataset.uid,
+        videoId: e.currentTarget.dataset.vid
+      },
+      header: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      method: "POST",
+      success: function (res) {
+        console.log(res)
+        that.setData({
+          picname: res.data.picname
+        })
+        //图片一把是通过接口请求后台，返回俩点地址，或者网络图片
+        let bg = res.data.backpic;
+        let qr = res.data.picstr;
+        let wW = that.data.windowWidth;
+        let wH = that.data.windowHeight;
+        //图片区别下载完成，生成临时路径后，在进行绘制
+        that.getImageAll([bg, qr]).then((res) => {
+          console.log(res)
+          let bg = res[0];
+          let qr = res[1];
+          let ctx = wx.createCanvasContext('canvas');
+          // ctx.drawImage(bg.path, 0, 0, wW - 100, wH - 250);
+          // ctx.drawImage(qr.path, qr.width - 100, wH - qr.height - 130, qr.width * 0.4, qr.height * 0.4)
+          ctx.drawImage(bg.path, 0, 0, wW - 100, wH - 210);
+          ctx.drawImage(qr.path, wW/2, wH / 2 - qr.height * 0.1/2, qr.width * 0.1, qr.height * 0.1)
+          ctx.setFontSize(20)
+          ctx.setFillStyle('red')
+          // ctx.fillText('Hello world', qr.width - 100, wH - qr.height - 150)
+          ctx.draw()
+          wx.hideLoading()
           that.setData({
-            showPoster: "none",
-            [sharenum]: that.data.pageList[that.data.pageIndex - 1][0].sharenum + 1
+            showPoster: "block"
           })
-          that.save()
-        }
-      })
+
+          that.hideShareModal()
+          wx.showModal({
+            title: '提示',
+            content: '图片绘制完成请保存到相册',
+            showCancel: false,
+            confirmText: "点击保存",
+            success: function (res) {
+              // var sharenum = `indexList[0].sharenum`
+              wx.request({
+                url: app.globalData.serverPath + 'delpic',
+                data: {
+                  name: that.data.picname
+                },
+                header: {
+                  "Content-Type": "application/x-www-form-urlencoded"
+                },
+                method: "POST",
+                success: function (res) {
+                  console.log(res)
+                }
+              })
+              that.setData({
+                showPoster: "none",
+                sharenum: that.data.sharenum + 1
+                // [sharenum]: that.data.pageList[that.data.pageIndex - 1][0].sharenum + 1
+              })
+              that.save()
+            }
+          })
+        })
+      },
+      fail: function (err) { },
+      complete: function () { }
     })
+
+
   },
   //保存
-  save: function () {
-    wx.canvasToTempFilePath({//canvas 生成图片 生成临时路径
+  save: function() {
+    wx.canvasToTempFilePath({ //canvas 生成图片 生成临时路径
       canvasId: 'canvas',
-      success: function (res) {
+      success: function(res) {
         console.log(res)
         wx.saveImageToPhotosAlbum({ //下载图片
           filePath: res.tempFilePath,
-          success: function () {
+          success: function() {
             wx.showToast({
               title: "保存成功",
               icon: "success",

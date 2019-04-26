@@ -127,6 +127,7 @@ Page({
       },
       method: 'POST',
       success: function (res) {
+        console.log(res)
         // 缓存uid
         app.globalData.uid = res.data.uid
         wx.setStorage({

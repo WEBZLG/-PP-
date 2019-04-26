@@ -31,11 +31,11 @@ Page({
     count: 1,//视频爱心点赞
     commentcount: 1,//评论点赞
     index_num: 1,
+    picname:'',
     play: 'none',
     inputValue: '',//发送评论的内容
     index: 1,
     vid: 0,
-    picname:"",
     pageIndex: 0,
     videoToggle: {
       data: {},
@@ -511,7 +511,12 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log("敲黑板看这里" + options)
+    // options 中的scene需要使用decodeURIComponent才能获取到生成二维码时传入的scene
+    var scene = decodeURIComponent(options.scene)//参数二维码传递过来的参数
+    console.log("敲黑板看这里" + scene)
+    var senceUid = scene.split("&")[0];
+    var senceRid = scene.split("&")[1];
+    console.log("敲黑板看这里"+options)
     wx.showLoading()
     var that = this;
     wx.setNavigationBarTitle({
@@ -543,12 +548,12 @@ Page({
         });
       }
     });
-  
+
     wx.request({
       url: app.globalData.serverPath + "release_one",
       data: {
-        "uid": options.uid,
-        "rid": options.videoId
+        "uid": senceUid,
+        "rid": senceRid
       },
       method: 'POST',
       success: function (res) {
@@ -628,7 +633,6 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function (ops) {
-    var that = this
     that.hideShareModal()
     var uid = ops.target.dataset.uid;
     var videoId = ops.target.dataset.vid
@@ -644,7 +648,7 @@ Page({
         // var shareNum = `indexList.sharenum`
         that.setData({
           // [shareNum]: that.data.indexList.sharenum + 1
-          sharenum: that.data.sharenum + 1
+          sharenum: that.data.sharenum + 1 
         })
       },
       fail: function (res) {
@@ -708,8 +712,6 @@ Page({
           let bg = res[0];
           let qr = res[1];
           let ctx = wx.createCanvasContext('canvas');
-          // ctx.drawImage(bg.path, 0, 0, wW - 100, wH - 250);
-          // ctx.drawImage(qr.path, qr.width - 100, wH - qr.height - 130, qr.width * 0.4, qr.height * 0.4)
           ctx.drawImage(bg.path, 0, 0, wW - 100, wH - 210);
           ctx.drawImage(qr.path, wW / 2, wH / 2 - qr.height * 0.1 / 2, qr.width * 0.1, qr.height * 0.1)
           ctx.setFontSize(20)
@@ -740,7 +742,7 @@ Page({
                 method: "POST",
                 success: function (res) {
                   console.log(res)
-                }
+                  }
               })
               that.setData({
                 showPoster: "none",

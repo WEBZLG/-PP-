@@ -83,9 +83,30 @@ Page({
         'amount': that.data.money
       },
       success: function (res) {
-        wx.redirectTo({
-          url: './deposit',
+        wx.requestPayment({
+          timeStamp: res.data.timeStamp,
+          nonceStr: res.data.nonceStr,
+          package: res.data.package,
+          signType: 'MD5',
+          paySign: res.data.paySign,
+          success: function (res) {
+            wx.showToast({
+              title: '充值成功！',
+            })
+                wx.redirectTo({
+                url: './deposit',
+              })
+          },
+          fail: function (res) {
+            // fail
+            console.log(res);
+          },
+          complete: function (res) {
+            // complete
+            console.log(res);
+          }
         })
+
       }
     })
   },
