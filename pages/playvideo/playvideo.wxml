@@ -190,12 +190,12 @@
     </view>
     <view class='share-type'>
       <view style='text-align:center'>
-        <button class='shareFriend' open-type='share' data-uid='{{item.uid}}' data-vid='{{item.id}}'>
+        <button class='shareFriend' open-type='share' data-uid='{{indexList.uid}}' data-vid='{{indexList.id}}'>
           <cover-image src='../../image/wechat@2x.png' class=''>好友</cover-image>
         </button>
         <text>微信</text>
       </view>
-      <view class='sharePoster' style='text-align:center' catchtap='create' data-uid='{{item.uid}}' data-vid='{{item.id}}'>
+      <view class='sharePoster' style='text-align:center' catchtap='create' data-uid='{{indexList.uid}}' data-vid='{{indexList.id}}'>
         <cover-image src='../../image/pyq@2x.png' class=''>朋友圈</cover-image>
         <text>朋友圈</text>
       </view>

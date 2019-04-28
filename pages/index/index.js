@@ -48,6 +48,10 @@ Page({
       loading: !1,
       flag: 0
     },
+    backpic:"",
+    picstr:"",
+    newbackpic: "",
+    newpicstr: "",
     videoPlay: !0,
     videoPlayFlag: !0,
     isAdvertising: 'none', //广告弹窗
@@ -1162,62 +1166,85 @@ Page({
       success: function (res) {
         console.log(res)
         that.setData({
-          picname: res.data.picname
+          picname: res.data.picname,
+          backpic: res.data.backpic,
+          picstr:res.data.picstr
         })
-        //图片一把是通过接口请求后台，返回俩点地址，或者网络图片
-        let bg = res.data.backpic;
-        let qr = res.data.picstr;
-        let wW = that.data.windowWidth;
-        let wH = that.data.windowHeight;
-        //图片区别下载完成，生成临时路径后，在进行绘制
-        that.getImageAll([bg, qr]).then((res) => {
-          console.log(res)
-          let bg = res[0];
-          let qr = res[1];
-          let ctx = wx.createCanvasContext('canvas');
-          // ctx.drawImage(bg.path, 0, 0, wW - 100, wH - 250);
-          // ctx.drawImage(qr.path, qr.width - 100, wH - qr.height - 130, qr.width * 0.4, qr.height * 0.4)
-          ctx.drawImage(bg.path, 0, 0, wW - 100, wH - 210);
-          ctx.drawImage(qr.path, wW/2, wH / 2 - qr.height * 0.1/2, qr.width * 0.1, qr.height * 0.1)
-          ctx.setFontSize(20)
-          ctx.setFillStyle('red')
-          // ctx.fillText('Hello world', qr.width - 100, wH - qr.height - 150)
-          ctx.draw()
-          wx.hideLoading()
-          that.setData({
-            showPoster: "block"
-          })
-
-          that.hideShareModal()
-          wx.showModal({
-            title: '提示',
-            content: '图片绘制完成请保存到相册',
-            showCancel: false,
-            confirmText: "点击保存",
-            success: function (res) {
-              // var sharenum = `indexList[0].sharenum`
-              wx.request({
-                url: app.globalData.serverPath + 'delpic',
-                data: {
-                  name: that.data.picname
-                },
-                header: {
-                  "Content-Type": "application/x-www-form-urlencoded"
-                },
-                method: "POST",
-                success: function (res) {
+        //获取网络图片本地路径
+        wx.getImageInfo({
+          src: that.data.backpic,//服务器返回的图片地址
+          success: function (res) {
+            console.log(res)
+            //res.path是网络图片的本地地址
+            let Path = res.path;
+            that.setData({
+              newbackpic: Path
+            });
+            //获取网络图片本地路径
+            wx.getImageInfo({
+              src: that.data.picstr,//服务器返回的图片地址
+              success: function (res) {
+                console.log(res)
+                //res.path是网络图片的本地地址
+                let Path = res.path;
+                that.setData({
+                  newpicstr: Path
+                })
+                console.log(that.data.newbackpic, that.data.newpicstr)
+                //图片一把是通过接口请求后台，返回俩点地址，或者网络图片
+                let bg = that.data.newbackpic;
+                let qr = that.data.newpicstr;
+                let wW = that.data.windowWidth;
+                let wH = that.data.windowHeight;
+                //图片区别下载完成，生成临时路径后，在进行绘制
+                that.getImageAll([bg, qr]).then((res) => {
                   console.log(res)
-                }
-              })
-              that.setData({
-                showPoster: "none",
-                sharenum: that.data.sharenum + 1
-                // [sharenum]: that.data.pageList[that.data.pageIndex - 1][0].sharenum + 1
-              })
-              that.save()
-            }
-          })
-        })
+                  let bg = res[0];
+                  let qr = res[1];
+                  let ctx = wx.createCanvasContext('canvas');
+                  // ctx.drawImage(bg.path, 0, 0, wW - 100, wH - 250);
+                  // ctx.drawImage(qr.path, qr.width - 100, wH - qr.height - 130, qr.width * 0.4, qr.height * 0.4)
+                  ctx.drawImage(bg.path, 0, 0, wW - 100, wH - 210);
+                  ctx.drawImage(qr.path, wW / 2, wH / 2 - qr.height * 0.1 / 2, qr.width * 0.1, qr.height * 0.1)
+                  ctx.setFontSize(20)
+                  ctx.setFillStyle('red')
+                  // ctx.fillText('Hello world', qr.width - 100, wH - qr.height - 150)
+                  ctx.stroke()
+                  ctx.draw()
+                  wx.hideLoading()
+                  that.setData({
+                    showPoster: "block"
+                  })
+
+                  that.hideShareModal()
+                  // that.save()
+                  wx.showModal({
+                    title: '提示',
+                    content: '图片绘制完成请保存到相册',
+                    showCancel: false,
+                    confirmText: "点击保存",
+                    success: function (res) {
+                      // var sharenum = `indexList[0].sharenum`
+                   
+                      that.setData({
+                        showPoster: "none",
+                        // sharenum: that.data.sharenum + 1
+                        // [sharenum]: that.data.pageList[that.data.pageIndex - 1][0].sharenum + 1
+                      })
+                      that.save()
+                    }
+                  })
+                })
+              },
+              fail: function (res) {
+                //失败回调
+              }
+            });
+          },
+          fail: function (res) {
+            //失败回调
+          }
+        });
       },
       fail: function (err) { },
       complete: function () { }
@@ -1227,6 +1254,7 @@ Page({
   },
   //保存
   save: function() {
+    var that = this;
     wx.canvasToTempFilePath({ //canvas 生成图片 生成临时路径
       canvasId: 'canvas',
       success: function(res) {
@@ -1235,9 +1263,48 @@ Page({
           filePath: res.tempFilePath,
           success: function() {
             wx.showToast({
-              title: "保存成功",
+              title: "图片已保存到相册",
               icon: "success",
+            });
+            setTimeout(function(){
+              that.setData({
+                showPoster: "none",
+                // sharenum: that.data.sharenum + 1
+                // [sharenum]: that.data.pageList[that.data.pageIndex - 1][0].sharenum + 1
+              })
+            },3000)
+            wx.request({
+              url: app.globalData.serverPath + 'delpic',
+              data: {
+                name: that.data.picname
+              },
+              header: {
+                "Content-Type": "application/x-www-form-urlencoded"
+              },
+              method: "POST",
+              success: function (res) {
+                console.log(res)
+              }
             })
+          },
+          fail(err) {
+            wx.showToast({
+              title: '请打开相册储存权限',
+              icon:"none"
+            })
+            // if (err.errMsg == "saveImageToPhotosAlbum: fail authorize no response") {
+            //   console.log("需要获取权限")
+            //   wx.openSetting({
+            //     success(settingdata) {
+            //       console.log(settingdata)
+            //       if (settingdata.authSetting["scope.writePhotosAlbum"]) {
+            //         console.log('获取权限成功，给出再次点击图片保存到相册的提示。')
+            //       } else {
+            //         console.log('获取权限失败，给出不给权限就无法正常使用的提示')
+            //       }
+            //     }
+            //   })
+            // }
           }
         })
       }
