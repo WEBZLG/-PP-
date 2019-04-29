@@ -6,14 +6,19 @@
   width: 50%;
   height: 480rpx;
   position:relative;
+  float: left;
 }
 image{
   width: 100%;
 }
 .content{
   position: absolute;
-  left: 0;
+  left:16rpx;
+  width: .300rpx;
   bottom: 10rpx;
   color: #eee;
   font-size: 28rpx;
+  overflow: hidden;
+text-overflow:ellipsis;
+white-space: nowrap;
 }

@@ -22,14 +22,14 @@ Page({
         networkImageUrl: e.globalData.IMAGE_URL,
     },
     onLoad: function(e) {
-      console.log(e)
+      //console.log(e)
       var that = this;
       wx.hideTabBar(), t = wx.createCameraContext();
       wx.getSystemInfo({
         success: function (res) {
           var ww = res.windowWidth
           var wh = res.windowHeight
-          console.log(ww, wh)
+          //console.log(ww, wh)
           that.setData({
             vWidth: ww,
             vHeight: wh
@@ -45,7 +45,7 @@ Page({
         var t = this;
         wx.getSetting({
             success: function(e) {
-              console.log(e)
+              //console.log(e)
                 e.authSetting["scope.camera"] && t.setData({
                     camSetFlag: !0
                 }), 1 == t.data.recordState && (e.authSetting["scope.record"] ? t.recordVideo() : wx.showModal({
@@ -131,7 +131,7 @@ Page({
                     clearInterval(e.data.setTime)
                     e.stopRecord()
                   }
-                  console.log(index)
+                  //console.log(index)
                 }, 1000)
 
               });
@@ -164,7 +164,7 @@ Page({
                             confirmText: "确定",
                             confirmColor: "#333333",
                             success: function(t) {
-                              console.log(t)
+                              //console.log(t)
                               if (t.cancel){
                                   wx.openSetting();
                                 }else{
@@ -175,7 +175,7 @@ Page({
                                       clearInterval(e.data.setTime)
                                       e.stopRecord()
                                     }
-                                    console.log(index)
+                                    //console.log(index)
                                   }, 1000)
                                 })
                               }
@@ -252,7 +252,7 @@ Page({
     //         maxDuration: t.data.limitTime,
     //         compressed: !1,
     //         success: function(a) {
-    //           console.log(a)
+    //           //console.log(a)
     //             var i = a.width > a.height ? 0 : 1;
     //           a.duration <= t.data.limitTime ? (t.setData({
     //                 "previewData.type": "video",
@@ -275,7 +275,7 @@ Page({
     gotoPreviewPage: function () {
       var vWidth = this.data.vWidth
       var vHeight = this.data.vHeight
-      console.log(vWidth, vHeight)
+      //console.log(vWidth, vHeight)
       wx.navigateTo({
         url: "../publish-preview/publish-preview?vWidth=" + vWidth + "&vHeight=" + vHeight
       });

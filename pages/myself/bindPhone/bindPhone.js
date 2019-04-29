@@ -1,5 +1,6 @@
 // pages/bindPhone/bindPhone.js
 let phonereg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1})|(17[0-9]{1}))+\d{8})$/;
+const app = getApp()
 Page({
 
   /**
@@ -38,6 +39,7 @@ Page({
         },
         method: 'POST',
         success: function (res) {
+          //console.log(res)
           if(res.data.result=="success"){
             wx.showToast({
               title: '发送成功！',
@@ -66,7 +68,7 @@ Page({
           btnText: that.data.number + "秒后获取",
           isGetCode: 'none'
         })
-        console.log(that.data.number)
+        //console.log(that.data.number)
         if (that.data.number == 0 || that.data.number < 1) {
           clearInterval(Num)
           that.setData({
@@ -79,7 +81,7 @@ Page({
     }
   },
   iptPhone: function (e) {
-    console.log(e)
+    //console.log(e)
     this.setData({
       iptPhone: e.detail.value
     })
@@ -127,9 +129,8 @@ Page({
                 wx.showToast({
                   title: '认证成功！',
                 });
-                that.setData({
-                  returnCode: res.data.code,
-                  returnPhone: res.data.tel
+                wx.reLaunch({
+                  url: '../../myself/myself'
                 })
               } else {
                 wx.showToast({
@@ -169,7 +170,7 @@ Page({
     wx.getStorage({
       key: 'userUid',
       success(res) {
-        console.log(res.data)
+        //console.log(res.data)
         that.setData({
           uid: res.data
         })

@@ -64,14 +64,14 @@ Page({
           // 用户点击了确定 可以调用删除方法了
           that.payorder()
         } else if (sm.cancel) {
-          console.log('用户点击取消')
+          //console.log('用户点击取消')
         }
       }
     })
     },
   payorder: function (e) {
     var that = this
-    console.log(that.data.uid, that.data.money )
+    //console.log(that.data.uid, that.data.money )
     wx.request({
       url: "https://www.surenmedia.cn/index/pay/insert",
       method: "POST",
@@ -99,11 +99,11 @@ Page({
           },
           fail: function (res) {
             // fail
-            console.log(res);
+            //console.log(res);
           },
           complete: function (res) {
             // complete
-            console.log(res);
+            //console.log(res);
           }
         })
 
@@ -119,7 +119,7 @@ Page({
       wx.getStorage({
         key: 'userUid',
         success(res) {
-          console.log(res.data)
+          //console.log(res.data)
           that.setData({
             uid: res.data
           });
@@ -130,7 +130,7 @@ Page({
             },
             method: 'POST',
             success: function (res) {
-              console.log(res);
+              //console.log(res);
               that.setData({
                 integral: res.data.integral
               })

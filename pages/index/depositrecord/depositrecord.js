@@ -29,7 +29,7 @@ Page({
           },
           method: 'POST',
           success: function (res) {
-            console.log(res);
+            // console.log(res);
             that.setData({
               Depositrecord: res.data
             })

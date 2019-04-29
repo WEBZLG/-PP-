@@ -20,7 +20,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log(options.id)
+    //console.log(options.id)
     var that = this;
     wx.request({
       url: app.globalData.serverPath + 'activityinfo',//请求地址
@@ -32,10 +32,10 @@ Page({
       },
       method: "GET",//get为默认方法/POST
       success: function (res) {
-        console.log(res)
+        //console.log(res)
         const article = res.data.content;
         WxParse.wxParse('article', 'html', article, that, 5);
-        console.log(res)
+        //console.log(res)
         that.setData({
           title: res.data.title,
           time:res.data.time,

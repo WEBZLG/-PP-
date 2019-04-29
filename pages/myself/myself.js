@@ -55,7 +55,7 @@ Page({
     wx.getStorage({
       key: 'userUid',
       success(res) {
-        console.log(res.data)
+        //console.log(res.data)
         that.setData({
           uid: res.data
         });
@@ -65,7 +65,7 @@ Page({
     wx.getStorage({
       key: 'userMessage',
       success(res) {
-        console.log(res.data)
+        //console.log(res.data)
         that.setData({
           nickname: res.data.nickName,
           gender: res.data.gender,
@@ -91,7 +91,7 @@ Page({
           clientWidth = res.windowWidth,
           rpxR = 750 / clientWidth;
         var calc = clientHeight * rpxR - 536;
-        // console.log(calc)
+        // //console.log(calc)
         that.setData({
           winHeight: calc
         });
@@ -111,7 +111,7 @@ Page({
       method: 'POST',
       success: function (res) {
         wx.hideLoading()
-        console.log(res);
+        //console.log(res);
         that.setData({
           sendVideo: res.data.release,
           attention : res.data.attention,
@@ -168,7 +168,7 @@ Page({
       method: 'POST',
       success: function (res) {
         wx.hideLoading()
-        console.log(res);
+        //console.log(res);
         that.setData({
           getVideo:res.data
         })
@@ -187,7 +187,7 @@ Page({
       method: 'POST',
       success: function (res) {
         wx.hideLoading()
-        console.log(res);
+        //console.log(res);
         that.setData({
           sendGoodsList:res.data
         })
@@ -224,7 +224,7 @@ Page({
       method: 'POST',
       success: function (res) {
         wx.hideLoading()
-        console.log(res);
+        //console.log(res);
         that.setData({
           noteList:res.data
         })
@@ -247,7 +247,7 @@ Page({
       method: 'POST',
       success: function (res) {
         wx.hideLoading()
-        console.log(res);
+        //console.log(res);
         that.setData({
           noteListDetails: res.data,
           isDialog: that.data.uid
@@ -258,7 +258,7 @@ Page({
   },
   // 滚动切换标签样式
   switchTab: function (e) {
-    // console.log(e)
+    // //console.log(e)
     if (e.detail.current == 0) {
       this.getSendVideo();
     } else if (e.detail.current == 1) {
@@ -277,7 +277,7 @@ Page({
   },
   // 点击标题切换当前页时改变样式
   swichNav: function (e) {
-    // console.log(e)
+    // //console.log(e)
     var cur = e.target.dataset.current;
     if (this.data.currentTaB == cur) { return false; }
     else {
@@ -342,7 +342,7 @@ Page({
       method: 'POST',
       success: function (res) {
         wx.hideLoading()
-        console.log(res);
+        //console.log(res);
         if (res.data.info == "success") {
           wx.showToast({
             title: '留言成功',
@@ -391,7 +391,7 @@ Page({
   },
 // 播放单独的视频
   playVideo:function(e){
-    console.log(e)
+    //console.log(e)
     var videoId = e.currentTarget.dataset.id
     var uid = this.data.uid
     wx.navigateTo({
@@ -411,7 +411,7 @@ Page({
 
       // 如果两次点击时间在300毫秒内，则认为是双击事件
       if (currentTime - lastTapTime < 300) {
-        console.log("double tap")
+        //console.log("double tap")
         // 成功触发双击事件时，取消单击事件的执行
         clearTimeout(that.lastTapTimeoutFunc);
         // wx.showModal({
@@ -422,7 +422,7 @@ Page({
       } else {
         // 单击事件延时300毫秒执行，这和最初的浏览器的点击300ms延时有点像。
         that.lastTapTimeoutFunc = setTimeout(function () {
-          console.log("tap")
+          //console.log("tap")
           that.playVideo(e)
         }, 300);
       }
@@ -445,7 +445,7 @@ Page({
             method: 'POST',
             success: function (res) {
               wx.hideLoading()
-              console.log(res);
+              //console.log(res);
               if (res.data == "1") {
                 wx.showToast({
                   title: '删除成功',
@@ -463,7 +463,7 @@ Page({
             }
           })
         } else if (sm.cancel) {
-          console.log('用户点击取消')
+          //console.log('用户点击取消')
         }
       }
     })

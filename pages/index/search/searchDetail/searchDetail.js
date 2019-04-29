@@ -38,7 +38,7 @@ Page({
     })
   },
   playVideo:function(e){
-    console.log(e)
+    // console.log(e)
     var uid = e.currentTarget.dataset.uid
     var videoId = e.currentTarget.dataset.id
     wx.navigateTo({

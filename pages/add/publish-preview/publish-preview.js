@@ -54,7 +54,7 @@ Page({
       success: function (res) {
         var ww = res.windowWidth
         var wh = res.windowHeight
-        console.log(ww, wh)
+        //console.log(ww, wh)
         that.setData({
           vWidth: ww,
           vHeight: ww*t.vHeight/t.vWidth
@@ -70,7 +70,7 @@ Page({
         videoType: 0
       })
     }
-    console.log(t)
+    //console.log(t)
 
     //  高度自适应
     wx.getSystemInfo({
@@ -79,7 +79,7 @@ Page({
           clientWidth = res.windowWidth,
           rpxR = 750 / clientWidth;
         var calc = clientHeight * rpxR - 180;
-        console.log(calc)
+        //console.log(calc)
         that.setData({
           winHeight: calc
         });
@@ -166,7 +166,7 @@ Page({
       data: {},
       method: 'POST',
       success: function (res) {
-        console.log(res);
+        //console.log(res);
         that.setData({
           musicTypeList:res.data
         })
@@ -203,7 +203,7 @@ Page({
       },
       method: 'POST',
       success: function (res) {
-        console.log(res);
+        //console.log(res);
         that.setData({
           musicList: res.data
         })
@@ -236,7 +236,7 @@ Page({
       data: {},
       method: 'POST',
       success: function (res) {
-        console.log(res);
+        //console.log(res);
         that.setData({
           stickerList: res.data
         })
@@ -247,8 +247,8 @@ Page({
   },
   // 第一张贴图触摸开始
   touchstartCallback: function (e) {
-    // console.log('touchstartCallback');
-    // console.log(e);
+    // //console.log('touchstartCallback');
+    // //console.log(e);
     if (e.touches.length === 1) {
       let { clientX, clientY } = e.touches[0];
       this.startX = clientX;
@@ -267,8 +267,8 @@ Page({
 
   // 第一张贴图触摸移动中
   touchmoveCallback: function (e) {
-    // console.log('touchmoveCallback');
-    // console.log(e);
+    // //console.log('touchmoveCallback');
+    // //console.log(e);
     if (e.touches.length === 1) {
       //单指移动
       if (this.data.stv.zoom) {
@@ -327,14 +327,14 @@ Page({
         'stv.width': newWidth,
         'stv.height': newWidth,
       })
-      //console.log(this.data.stv.scale)
+      ////console.log(this.data.stv.scale)
     }
   },
 
   // 第一张贴图触摸结束
   touchendCallback: function (e) {
-    // console.log('touchendCallback');
-    console.log(e);
+    // //console.log('touchendCallback');
+    //console.log(e);
     this.setData({
       stickerX: e.changedTouches[0].pageX,
       stickerY: e.changedTouches[0].pageY,
@@ -350,7 +350,7 @@ Page({
 
   // 缩放贴纸
   onScale(e) {
-    console.log(e.detail)
+    //console.log(e.detail)
   },
   // 添加贴纸
   addSticker(e) {
@@ -377,7 +377,7 @@ Page({
 
   // 删除贴纸
   delSticker(e){
-    console.log("删除")
+    //console.log("删除")
     this.setData({
       sticker: {
         id: "",
@@ -391,7 +391,7 @@ Page({
   // 播放音乐
   audioPlay: function (e) {
     var that = this;
-    console.log(e)
+    //console.log(e)
     const index = e.currentTarget.dataset.id;
     if(that.data.isMusic == index){
       that.audioPause();
@@ -419,8 +419,8 @@ Page({
 
 // 添加音乐
   addMusic:function(e){
-    console.log(this)
-    console.log(e)
+    //console.log(this)
+    //console.log(e)
     this.setData({
       musicId: e.currentTarget.dataset.item.id
     })
@@ -443,7 +443,7 @@ Page({
   // 点击标题切换当前页时改变样式
   swichNav: function (e) {
     var cur = e.target.dataset.current;
-    console.log(e)
+    //console.log(e)
     this.setData({
       musicType:e.currentTarget.dataset.id
     })
@@ -457,7 +457,7 @@ Page({
   },
   swichNavPic: function (e) {
     var cur = e.target.dataset.current;
-    console.log(e)
+    //console.log(e)
     // this.setData({
     //   musicType: e.currentTarget.dataset.id
     // })

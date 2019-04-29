@@ -22,31 +22,33 @@ Page({
     wx.getStorage({
       key: 'userUid',
       success(res) {
-        console.log(res.data)
+        //console.log(res.data)
         that.setData({
           uid: res.data
+        });
+        wx.request({
+          url: app.globalData.serverPath + "integral",
+          method: 'POST',
+          data: {
+            uid: that.data.uid
+          },
+          success: function (res) {
+            //console.log(res)
+            that.setData({
+              detailsList: res.data
+            })
+          },
+          fail: function (error) {
+            wx.showModal({
+              content: "请求失败!" + error,
+              showCancel: false
+            })
+          }
         })
       }
+      
     });
-    wx.request({
-      url: app.globalData.serverPath +"integral",
-      method: 'POST',
-      data:{
-        uid: that.data.uid
-      },
-      success:function(res){
-        console.log(res)
-        that.setData({
-          detailsList:res.data
-        })
-      },
-      fail:function(error){
-        wx.showModal({
-          content: "请求失败!"+error,
-          showCancel: false
-        })
-      }
-    })
+
   },
 
   /**

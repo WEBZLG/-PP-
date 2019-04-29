@@ -15,10 +15,18 @@
             <view class='infor-birth'>{{gender==1 ? "男":"女"}} {{birthday==null ? "1990-09-09" : birthday}} {{city==null ? "火星" : city}}</view>
             <view class='infor-call'>
               <blcok wx:if="{{uid_send_otherpeopleid_integral>phone_integral}}">
-              {{phone==null ? "18888888888" : phone}}
+                电话号：{{ phone}}
               </blcok>
+              <blcok wx:else>
+                电话获取值：{{phone_integral}}
+              </blcok>
+              </view>
+               <view class='infor-call'>
               <blcok wx:if="{{uid_send_otherpeopleid_integral>wx_integral}}">
-              {{wx==null ? "wx666666" : wx}}
+                微信号：{{wx}}
+              </blcok>
+              <blcok wx:else>
+                微信获取值：{{wx_integral}}
               </blcok>
             </view>
           </view>

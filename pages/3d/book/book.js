@@ -18,11 +18,11 @@ Page({
     wx.getStorage({
       key: 'userUid',
       success(res) {
-        console.log(res)
+        //console.log(res)
         that.setData({
           uid: res.data
         })
-        console.log(that.data.uid)
+        //console.log(that.data.uid)
         wx.request({
           url: app.globalData.serverPath + "photolist",
           data: {
@@ -30,7 +30,7 @@ Page({
           },
           method: 'POST',
           success: function (res) {
-            console.log(res);
+            //console.log(res);
             that.setData({
               bookList : res.data
             })
@@ -40,7 +40,7 @@ Page({
     })
   },
   viewBook:function(e){
-    console.log(e)
+    //console.log(e)
     var pid = e.currentTarget.dataset.id
     wx.navigateTo({
       url: '../view/view?pid='+pid,
@@ -56,7 +56,7 @@ Page({
       },
       method: 'POST',
       success: function (res) {
-        console.log(res)
+        //console.log(res)
         wx.hideLoading()
       if(res.data =="1"){
           wx.showToast({

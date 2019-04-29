@@ -24,7 +24,9 @@
   margin: 30rpx 0;
   background-size: cover;
 }
-
+.infor-name{
+  max-width: 300rpx
+}
 .infor-mark {
   font-size: 40rpx;
 }

@@ -115,10 +115,12 @@
       精彩推荐
     </view>
     <scroll-view style='height:220rpx;'>
-      <swiper>
+      <swiper autoplay >
+        <block wx:for="{{advertising}}" wx:key="index">
         <swiper-item>
-          <image src='{{advertising}}' style='width:690rpx;height:220rpx;'></image>
+          <image src="{{item.advertising}}"  style='width:690rpx;height:220rpx;'></image>
         </swiper-item>
+        </block>
       </swiper>
     </scroll-view>
   </view>

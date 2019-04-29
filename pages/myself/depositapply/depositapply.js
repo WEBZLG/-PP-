@@ -29,15 +29,21 @@ Page({
     this.setData({
       integral: options.integral
     })
-    wx.getStorage({
-      key: 'userUid',
-      success(res) {
-        console.log(res.data)
-        that.setData({
-          uid: res.data   
-        })
-      }
-    });
+    if (app.globalData.uid == null) {
+            wx.getStorage({
+              key: 'userUid',
+              success(res) {
+                //console.log(res)
+                that.setData({
+                  uid: res.data
+                });
+              }
+            });
+          } else {
+            that.setData({
+              uid: app.globalData.uid
+            });
+          }
   },
 
   /**

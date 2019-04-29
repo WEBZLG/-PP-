@@ -63,7 +63,7 @@ Page({
                 data: data.userInfo,
               })
               wx.setStorageSync('userMessage', data.userInfo)
-              console.log("code="+that.data.code)
+              // console.log("code="+that.data.code)
               wx.request({
                 url: app.globalData.serverPath+"login",
                 data: {
@@ -71,7 +71,7 @@ Page({
                 },
                 method: 'GET',
                 success: function (res) {
-                  console.log(res)
+                  // console.log(res)
                   // 缓存openid
                   wx.setStorage({
                     key: 'openId',
@@ -100,7 +100,7 @@ Page({
         userInfo: e.detail.userInfo,
         hasUserInfo: true
       });
-      console.log("登录")
+      // console.log("登录")
       wx.reLaunch({
         url: '../index/index'
       })
@@ -127,7 +127,7 @@ Page({
       },
       method: 'POST',
       success: function (res) {
-        console.log(res)
+        // console.log(res)
         // 缓存uid
         app.globalData.uid = res.data.uid
         wx.setStorage({
@@ -135,7 +135,7 @@ Page({
           data: res.data.uid
         })
         wx.setStorageSync('userUid', res.data.uid)
-        console.log(app.globalData.uid)
+        // console.log(app.globalData.uid)
       }
     })
   }

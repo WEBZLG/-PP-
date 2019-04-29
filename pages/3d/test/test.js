@@ -28,7 +28,7 @@ Page({
       sourceType: ['album'], // album 从相册选图，camera 使用相机，默认二者都有
 
       success: function (res) {
-        console.log(res)
+        //console.log(res)
 
         var imgsrc = res.tempFilePaths;
         if (imgsrc.length != 4) {
@@ -78,7 +78,7 @@ Page({
 
   },
   musicContent: function (options) {
-    console.log(options)
+    //console.log(options)
     app.data.musicContent = options.detail.value
   },
   onLoad: function (options) {
@@ -98,7 +98,7 @@ Page({
           clientWidth = res.windowWidth,
           rpxR = 750 / clientWidth;
         var calc = clientHeight * rpxR - 180;
-        console.log(calc)
+        //console.log(calc)
         that.setData({
           winHeight: calc
         });
@@ -109,7 +109,7 @@ Page({
       data: {},
       method: 'POST',
       success: function (res) {
-        console.log(res);
+        //console.log(res);
         that.setData({
           musicTypeList: res.data
         })
@@ -149,7 +149,7 @@ Page({
       },
       method: 'POST',
       success: function (res) {
-        console.log(res);
+        //console.log(res);
         that.setData({
           musicList: res.data,
         })
@@ -166,7 +166,7 @@ Page({
   // 点击标题切换当前页时改变样式
   swichNav: function (e) {
     var cur = e.target.dataset.current;
-    console.log(e)
+    //console.log(e)
     this.setData({
       musicType: e.currentTarget.dataset.id
     })
@@ -180,8 +180,8 @@ Page({
   },
   // 添加音乐
   addMusic: function (e) {
-    console.log(this)
-    console.log(e)
+    //console.log(this)
+    //console.log(e)
     this.setData({
       musicId: e.currentTarget.dataset.item.id,
       musicName: e.currentTarget.dataset.item.name,
@@ -198,7 +198,7 @@ Page({
   // 播放音乐
   audioPlay: function (e) {
     var that = this;
-    console.log(e)
+    //console.log(e)
     const index = e.currentTarget.dataset.id;
     if (that.data.isMusic == index) {
       that.audioPause();

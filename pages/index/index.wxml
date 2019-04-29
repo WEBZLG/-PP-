@@ -2,7 +2,7 @@
 <view style='position: relative;height:100%;overflow:hidden;'>
 <!-- 视频资源 -->
   <view class='video-box'>
-    <video id="myVideo" src="{{videoUrl}}" objectFit='{{videotype}}' autoplay='true' show-fullscreen-btn='{{false}}' show-center-play-btn="{{false}}" data-id='{{index}}' custom-cache='{{false}}' controls="{{false}}"  playsinline     bindended="bindended"></video>
+    <video id="myVideo" src="{{videoUrl}}" objectFit='{{videotype}}' autoplay='true' show-fullscreen-btn='{{false}}' show-center-play-btn="{{false}}" data-id='{{index}}' custom-cache='{{false}}' controls="{{false}}" loop='loop'  playsinline     bindended="bindended"></video>
   </view>
   <!-- 点击滑动蒙版图层 -->
   <cover-view class="ball" id="id" bindtouchend="handletouchend" bindtouchmove="handletouchmove" bindtouchstart="handletouchstart" catchtap="videoHandle" style='display:{{homeIsShow}}'>
@@ -66,7 +66,7 @@
     <cover-view class="desc">
       <cover-view class='nick-name'>
         <cover-view>{{wxname}}</cover-view>
-        <cover-image class='vip-icon' wx:if="{{isVip!=null}}" src='../../image/VIP@2x.png'></cover-image>
+        <cover-image class='vip-icon' wx:if="{{isVip!=0}}" src='../../image/VIP@2x.png'></cover-image>
         <cover-view class='focus'>
           {{ifRelation==0?"未关注":"已关注"}}
         </cover-view>

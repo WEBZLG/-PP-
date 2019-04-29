@@ -38,7 +38,7 @@ Page({
       method: "POST",//get为默认方法/POST
       success: function (res) {
         wx.hideLoading()
-        console.log(res)
+        // console.log(res)
         that.setData({
 　　　　　　Notice: res.data
 　　　　　　})

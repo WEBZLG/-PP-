@@ -21,18 +21,18 @@ Page({
     wx.getStorage({
       key: 'userUid',
       success(res) {
-        console.log(res.data)
+        //console.log(res.data)
         that.setData({
           uid: res.data
         })
-        console.log(that.data.uid)
+        //console.log(that.data.uid)
         //1.开始初始化第一个TAB页的关注列表数据
         wx.request({
           url: app.globalData.serverPath + 'attentionlist',
           data: { uid: that.data.uid },
           method: 'POST',
           success: function (res) {
-            console.log(res)
+            //console.log(res)
             that.setData({
               guanzhuList: res.data
             })
@@ -50,7 +50,7 @@ Page({
           data: { uid: that.data.uid },
           method: 'POST',
           success: function (res) {
-            console.log(res)
+            //console.log(res)
             that.setData({
               huodongList: res.data
             });
@@ -77,7 +77,7 @@ Page({
 
   swiperchange: function (e) {
     var that = this
-    console.log(e.detail.current)
+    //console.log(e.detail.current)
     that.setData({
       'currentTab': e.detail.current
     })

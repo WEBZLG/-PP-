@@ -13,7 +13,7 @@ Page({
     display_play:'none',
     display_pl:'none',
     more:true,//控制活动下拉  true是显示   false是隐藏
-    advertising:"",//活动图片
+    advertising:[],//活动图片
     activity:[],//活动
     hotuser:[]//明星
   },
@@ -48,8 +48,7 @@ Page({
       },
       method: 'POST',
       success: function (res) {
-        console.log(res);
-        res.data.advertising = "https://" + res.data.advertising
+        // console.log(res);
         that.setData({
           hotSearchData:res.data.rank,
           advertising: res.data.advertising,
@@ -98,7 +97,7 @@ Page({
   closeHistory: function (e) {
     var searchRecord = this.data.searchRecord
     var index=e.currentTarget.dataset.id
-    console.log(searchRecord)
+    // console.log(searchRecord)
     searchRecord.splice(index, 1)
     this.setData({
       searchRecord: searchRecord.splice(index, 1)
@@ -168,7 +167,7 @@ Page({
     wx.getStorage({
       key: 'userUid',
       success(res) {
-        console.log(res.data)
+        // console.log(res.data)
         that.setData({
           uid: res.data
         });

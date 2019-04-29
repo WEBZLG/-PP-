@@ -37,7 +37,7 @@ Page({
     wx.getStorage({
       key: 'userUid',
       success(res) {
-        console.log(res.data)
+        //console.log(res.data)
         that.setData({
           uid: res.data
         })
@@ -46,7 +46,7 @@ Page({
     wx.getStorage({
       key: 'userMessage',
       success(res) {
-        console.log(res.data)
+        //console.log(res.data)
         that.setData({
           sex: res.data.gender,
           place: res.data.city,
@@ -139,7 +139,7 @@ Page({
     })
   },
   dayClick: function (event) {
-    console.log(event)
+    //console.log(event)
     let clickDay = event.detail.day;
     let changeDay = `dayStyle[1].day`;
     let changeBg = `dayStyle[1].background`;

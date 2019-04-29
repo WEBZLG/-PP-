@@ -56,13 +56,13 @@ Page({
     videoType:0
   },
   onLoad: function(a) {
-    console.log(a.videoType)
+    //console.log(a.videoType)
     var options = JSON.parse(a.preData)
     const that = this
     wx.getStorage({
       key: 'userUid',
       success(res) {
-        console.log(res.data)
+        //console.log(res.data)
         that.setData({
           uid: res.data
         })
@@ -75,7 +75,7 @@ Page({
       stickery: options.stickery,
       videoType: a.videoType
     })
-    console.log(getCurrentPages())
+    //console.log(getCurrentPages())
 
     n = wx.createInnerAudioContext();
     var e = getCurrentPages(),
@@ -181,17 +181,17 @@ Page({
 * 点击日期返回
 */
   onPickerChange: function (e) {
-    console.log(e.detail);
+    //console.log(e.detail);
     this.setData({
       date: e.detail.dateString,
       activeTime: e.detail.dateString+":00",
     })
-    console.log(this.data.activeTime)
+    //console.log(this.data.activeTime)
   },
   // 是否参加会员
   vipSwitch:function(event){
     const that = this;
-    console.log(event)
+    //console.log(event)
     if (event.detail.value==true){
       that.setData({
         isShow : "block",
@@ -207,7 +207,7 @@ Page({
 
   // 发布活动
   publishWorks:function(options){
-    console.log(options)
+    //console.log(options)
     const that = this
     wx.showLoading({
       title: "发布中"
@@ -217,12 +217,12 @@ Page({
       worksPubSwitch: !1,
       isPublish:true
       })
-    console.log(that.data.previewData)
+    //console.log(that.data.previewData)
     const videoUrl = that.data.previewData.videoUrl.tempFilePath
 
     var formData = {};
     if(that.data.stickerid==""){
-      console.log("参数1")
+      //console.log("参数1")
       formData = {
         'uid': that.data.uid,
         'rplace': that.data.address.location,
@@ -239,7 +239,7 @@ Page({
         "videotype": that.data.videoType
       }
     }else{
-      console.log("参数2")
+      //console.log("参数2")
       formData = {
         'uid': that.data.uid,
         'rplace': that.data.address.location,
@@ -261,7 +261,7 @@ Page({
         }])
       }
     }
-    console.log(formData)
+    //console.log(formData)
     wx.uploadFile({
       url: app.globalData.serverPath +"release",
       filePath: videoUrl,
@@ -272,7 +272,7 @@ Page({
       },
       formData: formData ,
       success: function (res) {
-        console.log(res)
+        //console.log(res)
         if(res.data==1){
           wx.hideLoading();
           wx.showToast({
@@ -315,7 +315,7 @@ Page({
   },
   // 男成员
   manInput:function(event){
-    console.log(event)
+    //console.log(event)
     this.setData({
       activeManNum:event.detail.value
     })

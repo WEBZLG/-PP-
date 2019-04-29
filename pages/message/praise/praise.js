@@ -25,7 +25,7 @@ Page({
     wx.getStorage({
       key: 'userUid',
       success(res) {
-        console.log(res.data)
+        // console.log(res.data)
         that.setData({
           uid: res.data
         })
@@ -56,7 +56,7 @@ Page({
       },
       method: "POST",//get为默认方法/POST
       success: function (res) {
-        console.log(res.data)
+        // console.log(res.data)
         wx.hideLoading()
         that.setData({
           Zan: res.data

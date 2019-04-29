@@ -46,7 +46,7 @@ Page({
    */
 
   onLoad: function (options) {
-    console.log(options)
+    // console.log(options)
     var that = this;
     wx.setNavigationBarTitle({
       title: '个人信息',
@@ -59,7 +59,7 @@ Page({
     wx.getStorage({
       key: 'userUid',
       success(res) {
-        console.log(res.data)
+        // console.log(res.data)
         that.setData({
           uid: res.data
         });
@@ -226,7 +226,7 @@ Page({
   // 关注
   focus: function (e) {
     var that = this;
-    console.log(that.data.uid, that.data.otherId)
+    // console.log(that.data.uid, that.data.otherId)
     wx.request({
       url: app.globalData.serverPath + "attention",
       data: {
@@ -235,7 +235,7 @@ Page({
       },
       method: 'POST',
       success: function (res) {
-        console.log(res)
+        // console.log(res)
         if(res.data.info=="success"){
           if(res.data.status==0){
             that.setData({
@@ -247,7 +247,7 @@ Page({
             })
           }
         }else{
-          console.log(res)
+          // console.log(res)
         }
         
       }

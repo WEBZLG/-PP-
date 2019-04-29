@@ -23,7 +23,7 @@ App({
   onUnload: function () {
     wx.clearStorageSync()
     wx.clearStorage()
-    console.log("清除了")
+    //console.log("清除了")
   }
 
 })
@@ -63,7 +63,7 @@ function uploadimg(data) {
   wx.getStorage({
     key: 'userUid',
     success(res) {
-      console.log(res)
+      //console.log(res)
       getApp().data.uid = res.data
 
     i = data.i ? data.i : 0,
@@ -89,15 +89,15 @@ function uploadimg(data) {
     },
 
     success: (resp) => {
-      console.log(resp)
-      console.log(JSON.parse(resp.data))
+      //console.log(resp)
+      //console.log(JSON.parse(resp.data))
       var data = JSON.parse(resp.data)
       getApp().data.pid = data.pid
 
       success++;
 
 
-      console.log(i);
+      //console.log(i);
 
       //这里可能有BUG，失败也会执行这里
 
@@ -107,30 +107,30 @@ function uploadimg(data) {
 
       fail++;
 
-      console.log('fail:' + i + "fail:" + fail);
+      //console.log('fail:' + i + "fail:" + fail);
       wx.hideLoading()
     },
 
     complete: () => {
 
-      console.log(i);
+      //console.log(i);
 
       getApp().data.order = i+1
 
-      console.log(getApp().data.order)
+      //console.log(getApp().data.order)
       i++;
 
       if (i == data.path.length) { //当图片传完时，停止调用   
         wx.hideLoading()
-        console.log('执行完毕');
+        //console.log('执行完毕');
         var pid = getApp().data.pid
-        console.log('成功：' + success + " 失败：" + fail);
+        //console.log('成功：' + success + " 失败：" + fail);
         wx.navigateTo({
           url: '../view/view?pid='+pid,
         })
       } else {//若图片还没有传完，则继续调用函数
 
-        console.log(i);
+        //console.log(i);
 
         data.i = i;
 

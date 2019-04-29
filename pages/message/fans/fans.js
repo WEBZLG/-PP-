@@ -19,7 +19,7 @@ Page({
   },
   changeMotto: function (e) {
     var that =this;
-    console.log(e)
+    // console.log(e)
     const index = e.currentTarget.dataset.id;
     const eachotherStatus = e.currentTarget.dataset.item.eachother;
     const is = this.data.Fans[index].eachother;
@@ -41,7 +41,7 @@ Page({
       },
       method: "POST",//get为默认方法/POST
       success: function (res) {
-        console.log(res)
+        // console.log(res)
         if(res.data.info == "success"){
           if (eachotherStatus == 0) {
             that.setData({
@@ -73,7 +73,7 @@ Page({
     wx.getStorage({
       key: 'userUid',
       success(res) {
-        console.log(res.data)
+        // console.log(res.data)
         that.setData({
           uid: res.data
         })
@@ -101,7 +101,7 @@ Page({
       },
       method: "POST",//get为默认方法/POST
       success: function (res) {
-        console.log(res)
+        // console.log(res)
         wx.hideLoading()
         that.setData({
           Fans: res.data

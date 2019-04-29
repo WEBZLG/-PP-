@@ -29,7 +29,7 @@ Page({
       success: function (res) {
         const article = res.data.content;
         WxParse.wxParse('article', 'html', article, that, 5);
-        console.log(res)
+        // console.log(res)
         that.setData({
           title: res.data.title,
           time: res.data.time,

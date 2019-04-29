@@ -26,7 +26,7 @@ Page({
     wx.getStorage({
       key: 'userUid',
       success(res) {
-        console.log(res.data)
+        //console.log(res.data)
         that.setData({
           uid: res.data
         })
@@ -37,7 +37,7 @@ Page({
       data: {},
       method: 'POST',
       success: function (res) {
-        console.log(res);
+        //console.log(res);
         that.setData({
           helpList : res.data
         })
@@ -101,7 +101,7 @@ Page({
       },
       method: 'POST',
       success: function (res) {
-        console.log(res);
+        //console.log(res);
         wx.showToast({
           title: '提交成功',
           icon:"cuccess"
@@ -112,7 +112,7 @@ Page({
   },
   // 查看详情
   viewDetails:function(e){
-    console.log(e)
+    //console.log(e)
     var id = e.currentTarget.dataset.id
     wx.navigateTo({
       url: './helpDetails/helpDetails?id='+id,

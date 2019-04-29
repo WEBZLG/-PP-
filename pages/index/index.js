@@ -17,7 +17,7 @@ Page({
     id: '', //作品ID
     videoContent: "",
     wxname: '', //发布人昵称
-    wximage: '', //发布人头像
+    wximage: '../../image/like_red.png', //发布人头像
     name: '', //歌曲名
     if_pass: '', //是否认证
     if_activity: '', //1为发布活动 0为普通发布
@@ -27,7 +27,7 @@ Page({
     top: '', //送礼物排行榜
     ifRelation: '', //关注/为关注
     if_like: '', //0点赞  1未点赞
-    isVip: null, // 是否是vip
+    isVip: 0, // 是否是vip
     content: '', //内容
     commentList: [],
     //播放按钮
@@ -119,12 +119,12 @@ Page({
           })
           wx.login({
             success: function(res) {
-              console.log(res)
+              //console.log(res)
               that.setData({
                 code: res.code
               })
               that.loginAgain();
-              console.log("zouzhe" + that.data.uid)
+              //console.log("zouzhe" + that.data.uid)
 
             }
           })
@@ -132,43 +132,48 @@ Page({
             wx.getStorage({
               key: 'userMessage',
               success(res) {
-                console.log(res)
                 var sex = res.data.gender == 1 ? "男" : "女"
+                console.log(sex)
                 that.setData({
                   activeSex: sex
                 });
               }
             });
-          } else if (app.globalData.uid == null) {
+          } else{
+            var sex = app.globalData.userInfo.gender == 1 ? "男" : "女"
+            that.setData({
+              activeSex: sex
+            })
+          } 
+          
+          
+          if (app.globalData.uid == null) {
             wx.getStorage({
               key: 'userUid',
               success(res) {
-                console.log(res)
+                // console.log(res)
                 that.setData({
                   uid: res.data
                 });
               }
             });
           } else {
-            var sex = app.globalData.userInfo.gender == 1 ? "男" : "女"
             that.setData({
               uid: app.globalData.uid,
-              activeSex: sex
             });
           }
 
         } else {
           wx.reLaunch({
             url: '/pages/login/login'
-          })
+          });
+          return false;
         }
       }
     })
   },
 
-  onShow: function() {
-    console.log("看这里测试" + this.data.homeIsShow)
-  },
+  onShow: function() {},
   // 第二次登录
   loginAgain: function() {
     var that = this;
@@ -179,7 +184,7 @@ Page({
       },
       method: "GET",
       success: function(res) {
-        console.log(res)
+        // //console.log(res)
         app.globalData.uid = res.data.uid
         that.setData({
           uid: res.data.uid
@@ -214,7 +219,7 @@ Page({
           key: 'userUid',
           data: res.data.uid,
           success: function(res) {
-            console.log(res)
+            //console.log(res)
           }
         })
         wx.setStorageSync('userUid', res.data.uid)
@@ -223,7 +228,6 @@ Page({
       fail: function(err) {},
       complete: function() {}
     })
-    console.log("看这里测试" + this.data.homeIsShow)
   },
   // 广告
   getAdevertising: function() {
@@ -236,7 +240,7 @@ Page({
       },
       method: "POST",
       success: function(res) {
-        console.log(res)
+        //console.log(res)
         if (res.data.start == 0) {
           that.setData({
             isAdvertising: "block",
@@ -302,7 +306,7 @@ Page({
 
   // 评论点赞
   commentCollect: function(e) {
-    // console.log(e);
+    // //console.log(e);
     var that = this;
     // var vid = e.currentTarget.dataset.id;
     if (this.data.commentcount == 1) {
@@ -361,8 +365,8 @@ Page({
     });
   },
   videoTogglePrev: function() {
-    console.log(this.data.pageIndex - 1)
-    console.log(this.data.pageList)
+    //console.log(this.data.pageIndex - 1)
+    //console.log(this.data.pageList)
     var that = this;
     if (this.data.pageIndex == 0) {
       wx.showToast({
@@ -382,7 +386,7 @@ Page({
         },
         method: "POST",
         success: function(res) {
-          console.log(res)
+          //console.log(res)
           wx.hideLoading()
           that.setData({
             display_play: 'none',
@@ -432,14 +436,14 @@ Page({
     }
   },
   videoToggleNext: function() {
-    console.log(this.data.pageIndex)
+    //console.log(this.data.pageIndex)
     var that = this;
     var pageIndexLength = that.data.pageIndex + 1
     var pageListLength = that.data.pageList.length
     if (pageIndexLength < pageListLength) {
       var indexList = that.data.pageList[that.data.pageIndex + 1]
       wx.showLoading()
-      console.log("uid和id下" + indexList.uid, indexList.id)
+      //console.log("uid和id下" + indexList.uid, indexList.id)
       wx.request({
         url: app.globalData.serverPath + 'release_one',
         data: {
@@ -451,7 +455,7 @@ Page({
         },
         method: "POST",
         success: function(res) {
-          console.log(res)
+          //console.log(res)
           wx.hideLoading()
           that.setData({
             display_play: 'none',
@@ -487,7 +491,7 @@ Page({
   },
   // 获取视频信息
   getVideoMessage: function() {
-    console.log("uid=" + this.data.uid)
+    //console.log("uid=" + this.data.uid)
     var that = this;
     wx.showLoading()
     wx.request({
@@ -501,7 +505,7 @@ Page({
       method: "POST",
       success: function(res) {
         wx.hideLoading()
-        console.log(res.data)
+        //console.log(res.data)
 
         if (res.data == "no") {
           wx.showToast({
@@ -542,13 +546,13 @@ Page({
             pageList: that.data.pageList.concat(res.data),
             homeIsShow: "block"
           })
-          console.log("看这里" + that.data.homeIsShow)
+          //console.log("看这里" + that.data.homeIsShow)
         }
       },
       fail: function(err) {},
       complete: function() {}
     })
-    console.log("看这里测试" + this.data.homeIsShow)
+    //console.log("看这里测试" + this.data.homeIsShow)
   },
   videoHandle: function(a) {
     this.data.videoPlay ? (
@@ -639,7 +643,7 @@ Page({
   getGoods: function(e) {
     wx.showLoading();
     var that = this;
-    console.log(that.data.uid)
+    //console.log(that.data.uid)
     wx.request({
       url: app.globalData.serverPath + 'giftlist',
       data: {
@@ -650,7 +654,7 @@ Page({
       },
       method: "POST",
       success: function(res) {
-        console.log(res)
+        //console.log(res)
         wx.hideLoading()
         res.data.giftlist && res.data.giftlist.map((item, index) => {
           item.pic = "https://" + item.pic
@@ -666,7 +670,7 @@ Page({
     })
   },
   imageError: function(e) {
-    console.log(e)
+    //console.log(e)
   },
   //礼物显示
   showgiftsModal: function() {
@@ -692,7 +696,7 @@ Page({
   },
   //礼物留言显示
   showWordsModal: function() {
-    console.log(this.data.homeIsShow)
+    //console.log(this.data.homeIsShow)
     this.setData({
       homeIsShow: "none"
     })
@@ -749,7 +753,7 @@ Page({
   // 送出礼物 
   sendGift: function(e) {
     var that = this
-    console.log(e)
+    // console.log(e)
     wx.showModal({
       title: '提示',
       content: '赠送礼物？',
@@ -759,6 +763,7 @@ Page({
             url: app.globalData.serverPath + 'indexsendgift',
             data: {
               uid: that.data.uid,
+              rid:that.data.id,
               gid: that.data.giftId,
               income_uid: that.data.sendId,
               sendintegral: that.data.sendintegral,
@@ -770,20 +775,20 @@ Page({
             method: "POST",
             success: function(res) {
               that.hideWordsModal()
-              console.log(res)
+              //console.log(res)
               if (res.data.info == "Insufficient integral") {
                 wx.showToast({
                   title: '积分不足，请充值！',
                   icon: "none"
                 })
               } else if (res.data.info == "success") {
-                console.log(res.data.info)
+                //console.log(res.data.info)
                 wx.showToast({
                   title: '赠送成功！',
                   icon: "none"
                 })
               } else {
-                console.log(res.data.info)
+                //console.log(res.data.info)
                 wx.showToast({
                   title: '赠送失败！',
                   icon: "none"
@@ -798,7 +803,7 @@ Page({
             }
           })
         } else if (sm.cancel) {
-          console.log('用户点击取消')
+          //console.log('用户点击取消')
         }
       }
     })
@@ -835,8 +840,8 @@ Page({
   // 获取分页视频
   getPageVideoMessage: function(e) {
     var that = this;
-    console.log(that.data.uid, that.data.pageIndex)
-    console.log()
+    //console.log(that.data.uid, that.data.pageIndex)
+    //console.log()
     wx.request({
       url: app.globalData.serverPath + 'indexpage',
       data: {
@@ -848,7 +853,7 @@ Page({
       },
       method: "POST",
       success: function(res) {
-        console.log(res)
+        //console.log(res)
         wx.hideLoading()
         if (res.data.length == 0) {
           that.setData({
@@ -870,7 +875,7 @@ Page({
   getCommentMessage: function(e) {
     var that = this;
     var rid = e.currentTarget.dataset.id
-    console.log(rid)
+    //console.log(rid)
     wx.showLoading()
     wx.request({
       url: app.globalData.serverPath + 'indexcomment',
@@ -882,7 +887,7 @@ Page({
       },
       method: "POST",
       success: function(res) {
-        console.log(res.data)
+        //console.log(res.data)
         wx.hideLoading()
         that.setData({
           commentList: res.data
@@ -898,7 +903,7 @@ Page({
   sendCommentMessage: function() {
     var that = this;
     wx.showLoading()
-    console.log(that.data.uid, that.data.id)
+    //console.log(that.data.uid, that.data.id)
     wx.request({
       url: app.globalData.serverPath + 'sendcomment',
       data: {
@@ -911,7 +916,7 @@ Page({
       },
       method: "POST",
       success: function(res) {
-        console.log(res)
+        //console.log(res)
         wx.hideLoading()
         if (res.data.info == "success") {
 
@@ -938,8 +943,8 @@ Page({
   // 点赞功能
   like: function(e) {
     var that = this;
-    console.log(that.data.uid)
-    console.log(e)
+    //console.log(that.data.uid)
+    //console.log(e)
     wx.request({
       url: app.globalData.serverPath + 'index_like',
       data: {
@@ -951,7 +956,7 @@ Page({
       },
       method: "POST",
       success: function(res) {
-        console.log(res)
+        //console.log(res)
         if (res.data.info == "success") {
           if (res.data.if_like == 0) {
             that.setData({
@@ -977,7 +982,7 @@ Page({
   },
   // 活动详情
   textclick: function(e) {
-    console.log(e)
+    //console.log(e)
     var activeId = e.currentTarget.dataset.aid
     wx.navigateTo({
       url: '../focus/active/active?id=' + activeId,
@@ -1025,7 +1030,7 @@ Page({
             complete: function() {}
           })
         } else if (sm.cancel) {
-          console.log('用户点击取消')
+          //console.log('用户点击取消')
         }
       }
     })
@@ -1033,7 +1038,7 @@ Page({
   },
 
   onHide: function() {
-    console.log("隐藏")
+    //console.log("隐藏")
     this.videoContext.pause();
     // this.setData({
     //   display_play: 'block'
@@ -1096,16 +1101,16 @@ Page({
   onShareAppMessage: function(ops) {
     var that = this;
     that.hideShareModal()
-    console.log("分享")
-    console.log(ops)
+    //console.log("分享")
+    //console.log(ops)
     var uid = ops.target.dataset.uid;
     var videoId = ops.target.dataset.vid
     // if(ops.from==='button'){}
     return {
-      title: '小pp短视频',
+      title: '五一一短视频',
       path: '/pages/playvideo/playvideo?uid=' + uid + '&videoId=' + videoId,
       success: function(res) {
-        console.log(res)
+        //console.log(res)
         // 转发成功
         wx.showToast({
           title: '转发成功！',
@@ -1149,8 +1154,8 @@ Page({
   },
   //创建
   create: function(e) {
-    console.log("哎呀！我被点了")
-    console.log(e)
+    //console.log("哎呀！我被点了")
+    //console.log(e)
     wx.showLoading()
     var that = this;
     wx.request({
@@ -1164,7 +1169,7 @@ Page({
       },
       method: "POST",
       success: function (res) {
-        console.log(res)
+        //console.log(res)
         that.setData({
           picname: res.data.picname,
           backpic: res.data.backpic,
@@ -1174,7 +1179,7 @@ Page({
         wx.getImageInfo({
           src: that.data.backpic,//服务器返回的图片地址
           success: function (res) {
-            console.log(res)
+            //console.log(res)
             //res.path是网络图片的本地地址
             let Path = res.path;
             that.setData({
@@ -1184,13 +1189,13 @@ Page({
             wx.getImageInfo({
               src: that.data.picstr,//服务器返回的图片地址
               success: function (res) {
-                console.log(res)
+                //console.log(res)
                 //res.path是网络图片的本地地址
                 let Path = res.path;
                 that.setData({
                   newpicstr: Path
                 })
-                console.log(that.data.newbackpic, that.data.newpicstr)
+                //console.log(that.data.newbackpic, that.data.newpicstr)
                 //图片一把是通过接口请求后台，返回俩点地址，或者网络图片
                 let bg = that.data.newbackpic;
                 let qr = that.data.newpicstr;
@@ -1198,7 +1203,7 @@ Page({
                 let wH = that.data.windowHeight;
                 //图片区别下载完成，生成临时路径后，在进行绘制
                 that.getImageAll([bg, qr]).then((res) => {
-                  console.log(res)
+                  //console.log(res)
                   let bg = res[0];
                   let qr = res[1];
                   let ctx = wx.createCanvasContext('canvas');
@@ -1258,7 +1263,7 @@ Page({
     wx.canvasToTempFilePath({ //canvas 生成图片 生成临时路径
       canvasId: 'canvas',
       success: function(res) {
-        console.log(res)
+        //console.log(res)
         wx.saveImageToPhotosAlbum({ //下载图片
           filePath: res.tempFilePath,
           success: function() {
@@ -1283,7 +1288,7 @@ Page({
               },
               method: "POST",
               success: function (res) {
-                console.log(res)
+                //console.log(res)
               }
             })
           },
@@ -1293,14 +1298,14 @@ Page({
               icon:"none"
             })
             // if (err.errMsg == "saveImageToPhotosAlbum: fail authorize no response") {
-            //   console.log("需要获取权限")
+            //   //console.log("需要获取权限")
             //   wx.openSetting({
             //     success(settingdata) {
-            //       console.log(settingdata)
+            //       //console.log(settingdata)
             //       if (settingdata.authSetting["scope.writePhotosAlbum"]) {
-            //         console.log('获取权限成功，给出再次点击图片保存到相册的提示。')
+            //         //console.log('获取权限成功，给出再次点击图片保存到相册的提示。')
             //       } else {
-            //         console.log('获取权限失败，给出不给权限就无法正常使用的提示')
+            //         //console.log('获取权限失败，给出不给权限就无法正常使用的提示')
             //       }
             //     }
             //   })

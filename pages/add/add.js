@@ -21,7 +21,7 @@ Page({
     wx.getStorage({
       key: 'userUid',
       success(res) {
-        console.log(res.data)
+        //console.log(res.data)
         that.setData({
           uid: res.data
         })
@@ -110,7 +110,7 @@ Page({
       maxDuration: t.data.duration,
       compressed: !1,
       success: function (a) {
-        console.log(a)
+        //console.log(a)
         t.setData({
           vWidth:a.width,
           vHeight:a.height
