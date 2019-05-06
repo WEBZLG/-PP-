@@ -1,7 +1,7 @@
 <!--pages/zan/zan.wxml-->
 <block wx:for='{{Zan}}' wx:key="index" > 
 <view class='zan' wx:if="{{Zan !== ''}}">
-  <view class='head-img'>
+  <view class='head-img'  data-id='{{item.uid}}' catchtap='userdetail'>
     <image src='{{item.wximage}}' style='width:100rpx;height:100rpx;'></image>
   </view>
   <view class='zan-text'>

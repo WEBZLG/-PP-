@@ -33,3 +33,7 @@ page{
   height: 140rpx;
   width: 140rpx;
 }
+.btn-box text{
+  color: #eee;
+  font-size: 14px;
+}

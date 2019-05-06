@@ -1,7 +1,7 @@
 <!--pages/fans/fans.wxml-->
 
 <view class='fans' wx:for='{{Fans}}' wx:key='index' wx:if="{{Fans !== ''}}">
-  <view class='head-img'>
+  <view class='head-img'  data-id='{{item.uid}}' catchtap='userdetail'>
     <image src='{{item.wximage}}' style='width:100rpx;height:100rpx;'></image>
   </view>
   <view class='fans-text'>

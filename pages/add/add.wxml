@@ -2,8 +2,17 @@
 <view>
   <image class='add-bg' src='../../image/addbg.png'></image>
   <view class='btn-box'>
-    <cover-image class='nav-btn' bindtap='chooseVideo' src='../../image/upload.png'></cover-image>
-    <cover-image class='nav-btn' bindtap='getLocalVideo' src='../../image/rec.png'></cover-image>
-    <cover-image class='nav-btn' bindtap='get3dAlbum' src='../../image/3dpic.png'></cover-image>
+  <view>
+    <cover-image class='nav-btn' bindtap='chooseVideo' src='../../image/upload.png'>本地</cover-image>
+    <text>本地</text>
+  </view>
+  <view>
+    <cover-image class='nav-btn' bindtap='getLocalVideo' src='../../image/rec.png'>拍摄</cover-image>
+    <text>拍摄</text>
+  </view>
+  <view>
+   <cover-image class='nav-btn' bindtap='get3dAlbum' src='../../image/3dpic.png'>相册</cover-image>
+   <text>相册</text>
+  </view>
   </view>
 </view>

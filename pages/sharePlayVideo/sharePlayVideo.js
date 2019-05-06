@@ -22,7 +22,6 @@ Page({
     relation: '',//关注/为关注
     if_like: '', //0点赞  1未点赞
     isVip: null,// 是否是vip
-    content: '',//内容
     commentList: [],
     backpic: "",
     picstr: "",
@@ -206,7 +205,14 @@ Page({
     })
   },
 
-
+  // 活动详情
+  textclick: function (e) {
+    console.log(e)
+    var activeId = e.currentTarget.dataset.aid
+    wx.navigateTo({
+      url: '../focus/active/active?id=' + activeId,
+    })
+  },
   //评论弹窗
   showModal: function () {
     var animation = wx.createAnimation({
@@ -524,7 +530,7 @@ Page({
     wx.showLoading()
     var that = this;
     wx.setNavigationBarTitle({
-      title: "五一一短视频",
+      title: "素人短视频",
     })
     if (app.globalData.uid == null) {
       wx.getStorage({

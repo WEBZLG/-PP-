@@ -32,10 +32,9 @@ Page({
       },
       method: "GET",//get为默认方法/POST
       success: function (res) {
-        //console.log(res)
+        console.log(res)
         const article = res.data.content;
         WxParse.wxParse('article', 'html', article, that, 5);
-        //console.log(res)
         that.setData({
           title: res.data.title,
           time:res.data.time,

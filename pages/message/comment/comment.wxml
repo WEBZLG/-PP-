@@ -1,7 +1,7 @@
 <!--pages/comment/comment.wxml-->
 <block wx:for='{{Comment}}' wx:key="index">
 <view class='comment' wx:if="{{Comment !==''}}">
-  <view class='head-img'>
+  <view class='head-img' data-id='{{item.uid}}' catchtap='userdetail'>
     <image src='{{item.wximage}}' style='width:100rpx;height:100rpx;'></image>
   </view>
   <view class='comment-text'>

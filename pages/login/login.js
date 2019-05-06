@@ -4,14 +4,15 @@ const app = getApp()
 
 Page({
   data: {
-    motto: '五一一短视频',
+    motto: '素人短视频',
     userInfo: {},
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     openid: '',
     wxname: '',
     wximage: '',
-    code:""
+    code:"",
+    sex:""
   },
   onLoad: function () {
     if (app.globalData.userInfo) {
@@ -56,6 +57,7 @@ Page({
           // 获取用户信息
           wx.getUserInfo({
             success: function (data) {
+              console.log(data)
               app.globalData.userInfo = data.userInfo
               // 缓存用户信息
               wx.setStorage({
@@ -85,6 +87,7 @@ Page({
                     openid: res.data.openid, //用户openid
                     wxname: data.userInfo.nickName,//用户昵称
                     wximage: data.userInfo.avatarUrl,//用户头像
+                    sex:data.userInfo.gender//性别
                   })
                   that.setuserinfo();//第一次授权保存用户信息
                 }
@@ -118,12 +121,15 @@ Page({
     var openid = this.data.openid;
     var wxname = this.data.wxname;
     var wximage = this.data.wximage;
+    var sex = this.data.sex==1?"男":"女"
+    console.log(sex)
     wx.request({
       url: app.globalData.serverPath+"setuserinfo",
       data: {
         "openid": openid,
         "wxname": wxname,
-        "wximage": wximage
+        "wximage": wximage,
+        "sex":sex
       },
       method: 'POST',
       success: function (res) {

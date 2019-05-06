@@ -43,7 +43,6 @@ Page({
     
   },
   getdata: function () {
-   
     wx.showLoading()
     var that = this;
     wx.request({
@@ -56,7 +55,7 @@ Page({
       },
       method: "POST",//get为默认方法/POST
       success: function (res) {
-        // console.log(res.data)
+        console.log(res)
         wx.hideLoading()
         that.setData({
           Zan: res.data
@@ -67,7 +66,14 @@ Page({
       complete: function () { }//请求完成后执行的函数
     })
   },
-
+  // 视频用户详情页
+  userdetail: function (e) {
+    // console.log(e)
+    var otherId = e.currentTarget.dataset.id
+    wx.navigateTo({
+      url: '../../index/userdetail/userdetail?otherId=' + otherId
+    })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

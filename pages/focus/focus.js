@@ -32,7 +32,7 @@ Page({
           data: { uid: that.data.uid },
           method: 'POST',
           success: function (res) {
-            //console.log(res)
+            console.log(res)
             that.setData({
               guanzhuList: res.data
             })
@@ -74,7 +74,14 @@ Page({
     })
     
    },
-
+  // 视频用户详情页
+  userdetail: function (e) {
+    // console.log(e)
+    var otherId = e.currentTarget.dataset.id
+    wx.navigateTo({
+      url: '../index/userdetail/userdetail?otherId=' + otherId
+    })
+  },
   swiperchange: function (e) {
     var that = this
     //console.log(e.detail.current)

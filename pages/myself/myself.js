@@ -7,13 +7,13 @@ Page({
    */
   data: {
     uid:"",
-    nickname:"小pp",
+    nickname:"素人",
     gender:"1",
     city:"哈尔滨",
     provice:"黑龙江",
     country:"中国",
     avatarUrl:"",
-    signature:"小pp视频",
+    signature:"素人短视频",
     phone:"18888888888",
     birthday:"1999-09-09",
     wx:"wx88888888",

@@ -40,8 +40,8 @@ Page({
         wx.hideLoading()
         // console.log(res)
         that.setData({
-　　　　　　Notice: res.data
-　　　　　　})
+　　　Notice: res.data
+　　})
       },
       fail: function (err) { },//请求失败
       complete: function () { }//请求完成后执行的函数

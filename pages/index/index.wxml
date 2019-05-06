@@ -7,8 +7,14 @@
   <!-- 点击滑动蒙版图层 -->
   <cover-view class="ball" id="id" bindtouchend="handletouchend" bindtouchmove="handletouchmove" bindtouchstart="handletouchstart" catchtap="videoHandle" style='display:{{homeIsShow}}'>
     <!-- 公告 -->
-    <cover-view class='scroll_view_border' wx:if="{{isActiveVideo==1}}">
-      <cover-view class="srcoll_view" catchtap="textclick" data-aid='{{activeId}}'>{{videoContent}}</cover-view>
+    <cover-view class='scroll_view_border'>
+      <cover-view class="srcoll_view">
+        <cover-view  class='notice_item'   wx:for="{{videoContent}}" wx:key="{{index}}"     catchtap="textclick" data-rid='{{item.rid}}'>
+        <cover-image  class='sexIocn'  wx:if="{{item.sex=='男'}}"  src='../../image/men.png'></cover-image>
+        <cover-image  class='sexIocn'  wx:if="{{item.sex=='女'}}"  src='../../image/women.png'></cover-image>
+          <cover-view class='actText'>{{item.title}}</cover-view>
+        </cover-view>
+      </cover-view>
     </cover-view>
     <!-- 地址 -->
     <cover-view class='my-address'>
@@ -75,7 +81,7 @@
         <cover-image class='length-icon' src='../../image/activity.png'></cover-image>
       </cover-view>
       <cover-view>
-        <cover-view class="desc-text">{{videoContent}}</cover-view>
+        <cover-view class="desc-text">{{content}}</cover-view>
       </cover-view>
       <cover-view class='music'>
         <cover-view>

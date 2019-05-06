@@ -1,7 +1,7 @@
 
 <view class="container">
   <view class="usermotto">
-      <image src='../../image/511.png'></image>
+      <image src='../../image/suren.png'></image>
   </view>
   <view class="userinfo" >
     <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 授权登录 </button>

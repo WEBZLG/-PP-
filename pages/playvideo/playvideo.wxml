@@ -7,7 +7,7 @@
   <cover-view data-time="{{lastTapTime}}" class="ball" id="id" catchtap="videoHandle" style='display:{{isShow}}'>
     <!-- 公告 -->
     <cover-view class='scroll_view_border' wx:if="{{isActiveVideo==1}}">
-      <cover-view class="srcoll_view" bindtap="textclick">{{indexList.content}}</cover-view>
+      <cover-view class="srcoll_view" bindtap="textclick"  data-aid ="{{indexList.aid}}">{{indexList.content}}</cover-view>
     </cover-view>
     <!-- 地址 -->
     <cover-view class='my-address'>

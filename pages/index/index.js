@@ -15,7 +15,7 @@ Page({
     url: '', //视频地址
     pic: '', //第一帧图片
     id: '', //作品ID
-    videoContent: "",
+    videoContent: "",//活动内容
     wxname: '', //发布人昵称
     wximage: '../../image/like_red.png', //发布人头像
     name: '', //歌曲名
@@ -28,7 +28,6 @@ Page({
     ifRelation: '', //关注/为关注
     if_like: '', //0点赞  1未点赞
     isVip: 0, // 是否是vip
-    content: '', //内容
     commentList: [],
     //播放按钮
     display_play: 'none',
@@ -99,7 +98,7 @@ Page({
     var that = this;
     this.videoContext = wx.createVideoContext('myVideo')
     wx.setNavigationBarTitle({
-      title: "五一一短视频",
+      title: "素人短视频",
     })
 
     wx.getSetting({
@@ -180,7 +179,8 @@ Page({
     wx.request({
       url: app.globalData.serverPath + 'againlogin',
       data: {
-        code: that.data.code
+        code: that.data.code,
+        sex: that.data.activeSex
       },
       method: "GET",
       success: function(res) {
@@ -223,7 +223,8 @@ Page({
           }
         })
         wx.setStorageSync('userUid', res.data.uid)
-        that.getVideoMessage()
+        that.getVideoMessage();
+        that.getActiveMessage();
       },
       fail: function(err) {},
       complete: function() {}
@@ -403,7 +404,7 @@ Page({
             commentnum: res.data.commentnum,
             wximage: res.data.wximage,
             wxname: res.data.wxname,
-            videoContent: res.data.content,
+            content: res.data.content,
             top: res.data.top,
             musicName: res.data.name,
             pageIndex: that.data.pageIndex - 1,
@@ -412,27 +413,6 @@ Page({
         fail: function(err) {},
         complete: function() {}
       })
-
-      // this.setData({   
-      //   display_play: 'none',
-      //   sendId: that.data.pageList[that.data.pageIndex-1].uid,
-      //   videoUrl: that.data.pageList[that.data.pageIndex - 1].url,
-      //   isActiveVideo: that.data.pageList[that.data.pageIndex - 1].if_activity,
-      //   isVip: that.data.pageList[that.data.pageIndex - 1].if_pass,
-      //   if_like: that.data.pageList[that.data.pageIndex - 1].if_like,
-      //   activeId: that.data.pageList[that.data.pageIndex - 1].aid,
-      //   ifRelation: that.data.pageList[that.data.pageIndex - 1 ].relation,
-      //   likenum: that.data.pageList[that.data.pageIndex - 1].likenum,
-      //   id: that.data.pageList[that.data.pageIndex - 1].id,
-      //   sharenum: that.data.pageList[that.data.pageIndex - 1].sharenum,
-      //   commentnum: that.data.pageList[that.data.pageIndex - 1].commentnum,
-      //   wximage: that.data.pageList[that.data.pageIndex - 1].wximage,
-      //   wxname: that.data.pageList[that.data.pageIndex - 1].wxname,
-      //   videoContent: that.data.pageList[that.data.pageIndex - 1].content,
-      //   top: that.data.pageList[that.data.pageIndex - 1].top,
-      //   musicName: that.data.pageList[that.data.pageIndex - 1].name,
-      //   pageIndex : that.data.pageIndex-1,   
-      // })
     }
   },
   videoToggleNext: function() {
@@ -443,7 +423,6 @@ Page({
     if (pageIndexLength < pageListLength) {
       var indexList = that.data.pageList[that.data.pageIndex + 1]
       wx.showLoading()
-      //console.log("uid和id下" + indexList.uid, indexList.id)
       wx.request({
         url: app.globalData.serverPath + 'release_one',
         data: {
@@ -472,7 +451,7 @@ Page({
             commentnum: res.data.commentnum,
             wximage: res.data.wximage,
             wxname: res.data.wxname,
-            videoContent: res.data.content,
+            content: res.data.content,
             top: res.data.top,
             musicName: res.data.name,
             pageIndex: that.data.pageIndex + 1,
@@ -539,21 +518,40 @@ Page({
             sharenum: res.data.sharenum,
             commentnum: res.data.commentnum,
             wxname: res.data.wxname,
-            videoContent: res.data.content,
+            content: res.data.content,
             top: res.data.top,
             musicName: res.data.name,
             pageIndex: that.data.pageIndex + 1,
             pageList: that.data.pageList.concat(res.data),
             homeIsShow: "block"
           })
-          //console.log("看这里" + that.data.homeIsShow)
         }
       },
       fail: function(err) {},
       complete: function() {}
     })
-    //console.log("看这里测试" + this.data.homeIsShow)
   },
+
+  // 获取活动信息
+  getActiveMessage:function(){
+    var that = this;
+    wx.request({
+      url: app.globalData.serverPath + 'index_activity',
+      data: {},
+      header: { //请求头
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      method: "POST",
+      success: function (res) {
+        console.log(res.data)
+        that.setData({
+          videoContent:res.data
+        })
+      },
+      fail: function (err) { },
+      complete: function () { }
+    })
+  } , 
   videoHandle: function(a) {
     this.data.videoPlay ? (
       this.setData({
@@ -582,10 +580,10 @@ Page({
 
   //播放结束
   bindended: function(e) {
-    this.setData({
-      display_play: 'block',
-      videoPlay: !1,
-    })
+    // this.setData({
+    //   display_play: 'block',
+    //   videoPlay: !1,
+    // })
   },
 
 
@@ -982,10 +980,11 @@ Page({
   },
   // 活动详情
   textclick: function(e) {
-    //console.log(e)
-    var activeId = e.currentTarget.dataset.aid
+    console.log(e)
+    var videoId = e.currentTarget.dataset.rid
+    var uid = this.data.uid
     wx.navigateTo({
-      url: '../focus/active/active?id=' + activeId,
+      url: '../playvideo/playvideo?uid=' + uid + '&videoId=' + videoId,
     })
   },
   // 参加活动
@@ -1107,7 +1106,7 @@ Page({
     var videoId = ops.target.dataset.vid
     // if(ops.from==='button'){}
     return {
-      title: '五一一短视频',
+      title: '素人短视频',
       path: '/pages/playvideo/playvideo?uid=' + uid + '&videoId=' + videoId,
       success: function(res) {
         //console.log(res)

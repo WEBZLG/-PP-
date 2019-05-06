@@ -14,7 +14,7 @@
           <view class='nav-border'>
             <view class='nav-content'>
               <view class='nav-contentup'>
-                <view class='nav-contentup-img'>
+                <view class='nav-contentup-img'  data-id='{{item.uid}}' catchtap='userdetail'>
                   <image src='{{item.wximage}}' class='nav-contentimg'></image>
                 </view>
 

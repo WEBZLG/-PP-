@@ -45,7 +45,23 @@ video {
   height: 0rpx;
   color: transparent;
 }
-
+.notice_item{
+  display: inline-block;
+  vertical-align: middle;
+  margin: 2rpx 20rpx;
+  border-bottom: 1px solid #ccc;
+}
+.sexIocn{
+  height:40rpx;
+  width:40rpx;
+  display:inline-block;
+  vertical-align:top;
+}
+.actText{
+  display:inline-block;
+  vertical-align:top;
+  margin-left: 10rpx;
+}
 @keyframes myfirst {
   0% {
     margin-left: 750rpx;
