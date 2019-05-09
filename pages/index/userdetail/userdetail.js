@@ -7,15 +7,15 @@ Page({
   data: {
     uid: "",
     nickname: "素人",
-    gender: "1",
+    gender: "男",
     city: "哈尔滨",
     provice: "黑龙江",
     country: "中国",
     avatarUrl: "",
     signature: "素人短视频",
-    phone: "18888888888",
-    birthday: "1999-09-09",
-    wx: "wx88888888",
+    phone: "电话保密",
+    birthday: "生日保密",
+    wx: "微信保密",
     winHeight: "",//窗口高度
     currentTab: 0, //预设当前项的值
     scrollLeft: 0, //tab标题的滚动条位置
@@ -104,6 +104,7 @@ Page({
           birthday: res.data.birthday,
           phone: res.data.phone,
           wx: res.data.wx,
+          gender:res.data.sex,
           signature: res.data.signature,
           avatarUrl: res.data.wximage,
           nickname:res.data.wxname,

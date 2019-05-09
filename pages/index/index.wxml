@@ -10,8 +10,8 @@
     <cover-view class='scroll_view_border'>
       <cover-view class="srcoll_view">
         <cover-view  class='notice_item'   wx:for="{{videoContent}}" wx:key="{{index}}"     catchtap="textclick" data-rid='{{item.rid}}'>
-        <cover-image  class='sexIocn'  wx:if="{{item.sex=='男'}}"  src='../../image/men.png'></cover-image>
-        <cover-image  class='sexIocn'  wx:if="{{item.sex=='女'}}"  src='../../image/women.png'></cover-image>
+          <cover-image  class='sexIocn'  wx:if="{{item.sex=='男'}}"  src='../../image/men.png'></cover-image>
+          <cover-image  class='sexIocn'  wx:if="{{item.sex=='女'}}"  src='../../image/women.png'></cover-image>
           <cover-view class='actText'>{{item.title}}</cover-view>
         </cover-view>
       </cover-view>

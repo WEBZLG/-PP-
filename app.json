@@ -34,7 +34,8 @@
     "pages/index/search/searchDetail/searchDetail",
     "pages/3d/test/test",
     "pages/3d/view/view",
-    "pages/3d/book/book"
+    "pages/3d/book/book",
+    "pages/myself/focus/focus"
   ],
   "permission": {
     "scope.userLocation": {

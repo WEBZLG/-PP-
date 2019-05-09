@@ -89,7 +89,7 @@
 }
 
 .other-data {
-  width: 80%;
+  width: 100%;
   color: #fff;
   font-size: 32rpx;
   line-height: 40rpx;
@@ -101,7 +101,7 @@
 }
 
 .item {
-  width: 33.33%;
+  width: 30%;
   text-align: left;
 }
 

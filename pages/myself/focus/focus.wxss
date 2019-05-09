@@ -1,0 +1,39 @@
+/* pages/myself/focus/focus.wxss */
+
+page{
+  background-color: #434343;
+}
+.head-img{
+  width: 100rpx;
+  height: 100rpx;
+  border: white 1rpx solid;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.fans{
+  display: flex;
+  flex-direction: row;
+  justify-content:space-between;
+  padding: 50rpx 30rpx 0rpx;
+}
+.fans-text{
+  display: flex;
+  flex-direction: column;
+  color: white;
+  font-size: 23rpx;
+  margin-left:-200rpx;
+  line-height:48rpx;
+
+}
+.follow{
+  width: 120rpx;
+  height: 36rpx;
+  border: 1rpx white solid;
+  border-radius: 18rpx;
+  color: white;
+  font-size: 17rpx;
+  text-align: center;
+  line-height: 36rpx;
+  margin-top:30rpx;
+
+  }

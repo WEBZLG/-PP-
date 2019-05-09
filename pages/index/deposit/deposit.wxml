@@ -10,7 +10,6 @@
   <text style='font-size:58rpx;color:#fefefe'>{{integral}}</text>
   </view>
   <view class='deposit'>
-    <text>充值</text>
     <view class='depositList' wx:for='{{Deposite}}' wx:key='index'>
       <view>
       <image src='../../../image/score.png' style='width:30rpx;height:29rpx;padding-right:25rpx;'></image>

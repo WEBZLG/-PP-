@@ -14,9 +14,9 @@ Page({
     country:"中国",
     avatarUrl:"",
     signature:"素人短视频",
-    phone:"18888888888",
-    birthday:"1999-09-09",
-    wx:"wx88888888",
+    phone:"未设置",
+    birthday:"未设置",
+    wx:"未设置",
     winHeight: "",//窗口高度
     currentTab: 0, //预设当前项的值
     scrollLeft: 0, //tab标题的滚动条位置
@@ -65,7 +65,7 @@ Page({
     wx.getStorage({
       key: 'userMessage',
       success(res) {
-        //console.log(res.data)
+        // console.log(res)
         that.setData({
           nickname: res.data.nickName,
           gender: res.data.gender,
@@ -156,6 +156,21 @@ Page({
       url: './help/help'
     })
   },
+  goZan: function () {
+    wx.navigateTo({
+      url: '../message/praise/praise'
+    })
+  },
+  goFocus: function () {
+    wx.navigateTo({
+      url: './focus/focus'
+    })
+  },
+  goFans: function () {
+    wx.navigateTo({
+      url: '../message/fans/fans'
+    })
+  },
   // 点赞视频
   getLikeVideo:function(){
     wx.showLoading()
@@ -187,7 +202,7 @@ Page({
       method: 'POST',
       success: function (res) {
         wx.hideLoading()
-        //console.log(res);
+        console.log(res);
         that.setData({
           sendGoodsList:res.data
         })
@@ -205,6 +220,7 @@ Page({
       },
       method: 'POST',
       success: function (res) {
+        console.log(res)
         wx.hideLoading()
         that.setData({
           getGoodsList: res.data
@@ -468,6 +484,20 @@ Page({
       }
     })
   },
+  // 视频用户详情页
+  userdetail: function (e) {
+    var otherId = e.currentTarget.dataset.id
+    wx.navigateTo({
+      url: '../index/userdetail/userdetail?otherId=' + otherId
+    })
+  },
+  // 充值
+  deposit: function () {
+    // this.hideModal()
+    wx.navigateTo({
+      url: '../index/deposit/deposit',
+    })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -479,7 +509,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.onLoad();
   },
 
   /**

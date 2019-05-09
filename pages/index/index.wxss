@@ -412,7 +412,7 @@ button::after {
 /* 送礼物列表弹出层 */
 
 .gifts_attr_box {
-  height: 50%;
+  height: 570rpx;
   width: 100%;
   overflow: hidden;
   position: fixed;
@@ -589,3 +589,4 @@ button::after {
   font-weight: bold;
   z-index: 9999999999999;
 }
+

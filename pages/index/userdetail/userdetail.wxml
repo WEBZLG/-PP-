@@ -12,7 +12,7 @@
         <view class='sign-text' wx:else>{{signature}}</view>
         <view class='infor-more'>
           <view class='infor-details'>
-            <view class='infor-birth'>{{gender==1 ? "男":"女"}} {{birthday==null ? "1990-09-09" : birthday}} {{city==null ? "火星" : city}}</view>
+            <view class='infor-birth'>{{gender}} {{birthday==null ? "未设置" : birthday}} {{city==null ? "火星" : city}}</view>
             <view class='infor-call'>
               <blcok wx:if="{{uid_send_otherpeopleid_integral>phone_integral}}">
                 电话号：{{ phone}}

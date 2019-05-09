@@ -1,0 +1,13 @@
+<!--pages/myself/focus/focus.wxml-->
+
+<view class='fans' wx:for='{{focusList}}' wx:key='index' wx:if="{{focusList !== ''}}">
+  <view class='head-img'  data-id='{{item.id}}' catchtap='userdetail'>
+    <image src='{{item.wximage}}' style='width:100rpx;height:100rpx;'></image>
+  </view>
+  <view class='fans-text'>
+    <text>{{item.wxname}}</text>
+    <text>{{item.time}}</text>
+  </view>
+  <view class='follow' bindtap='cancel' data-id='{{item.id}}'> 取消关注</view>
+</view>
+<view class='none-data' wx:if="{{focusList == ''}}">暂无数据</view>

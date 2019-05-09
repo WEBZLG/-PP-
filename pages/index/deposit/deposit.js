@@ -10,7 +10,7 @@ Page({
     money:"",//充值金额
     integral:0,//积分
     Deposite:[{
-      id:1,
+      id:0,
       score:50,
       rmb:5
     }, {
@@ -30,15 +30,15 @@ Page({
         score: 1000,
         rmb: 100
       }, {
-        id: 1,
+        id: 6,
         score: 2000,
         rmb: 200
       }, {
-        id: 1,
+        id: 7,
         score: 5000,
         rmb: 500
       }, {
-        id: 1,
+        id: 8,
         score: 10000,
         rmb: 1000
       }]
@@ -114,6 +114,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    wx.setNavigationBarTitle({
+      title: '积分充值',
+    })
       var that = this;
       // 缓存中取信息
       wx.getStorage({
