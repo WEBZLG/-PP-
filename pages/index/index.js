@@ -1153,8 +1153,6 @@ Page({
   },
   //创建
   create: function(e) {
-    //console.log("哎呀！我被点了")
-    //console.log(e)
     wx.showLoading()
     var that = this;
     wx.request({
