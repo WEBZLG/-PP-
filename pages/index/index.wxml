@@ -118,7 +118,13 @@
   </cover-view>
   <!-- 广告 -->
   <cover-view class='advertising' style='display:{{isAdvertising}}'>
-    <cover-view class='advertising-img'>
+    <cover-view class='advertising-img' catchtap='advertisingDetails' wx:if="{{advertisingData.start_info==0}}">
+      <cover-image src='{{advertisingData.pic}}'></cover-image>
+      <cover-view class='time-close'>{{advertisingNum}}秒后关闭
+        <cover-view catchtap='closeAvertising'>直接跳过</cover-view>
+      </cover-view>
+    </cover-view>
+    <cover-view class='advertising-img' wx:if="{{advertisingData.start_info==1}}">
       <cover-image src='{{advertisingData.pic}}'></cover-image>
       <cover-view class='time-close'>{{advertisingNum}}秒后关闭
         <cover-view catchtap='closeAvertising'>直接跳过</cover-view>

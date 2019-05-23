@@ -48,7 +48,7 @@ Page({
       },
       method: 'POST',
       success: function (res) {
-        // console.log(res);
+        console.log(res);
         that.setData({
           hotSearchData:res.data.rank,
           advertising: res.data.advertising,
@@ -61,6 +61,15 @@ Page({
       searchRecord: wx.getStorageSync('searchRecord') || [],//若无储存则为空
     })
   },
+// 精彩推荐详情
+    advertisingDetails(e){
+        console.log(e)
+        if(e.currentTarget.dataset.start==0){
+            wx.navigateTo({
+                url: '../advertisingDetails/advertisingDetails?content='+e.currentTarget.dataset.content,
+            })
+        }
+    },
   //点击搜索按钮提交表单跳转并储存历史记录  
   searchSubmitFn: function (e) {
     // console.log(e)    

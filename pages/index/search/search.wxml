@@ -118,7 +118,7 @@
       <swiper autoplay >
         <block wx:for="{{advertising}}" wx:key="index">
         <swiper-item>
-          <image src="{{item.advertising}}"  style='width:690rpx;height:220rpx;'></image>
+          <image src="{{item.advertising}}" data-start='{{item.if_start}}' data-content="{{item.content}}"  style='width:690rpx;height:220rpx;' catchtap='advertisingDetails'></image>
         </swiper-item>
         </block>
       </swiper>

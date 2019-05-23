@@ -1,0 +1,8 @@
+<!--pages/index/advertisingDetails/advertisingDetails.wxml-->
+<import src="../../../wxParse/wxParse.wxml" />
+<view class='details'>
+<view hidden="{{isShow}}">
+  <template is="wxParse" data="{{wxParseData:article.nodes}}" />
+</view>
+  <view class='none-data' hidden="{{!isShow}}">暂无详情数据</view>
+</view>

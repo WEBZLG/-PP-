@@ -46,7 +46,7 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+    onShow: function (options) {
     var that = this;
     wx.setNavigationBarTitle({
       title: '我的信息',
@@ -503,13 +503,6 @@ Page({
    */
   onReady: function () {
 
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-    this.onLoad();
   },
 
   /**

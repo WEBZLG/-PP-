@@ -1,0 +1,6 @@
+/* pages/index/advertisingDetails/advertisingDetails.wxss */
+@import"../../../wxParse/wxParse.wxss";
+.details{
+    margin: 30rpx;
+    color: #eee;
+}

@@ -25,15 +25,11 @@
   display: flex;
   margin: 30rpx 0;
   position: relative;
+  justify-content:space-between;
 }
-.title{
-  width: 30%;
-  text-align: left
-}
+
 .ipt{
-  width: 70%;
   text-align: right;
-  /* border-bottom: 2rpx solid #eee; */
 }
 button{
 width:100%;

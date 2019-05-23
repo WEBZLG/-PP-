@@ -1,87 +1,88 @@
 {
-  "pages": [
-    "pages/index/index",
-    "pages/add/publish-preview/publish-preview",
-    "pages/add/publish-submit/publish-submit",
-    "pages/add/publish/publish",
-    "pages/myself/redact/redact",
-    "pages/myself/viewdetails/viewdetails",
-    "pages/myself/depositapply/depositapply",
-    "pages/add/add",
-    "pages/focus/focus",
-    "pages/switchcity/switchcity",
-    "pages/message/message",
-    "pages/myself/myself",
-    "pages/apply/apply",
-    "pages/login/login",
-    "pages/myself/help/help",
-    "pages/add/publish-edit/publish-edit",
-    "pages/message/comment/comment",
-    "pages/message/fans/fans",
-    "pages/message/detail/detail",
-    "pages/message/notice/notice",
-    "pages/message/praise/praise",
-    "pages/message/noticeDetails/noticeDetails",
-    "pages/focus/active/active",
-    "pages/help/helpDetails/helpDetails",
-    "pages/index/userdetail/userdetail",
-    "pages/index/deposit/deposit",
-    "pages/index/depositrecord/depositrecord",
-    "pages/index/search/search",
-    "pages/playvideo/playvideo",
-    "pages/sharePlayVideo/sharePlayVideo",
-    "pages/myself/bindPhone/bindPhone",
-    "pages/index/search/searchDetail/searchDetail",
-    "pages/3d/test/test",
-    "pages/3d/view/view",
-    "pages/3d/book/book",
-    "pages/myself/focus/focus"
-  ],
-  "permission": {
-    "scope.userLocation": {
-      "desc": "我们将根据位置展示同城的视频"
-    }
-  },
-  "window": {
-    "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#3E3E3E",
-    "navigationBarTitleText": "素人短视频",
-    "navigationBarTextStyle": "white"
-  },
-  "tabBar": {
-    "color": "#c4c4c4",
-    "selectedColor": "#fff",
-    "borderStyle": "white",
-    "backgroundColor": "#3E3E3E",
-    "list": [
-      {
-        "pagePath": "pages/index/index",
-        "text": "首页"
-      },
-      {
-        "pagePath": "pages/focus/focus",
-        "text": "关注"
-      },
-      {
-        "iconPath": "image/add.png",
-        "selectedIconPath": "image/add.png",
-        "pagePath": "pages/add/add"
-      },
-      {
-        "pagePath": "pages/message/message",
-        "text": "消息"
-      },
-      {
-        "pagePath": "pages/myself/myself",
-        "text": "我的"
-      }
-    ]
-  },
-  "plugins": {
-    "calendar": {
-      "version": "1.1.3",
-      "provider": "wx92c68dae5a8bb046"
-    }
-  },
-  "sitemapLocation": "sitemap.json"
+    "pages": [
+        "pages/index/index",
+        "pages/add/publish-preview/publish-preview",
+        "pages/add/publish-submit/publish-submit",
+        "pages/add/publish/publish",
+        "pages/myself/redact/redact",
+        "pages/myself/viewdetails/viewdetails",
+        "pages/myself/depositapply/depositapply",
+        "pages/add/add",
+        "pages/focus/focus",
+        "pages/switchcity/switchcity",
+        "pages/message/message",
+        "pages/myself/myself",
+        "pages/apply/apply",
+        "pages/login/login",
+        "pages/myself/help/help",
+        "pages/add/publish-edit/publish-edit",
+        "pages/message/comment/comment",
+        "pages/message/fans/fans",
+        "pages/message/detail/detail",
+        "pages/message/notice/notice",
+        "pages/message/praise/praise",
+        "pages/message/noticeDetails/noticeDetails",
+        "pages/focus/active/active",
+        "pages/help/helpDetails/helpDetails",
+        "pages/index/userdetail/userdetail",
+        "pages/index/deposit/deposit",
+        "pages/index/depositrecord/depositrecord",
+        "pages/index/search/search",
+        "pages/playvideo/playvideo",
+        "pages/sharePlayVideo/sharePlayVideo",
+        "pages/myself/bindPhone/bindPhone",
+        "pages/index/search/searchDetail/searchDetail",
+        "pages/3d/test/test",
+        "pages/3d/view/view",
+        "pages/3d/book/book",
+        "pages/myself/focus/focus",
+        "pages/index/advertisingDetails/advertisingDetails"
+    ],
+    "permission": {
+        "scope.userLocation": {
+            "desc": "我们将根据位置展示同城的视频"
+        }
+    },
+    "window": {
+        "backgroundTextStyle": "light",
+        "navigationBarBackgroundColor": "#3E3E3E",
+        "navigationBarTitleText": "素人短视频",
+        "navigationBarTextStyle": "white"
+    },
+    "tabBar": {
+        "color": "#c4c4c4",
+        "selectedColor": "#fff",
+        "borderStyle": "white",
+        "backgroundColor": "#3E3E3E",
+        "list": [
+            {
+                "pagePath": "pages/index/index",
+                "text": "首页"
+            },
+            {
+                "pagePath": "pages/focus/focus",
+                "text": "关注"
+            },
+            {
+                "iconPath": "image/add.png",
+                "selectedIconPath": "image/add.png",
+                "pagePath": "pages/add/add"
+            },
+            {
+                "pagePath": "pages/message/message",
+                "text": "消息"
+            },
+            {
+                "pagePath": "pages/myself/myself",
+                "text": "我的"
+            }
+        ]
+    },
+    "plugins": {
+        "calendar": {
+            "version": "1.1.3",
+            "provider": "wx92c68dae5a8bb046"
+        }
+    },
+    "sitemapLocation": "sitemap.json"
 }

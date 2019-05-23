@@ -1,42 +1,46 @@
-
 <view>
-  <view class='person'>
-    <image class='headimg' src='{{headUrl}}'></image>
-    <view class='nickName'>{{nickName}}</view>
-    <view class='sex-addr'>{{sex == 1 ? "男" : "女"}} {{place}}</view>
-  </view>
-  <view class='message'>
-    <view class='item'>
-      <view class='title'>签名</view>
-      <input class='ipt'  bindinput='getSign' placeholder='填写个性签名'/>
+    <view class='person'>
+        <image class='headimg' src='{{headUrl}}'></image>
+        <view class='nickName'>{{nickName}}</view>
+        <view class='sex-addr'>{{sex == 1 ? "男" : "女"}} {{place}}</view>
     </view>
-    <view class='item'>
-      <view class='title '>生日</view>
-      <input class='ipt maskLayer'  bindtap='chooseSezi' placeholder='选择出生日期' value='{{birthday}}' disabled='true'/>
+    <view class='message'>
+        <view class='item'>
+            <view class='title'>签名</view>
+            <input class='ipt' bindinput='getSign' placeholder='填写个性签名' />
+        </view>
+        <view class='item'>
+            <view class='title '>生日</view>
+            <!-- <input class='ipt maskLayer'  bindtap='chooseSezi' placeholder='选择出生日期' value='{{birthday}}' disabled='true'/> -->
+            <view class="section">
+                <picker mode="date" value="{{birthday}}" start="1950-01-01" end="2099-01-01" bindchange="bindDateChange">
+                    <view class="picker"> {{birthday}}</view>
+                </picker>
+            </view>
+        </view>
+        <view class='item'>
+            <view class='title'>电话</view>
+            <input class='ipt' bindinput='getCall' placeholder='填写手机号' />
+        </view>
+        <view class='item'>
+            <view class='title'>电话获取值</view>
+            <input class='ipt' bindinput='getCallNum' placeholder='填写手机号获取值' />
+            <text class='notice'>粉丝送礼物达到相应分值时即可查看我的电话号码</text>
+        </view>
+        <view class='item'>
+            <view class='title'>微信</view>
+            <input class='ipt' bindinput='getWx' placeholder='填写微信号' />
+        </view>
+        <view class='item'>
+            <view class='title'>微信获取值</view>
+            <input class='ipt' bindinput='getWxNum' placeholder='填写微信号获取值' />
+            <text class='notice'>粉丝送礼物达到相应分值时即可查看我的微信号码</text>
+        </view>
+        <view class='item'>
+            <button type='button' bindtap='save'>保存</button>
+        </view>
     </view>
-    <view class='item'>
-      <view class='title'>电话</view>
-      <input class='ipt'  bindinput='getCall' placeholder='填写手机号'/>
-    </view>
-    <view class='item'>
-      <view class='title'>电话获取值</view>
-      <input class='ipt'  bindinput='getCallNum' placeholder='填写手机号获取值'/>
-      <text class='notice'>粉丝送礼物达到相应分值时即可查看我的电话号码</text>
-    </view>
-    <view class='item'>
-      <view class='title'>微信</view>
-      <input class='ipt'  bindinput='getWx' placeholder='填写微信号'/>
-    </view>
-    <view class='item'>
-      <view class='title'>微信获取值</view>
-      <input class='ipt'  bindinput='getWxNum' placeholder='填写微信号获取值'/>
-      <text class='notice'>粉丝送礼物达到相应分值时即可查看我的微信号码</text>
-    </view>
-    <view class='item'>
-      <button type='button' bindtap='save'>保存</button>
-    </view>
-  </view>
-  <view class='calendar-box choose' wx:if="{{chooseSize}}" animation='{{animationData}}'>
+    <!-- <view class='calendar-box choose' wx:if="{{chooseSize}}" animation='{{animationData}}'>
     <calendar  calendar-style="calendar"  header-style="calendar-header"  board-style="calendar-board" days-color="{{dayStyle}}" weeks-type="cn" binddayClick="dayClick" />
- </view>
+ </view> -->
 </view>
