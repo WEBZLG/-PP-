@@ -1256,21 +1256,22 @@ Page({
 
 
     },
+
     //保存
-    save: function() {
+    save: function () {
         var that = this;
         wx.canvasToTempFilePath({ //canvas 生成图片 生成临时路径
             canvasId: 'canvas',
-            success: function(res) {
+            success: function (res) {
                 //console.log(res)
                 wx.saveImageToPhotosAlbum({ //下载图片
                     filePath: res.tempFilePath,
-                    success: function() {
+                    success: function () {
                         wx.showToast({
                             title: "图片已保存到相册",
                             icon: "success",
                         });
-                        setTimeout(function() {
+                        setTimeout(function () {
                             that.setData({
                                 showPoster: "none",
                                 // sharenum: that.data.sharenum + 1
@@ -1286,7 +1287,7 @@ Page({
                                 "Content-Type": "application/x-www-form-urlencoded"
                             },
                             method: "POST",
-                            success: function(res) {
+                            success: function (res) {
                                 //console.log(res)
                             }
                         })
