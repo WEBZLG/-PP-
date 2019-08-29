@@ -97,9 +97,9 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
+  // onShareAppMessage: function () {
 
-  },
+  // },
   getSign: function (e) {
     this.setData({
       signature: e.detail.value

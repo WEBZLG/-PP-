@@ -2,7 +2,7 @@
 <view>
   <picker disabled="{{disabled}}" mode="multiSelector" bindchange="pickerChange" bindcolumnchange="pickerColumnChange" bindcancel ="pickerCancel" value="{{pickerIndex}}" range="{{pickerArray}}" range-key="{{'name'}}">
     <view>
-      {{date+":00"}}
+      {{dateString}}
     </view>
   </picker>
 </view>

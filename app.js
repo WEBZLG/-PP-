@@ -125,7 +125,7 @@ function uploadimg(data) {
         //console.log('执行完毕');
         var pid = getApp().data.pid
         //console.log('成功：' + success + " 失败：" + fail);
-        wx.navigateTo({
+        wx.redirectTo({
           url: '../view/view?pid='+pid,
         })
       } else {//若图片还没有传完，则继续调用函数

@@ -81,7 +81,8 @@ Page({
     //console.log(options)
     app.data.musicContent = options.detail.value
   },
-  onLoad: function (options) {
+  onShow: function (options) {
+    console.log(11)
     var that = this;
     // 评论弹出层动画创建
     this.animation = wx.createAnimation({

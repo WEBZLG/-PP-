@@ -19,7 +19,7 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-    onShow: function (options) {
+    onLoad: function (options) {
     //console.log(options.id)
     var that = this;
     wx.request({
@@ -88,7 +88,7 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
+  // onShareAppMessage: function () {
 
-  }
+  // }
 })

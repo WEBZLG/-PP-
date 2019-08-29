@@ -45,7 +45,7 @@
         <view class='integral'>{{integral}}积分</view>
         <view class='view-detail' bindtap='viewDetails'>明细</view>
         <view class='deposit-apply' bindtap='depositApply'>提现</view>
-        <view class='deposit-apply' bindtap='deposit'>充值</view>
+        <view class='deposit-apply' bindtap='deposit' hidden="{{iosShow}}">充值</view>
       </view>
     </view>
   </view>

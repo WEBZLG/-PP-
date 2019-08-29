@@ -17,8 +17,11 @@ Page({
     topicAreaValue: "",
     description: "",//视频内容
     submitData:'',
-    date:"",
+    date: '2019-01-01 13:37',
     disabled: false,//设置是否能点击 false可以 true不能点击
+    startDate: '2019-01-01 12:00',
+    endDate: '2099-01-01 12:00',
+    placeholder: '请选择时间',
     isVip:!1,//是否是会员
     isDis:true,//是否限制人数
     isLimit: 1,//是否限制人数
@@ -207,6 +210,7 @@ Page({
 
   // 发布活动
   publishWorks:function(options){
+    console.log("点我了")
     //console.log(options)
     const that = this
     wx.showLoading({
@@ -282,9 +286,10 @@ Page({
           that.setData({
             isPublish:false
           })
-          wx.reLaunch({
-            url: '../../myself/myself',
-          })
+            wx.switchTab({
+              url: '../../myself/myself'
+            })
+          
         }else{
           wx.hideLoading();
           wx.showToast({

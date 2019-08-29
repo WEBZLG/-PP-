@@ -65,7 +65,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    wx.showTabBar()
   },
 
   /**
@@ -99,9 +99,9 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
+  // onShareAppMessage: function () {
 
-  },
+  // },
   // 本地视频
   chooseVideo: function () {
     var t = this;

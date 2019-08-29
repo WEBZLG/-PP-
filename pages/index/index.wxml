@@ -194,7 +194,7 @@
         <image src='../../image/score.png' style='width:30rpx;height:29rpx;'></image>
         <text> 积分: {{goodIntegral}}</text>
       </view>
-      <view class='deposit' bindtap='deposit'>充值></view>
+      <view class='deposit' bindtap='deposit' hidden="{{iosShow}}">充值></view>
     </view>
   </view>
 
